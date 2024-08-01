@@ -739,7 +739,7 @@ class LazyCollection implements CanBeEscapedWhenCastToString, Enumerable
      *
      * @param  string|array<array-key, string>  $value
      * @param  string|null  $key
-     * @return static<array-key, mixed>
+     * @return static<int, mixed>
      */
     public function pluck($value, $key = null)
     {

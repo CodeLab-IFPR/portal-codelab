@@ -285,7 +285,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     }
 
     /**
-     * Explode the string into a collection.
+     * Explode the string into an array.
      *
      * @param  string  $delimiter
      * @param  int  $limit
