@@ -12,10 +12,10 @@
     <meta name="keywords" content="">
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon/favicon-16x16.png">
-    <link rel="mask-icon" href="./assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="apple-touch-icon" sizes="180x180" src="{{ asset('img/favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" src="{{ asset('img/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" src="{{ asset('img/favicon/favicon-16x16.png') }}">
+    <link rel="mask-icon" src="{{ asset('img/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     
@@ -377,42 +377,42 @@
                         <!-- Logo-->
                         <div class="col-6 col-sm-4 col-md-3 col-lg-2">
                             <picture>
-                                <img class="img-fluid" src="./assets/images/logos/logo-17.svg" alt="">
+                                <img class="img-fluid" src="{{ asset('img/logo-17.svg') }}" alt="">
                             </picture>
                         </div>
                         <!-- / Logo-->
                         <!-- Logo-->
                         <div class="col-6 col-sm-4 col-md-3 col-lg-2">
                             <picture>
-                                <img class="img-fluid" src="./assets/images/logos/logo-18.svg" alt="">
+                                <img class="img-fluid" src="{{ asset('img/logo-18.svg') }}" alt="">
                             </picture>
                         </div>
                         <!-- / Logo-->
                         <!-- Logo-->
                         <div class="col-6 col-sm-4 col-md-3 col-lg-2">
                             <picture>
-                                <img class="img-fluid" src="./assets/images/logos/logo-19.svg" alt="">
+                                <img class="img-fluid" src="{{ asset('img/logo-19.svg') }}" alt="">
                             </picture>
                         </div>
                         <!-- / Logo-->
                         <!-- Logo-->
                         <div class="col-6 col-sm-4 col-md-3 col-lg-2">
                             <picture>
-                                <img class="img-fluid" src="./assets/images/logos/logo-20.svg" alt="">
+                                <img class="img-fluid" src="{{ asset('img/logo-20.svg') }}" alt="">
                             </picture>
                         </div>
                         <!-- / Logo-->
                         <!-- Logo-->
                         <div class="col-6 col-sm-4 col-md-3 col-lg-2">
                             <picture>
-                                <img class="img-fluid" src="./assets/images/logos/logo-21.svg" alt="">
+                                <img class="img-fluid" src="{{ asset('img/logo-21.svg') }}" alt="">
                             </picture>
                         </div>
                         <!-- / Logo-->
                         <!-- Logo-->
                         <div class="col-6 col-sm-4 col-md-3 col-lg-2">
                             <picture>
-                                <img class="img-fluid" src="./assets/images/logos/logo-22.svg" alt="">
+                                <img class="img-fluid" src="{{ asset('img/logo-22.svg') }}" alt="">
                             </picture>
                         </div>
                         <!-- / Logo-->

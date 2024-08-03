@@ -14,11 +14,11 @@ Route::get('/about', function () {
 });
 
 Route::get('/pricing', function () {
-    return view('about');
+    return view('pricing');
 });
 
 Route::get('/contact', function () {
-    return view('about');
+    return view('contact');
 });
 
 Route::get('/dashboard', function () {
