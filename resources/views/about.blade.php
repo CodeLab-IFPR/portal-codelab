@@ -12,10 +12,10 @@
     <meta name="keywords" content="">
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon/favicon-16x16.png">
-    <link rel="mask-icon" href="./assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="apple-touch-icon" sizes="180x180" src="{{ asset('img/favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" src="{{ asset('img/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" src="{{ asset('img/favicon/favicon-16x16.png') }}">
+    <link rel="mask-icon" src="{{ asset('img/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     
@@ -134,13 +134,13 @@
                         <!-- / Features dropdown menu-->
                     </li>    
                     <li class="nav-item">
-                        <a class="nav-link" href="./pricing.html">Pricing</a>
+                        <a class="nav-link" href="./pricing">Pricing</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./about.html">About</a>
+                        <a class="nav-link" href="./about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./contact.html">Contact</a>
+                        <a class="nav-link" href="./contact">Contact</a>
                     </li>
                 </ul>            <div class="d-none d-lg-flex">
                     <a href="#" class="btn btn-link text-muted" role="button">Login</a>
@@ -176,7 +176,7 @@
                         <div class="col-12 col-md-6">
                             <picture>
                                 <img class="img-fluid rounded shadow-sm"
-                                    src="./assets/images/about-1.jpeg"
+                                    src="{{ asset('img/about-1.jpeg') }}"
                                     alt="HTML Bootstrap Template by Pixel Rocket">
                             </picture>
                         </div>
@@ -185,14 +185,14 @@
                                 <div class="col-12">
                                     <picture>
                                         <img class="img-fluid rounded shadow-sm"
-                                            src="./assets/images/about-2.jpeg"
+                                            src="{{ asset('img/about-2.jpeg') }}"
                                             alt="HTML Bootstrap Template by Pixel Rocket">
                                     </picture>
                                 </div>
                                 <div class="col-12">
                                     <picture>
                                         <img class="img-fluid rounded shadow-sm"
-                                            src="./assets/images/about-3.jpeg"
+                                            src="{{ asset('img/about-3.jpeg') }}"
                                             alt="HTML Bootstrap Template by Pixel Rocket">
                                     </picture>
                                 </div>
@@ -207,7 +207,7 @@
                         <div class="col-12 col-md-6 d-none d-lg-block">
                             <picture>
                                 <img class="img-fluid rounded shadow-sm"
-                                    src="./assets/images/about-4.jpeg"
+                                    src="{{ asset('img/about-4.jpeg') }}"
                                     alt="HTML Bootstrap Template by Pixel Rocket">
                             </picture>
                         </div>
@@ -216,14 +216,14 @@
                                 <div class="col-12">
                                     <picture>
                                         <img class="img-fluid rounded shadow-sm"
-                                            src="./assets/images/about-5.jpeg"
+                                            src="{{ asset('img/about-5.jpeg') }}"
                                             alt="HTML Bootstrap Template by Pixel Rocket">
                                     </picture>
                                 </div>
                                 <div class="col-12">
                                     <picture>
                                         <img class="img-fluid rounded shadow-sm"
-                                            src="./assets/images/about-6.jpeg"
+                                            src="{{ asset('img/about-6.jpeg') }}"
                                             alt="HTML Bootstrap Template by Pixel Rocket">
                                     </picture>
                                 </div>
@@ -266,7 +266,7 @@
                 <div class="col-12 col-lg-6">
                     <picture>
                         <img class="img-fluid rounded shadow-sm"
-                            src="./assets/images/about-7.jpeg"
+                            src="{{ asset('img/about-7.jpeg') }}"
                             alt="HTML Bootstrap Template by Pixel Rocket">
                     </picture>
                 </div>
@@ -283,7 +283,7 @@
                                 <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
                                     <picture class="avatar">
                                         <img class="img-fluid rounded-circle"
-                                            src="./assets/images/profile-small-2.jpeg"
+                                            src="{{ asset('img/profile-small-2.jpeg') }}"
                                             alt="">
                                     </picture>
                                     <p class="lead fw-bolder mb-0 mt-4">Jack Johnston</p>
@@ -304,7 +304,7 @@
                                 <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
                                     <picture class="avatar">
                                         <img class="img-fluid rounded-circle"
-                                            src="./assets/images/profile-small-3.jpeg"
+                                            src="{{ asset('img/profile-small-3.jpeg') }}"
                                             alt="">
                                     </picture>
                                     <p class="lead fw-bolder mb-0 mt-4">JP Laurent</p>
@@ -325,7 +325,7 @@
                                 <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
                                     <picture class="avatar">
                                         <img class="img-fluid rounded-circle"
-                                            src="./assets/images/profile-small-4.jpeg"
+                                            src="{{ asset('img/profile-small-4.jpeg') }}"
                                             alt="">
                                     </picture>
                                     <p class="lead fw-bolder mb-0 mt-4">Gary Waite</p>
@@ -346,7 +346,7 @@
                                 <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
                                     <picture class="avatar">
                                         <img class="img-fluid rounded-circle"
-                                            src="./assets/images/profile-small-5.jpeg"
+                                            src="{{ asset('img/profile-small-5.jpeg') }}"
                                             alt="">
                                     </picture>
                                     <p class="lead fw-bolder mb-0 mt-4">Patrica Smith</p>
@@ -367,7 +367,7 @@
                                 <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
                                     <picture class="avatar">
                                         <img class="img-fluid rounded-circle"
-                                            src="./assets/images/profile-small-6.jpeg"
+                                            src="{{ asset('img/profile-small-6.jpeg') }}"
                                             alt="">
                                     </picture>
                                     <p class="lead fw-bolder mb-0 mt-4">Samanth Rowson</p>
@@ -388,7 +388,7 @@
                                 <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
                                     <picture class="avatar">
                                         <img class="img-fluid rounded-circle"
-                                            src="./assets/images/profile-small-7.jpeg"
+                                            src="{{ asset('img/profile-small-7.jpeg') }}"
                                             alt="">
                                     </picture>
                                     <p class="lead fw-bolder mb-0 mt-4">Jack Smith</p>

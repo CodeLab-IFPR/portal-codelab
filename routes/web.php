@@ -13,7 +13,7 @@ Route::get('/about', function () {
     return view('about');
 });
 
-Route::get('/princing', function () {
+Route::get('/pricing', function () {
     return view('about');
 });
 

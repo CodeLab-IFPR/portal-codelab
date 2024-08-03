@@ -137,13 +137,13 @@
                         <!-- / Features dropdown menu-->
                     </li>    
                     <li class="nav-item">
-                        <a class="nav-link" href="pricing">Pricing</a>
+                        <a class="nav-link" href="./pricing">Pricing</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about">About</a>
+                        <a class="nav-link" href="./about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact">Contact</a>
+                        <a class="nav-link" href="./contact">Contact</a>
                     </li>
                 </ul>            <div class="d-none d-lg-flex">
                     <a href="#" class="btn btn-link text-muted" role="button">Login</a>
