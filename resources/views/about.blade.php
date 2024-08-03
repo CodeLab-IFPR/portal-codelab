@@ -20,10 +20,10 @@
     <meta name="theme-color" content="#ffffff">
     
     <!-- Vendor CSS -->
-    <link rel="stylesheet" href="./assets/css/libs.bundle.css" />
+    @vite('resources/css/libs.bundle.css')
 
     <!-- Main CSS -->
-    <link rel="stylesheet" href="./assets/css/theme.bundle.css" />
+    @vite('resources/css/theme.bundle.css')
 
     <!-- Fix for custom scrollbar if JS is disabled-->
     <noscript>
@@ -157,9 +157,9 @@
         <header class="pt-10">
             <div class="container">
                 <div class="text-center col-12 col-sm-9 col-lg-7 col-xl-6 mx-auto position-relative z-index-20">
-                    <h1 class="display-3 fw-bold mb-3">Contact us</h1>
-                    <p class="text-muted lead mb-0">Select a category below to email the correct support team, or
-                        alternatively, send us a general message using the form below.</p>
+                    <h1 class="display-3 fw-bold mb-3">About us</h1>
+                    <p class="text-muted lead mb-0">Launched in 2017, Sigma is an online template design tool with a mission
+                        to make landing page design accessible to everyone in the world.</p>
                 </div>
             </div>
         </header>
@@ -168,134 +168,254 @@
         <!-- Page Content Goes Here -->
         <div class="container position-relative z-index-20 py-7">
 
-            <!-- Support Categories-->
-            <div class="row g-5">
-                <!-- Single Category-->
-                <div class="col-12 col-lg-4">
-                    <div class="card rounded shadow-lg h-100">
-                        <div
-                            class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
-                            <span class="f-w-10 d-block text-primary">
-                                <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                                    <polyline points="2 17 12 22 22 17"></polyline>
-                                    <polyline opacity=".4" points="2 12 12 17 22 12"></polyline>
-                                </svg>
-                            </span>
-                            <p class="fw-medium mb-1 my-4 fs-5">Knowledgebase</p>
-                            <span class="text-muted fs-7 mb-4">Browse our resources or
-                                submit a ticket to our support team.</span>
-                            <a href="#" class="fw-bolder">Visit help center &rarr;</a>
+            <!-- About Us Images-->
+            <div class="row g-3">
+                <!-- Images Left Side-->
+                <div class="col-12 col-lg-6 d-none d-lg-block">
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <picture>
+                                <img class="img-fluid rounded shadow-sm"
+                                    src="./assets/images/about-1.jpeg"
+                                    alt="HTML Bootstrap Template by Pixel Rocket">
+                            </picture>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="row gy-3">
+                                <div class="col-12">
+                                    <picture>
+                                        <img class="img-fluid rounded shadow-sm"
+                                            src="./assets/images/about-2.jpeg"
+                                            alt="HTML Bootstrap Template by Pixel Rocket">
+                                    </picture>
+                                </div>
+                                <div class="col-12">
+                                    <picture>
+                                        <img class="img-fluid rounded shadow-sm"
+                                            src="./assets/images/about-3.jpeg"
+                                            alt="HTML Bootstrap Template by Pixel Rocket">
+                                    </picture>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- / Single Category-->
-                <!-- Single Category-->
-                <div class="col-12 col-lg-4">
-                    <div class="card rounded shadow-lg h-100">
-                        <div
-                            class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
-                            <span class="f-w-10 d-block text-primary">
-                                <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path opacity=".4" d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path opacity=".4" d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                            </span>
-                            <p class="fw-medium mb-1 my-4 fs-5">Contact sales</p>
-                            <span class="text-muted fs-7 mb-4">Ask about a custom pricing plan, our business products, or request a demo.</span>
-                            <a href="#" class="fw-bolder">Contact sales &rarr;</a>
+                <!-- /Images Left Side-->
+                <!-- Images Right Side-->
+                <div class="col-12 col-lg-6">
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6 d-none d-lg-block">
+                            <picture>
+                                <img class="img-fluid rounded shadow-sm"
+                                    src="./assets/images/about-4.jpeg"
+                                    alt="HTML Bootstrap Template by Pixel Rocket">
+                            </picture>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="row gy-3">
+                                <div class="col-12">
+                                    <picture>
+                                        <img class="img-fluid rounded shadow-sm"
+                                            src="./assets/images/about-5.jpeg"
+                                            alt="HTML Bootstrap Template by Pixel Rocket">
+                                    </picture>
+                                </div>
+                                <div class="col-12">
+                                    <picture>
+                                        <img class="img-fluid rounded shadow-sm"
+                                            src="./assets/images/about-6.jpeg"
+                                            alt="HTML Bootstrap Template by Pixel Rocket">
+                                    </picture>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- / Single Category-->
-                <!-- Single Category-->
-                <div class="col-12 col-lg-4">
-                    <div class="card rounded shadow-lg h-100">
-                        <div
-                            class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
-                            <span class="f-w-12 d-block text-primary">
-                                <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path opacity=".4" d="M13 6h3a2 2 0 0 1 2 2v7"></path><line opacity=".4" x1="6" y1="9" x2="6" y2="21"></line></svg>
-                            </span>
-                            <p class="fw-medium mb-1 my-4 fs-5">Technical Support</p>
-                            <span class="text-muted fs-7 mb-4">Need help with our API, or assistance using our landing page design tool?</span>
-                            <a href="#" class="fw-bolder">Contact support &rarr;</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- / Single Category-->
+                <!-- Images Right Side-->
             </div>
-            <!-- Support Categories-->
+            <!-- About Us Images-->
 
-            <!-- Contact Details & Form-->
-            <div class="row gx-10 my-10 pt-5">
-                <!-- Contact Form-->
-                <div class="col-12 col-lg-8">
-                    <p class="mb-3 small fw-bolder tracking-wider text-uppercase text-primary">Get in touch</p>
-                    <h2 class="display-5 fw-bold mb-6">Send us a message</h2>
-                    <form>
-                        <div class="row g-5">
-                            <!-- Name-->
-                            <div class="col-12 col-md-6">
-                                <label class="form-label">Name</label>
-                                <input type="text" class="form-control" name="name" placeholder="John Doe">
-                            </div>
-                            <!-- / Name-->
-
-                            <!-- Email-->
-                            <div class="col-12 col-md-6">
-                                <label class="form-label">Email</label>
-                                <input type="email" class="form-control" name="email" placeholder="john@doe.com">
-                            </div>
-                            <!-- / Email-->
-
-                            <!-- Company Name-->
-                            <div class="col-12 col-md-6">
-                                <label class="form-label">Company</label>
-                                <input type="text" class="form-control" name="company" placeholder="ACME Limited">
-                            </div>
-                            <!-- / Company Name-->
-
-                            <!-- Telephone-->
-                            <div class="col-12 col-md-6">
-                                <label class="form-label">Telephone</label>
-                                <input type="text" class="form-control" name="telephone"
-                                    placeholder="+44 (0)208 445 678">
-                            </div>
-                            <!-- / Telephone-->
-
-                            <!-- Project Information-->
-                            <div class="col-12">
-                                <label class="form-label">Message</label>
-                                <textarea name="about" class="form-control" cols="30" rows="10"></textarea>
-                            </div>
-                            <!-- / Project Information-->
-
-                            <!-- Submit btn-->
-                            <div class="col-12 justify-content-end d-flex">
-                                <button class="btn btn-primary" type="submit">Send Message</button>
-                            </div>
-                            <!-- / Submit Btn-->
-                        </div>
-                    </form>
-                </div>
-                <!-- / Contact Form-->
-                <!-- Contact Details-->
-                <div class="col-12 col-lg-4 mt-5 mt-lg-0">
-                    <div class="mb-5">
-                        <p class="mb-4 small fw-bolder tracking-wider text-uppercase text-primary">Find us online</p>
-                        <ul class="list-unstyled">
-                            <li class="d-flex align-items-center mb-2"><i class="ri-github-line me-3 ri-lg"></i> <a class="text-muted" href="#">Github</a></li>
-                            <li class="d-flex align-items-center mb-2"><i class="ri-facebook-line me-3 ri-lg"></i> <a class="text-muted" href="#">Facebook</a></li>
-                            <li class="d-flex align-items-center mb-2"><i class="ri-twitter-line me-3 ri-lg"></i> <a class="text-muted" href="#">Twitter</a></li>
-                            <li class="d-flex align-items-center mb-2"><i class="ri-codepen-line me-3 ri-lg"></i> <a class="text-muted" href="#">Codepen</a></li>
-                        </ul>
+            <!-- Company Summary-->
+            <div class="col-12 col-md-8 col-lg-6 mx-auto text-center py-4 border-bottom mb-5">
+                <div class="my-5 d-none d-md-flex align-items-start justify-content-between">
+                    <div>
+                        <span class="display-3 fw-bold text-primary d-block">12</span>
+                        <span
+                            class="d-block fs-9 fw-bolder tracking-wide text-uppercase text-muted">Locations</span>
                     </div>
-                    <p class="mb-4 small fw-bolder tracking-wider text-uppercase text-primary">Our head office</p>
-                    <p>33 Sandhurst Road, Canterbury Avenue, Central London, SM3 4RT, United Kingdom</p>
-                </div>
-                <!-- / Contact Details-->
-            </div>
-            <!-- Contact Details & Form-->
+                    <div>
+                        <span class="display-3 fw-bold text-primary d-block">75K</span>
+                        <span
+                            class="d-block fs-9 fw-bolder tracking-wide text-uppercase text-muted">Customers</span>
+                    </div>
+                    <div>
+                        <span class="display-3 fw-bold text-primary d-block">160</span>
+                        <span class="d-block fs-9 fw-bolder tracking-wide text-uppercase text-muted">Staff</span>
+                    </div>
+                </div>            </div>
+            <!-- Company Summary-->
 
+            <!-- Company Story-->
+            <div class="py-6 row gx-8 align-items-center">
+                <div class="col-12 col-lg-6">
+                    <p class="mb-3 small fw-bolder tracking-wider text-uppercase text-primary">How it started</p>
+                    <h2 class="display-5 fw-bold mb-6">Our story</h2>
+                    <p>In 2015, one of our founders had an experience with landing pages where he realized that you can’t control your results, but only act on them. This is what inspired him and the other co-founder to build a landing page design tool which helps users build their landing pages.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas quis tortor sed neque pellentesque suscipit. Quisque finibus tristique faucibus. Pellentesque rhoncus justo ac ipsum pulvinar commodo. Nam quis hendrerit dui. Vestibulum dolor ligula, vehicula bibendum iaculis in, placerat et sapien. Maecenas in odio at quam volutpat lobortis.</p>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <picture>
+                        <img class="img-fluid rounded shadow-sm"
+                            src="./assets/images/about-7.jpeg"
+                            alt="HTML Bootstrap Template by Pixel Rocket">
+                    </picture>
+                </div>
+            </div>
+            <!-- /Company Story-->
+
+            <!-- Company Leadership-->
+            <div class="py-8">
+                <h2 class="display-5 fw-bold mb-6 text-center">Our team</h2>
+                <div class="row g-6">
+                        <!-- Single Team-->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card rounded shadow-lg h-100">
+                                <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
+                                    <picture class="avatar">
+                                        <img class="img-fluid rounded-circle"
+                                            src="./assets/images/profile-small-2.jpeg"
+                                            alt="">
+                                    </picture>
+                                    <p class="lead fw-bolder mb-0 mt-4">Jack Johnston</p>
+                                    <p class="text-primary small fw-bold mb-4">Founder &amp; CEO</p>
+                                    <p class="text-muted">Serial angel investor and entrepreneur, Jack has founded multiple successful startups prior to Sigma.</p>
+                                    <ul class="list-unstyled d-flex align-items-center justify-content-center mb-0">
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-linkedin-box-fill ri-2x"></i></a></li>
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-facebook-box-fill ri-2x"></i></a></li>
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-twitter-fill ri-2x"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- / Single Team-->
+                        <!-- Single Team-->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card rounded shadow-lg h-100">
+                                <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
+                                    <picture class="avatar">
+                                        <img class="img-fluid rounded-circle"
+                                            src="./assets/images/profile-small-3.jpeg"
+                                            alt="">
+                                    </picture>
+                                    <p class="lead fw-bolder mb-0 mt-4">JP Laurent</p>
+                                    <p class="text-primary small fw-bold mb-4">Executive Chairman</p>
+                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas quis tortor sed neque pellentesque.</p>
+                                    <ul class="list-unstyled d-flex align-items-center justify-content-center mb-0">
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-linkedin-box-fill ri-2x"></i></a></li>
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-facebook-box-fill ri-2x"></i></a></li>
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-twitter-fill ri-2x"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- / Single Team-->
+                        <!-- Single Team-->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card rounded shadow-lg h-100">
+                                <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
+                                    <picture class="avatar">
+                                        <img class="img-fluid rounded-circle"
+                                            src="./assets/images/profile-small-4.jpeg"
+                                            alt="">
+                                    </picture>
+                                    <p class="lead fw-bolder mb-0 mt-4">Gary Waite</p>
+                                    <p class="text-primary small fw-bold mb-4">Founder &amp; CTO</p>
+                                    <p class="text-muted">Mauris consequat sodales dolor, eu iaculis tortor efficitur vel. Mauris sed felis augue argum felis.</p>
+                                    <ul class="list-unstyled d-flex align-items-center justify-content-center mb-0">
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-linkedin-box-fill ri-2x"></i></a></li>
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-facebook-box-fill ri-2x"></i></a></li>
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-twitter-fill ri-2x"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- / Single Team-->
+                        <!-- Single Team-->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card rounded shadow-lg h-100">
+                                <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
+                                    <picture class="avatar">
+                                        <img class="img-fluid rounded-circle"
+                                            src="./assets/images/profile-small-5.jpeg"
+                                            alt="">
+                                    </picture>
+                                    <p class="lead fw-bolder mb-0 mt-4">Patrica Smith</p>
+                                    <p class="text-primary small fw-bold mb-4">VP Marketing</p>
+                                    <p class="text-muted">Nullam faucibus placerat vestibulum. Vivamus blandit risus a ligula efficitur tincidunt.</p>
+                                    <ul class="list-unstyled d-flex align-items-center justify-content-center mb-0">
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-linkedin-box-fill ri-2x"></i></a></li>
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-facebook-box-fill ri-2x"></i></a></li>
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-twitter-fill ri-2x"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- / Single Team-->
+                        <!-- Single Team-->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card rounded shadow-lg h-100">
+                                <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
+                                    <picture class="avatar">
+                                        <img class="img-fluid rounded-circle"
+                                            src="./assets/images/profile-small-6.jpeg"
+                                            alt="">
+                                    </picture>
+                                    <p class="lead fw-bolder mb-0 mt-4">Samanth Rowson</p>
+                                    <p class="text-primary small fw-bold mb-4">Head Designer</p>
+                                    <p class="text-muted">Vestibulum fermentum urna sit amet dolor rutrum, non consequat velit vehicula. Proin sed consequat diam.</p>
+                                    <ul class="list-unstyled d-flex align-items-center justify-content-center mb-0">
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-linkedin-box-fill ri-2x"></i></a></li>
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-facebook-box-fill ri-2x"></i></a></li>
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-twitter-fill ri-2x"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- / Single Team-->
+                        <!-- Single Team-->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card rounded shadow-lg h-100">
+                                <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
+                                    <picture class="avatar">
+                                        <img class="img-fluid rounded-circle"
+                                            src="./assets/images/profile-small-7.jpeg"
+                                            alt="">
+                                    </picture>
+                                    <p class="lead fw-bolder mb-0 mt-4">Jack Smith</p>
+                                    <p class="text-primary small fw-bold mb-4">Technical Lead</p>
+                                    <p class="text-muted">Sed venenatis ligula tortor, vel pharetra massa convallis a. Ut bibendum porttitor nisi ornare.</p>
+                                    <ul class="list-unstyled d-flex align-items-center justify-content-center mb-0">
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-linkedin-box-fill ri-2x"></i></a></li>
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-facebook-box-fill ri-2x"></i></a></li>
+                                        <li class="mx-2"><a href="#" class="text-decoration-none"><i class="ri-twitter-fill ri-2x"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- / Single Team-->
+                </div>
+            </div>
+
+            <!-- / Company Leadership-->
+
+            <!-- Careers-->
+            <div class="d-flex justify-content-center my-5">
+                <div class="rounded-pill border px-5 py-3 text-muted d-flex align-items-center">
+                    Want to join our team? <a href="#" class="fw-bold d-flex align-items-center ms-2">We are hiring <i class="ri-arrow-right-line ms-1"></i></a>
+                </div>
+            </div>
+            
+            <!-- / Careers-->
         </div>
 
         <!-- /Page Content -->
@@ -456,10 +576,12 @@
 
     <!-- Theme JS -->
     <!-- Vendor JS -->
-    <script src="./assets/js/vendor.bundle.js"></script>
+    @vite('resources/js/vendor.bundle.js')
+    <!-- <script src="./assets/js/vendor.bundle.js"></script> -->
     
     <!-- Theme JS -->
-    <script src="./assets/js/theme.bundle.js"></script>
+    @vite('resources/js/theme.bundle.js')
+    <!-- <script src="./assets/js/theme.bundle.js"></script> -->
 </body>
 
 </html>

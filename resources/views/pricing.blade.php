@@ -20,10 +20,13 @@
     <meta name="theme-color" content="#ffffff">
     
     <!-- Vendor CSS -->
-    <link rel="stylesheet" href="./assets/css/libs.bundle.css" />
+    @vite('resources/css/libs.bundle.css')
+    <!-- <link rel="stylesheet" href="./assets/css/libs.bundle.css" /> -->
+    
 
     <!-- Main CSS -->
-    <link rel="stylesheet" href="./assets/css/theme.bundle.css" />
+    @vite('resources/css/theme.bundle.css')
+    <!-- <link rel="stylesheet" href="./assets/css/theme.bundle.css" /> -->
 
     <!-- Fix for custom scrollbar if JS is disabled-->
     <noscript>
@@ -673,10 +676,12 @@
 
     <!-- Theme JS -->
     <!-- Vendor JS -->
-    <script src="./assets/js/vendor.bundle.js"></script>
+    @vite('resources/js/vendor.bundle.js')
+    <!-- <script src="./assets/js/vendor.bundle.js"></script> -->
     
     <!-- Theme JS -->
-    <script src="./assets/js/theme.bundle.js"></script>
+    @vite('resources/js/theme.bundle.js')
+    <!-- <script src="./assets/js/theme.bundle.js"></script> -->
 </body>
 
 </html>

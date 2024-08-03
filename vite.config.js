@@ -13,6 +13,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/theme.bundle.js',
                 'resources/js/vendor.bundle.js',
+                'resources/fonts*',
             ],
             refresh: true,
         }),
