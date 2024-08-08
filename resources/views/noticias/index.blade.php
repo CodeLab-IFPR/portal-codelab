@@ -1,7 +1,8 @@
-@extends('membros.layout')
+@extends('noticias.layout')
+
 @section('content')
 <div class="card mt-5">
-    <h2 class="card-header display-4 text-center">Membros</h2>
+    <h2 class="card-header">Noticias</h2>
     <div class="card-body">
 
         @session('success')
@@ -9,39 +10,40 @@
         @endsession
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a class="btn btn-success btn-sm" href="{{ route('membros.create') }}"> <i
-                    class="fa fa-plus"></i> Adicionar um novo membro</a>
+            <a class="btn btn-success btn-sm" href="{{ route('noticias.create') }}"> <i
+                    class="fa fa-plus"></i> Adicionar Noticia</a>
         </div>
 
         <table class="table table-bordered table-striped mt-4">
             <thead>
                 <tr>
-                    <th>Imagem</th>
-                    <th>Nome</th>
-                    <th>Cargo</th>
-                    <th>Biografia</th>
+                    <th>Titulo</th>
+                    <th>Conteudo</th>
+                    <th>Autor</th>
+                    <th>Categoria</th>
+                    <th>Capa</th>
                     <th width="250px">Ação</th>
                 </tr>
             </thead>
 
             <tbody>
-                @forelse($membros as $membro)
+                @forelse($noticias as $noticia)
                     <tr>
-                        
-                        <td><img src="/imagens/{{ $membro->imagem }}" alt="{{ $membro->alt }}" width="100px"></td>
-                        <td>{{ $membro->nome }}</td>
-                        <td>{{ $membro->cargo }}</td>
-                        <td>{{ mb_strimwidth("$membro->biografia", 0, 250, "...");}}</td>
+                        <td>{{$noticia->titulo}}</td>
+                        <td>{{ Str::limit(html_entity_decode(strip_tags($noticia->conteudo)), 500) }}</td>
+                        <td>{{ $noticia->autor }}</td>
+                        <td>{{ $noticia->categoria }}</td>
+                        <td><img src="/imagens/{{ $noticia->imagem }}" alt="{{ $noticia->alt }}" width="100px"></td>
                         <td>
-                            <form action="{{ route('membros.destroy',$membro->id) }}"
+                            <form action="{{ route('noticias.destroy',$noticia->slug) }}"
                                 method="POST">
 
                                 <a class="btn btn-info btn-sm"
-                                    href="{{ route('membros.show',$membro->id) }}"><i
+                                    href="{{ route('noticias.show', $noticia->slug) }}"><i
                                         class="fa-solid fa-list"></i> View</a>
 
                                 <a class="btn btn-primary btn-sm"
-                                    href="{{ route('membros.edit',$membro->id) }}"><i
+                                    href="{{ route('noticias.edit', $noticia->slug) }}"><i
                                         class="fa-solid fa-pen-to-square"></i> Editar</a>
 
                                 @csrf
@@ -54,14 +56,14 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="text-center">Não há membros.</td>
+                        <td colspan="5" class="text-center">Não há noticias 😢</td>
                     </tr>
                 @endforelse
             </tbody>
 
         </table>
 
-        {!! $membros->withQueryString()->links('pagination::bootstrap-5') !!}
+        {!! $noticias->withQueryString()->links('pagination::bootstrap-5') !!}
 
     </div>
 </div>
