@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
+class ComposerStaticInitc484432377effb738fd993232a942a6c
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -204,8 +204,8 @@ class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'Whoops\\' => 
         array (
@@ -1824,7 +1824,6 @@ class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
         'Illuminate\\Console\\View\\Components\\Mutators\\EnsurePunctuation' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Console/View/Components/Mutators/EnsurePunctuation.php',
         'Illuminate\\Console\\View\\Components\\Mutators\\EnsureRelativePaths' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Console/View/Components/Mutators/EnsureRelativePaths.php',
         'Illuminate\\Console\\View\\Components\\Secret' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Console/View/Components/Secret.php',
-        'Illuminate\\Console\\View\\Components\\Success' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Console/View/Components/Success.php',
         'Illuminate\\Console\\View\\Components\\Task' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Console/View/Components/Task.php',
         'Illuminate\\Console\\View\\Components\\TwoColumnDetail' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Console/View/Components/TwoColumnDetail.php',
         'Illuminate\\Console\\View\\Components\\Warn' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Console/View/Components/Warn.php',
@@ -6954,9 +6953,9 @@ class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitc484432377effb738fd993232a942a6c::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitc484432377effb738fd993232a942a6c::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitc484432377effb738fd993232a942a6c::$classMap;
 
         }, null, ClassLoader::class);
     }

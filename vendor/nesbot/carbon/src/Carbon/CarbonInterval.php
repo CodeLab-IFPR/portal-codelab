@@ -1373,6 +1373,8 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
 
                 case 'day':
                     if ($value === false) {
+                        $this->days = false;
+
                         break;
                     }
 
