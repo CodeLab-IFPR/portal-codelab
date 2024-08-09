@@ -858,65 +858,34 @@
         </div>
         <!-- /Customer Reviews-->
 
-        <!-- Latest Blog Posts-->
-        <div class="bg-primary py-10">
-            <div class="container">
-                <h4 class="fs-1 fw-bold mb-6 text-white text-center">Our latest articles</h4>
+<!-- Latest Blog Posts-->
+<div class="bg-primary py-10">
+    <div class="container">
+        <h4 class="fs-1 fw-bold mb-6 text-white text-center">Our latest articles</h4>
 
-                <div class="row g-5">
+        <div class="row g-5">
+            @foreach($noticias as $noticia)
+            <!-- Blog Post-->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="d-flex h-100 bg-white rounded card overflow-hidden shadow-lg position-relative hover-lift">
+                    <picture>
+                        <img class="img-fluid" src="{{ asset('imagens/' . $noticia->imagem) }}" alt="{{ $noticia->alt }}">
+                    </picture>
 
-                    <!-- Blog Post-->
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div
-                            class="d-flex h-100 bg-white rounded card overflow-hidden shadow-lg position-relative hover-lift">
-                            <picture>
-                                <img class="img-fluid" src="{{ asset('img/blog-one.jpeg') }}" alt="">
-                            </picture>
-
-                            <div class="card-body p-4 p-lg-5">
-                                <p class="card-title fw-medium mb-4">The ultimate guide to event project management</p>
-                                <a href="#" class="fw-medium fs-7 text-decoration-none link-cover">Read more &rarr;</a>
-                            </div>
-                        </div>
+                    <div class="card-body p-4 p-lg-5">
+                        <p class="card-title fw-medium mb-4">{{ $noticia->titulo }}</p>
+                        <a href="{{ route('noticias.show', $noticia->slug) }}" class="fw-medium fs-7 text-decoration-none link-cover">Read more &rarr;</a>
                     </div>
-                    <!-- / Blog Post-->
-                    <!-- Blog Post-->
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div
-                            class="d-flex h-100 bg-white rounded card overflow-hidden shadow-lg position-relative hover-lift">
-                            <picture>
-                                <img class="img-fluid" src="{{ asset('img/blog-two.jpeg') }}" alt="">
-                            </picture>
-
-                            <div class="card-body p-4 p-lg-5">
-                                <p class="card-title fw-medium mb-4">How to use Agile to implement Scrum method</p>
-                                <a href="#" class="fw-medium fs-7 text-decoration-none link-cover">Read more &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- / Blog Post-->
-                    <!-- Blog Post-->
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div
-                            class="d-flex h-100 bg-white rounded card overflow-hidden shadow-lg position-relative hover-lift">
-                            <picture>
-                                <img class="img-fluid" src="{{ asset('img/blog-three.jpeg') }}" alt="">
-                            </picture>
-
-                            <div class="card-body p-4 p-lg-5">
-                                <p class="card-title fw-medium mb-4">What is the best software version control?</p>
-                                <a href="#" class="fw-medium fs-7 text-decoration-none link-cover">Read more &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- / Blog Post-->
-
                 </div>
-
-                <a href="#" class="btn btn-white mx-auto mt-7 d-table fw-medium w-100 w-md-auto">More articles &rarr;</a>
             </div>
+            <!-- / Blog Post-->
+            @endforeach
         </div>
-        <!-- / Latest Blog Posts-->
+
+        <a href="{{ route('noticias.index') }}" class="btn btn-white mx-auto mt-7 d-table fw-medium w-100 w-md-auto">More articles &rarr;</a>
+    </div>
+</div>
+<!-- / Latest Blog Posts-->
 
         <!-- Product Features summary-->
         <div class="py-10">
