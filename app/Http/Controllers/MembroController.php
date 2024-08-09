@@ -7,7 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Log; // Importar a classe Log
+use Illuminate\Support\Facades\Log;
 
 class MembroController extends Controller
 {
