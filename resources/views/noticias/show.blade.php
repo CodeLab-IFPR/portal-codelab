@@ -3,6 +3,9 @@
 @section('content')
 <div class="card mt-5">
     <h1 class="text-center">{{ $noticia->titulo }}</h1>
+    <div class="text-center">
+        <img src="/imagens/{{ $noticia->imagem }}" alt="{{ $noticia->alt }}" width="800px">
+    </div>
     <div class="card-body">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
