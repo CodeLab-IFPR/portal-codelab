@@ -17,6 +17,12 @@ class NoticiasController extends Controller
         return view('noticias.index', compact('noticias'));
     }
 
+    public function home(): View
+{
+    $noticias = Noticias::latest()->take(3)->get();
+    return view('home', compact('noticias'));
+}
+
     public function create(): View
     {
         return view('noticias.create');
