@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Membro;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
 
@@ -26,14 +25,32 @@ class MembroController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'nome' => 'required',
-            'cargo' => 'required',
-            'biografia' => 'required',
-            'alt' => 'required',
+            'nome' => 'required|min:3|max:255',
+            'cargo' => 'required|min:5|max:100',
+            'biografia' => 'required|min:10',
+            'alt' => 'required|min:5|max:255',
             'imagem' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ],[
+            'nome.required' => 'O nome é obrigatório.',
+            'nome.min' => 'O nome deve ter no mínimo 3 caracteres.',
+            'nome.max' => 'O nome deve ter no máximo 255 caracteres.',
+            'cargo.required' => 'O cargo é obrigatório.',
+            'cargo.min' => 'O cargo deve ter no mínimo 5 caracteres.',
+            'cargo.max' => 'O cargo deve ter no máximo 100 caracteres.',
+            'biografia.required' => 'A biografia é obrigatória.',
+            'biografia.min' => 'A biografia deve ter no mínimo 10 caracteres.',
+            'alt.required' => 'O texto alternativo é obrigatório.',
+            'alt.min' => 'O texto alternativo deve ter no mínimo 5 caracteres.',
+            'alt.max' => 'O texto alternativo deve ter no máximo 255 caracteres.',
+            'imagem.required' => 'A imagem é obrigatória.',
+            'imagem.image' => 'O arquivo deve ser uma imagem.',
+            'imagem.mimes' => 'A imagem deve ser um dos seguintes formatos: jpeg, png, jpg, gif.',
+            'imagem.max' => 'A imagem não pode ter mais que 2MB.',
         ]);
+        
         $entrada = $request->all();
-
+        
+        
         if ($imagem = $request->file('imagem')) {
             $destinationPath = 'imagens/';
             $profileImage = date('YmdHis') . "." . $imagem->getClientOriginalExtension();
@@ -69,7 +86,21 @@ class MembroController extends Controller
             'cargo' => 'required',
             'biografia' => 'required',
             'alt' => 'nullable',
-            'imagem' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'imagem' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ],[
+            'nome.required' => 'O nome é obrigatório.',
+            'nome.min' => 'O nome deve ter no mínimo 3 caracteres.',
+            'nome.max' => 'O nome deve ter no máximo 255 caracteres.',
+            'cargo.required' => 'O cargo é obrigatório.',
+            'cargo.min' => 'O cargo deve ter no mínimo 5 caracteres.',
+            'cargo.max' => 'O cargo deve ter no máximo 100 caracteres.',
+            'biografia.required' => 'A biografia é obrigatória.',
+            'biografia.min' => 'A biografia deve ter no mínimo 10 caracteres.',
+            'alt.min' => 'O texto alternativo deve ter no mínimo 5 caracteres.',
+            'alt.max' => 'O texto alternativo deve ter no máximo 255 caracteres.',
+            'imagem.image' => 'O arquivo deve ser uma imagem.',
+            'imagem.mimes' => 'A imagem deve ser um dos seguintes formatos: jpeg, png, jpg, gif.',
+            'imagem.max' => 'A imagem não pode ter mais que 2MB.',
         ]);
 
         Log::info('Validação concluída.');

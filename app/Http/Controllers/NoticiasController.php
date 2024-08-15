@@ -31,12 +31,27 @@ class NoticiasController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'titulo' => 'required|max:255',
-            'autor' => 'required',
-            'conteudo' => 'required',
+            'titulo' => 'required|min:5|max:255',
+            'autor' => 'required|min:3|max:255',
+            'conteudo' => 'required|min:15',
             'categoria' => 'required',
             'alt' => 'required',
             'imagem' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ],[
+            'titulo.required' => 'O campo título é obrigatório.',
+            'titulo.min' => 'O campo título deve ter no mínimo 5 caracteres.',
+            'titulo.max' => 'O campo título deve ter no máximo 255 caracteres.',
+            'autor.required' => 'O campo autor é obrigatório.',
+            'autor.min' => 'O campo autor deve ter no mínimo 3 caracteres.',
+            'autor.max' => 'O campo autor deve ter no máximo 255 caracteres.',
+            'conteudo.required' => 'O campo conteúdo é obrigatório.',
+            'conteudo.min' => 'O campo conteúdo deve ter no mínimo 15 caracteres.',
+            'categoria.required' => 'O campo categoria é obrigatório.',
+            'alt.required' => 'O campo alt é obrigatório.',
+            'imagem.required' => 'O campo imagem é obrigatório.',
+            'imagem.image' => 'O arquivo deve ser uma imagem.',
+            'imagem.mimes' => 'A imagem deve ser um dos seguintes formatos: jpeg, png, jpg.',
+            'imagem.max' => 'A imagem não pode ter mais que 2MB.',
         ]);
 
         $entrada = $request->all();
@@ -71,12 +86,22 @@ class NoticiasController extends Controller
         Log::info('Dados recebidos: ', $request->all());
 
         $request->validate([
-            'titulo' => 'nullable|max:255',
-            'autor' => 'nullable',
-            'conteudo' => 'nullable',
+            'titulo' => 'nullable|min:5|max:255',
+            'autor' => 'nullable|min:3|max:255',
+            'conteudo' => 'nullable|min:15',
             'categoria' => 'nullable|string|max:255',
             'alt' => 'nullable|string|max:255',
             'imagem' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ],[
+            'titulo.max' => 'O campo título deve ter no máximo 255 caracteres.',
+            'autor.min' => 'O campo autor deve ter no mínimo 3 caracteres.',
+            'autor.max' => 'O campo autor deve ter no máximo 255 caracteres.',
+            'conteudo.min' => 'O campo conteúdo deve ter no mínimo 15 caracteres.',
+            'categoria.max' => 'O campo categoria deve ter no máximo 255 caracteres.',
+            'alt.max' => 'O campo alt deve ter no máximo 255 caracteres.',
+            'imagem.image' => 'O arquivo deve ser uma imagem.',
+            'imagem.mimes' => 'A imagem deve ser um dos seguintes formatos: jpeg, png, jpg.',
+            'imagem.max' => 'A imagem não pode ter mais que 2MB.',
         ]);
 
         Log::info('Validação concluída.');

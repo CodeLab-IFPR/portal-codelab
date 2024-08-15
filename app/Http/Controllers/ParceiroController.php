@@ -26,11 +26,28 @@ class ParceiroController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'nome' => 'required',
-            'email' => 'required',
-            'link' => 'required',
-            'alt' => 'required',
-            'imagem' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'nome' => 'required|min:3|max:255',
+            'email' => 'required|email',
+            'link' => 'required|url',
+            'alt' => 'required|min:5|max:250',
+            'imagem' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ],[
+            'nome.required' => 'O nome é obrigatório.',
+            'nome.min' => 'O nome deve ter no mínimo 3 caracteres.',
+            'nome.max' => 'O nome deve ter no máximo 255 caracteres.',
+            'email.required' => 'O email é obrigatório.',
+            'email.email' => 'O email deve ser um endereço de email válido.',
+            'email.min' => 'O email deve ter no mínimo 5 caracteres.',
+            'email.max' => 'O email deve ter no máximo 250 caracteres.',
+            'link.required' => 'O link é obrigatório.',
+            'link.url' => 'O link deve ser uma URL válida.',
+            'alt.required' => 'O alt é obrigatório.',
+            'alt.min' => 'O alt deve ter no mínimo 5 caracteres.',
+            'alt.max' => 'O alt deve ter no máximo 250 caracteres.',
+            'imagem.required' => 'A imagem é obrigatória.',
+            'imagem.image' => 'O arquivo deve ser uma imagem.',
+            'imagem.mimes' => 'A imagem deve ser um dos seguintes formatos: jpeg, png, jpg, gif.',
+            'imagem.max' => 'A imagem não pode ter mais que 2MB.',
         ]);
         $entrada = $request->all();
 
@@ -65,11 +82,23 @@ class ParceiroController extends Controller
         Log::info('Dados recebidos: ', $request->all()); // Verifica os dados recebidos
 
         $request->validate([
-            'nome' => 'required',
-            'email' => 'required',
-            'link' => 'nullable',
-            'alt' => 'nullable',
+            'nome' => 'required|min:3|max:255',
+            'email' => 'required|email',
+            'link' => 'nullable|url',
+            'alt' => 'nullable|min:5|max:250',
             'imagem' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ],[
+            'nome.required' => 'O nome é obrigatório.',
+            'nome.min' => 'O nome deve ter no mínimo 3 caracteres.',
+            'nome.max' => 'O nome deve ter no máximo 255 caracteres.',
+            'email.required' => 'O email é obrigatório.',
+            'email.email' => 'O email deve ser um endereço de email válido.',
+            'link.url' => 'O link deve ser uma URL válida.',
+            'alt.min' => 'O alt deve ter no mínimo 5 caracteres.',
+            'alt.max' => 'O alt deve ter no máximo 250 caracteres.',
+            'imagem.image' => 'O arquivo deve ser uma imagem.',
+            'imagem.mimes' => 'A imagem deve ser um dos seguintes formatos: jpeg, png, jpg, gif, svg.',
+            'imagem.max' => 'A imagem não pode ter mais que 2MB.',
         ]);
 
         Log::info('Validação concluída.');

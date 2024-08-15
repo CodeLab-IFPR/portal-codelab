@@ -1,11 +1,14 @@
-@extends('noticias.layout')
+@extends('layouts.portal')
 
+<!-- Titulo -->
+@section('title')
+{{ $noticia->titulo }}
+@endsection
+<!-- Titulo -->
+ 
 @section('content')
 <div class="card mt-5">
     <h1 class="text-center">{{ $noticia->titulo }}</h1>
-    <div class="text-center">
-        <img src="/imagens/{{ $noticia->imagem }}" alt="{{ $noticia->alt }}" width="800px">
-    </div>
     <div class="card-body">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -26,14 +29,16 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                <small><span><strong>Por</strong> {{$noticia->autor}}</span></small>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <small><strong>Publicado em: </strong>{{ $noticia->created_at->format('d/m/Y H:i') }} <strong>. Atualizado</strong> {{ $noticia->updated_at->diffForHumans() }}</small>
+                    <small><span><strong>Por</strong> {{ $noticia->autor }}</span></small>
                 </div>
-            </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <small><strong>Publicado em:
+                            </strong>{{ $noticia->created_at->format('d/m/Y H:i') }}
+                            <strong>. Atualizado</strong> {{ $noticia->updated_at->diffForHumans() }}</small>
+                    </div>
+                </div>
 
+            </div>
         </div>
-    </div>
-    @endsection
+        @endsection
