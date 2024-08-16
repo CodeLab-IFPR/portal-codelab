@@ -8,6 +8,7 @@
 /imagens
 /public/imagens/*
 /public/imagem
+/storage/logs/*.log
 .env
 .env.backup
 .env.production
