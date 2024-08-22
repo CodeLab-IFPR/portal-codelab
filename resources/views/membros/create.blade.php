@@ -1,14 +1,31 @@
-@extends('membros.layout')
+@extends('layouts.admin')
+
+<!-- Titulo -->
+@section('title')
+Parceiros
+@endsection
+<!-- Titulo -->
 
 @section('content')
-<div class="card mt-5">
-    <h2 class="card-header">Cadastro de Membro</h2>
-    <div class="card-body">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a class="btn btn-primary btn-sm" href="{{ route('membros.index') }}"><i
-                    class="fa fa-arrow-left"></i> Voltar</a>
+<div class="app-content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h3 class="mb-0">Membro</h3>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                    <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Membro
+                    </li>
+                </ol>
+            </div>
         </div>
-
+    </div>
+</div>
+<div class="container">
+    <div class="card-body">
         <form action="{{ route('membros.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
@@ -56,8 +73,9 @@
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
-
-            <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+            <input type="submit" class="btn btn-outline-secondary" value="Salvar">
+            </div>
         </form>
 
     </div>
