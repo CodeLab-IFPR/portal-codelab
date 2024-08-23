@@ -117,7 +117,7 @@ Contate Nos
                 class="text-muted" href="#">Codepen</a></li>
             </ul>
             </div>
-            <p class="mb-4 small fw-bolder tracking-wider text-uppercase text-primary">Nosso escritório principal</p>
+            <p class="mb-4 small fw-bolder tracking-wider text-uppercase text-primary">Nosso endereço</p>
             <p>Av. José Felipe Tequinha, 1400 - Jardim das Nacoes, Paranavaí - PR</p>
         </div>
         </div>

@@ -99,6 +99,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('contact') }}">Contato</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('submission') }}">Submissão</a>
+                    </li>
                 </ul>            <div class="d-none d-lg-flex">
                     <a href="{{ route('login') }}" class="btn btn-link text-muted" role="button">Entrar</a>
                     <a href="{{ route('register') }}" class="btn btn-primary ms-2" role="button">Registre-se</a>
@@ -109,7 +112,7 @@
     <main class="mt-0 ">
         @yield('content')
     </main>
-    <footer class="bg-dark pt-10 pb-8">
+    <footer class="bg-dark pt-4 pb-8">
         <div class="container">
     
             <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-center">
@@ -121,12 +124,6 @@
                     </span>
                     <span class="fw-bold">CDT</span>
                 </a>    
-                <ul class="list-unstyled d-flex align-items-center justify-content-end">
-                    <li class="ms-5"><a href="#" class="text-white text-decoration-none opacity-50-hover transition-opacity"><i class="ri-facebook-circle-line ri-lg"></i></a></li>
-                    <li class="ms-5"><a href="#" class="text-white text-decoration-none opacity-50-hover transition-opacity"><i class="ri-twitter-line ri-lg"></i></a></li>
-                    <li class="ms-5"><a href="#" class="text-white text-decoration-none opacity-50-hover transition-opacity"><i class="ri-instagram-line ri-lg"></i></a></li>
-                    <li class="ms-5"><a href="#" class="text-white text-decoration-none opacity-50-hover transition-opacity"><i class="ri-snapchat-line ri-lg"></i></a></li>
-                </ul>
             </div>
             <div class="d-flex flex-wrap justify-content-between mt-5 mt-lg-7">    
                 <div class="w-100 w-sm-50 w-lg-auto mb-4 mb-lg-0">
