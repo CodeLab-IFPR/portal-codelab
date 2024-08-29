@@ -2,7 +2,7 @@
 
 <!-- Titulo -->
 @section('title')
-Parceiros
+Membros - Cadastro
 @endsection
 <!-- Titulo -->
 
@@ -11,13 +11,13 @@ Parceiros
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h3 class="mb-0">Membro</h3>
+                <h3 class="mb-0">Membro - Cadastro</h3>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        Membro
+                        Membro - Cadastro
                     </li>
                 </ol>
             </div>
@@ -31,7 +31,7 @@ Parceiros
 
             <div class="mb-3">
                 <label for="inputNome" class="form-label"><strong>*Nome:</strong></label>
-                <input type="text" name="nome" class="form-control  @error('nome') inválido @enderror" id="inputNome"
+                <input type="text" name="nome" class="form-control @error('nome') inválido @enderror" id="inputNome"
                     placeholder="Nome..." required>
                 @error('nome')
                     <div class="form-text text-danger">{{ $message }}</div>
@@ -56,6 +56,20 @@ Parceiros
                 @enderror
             </div>
 
+            <div id="links-wrapper" class="mb-3">
+                <label for="inputLink" class="form-label"><strong>Rede Sociais:</strong></label>
+                <div class="input-group">
+                    <input type="url" class="form-control @error('link') inválido @enderror" name="link[]"
+                        id="inputLink" placeholder="LinkedIn/Github/Discord..." required>
+                    <button type="button" id="add-link" class="btn btn-outline-success"><strong>+</strong></button>
+                </div>
+                @error('link')
+                    <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div id="additional-links"></div>
+
             <div class="mb-3">
                 <label for="inputImagem" class="form-label"><strong>*Imagem:</strong></label>
                 <input type="file" name="imagem" class="form-control @error('imagem') inválido @enderror"
@@ -73,11 +87,29 @@ Parceiros
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-            <input type="submit" class="btn btn-outline-secondary" value="Salvar">
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <input type="submit" class="btn btn-outline-success" value="Salvar">
             </div>
         </form>
-
     </div>
 </div>
+
+<script>
+    document.getElementById('add-link').addEventListener('click', function () {
+        var additionalLinks = document.getElementById('additional-links');
+        var newField = document.createElement('div');
+        newField.classList.add('mb-3', 'input-group');
+        newField.innerHTML = `
+            <input class="form-control" name="link[]" placeholder="LinkedIn/Github/Discord...">
+            <button type="button" class="btn btn-outline-danger remove-link"><strong>-</strong></button>
+        `;
+        additionalLinks.appendChild(newField);
+    });
+    document.getElementById('additional-links').addEventListener('click', function (e) {
+        if (e.target.classList.contains('remove-link')) {
+            e.target.closest('.input-group').remove();
+        }
+    });
+</script>
 @endsection

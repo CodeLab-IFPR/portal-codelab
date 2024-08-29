@@ -13,7 +13,12 @@ class Membro extends Model
         'nome',
         'cargo',
         'biografia',
+        'imagem',
         'alt',
-        'imagem'
     ];
+    
+    public function links()
+    {
+        return $this->hasMany(Link::class);
+    }
 }
