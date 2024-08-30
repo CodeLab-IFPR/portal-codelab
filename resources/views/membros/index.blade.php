@@ -46,11 +46,8 @@
                         <td>{{ mb_strimwidth("$membro->biografia", 0, 250, "...") }}
                         </td>
                         <td>
-                            @forelse($membro->links as $link)
-                                <a href="{{ $link->link }}" target="_blank" class="d-block">{{ $link->link }}</a>
-                            @empty
-                                <span>Nenhum link disponível</span>
-                            @endforelse
+                        <a href="{{ $membro->linkedin }}" target="_blank">LinkedIn</a>
+                        <a href="{{ $membro->github }}" target="_blank">GitHub</a>
                         </td>
                         <td>
                             <form action="{{ route('membros.destroy',$membro->id) }}"

@@ -81,22 +81,22 @@ Membros - Edição
                 @enderror
             </div>
 
-            <div id="links-container">
-                <label for="links" class="form-label"><strong>Links:</strong></label>
-                @foreach($membro->links as $index => $link)
-                    <div class="input-group mb-3">
-                        <input type="text" name="links[{{ $index }}][link]"
-                            value="{{ old("links[$index][link]", $link->link) }}"
-                            class="form-control @error(" links.$index.link") is-invalid @enderror"
-                            placeholder="LinkedIn/Github/Discord...">
-                        <button type="button" class="btn btn-outline-primary"
-                            onclick="addLink()"><strong>+</strong></button>
-                        <button type="button" class="btn btn-outline-danger" onclick="removeLink(this)">-</button>
-                        @error("links.$index.link")
-                            <div class="form-text text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                @endforeach
+            <div class="mb-3">
+                <label for="inputLinkedin" class="form-label"><strong>LinkedIn:</strong></label>
+                <input type="url" name="linkedin" value="{{ old('linkedin', $membro->linkedin) }}"
+                    class="form-control @error('linkedin') is-invalid @enderror" id="inputLinkedin" placeholder="LinkedIn URL">
+                @error('linkedin')
+                    <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label for="inputGithub" class="form-label"><strong>GitHub:</strong></label>
+                <input type="url" name="github" value="{{ old('github', $membro->github) }}"
+                    class="form-control @error('github') is-invalid @enderror" id="inputGithub" placeholder="GitHub URL">
+                @error('github')
+                    <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <br>
             

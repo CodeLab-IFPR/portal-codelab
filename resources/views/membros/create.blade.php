@@ -56,14 +56,20 @@ Membros - Cadastro
                 @enderror
             </div>
 
-            <div id="links-wrapper" class="mb-3">
-                <label for="inputLink" class="form-label"><strong>Rede Sociais:</strong></label>
-                <div class="input-group">
-                    <input type="url" class="form-control @error('link') inválido @enderror" name="link[]"
-                        id="inputLink" placeholder="LinkedIn/Github/Discord..." required>
-                    <button type="button" id="add-link" class="btn btn-outline-success"><strong>+</strong></button>
-                </div>
-                @error('link')
+            <div class="mb-3">
+                <label for="inputLinkedin" class="form-label"><strong>LinkedIn:</strong></label>
+                <input type="url" class="form-control @error('linkedin') is-invalid @enderror" name="linkedin" id="inputLinkedin"
+                    placeholder="LinkedIn URL">
+                @error('linkedin')
+                    <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label for="inputGithub" class="form-label"><strong>GitHub:</strong></label>
+                <input type="url" class="form-control @error('github') is-invalid @enderror" name="github" id="inputGithub"
+                    placeholder="GitHub URL">
+                @error('github')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>

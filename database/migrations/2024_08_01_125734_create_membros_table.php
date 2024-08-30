@@ -18,6 +18,8 @@ return new class extends Migration
             $table->text('biografia');
             $table->string('alt');
             $table->string('imagem');
+            $table->string('linkedin')->nullable();
+            $table->string('github')->nullable();
             $table->timestamps();
         });
     }

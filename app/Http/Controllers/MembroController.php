@@ -17,6 +17,13 @@ class MembroController extends Controller
         return view('membros.index',compact('membros'));
     }
 
+        public function about(): View
+    {
+        $membros = Membro::all();
+        
+        return view('about', compact('membros'));
+    }
+
     public function create(): View
     {
         return view('membros.create');
@@ -28,14 +35,14 @@ class MembroController extends Controller
             'nome' => 'required|min:3|max:255',
             'cargo' => 'required|min:5|max:100',
             'biografia' => 'required|min:10',
-            'link' => 'nullable|array',
-            'link.*' => 'nullable|url',
+            'linkedin' => 'nullable|url',
+            'github' => 'nullable|url',
             'alt' => 'required|min:5|max:255',
             'imagem' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
-        $entrada = $request->except('link');
-
+    
+        $entrada = $request->all();
+    
         if ($imagem = $request->file('imagem')) {
             $destinationPath = 'imagens/';
             $profileImage = date('YmdHis') . "." . $imagem->getClientOriginalExtension();
@@ -44,14 +51,6 @@ class MembroController extends Controller
         }
 
         $membro = Membro::create($entrada);
-
-        if ($request->has('link')) {
-            foreach ($request->link as $link) {
-                if ($link) {
-                    $membro->links()->create(['link' => $link]);
-                }
-            }
-        }
 
         return redirect()->route("membros.index")
             ->with("success", "Membro criado com sucesso.");
@@ -74,14 +73,14 @@ class MembroController extends Controller
             'nome' => 'required|min:3|max:255',
             'cargo' => 'required|min:5|max:100',
             'biografia' => 'required|min:10',
-            'link' => 'nullable|array',
-            'link.*' => 'nullable|url',
+            'linkedin' => 'nullable|url',
+            'github' => 'nullable|url',
             'alt' => 'required|min:5|max:255',
             'imagem' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
-        $entrada = $request->except('link');
-
+    
+        $entrada = $request->all();
+    
         if ($imagem = $request->file('imagem')) {
             $destinationPath = 'imagens/';
             $profileImage = date('YmdHis') . "." . $imagem->getClientOriginalExtension();
@@ -90,17 +89,6 @@ class MembroController extends Controller
         }
 
         $membro->update($entrada);
-
-        // Atualiza os links
-        $membro->links()->delete(); // Remove links antigos
-
-        if ($request->has('link')) {
-            foreach ($request->link as $link) {
-                if ($link) {
-                    $membro->links()->create(['link' => $link]);
-                }
-            }
-        }
 
         return redirect()->route("membros.index")
             ->with("success", "Membro atualizado com sucesso.");

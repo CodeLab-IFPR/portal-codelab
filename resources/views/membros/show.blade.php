@@ -46,14 +46,8 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 mt-2">
-                <div class="form-group">
-                    <strong>Rede Sociais:</strong> <br />
-                    @forelse($membro->links as $link)
-                                <a href="{{ $link->link }}" target="_blank" class="d-block">{{ $link->link }}</a>
-                            @empty
-                                <span>Nenhum link disponível</span>
-                            @endforelse
-                </div>
+            <p><strong>LinkedIn:</strong> <a href="{{ $membro->linkedin }}" target="_blank">{{ $membro->linkedin }}</a></p>
+            <p><strong>GitHub:</strong> <a href="{{ $membro->github }}" target="_blank">{{ $membro->github }}</a></p>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">

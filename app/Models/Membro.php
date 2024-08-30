@@ -15,10 +15,8 @@ class Membro extends Model
         'biografia',
         'imagem',
         'alt',
+        'linkedin',
+        'github'
     ];
     
-    public function links()
-    {
-        return $this->hasMany(Link::class);
-    }
 }
