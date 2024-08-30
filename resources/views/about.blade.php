@@ -10,9 +10,8 @@ Sobre Nós
 <header class="pt-10">
     <div class="container">
         <div class="text-center col-12 col-sm-9 col-lg-7 col-xl-6 mx-auto position-relative z-index-20">
-            <h1 class="display-3 fw-bold mb-3">About us</h1>
-            <p class="text-muted lead mb-0">Launched in 2017, Sigma is an online template design tool with a mission
-                to make landing page design accessible to everyone in the world.</p>
+            <h1 class="display-3 fw-bold mb-3">Sobre Nós</h1>
+            <p class="text-muted lead mb-0">Lançado em 2024, o CDT (Centro de Desenvolvimento de Tecnologia) é uma plataforma online que visa mostrar projetos de desenvolvimento de software a todos no IFPR (Instituto Federal do Paraná).</p>
         </div>
     </div>
 </header>

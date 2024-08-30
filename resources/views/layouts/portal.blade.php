@@ -32,9 +32,9 @@
         <div class="container">
             <a class="navbar-brand d-flex align-items-center lh-1 me-10 transition-opacity opacity-75-hover" href="{{ route('home') }}">
                 <span class="f-w-7 d-block text-success me-2">
-                    <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 246.46 258.91"><path d="M145.61,187.72,22.41,116.58,0,129.52l50.45,29.13L0,187.77l22.41,12.94s90.75,52.38,100.82,58.2l123.23-71.13L44.7,71.2l78.54-45.34,78.4,45.26-28,16.2-50.31-29L100.85,71.2l123.21,71.13,22.4-12.94L196,100.25q25.25-14.55,50.46-29.12L123.23,0,0,71.13,201.77,187.71l-78.52,45.41L44.8,187.78l28.06-16.19,50.34,29.07Z" fill="currentColor" fill-rule="evenodd"/></svg>
+                    <img class="img-fluid d-table mx-auto" src="{{ asset('img/logo_CDT.png') }}" alt="">
                 </span>
-                <span class="fw-bold text-body">Sigma</span>
+                <span class="fw-bold text-body">CDT</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +45,7 @@
                     <li class="nav-item dropdown position-static">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
-                            Features
+                            Novidades
                         </a>
                         <div class="dropdown-menu dropdown-megamenu">
                             <div class="container">
@@ -55,9 +55,9 @@
                                             <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline opacity=".4" points="2 12 12 17 22 12"></polyline></svg>
                                         </span>
                                         <div class="position-relative">
-                                            <h6 class="dropdown-heading">Tasks planner</h6>
-                                            <p class="text-muted">Plan and schedule your weekly tasks on web or mobile through our desktop or mobile apps.</p>
-                                            <a href="#" class="fw-medium fs-7 text-decoration-none link-cover">Read more &rarr;</a>
+                                            <h6 class="dropdown-heading">Planejador de tarefas</h6>
+                                            <p class="text-muted">Planeje e agende suas tarefas semanais na web ou no celular por meio de nossos aplicativos para desktop ou celular.</p>
+                                            <a href="#" class="fw-medium fs-7 text-decoration-none link-cover">Leia mais &rarr;</a>
                                         </div>
                                     </div>
                                     <div class="col-auto me-4 mb-4 me-lg-0 mb-lg-0 col-lg-4 d-flex align-items-start">
@@ -65,9 +65,9 @@
                                             <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect opacity=".3" x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
                                         </span>
                                         <div class="position-relative">
-                                            <h6 class="dropdown-heading">Team collaborations</h6>
-                                            <p class="text-muted">Invite unlimited team members to view, edit, comment and create landing pages with you.</p>
-                                            <a href="#" class="fw-medium fs-7 text-decoration-none link-cover">Read more &rarr;</a>
+                                            <h6 class="dropdown-heading">Colaboração em equipe</h6>
+                                            <p class="text-muted">Convide membros ilimitados da equipe para visualizar, editar, comentar e criar páginas de destino com você.</p>
+                                            <a href="#" class="fw-medium fs-7 text-decoration-none link-cover">Leia mais &rarr;</a>
                                         </div>
                                     </div>
                                     <div class="col-auto me-4 mb-4 me-lg-0 mb-lg-0 col-lg-4 d-flex align-items-start">
@@ -75,17 +75,17 @@
                                             <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path opacity=".4" d="M13 6h3a2 2 0 0 1 2 2v7"></path><line opacity=".4" x1="6" y1="9" x2="6" y2="21"></line></svg>
                                         </span>
                                         <div class="position-relative">
-                                            <h6 class="dropdown-heading">Version control</h6>
-                                            <p class="text-muted">Full integration with Git, GitLab and Bitbucket to easily allow version control.</p>
-                                            <a href="#" class="fw-medium fs-7 text-decoration-none link-cover">Read more &rarr;</a>
+                                            <h6 class="dropdown-heading">Controle de versão</h6>
+                                            <p class="text-muted">Integração completa com Git, GitLab e Bitbucket para permitir facilmente o controle de versão.</p>
+                                            <a href="#" class="fw-medium fs-7 text-decoration-none link-cover">Leia mais &rarr;</a>
                                         </div>
                                     </div>                                
                                 </div>
                                 <div class="mt-4 border-top d-none d-lg-flex flex-column py-5">
-                                    <p class="text-muted">From the blog</p>
-                                    <a href="#">The ultimate guide to event project management &rarr;</a>
-                                    <a href="#">How to use Agile to implememt Scrum method &rarr;</a>
-                                    <a href="#">What is the best software version control? &rarr;</a>
+                                    <p class="text-muted">Do blog</p>
+                                    <a href="#">O guia definitivo para gerenciamento de projetos de eventos &rarr;</a>
+                                    <a href="#">Como usar o Agile para implementar o método Scrum &rarr;</a>
+                                    <a href="#">Qual é o melhor controle de versão de software? &rarr;</a>
                                 </div>
                             </div>
                         </div>
@@ -94,13 +94,16 @@
                         <a class="nav-link" href="{{route('noticias.index')}}">Notícias</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('about') }}">About</a>
+                        <a class="nav-link" href="{{ route('about') }}">Sobre Nós</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('contact') }}">Contact</a>
+                        <a class="nav-link" href="{{ route('contact') }}">Contato</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('submission') }}">Submissão</a>
                     </li>
                 </ul>            <div class="d-none d-lg-flex">
-                    <a href="{{ route('login') }}" class="btn btn-link text-muted" role="button">Login</a>
+                    <a href="{{ route('login') }}" class="btn btn-link text-muted" role="button">Entrar</a>
                     <a href="{{ route('register') }}" class="btn btn-primary ms-2" role="button">Registre-se</a>
                 </div>
             </div>
@@ -109,7 +112,7 @@
     <main class="mt-0 ">
         @yield('content')
     </main>
-    <footer class="bg-dark pt-10 pb-8">
+    <footer class="bg-dark pt-4 pb-8">
         <div class="container">
     
             <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-center">
@@ -117,16 +120,10 @@
                 <a class="d-flex align-items-center lh-1 text-white transition-opacity opacity-50-hover text-decoration-none mb-4 mb-md-0"
                     href="#">
                     <span class="f-w-7 d-block text-success me-2">
-                        <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 246.46 258.91"><path d="M145.61,187.72,22.41,116.58,0,129.52l50.45,29.13L0,187.77l22.41,12.94s90.75,52.38,100.82,58.2l123.23-71.13L44.7,71.2l78.54-45.34,78.4,45.26-28,16.2-50.31-29L100.85,71.2l123.21,71.13,22.4-12.94L196,100.25q25.25-14.55,50.46-29.12L123.23,0,0,71.13,201.77,187.71l-78.52,45.41L44.8,187.78l28.06-16.19,50.34,29.07Z" fill="currentColor" fill-rule="evenodd"/></svg>
+                    <img class="img-fluid d-table mx-auto" src="{{ asset('img/logo_CDT.png') }}" alt="">
                     </span>
-                    <span class="fw-bold">Sigma</span>
+                    <span class="fw-bold">CDT</span>
                 </a>    
-                <ul class="list-unstyled d-flex align-items-center justify-content-end">
-                    <li class="ms-5"><a href="#" class="text-white text-decoration-none opacity-50-hover transition-opacity"><i class="ri-facebook-circle-line ri-lg"></i></a></li>
-                    <li class="ms-5"><a href="#" class="text-white text-decoration-none opacity-50-hover transition-opacity"><i class="ri-twitter-line ri-lg"></i></a></li>
-                    <li class="ms-5"><a href="#" class="text-white text-decoration-none opacity-50-hover transition-opacity"><i class="ri-instagram-line ri-lg"></i></a></li>
-                    <li class="ms-5"><a href="#" class="text-white text-decoration-none opacity-50-hover transition-opacity"><i class="ri-snapchat-line ri-lg"></i></a></li>
-                </ul>
             </div>
             <div class="d-flex flex-wrap justify-content-between mt-5 mt-lg-7">    
                 <div class="w-100 w-sm-50 w-lg-auto mb-4 mb-lg-0">
@@ -150,7 +147,7 @@
                     </ul>
                 </div>
                 <div class="w-100 w-sm-50 w-lg-auto mb-4 mb-lg-0">
-                    <h6 class="text-uppercase fs-xs fw-bolder tracking-wider text-white opacity-50">Legals</h6>
+                    <h6 class="text-uppercase fs-xs fw-bolder tracking-wider text-white opacity-50">Termos Legais</h6>
                     <ul class="list-unstyled footer-nav">
                         <li><a href="#">Política de Privacidade</a></li>
                         <li><a href="#">Termos & Condições</a></li>
@@ -162,7 +159,7 @@
         </div>
         <div class="container">
             <div class="border-top pt-6 mt-7 border-white-10 d-flex flex-column flex-md-row justify-content-between align-items-center">
-                <span class="small text-white opacity-50 mb-2 mb-md-0">All rights reserved &copy Sigma 2021</span>
+                <span class="small text-white opacity-50 mb-2 mb-md-0">Todos os direitos reservados &copy IFPR 2024 e Sigma 2021</span>
                 <span class="small text-white opacity-50">Termos de Serviço  |  Política de Segurança</span>
             </div>
         </div>    

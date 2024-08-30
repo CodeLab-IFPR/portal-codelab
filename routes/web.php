@@ -22,6 +22,10 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
+Route::get('/submission', function () {
+    return view('submission');
+})->name('submission');
+
 Route::get('/admin', function () {
     return view('admin/index');
 })->name('admin');
