@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class NoticiasController extends Controller
 {
@@ -110,10 +111,18 @@ class NoticiasController extends Controller
         $entrada = $request->all();
         $entrada['slug'] = Str::slug($request->input('titulo'));
 
+        $noticia = Noticias::where('slug', $slug)->firstOrFail();
+
         if ($imagem = $request->file('imagem')) {
-            Log::info('Imagem recebida.');
+            if ($noticia->imagem) {
+                $oldImagePath = public_path('imagens/' . $noticia->imagem);
+                if (File::exists($oldImagePath)) {
+                    File::delete($oldImagePath);
+                }
+            }
+
             $destinationPath = 'imagens/';
-            $profileImage = date('YmdHis') . "." . $imagem->getClientOriginalExtension();
+            $profileImage = date('YmdHis') . "_" . $noticia->id . "." . $imagem->getClientOriginalExtension();
             $imagem->move($destinationPath, $profileImage);
             $entrada['imagem'] = $profileImage;
         } else {
@@ -123,7 +132,6 @@ class NoticiasController extends Controller
         Log::info('Dados para atualização: ', $entrada);
 
         try {
-            $noticia = Noticias::where('slug', $slug)->firstOrFail();
             $noticia->update($entrada);
             Log::info('Atualização concluída.');
 
@@ -140,7 +148,13 @@ class NoticiasController extends Controller
     public function destroy(string $slug): RedirectResponse
     {
         $noticia = Noticias::where('slug', $slug)->firstOrFail();
-        $noticia->delete();
+        
+        if ($noticia->imagem) {
+            $imagePath = public_path('imagens/' . $noticia->imagem);
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
+            }
+        }
 
         return redirect()->route("noticias.index")
             ->with("success", "Notícia deletada com sucesso.");
