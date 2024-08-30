@@ -1,17 +1,28 @@
-@extends('membros.layout')
+@extends('layouts.admin')
 @section('content')
-<div class="card mt-5">
-    <h2 class="card-header display-4 text-center">Membros</h2>
+<div class="app-content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h3 class="mb-0">Membro - Lista</h3>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                    <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Membro - Lista
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
     <div class="card-body">
 
         @session('success')
             <div class="alert alert-success" role="alert"> {{ $value }} </div>
         @endsession
-
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a class="btn btn-success btn-sm" href="{{ route('membros.create') }}"> <i
-                    class="fa fa-plus"></i> Adicionar um novo membro</a>
-        </div>
 
         <table class="table table-bordered table-striped mt-4">
             <thead>
@@ -20,18 +31,24 @@
                     <th>Nome</th>
                     <th>Cargo</th>
                     <th>Biografia</th>
-                    <th width="250px">Ação</th>
+                    <th>Links</th>
+                    <th width="183px">Ação</th>
                 </tr>
             </thead>
 
             <tbody>
                 @forelse($membros as $membro)
                     <tr>
-                        
+
                         <td><img src="/imagens/{{ $membro->imagem }}" alt="{{ $membro->alt }}" width="100px"></td>
                         <td>{{ $membro->nome }}</td>
                         <td>{{ $membro->cargo }}</td>
-                        <td>{{ mb_strimwidth("$membro->biografia", 0, 250, "...");}}</td>
+                        <td>{{ mb_strimwidth("$membro->biografia", 0, 250, "...") }}
+                        </td>
+                        <td>
+                        <a href="{{ $membro->linkedin }}" target="_blank">LinkedIn</a>
+                        <a href="{{ $membro->github }}" target="_blank">GitHub</a>
+                        </td>
                         <td>
                             <form action="{{ route('membros.destroy',$membro->id) }}"
                                 method="POST">
@@ -54,7 +71,13 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="text-center">Não há membros.</td>
+                        <td colspan="5">
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                                <a class="btn btn-outline-success btn-sm"
+                                    href="{{ route('membros.create') }}"> <i class="fa fa-plus"></i>
+                                    Adicionar membro</a>
+                            </div>
+                        </td>
                     </tr>
                 @endforelse
             </tbody>

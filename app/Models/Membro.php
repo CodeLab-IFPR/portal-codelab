@@ -13,7 +13,10 @@ class Membro extends Model
         'nome',
         'cargo',
         'biografia',
+        'imagem',
         'alt',
-        'imagem'
+        'linkedin',
+        'github'
     ];
+    
 }
