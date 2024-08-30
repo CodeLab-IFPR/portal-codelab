@@ -113,142 +113,34 @@ Sobre Nós
         </div>
     </div>
     <div class="py-8">
-        <h2 class="display-5 fw-bold mb-6 text-center">Our team</h2>
-        <div class="row g-6">
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card rounded shadow-lg h-100">
-                    <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
-                        <picture class="avatar">
-                            <img class="img-fluid rounded-circle"
-                                src="{{ asset('img/profile-small-2.jpeg') }}" alt="">
-                        </picture>
-                        <p class="lead fw-bolder mb-0 mt-4">Jack Johnston</p>
-                        <p class="text-primary small fw-bold mb-4">Founder &amp; CEO</p>
-                        <p class="text-muted">Serial angel investor and entrepreneur, Jack has founded multiple
-                            successful startups prior to Sigma.</p>
-                        <ul class="list-unstyled d-flex align-items-center justify-content-center mb-0">
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-linkedin-box-fill ri-2x"></i></a></li>
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-facebook-box-fill ri-2x"></i></a></li>
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-twitter-fill ri-2x"></i></a></li>
-                        </ul>
+    <h2 class="display-5 fw-bold mb-6 text-center">Our team</h2>
+    <div class="row g-6">
+        @foreach ($membros as $membro)
+        <div class="col-12 col-md-4">
+            <div style="position:relative; display:flex; flex-direction:column; min-width:0; word-wrap:break-word; background-color:#fff; background-clip:border-box; border-radius:0.25rem; box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075); height:100%;">
+                <div style="flex:1 1 auto; padding:1rem; text-align:center;">
+                    <div style="margin-bottom:1rem;">
+                        <img style="width:80px; height:80px; border-radius:50%;" src="{{ asset('imagens/' . $membro->imagem) }}" alt="{{ $membro->alt }}">
                     </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card rounded shadow-lg h-100">
-                    <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
-                        <picture class="avatar">
-                            <img class="img-fluid rounded-circle"
-                                src="{{ asset('img/profile-small-3.jpeg') }}" alt="">
-                        </picture>
-                        <p class="lead fw-bolder mb-0 mt-4">JP Laurent</p>
-                        <p class="text-primary small fw-bold mb-4">Executive Chairman</p>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas quis
-                            tortor sed neque pellentesque.</p>
-                        <ul class="list-unstyled d-flex align-items-center justify-content-center mb-0">
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-linkedin-box-fill ri-2x"></i></a></li>
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-facebook-box-fill ri-2x"></i></a></li>
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-twitter-fill ri-2x"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card rounded shadow-lg h-100">
-                    <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
-                        <picture class="avatar">
-                            <img class="img-fluid rounded-circle"
-                                src="{{ asset('img/profile-small-4.jpeg') }}" alt="">
-                        </picture>
-                        <p class="lead fw-bolder mb-0 mt-4">Gary Waite</p>
-                        <p class="text-primary small fw-bold mb-4">Founder &amp; CTO</p>
-                        <p class="text-muted">Mauris consequat sodales dolor, eu iaculis tortor efficitur vel. Mauris
-                            sed felis augue argum felis.</p>
-                        <ul class="list-unstyled d-flex align-items-center justify-content-center mb-0">
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-linkedin-box-fill ri-2x"></i></a></li>
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-facebook-box-fill ri-2x"></i></a></li>
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-twitter-fill ri-2x"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card rounded shadow-lg h-100">
-                    <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
-                        <picture class="avatar">
-                            <img class="img-fluid rounded-circle"
-                                src="{{ asset('img/profile-small-5.jpeg') }}" alt="">
-                        </picture>
-                        <p class="lead fw-bolder mb-0 mt-4">Patrica Smith</p>
-                        <p class="text-primary small fw-bold mb-4">VP Marketing</p>
-                        <p class="text-muted">Nullam faucibus placerat vestibulum. Vivamus blandit risus a ligula
-                            efficitur tincidunt.</p>
-                        <ul class="list-unstyled d-flex align-items-center justify-content-center mb-0">
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-linkedin-box-fill ri-2x"></i></a></li>
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-facebook-box-fill ri-2x"></i></a></li>
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-twitter-fill ri-2x"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card rounded shadow-lg h-100">
-                    <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
-                        <picture class="avatar">
-                            <img class="img-fluid rounded-circle"
-                                src="{{ asset('img/profile-small-6.jpeg') }}" alt="">
-                        </picture>
-                        <p class="lead fw-bolder mb-0 mt-4">Samanth Rowson</p>
-                        <p class="text-primary small fw-bold mb-4">Head Designer</p>
-                        <p class="text-muted">Vestibulum fermentum urna sit amet dolor rutrum, non consequat velit
-                            vehicula. Proin sed consequat diam.</p>
-                        <ul class="list-unstyled d-flex align-items-center justify-content-center mb-0">
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-linkedin-box-fill ri-2x"></i></a></li>
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-facebook-box-fill ri-2x"></i></a></li>
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-twitter-fill ri-2x"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card rounded shadow-lg h-100">
-                    <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
-                        <picture class="avatar">
-                            <img class="img-fluid rounded-circle"
-                                src="{{ asset('img/profile-small-7.jpeg') }}" alt="">
-                        </picture>
-                        <p class="lead fw-bolder mb-0 mt-4">Jack Smith</p>
-                        <p class="text-primary small fw-bold mb-4">Technical Lead</p>
-                        <p class="text-muted">Sed venenatis ligula tortor, vel pharetra massa convallis a. Ut bibendum
-                            porttitor nisi ornare.</p>
-                        <ul class="list-unstyled d-flex align-items-center justify-content-center mb-0">
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-linkedin-box-fill ri-2x"></i></a></li>
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-facebook-box-fill ri-2x"></i></a></li>
-                            <li class="mx-2"><a href="#" class="text-decoration-none"><i
-                                        class="ri-twitter-fill ri-2x"></i></a></li>
-                        </ul>
-                    </div>
+                    <p style="font-weight:bold; margin-bottom:0.5rem; margin-top:1rem;">{{ $membro->nome }}</p>
+                    <p style="color:#007bff; font-weight:bold; margin-bottom:1rem; font-size:small;">{{ $membro->cargo }}</p>
+                    <p style="color:#6c757d; margin-bottom:1rem; line-height:1.5; word-wrap:break-word; overflow-wrap:break-word; white-space:normal;">{{ $membro->biografia }}</p>
+                    <ul style="list-style:none; padding-left:0; display:flex; align-items:center; justify-content:center; margin-bottom:0;">
+                        @if ($membro->linkedin)
+                        <li style="margin:0 0.5rem;"><a href="{{ $membro->linkedin }}" style="text-decoration:none;" target="_blank"><i class="ri-linkedin-box-fill ri-2x"></i></a></li>
+                        @endif
+                        @if ($membro->github)
+                        <li style="margin:0 0.5rem;"><a href="{{ $membro->github }}" style="text-decoration:none;" target="_blank"><i class="ri-github-fill ri-2x"></i></a></li>
+                        @endif
+                    </ul>
                 </div>
             </div>
         </div>
+        @endforeach
     </div>
+</div>
+
+
     <div class="d-flex justify-content-center my-5">
         <div class="rounded-pill border px-5 py-3 text-muted d-flex align-items-center">
             Want to join our team? <a href="#" class="fw-bold d-flex align-items-center ms-2">We are hiring <i

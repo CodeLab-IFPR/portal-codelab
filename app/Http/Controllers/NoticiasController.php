@@ -25,6 +25,7 @@ class NoticiasController extends Controller
 
     public function create(): View
     {
+        Log::info('Método create chamado.');
         return view('noticias.create');
     }
 

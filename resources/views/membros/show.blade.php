@@ -1,15 +1,31 @@
-@extends('membros.layout')
+@extends('layouts.admin')
+
+<!-- Titulo -->
+@section('title')
+{{ $membro->nome }}
+@endsection
+<!-- Titulo -->
 
 @section('content')
-<div class="card mt-5">
-    <h2 class="card-header">Membro - {{ $membro->nome }}</h2>
-    <div class="card-body">
-
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a class="btn btn-primary btn-sm" href="{{ route('membros.index') }}"><i
-                    class="fa fa-arrow-left"></i> Voltar</a>
+<div class="app-content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h3 class="mb-0">Membro - Visualização</h3>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                    <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Membro - Visualização
+                    </li>
+                </ol>
+            </div>
         </div>
-
+    </div>
+</div>
+<div class="container">
+    <div class="card-body">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
@@ -28,6 +44,10 @@
                     <strong>Biografia:</strong> <br />
                     {{ $membro->biografia }}
                 </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 mt-2">
+            <p><strong>LinkedIn:</strong> <a href="{{ $membro->linkedin }}" target="_blank">{{ $membro->linkedin }}</a></p>
+            <p><strong>GitHub:</strong> <a href="{{ $membro->github }}" target="_blank">{{ $membro->github }}</a></p>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
