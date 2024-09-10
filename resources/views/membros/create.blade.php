@@ -32,7 +32,7 @@ Membros - Cadastro
             <div class="mb-3">
                 <label for="inputNome" class="form-label"><strong>*Nome:</strong></label>
                 <input type="text" name="nome" class="form-control @error('nome') inválido @enderror" id="inputNome"
-                    placeholder="Nome..." value="{{ old('nome') }}" required>
+                    placeholder="Nome..." required>
                 @error('nome')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -41,7 +41,7 @@ Membros - Cadastro
             <div class="mb-3">
                 <label for="inputCargo" class="form-label"><strong>*Cargo:</strong></label>
                 <input type="text" class="form-control @error('cargo') inválido @enderror" name="cargo" id="inputCargo"
-                    placeholder="Cargo..." value=" {{ old('cargo') }}" required>
+                    placeholder="Cargo..." required>
                 @error('cargo')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -50,7 +50,7 @@ Membros - Cadastro
             <div class="mb-3">
                 <label for="inputBiografia" class="form-label"><strong>*Biografia:</strong></label>
                 <textarea class="form-control @error('biografia') inválido @enderror" style="height:150px"
-                    name="biografia" id="inputBiografia" placeholder="Biografia..." required>{{ old('biografia') }}</textarea>
+                    name="biografia" id="inputBiografia" placeholder="Biografia..." required></textarea>
                 @error('biografia')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -59,7 +59,7 @@ Membros - Cadastro
             <div class="mb-3">
                 <label for="inputLinkedin" class="form-label"><strong>LinkedIn:</strong></label>
                 <input type="url" class="form-control @error('linkedin') is-invalid @enderror" name="linkedin" id="inputLinkedin"
-                    placeholder="LinkedIn URL" value="{{ old('linkedin') }}">
+                    placeholder="LinkedIn URL">
                 @error('linkedin')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -68,7 +68,7 @@ Membros - Cadastro
             <div class="mb-3">
                 <label for="inputGithub" class="form-label"><strong>GitHub:</strong></label>
                 <input type="url" class="form-control @error('github') is-invalid @enderror" name="github" id="inputGithub"
-                    placeholder="GitHub URL" value="{{ old('github') }}">
+                    placeholder="GitHub URL">
                 @error('github')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -88,7 +88,7 @@ Membros - Cadastro
             <div class="mb-3">
                 <label for="inputAlt" class="form-label"><strong>Alt:</strong></label>
                 <input type="text" class="form-control @error('alt') inválido @enderror" name="alt" id="inputAlt"
-                    placeholder="Descrição da imagem..." value="{{ old('alt') }}" required>
+                    placeholder="Descrição da imagem..." required>
                 @error('alt')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
