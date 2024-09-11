@@ -35,10 +35,14 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('certificados/criar', [CertificadoController::class, 'create'])->name('certificados.create');
-Route::post('certificados', [CertificadoController::class, 'store'])->name('certificados.store');
-Route::get('certificados/{certificado}', [CertificadoController::class, 'show'])->name('certificados.show');
-Route::get('certificados/{certificado}/baixar', [CertificadoController::class, 'download'])->name('certificados.download');
+Route::controller(CertificadoController::class)->group(function(){
+    Route::get('/certificados/create', 'create')->name('certificados.create');
+    Route::post('/certificados', 'store')->name('certificados.store');
+    Route::get('/certificados/{certificado}', 'show')->name('certificados.show');
+    Route::get('/certificados/{certificado}/download', 'download')->name('certificados.download');
+    Route::get('/certificados/{certificado}/view', 'viewCertificate')->name('certificados.view');
+    Route::get('/certificados/{certificado}/download-certificate', 'downloadCertificate')->name('certificados.downloadCertificate');
+});
 
 Route::get('noticias/create', [NoticiasController::class, 'create'])->name('noticias.create');
 Route::get('noticias/{slug}/edit', [NoticiasController::class, 'edit'])->name('noticias.edit');
