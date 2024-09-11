@@ -44,11 +44,16 @@ class MembroController extends Controller
     
         $entrada = $request->all();
     
-        if ($imagem = $request->file('imagem')) {
-            $destinationPath = 'imagens/';
-            $profileImage = date('YmdHis') . "." . $imagem->getClientOriginalExtension();
-            $imagem->move($destinationPath, $profileImage);
-            $entrada['imagem'] = $profileImage;
+        if ($request->has('cropped_image')) {
+            $folderPath = public_path('imagens/');
+            $image_parts = explode(";base64,", $request->cropped_image);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $imageName = uniqid() . '.png';
+            $imageFullPath = $folderPath . $imageName;
+            file_put_contents($imageFullPath, $image_base64);
+            $entrada['imagem'] = $imageName;
         }
 
         $membro = Membro::create($entrada);
@@ -81,7 +86,7 @@ class MembroController extends Controller
 
         $entrada = $request->all();
 
-        if ($imagem = $request->file('imagem')) {
+        if ($request->has('cropped_image')) {
             // Remove a imagem antiga se existir
             if ($membro->imagem) {
                 $oldImagePath = public_path('imagens/' . $membro->imagem);
@@ -89,12 +94,17 @@ class MembroController extends Controller
                     File::delete($oldImagePath);
                 }
             }
-
+    
             // Salva a nova imagem
-            $destinationPath = 'imagens/';
-            $profileImage = date('YmdHis') . "_" . $membro->id . "." . $imagem->getClientOriginalExtension();
-            $imagem->move($destinationPath, $profileImage);
-            $entrada['imagem'] = $profileImage;
+            $folderPath = public_path('imagens/');
+            $image_parts = explode(";base64,", $request->cropped_image);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $imageName = uniqid() . '.png';
+            $imageFullPath = $folderPath . $imageName;
+            file_put_contents($imageFullPath, $image_base64);
+            $entrada['imagem'] = $imageName;
         }
 
         $membro->update($entrada);

@@ -18,5 +18,9 @@ class Membro extends Model
         'linkedin',
         'github'
     ];
-    
+
+    public function certificados()
+    {
+        return $this->hasMany(Certificado::class, 'membros_id');
+    }
 }

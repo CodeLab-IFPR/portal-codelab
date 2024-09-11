@@ -2,6 +2,10 @@
 
 return [
 
+    'aliases' => [
+    'PDF' => Barryvdh\DomPDF\Facade::class,
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

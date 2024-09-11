@@ -78,8 +78,7 @@ Membros - Cadastro
 
             <div class="mb-3">
                 <label for="inputImagem" class="form-label"><strong>*Imagem:</strong></label>
-                <input type="file" name="imagem" class="form-control @error('imagem') inválido @enderror"
-                    id="inputImagem" required>
+                <input type="file" name="imagem" class="form-control @error('imagem') inválido @enderror" id="inputImagem" required>
                 @error('imagem')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -87,8 +86,7 @@ Membros - Cadastro
 
             <div class="mb-3">
                 <label for="inputAlt" class="form-label"><strong>Alt:</strong></label>
-                <input type="text" class="form-control @error('alt') inválido @enderror" name="alt" id="inputAlt"
-                    placeholder="Descrição da imagem..." required>
+                <input type="text" class="form-control @error('alt') inválido @enderror" name="alt" id="inputAlt" placeholder="Descrição da imagem..." required>
                 @error('alt')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -101,21 +99,63 @@ Membros - Cadastro
     </div>
 </div>
 
+<!-- Modal para crop de imagem -->
+<div id="imageModel" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Crop de Imagem</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="image_demo" style="width:350px; margin-top:30px"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary crop_image">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-    document.getElementById('add-link').addEventListener('click', function () {
-        var additionalLinks = document.getElementById('additional-links');
-        var newField = document.createElement('div');
-        newField.classList.add('mb-3', 'input-group');
-        newField.innerHTML = `
-            <input class="form-control" name="link[]" placeholder="LinkedIn/Github/Discord...">
-            <button type="button" class="btn btn-outline-danger remove-link"><strong>-</strong></button>
-        `;
-        additionalLinks.appendChild(newField);
-    });
-    document.getElementById('additional-links').addEventListener('click', function (e) {
-        if (e.target.classList.contains('remove-link')) {
-            e.target.closest('.input-group').remove();
-        }
+    $(document).ready(function() {
+        var $image_crop = $('#image_demo').croppie({
+            enableExif: true,
+            viewport: {
+                width: 200,
+                height: 200,
+                type: 'circle'
+            },
+            boundary: {
+                width: 300,
+                height: 300
+            },
+        });
+
+        $('#inputImagem').on('change', function() {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                $image_crop.croppie('bind', {
+                    url: event.target.result
+                }).then(function() {
+                    console.log('jQuery bind complete');
+                });
+            }
+            reader.readAsDataURL(this.files[0]);
+            $('#imageModel').modal('show');
+        });
+
+        $('.crop_image').click(function(event) {
+            $image_crop.croppie('result', {
+                type: 'canvas',
+                size: 'viewport'
+            }).then(function(response) {
+                $('#imageModel').modal('hide');
+                $('form').append('<input type="hidden" name="cropped_image" value="' + response + '">');
+                $('form').submit();
+            });
+        });
     });
 </script>
 @endsection

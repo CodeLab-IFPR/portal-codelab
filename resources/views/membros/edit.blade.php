@@ -58,11 +58,9 @@ Membros - Edição
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
-
             <div class="mb-3">
                 <label for="inputImagem" class="form-label"><strong>Imagem:</strong></label>
-                <input type="file" name="imagem" class="form-control @error('imagem') is-invalid @enderror"
-                    id="inputImagem">
+                <input type="file" name="imagem" class="form-control @error('imagem') is-invalid @enderror" id="inputImagem">
                 @if($membro->imagem)
                     <img src="/imagens/{{ $membro->imagem }}" width="300px" class="mt-2">
                 @endif
@@ -73,14 +71,11 @@ Membros - Edição
 
             <div class="mb-3">
                 <label for="inputAlt" class="form-label"><strong>Alt:</strong></label>
-                <input type="text" name="alt" value="{{ old('alt', $membro->alt) }}"
-                    class="form-control @error('alt') is-invalid @enderror" id="inputAlt"
-                    placeholder="Descrição da imagem...">
+                <input type="text" name="alt" value="{{ old('alt', $membro->alt) }}" class="form-control @error('alt') is-invalid @enderror" id="inputAlt" placeholder="Descrição da imagem...">
                 @error('alt')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
-
             <div class="mb-3">
                 <label for="inputLinkedin" class="form-label"><strong>LinkedIn:</strong></label>
                 <input type="url" name="linkedin" value="{{ old('linkedin', $membro->linkedin) }}"
@@ -106,27 +101,68 @@ Membros - Edição
 
                 <button type="submit" class="btn btn-outline-success btn-sm"><i class="fa-solid fa-floppy-disk"></i> Atualizar</button>
             </div>
+            </div>
         </form>
     </div>
 </div>
 
+<!-- Modal para crop de imagem -->
+<div id="imageModel" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Crop de Imagem</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="image_demo" style="width:350px; margin-top:30px"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary crop_image">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-    function addLink() {
-        const container = document.getElementById('links-container');
-        const index = container.children.length;
+    $(document).ready(function() {
+        var $image_crop = $('#image_demo').croppie({
+            enableExif: true,
+            viewport: {
+                width: 200,
+                height: 200,
+                type: 'square'
+            },
+            boundary: {
+                width: 300,
+                height: 300
+            }
+        });
 
-        const div = document.createElement('div');
-        div.classList.add('input-group', 'mb-3');
+        $('#inputImagem').on('change', function() {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                $image_crop.croppie('bind', {
+                    url: event.target.result
+                }).then(function() {
+                    console.log('jQuery bind complete');
+                });
+            }
+            reader.readAsDataURL(this.files[0]);
+            $('#imageModel').modal('show');
+        });
 
-        div.innerHTML = `
-            <input type="text" name="links[${index}][link]" class="form-control" placeholder="LinkedIn/Github/Discord...">
-            <button type="button" class="btn btn-danger" onclick="removeLink(this)">-</button>
-        `;
-        container.appendChild(div);
-    }
-
-    function removeLink(button) {
-        button.parentElement.remove();
-    }
+        $('.crop_image').click(function(event) {
+            $image_crop.croppie('result', {
+                type: 'canvas',
+                size: 'viewport'
+            }).then(function(response) {
+                $('#imageModel').modal('hide');
+                $('form').append('<input type="hidden" name="cropped_image" value="' + response + '">');
+                $('form').submit();
+            });
+        });
+    });
 </script>
 @endsection
