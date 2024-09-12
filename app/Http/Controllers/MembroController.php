@@ -55,9 +55,9 @@ class MembroController extends Controller
             file_put_contents($imageFullPath, $image_base64);
             $entrada['imagem'] = $imageName;
         }
-
+    
         $membro = Membro::create($entrada);
-
+    
         return redirect()->route("membros.index")
             ->with("success", "Membro criado com sucesso.");
     }
@@ -83,9 +83,9 @@ class MembroController extends Controller
             'alt' => 'required|min:5|max:255',
             'imagem' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
+    
         $entrada = $request->all();
-
+    
         if ($request->has('cropped_image')) {
             // Remove a imagem antiga se existir
             if ($membro->imagem) {
@@ -106,9 +106,9 @@ class MembroController extends Controller
             file_put_contents($imageFullPath, $image_base64);
             $entrada['imagem'] = $imageName;
         }
-
+    
         $membro->update($entrada);
-
+    
         return redirect()->route("membros.index")
             ->with("success", "Membro atualizado com sucesso.");
     }
