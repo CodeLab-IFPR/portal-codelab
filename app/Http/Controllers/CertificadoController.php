@@ -49,33 +49,29 @@ class CertificadoController extends Controller
         $credential = $certificado->token;
         $description = $certificado->descricao;
         $hours = $certificado->horas;
-        $date = (new \DateTime($certificado->data))->format('d/m/Y'); // Convert string to DateTime
+        $date = (new \DateTime($certificado->data))->format('d/m/Y');
     
-        // Generate QR Code 
         $qrCode = QrCode::format('png')->size(500)->generate($credential);
         $qrCodeDir = public_path('qr');
         $qrCodePath = $qrCodeDir . '/' . $credential . '.png';
     
-        // Ensure the QR code directory exists
         if (!file_exists($qrCodeDir)) {
             mkdir($qrCodeDir, 0777, true);
         }
     
         file_put_contents($qrCodePath, $qrCode);
     
-        // Ensure the certificate directory exists
         $certificateDir = public_path('certificate');
         if (!file_exists($certificateDir)) {
             mkdir($certificateDir, 0777, true);
         }
     
-        // Create instance PDF
         $pdf = new Fpdi();
-        $pathToTemplate = $certificateDir . '/Certificate.pdf';
+        $pathToTemplate = $certificateDir . '/Certificate2.pdf';
         if (!file_exists($pathToTemplate)) {
             throw new \Exception("Template file not found: " . $pathToTemplate);
         }
-        $pathToTemplate = public_path('certificate/Certificate.pdf');
+        $pathToTemplate = public_path('certificate/Certificate2.pdf');
         $pdf->setSourceFile($pathToTemplate);
         $template = $pdf->importPage(1);
     
@@ -83,24 +79,35 @@ class CertificadoController extends Controller
     
         $pdf->AddPage($size['orientation'], [$size['width'], $size['height']]);
         $pdf->useTemplate($template, 0, 0, $size['width'], $size['height']);
-    
-        $pdf->SetFont('Helvetica');
+
+
+        $pdf->AddFont('DejaVuSerifCondensed', '', 'AMAZI___.ttf',true);
+        $pdf->SetFont('DejaVuSerifCondensed', '', 12);
         $pdf->SetFontSize(30);
-        $pdf->SetXY(35, 120);
+        $pdf->SetXY(35, 110);
         $pdf->Write(0, $name);
-    
+
         $pdf->SetFont('Helvetica');
-        $pdf->SetFontSize(15);
-        $pdf->SetXY(238, 177);
+        $pdf->SetFontSize(12);
+        $pdf->SetXY(35, 120);
+        $pdf->MultiCell(170, 8, $description);
+        
+        $pdf->SetFont('Helvetica');
+        $pdf->SetFontSize(12);
+        $pdf->SetXY(145, 176.8);
+        $pdf->Write(0, 'Horas: ' . $hours);
+        
+        $pdf->SetFont('Helvetica');
+        $pdf->SetFontSize(12);
+        $pdf->SetXY(241, 176.8);
         $pdf->Write(0, $credential);
     
         $pdf->Image($qrCodePath, 217, 133, 40, 40);
 
 
-        $fileName = 'Certificate_' . $credential . '.pdf';
+        $fileName = 'Certificate2_' . $credential . '.pdf';
         $filePath = $certificateDir . '/' . $fileName;
     
-        // Save the PDF to the certificate directory
         $pdf->Output($filePath, 'F');
     
         if ($download) {

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('membros_id')->constrained()->onDelete('cascade');
             $table->string('token')->unique();
-            $table->string('descricao');
+            $table->text('descricao');
             $table->integer('horas');
             $table->date('data');
             $table->timestamps();
