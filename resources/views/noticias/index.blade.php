@@ -7,8 +7,7 @@ Noticias
 <!-- Titulo -->
 
 @section('content')
-<div class="container">
-    
+<div class="container">   
     <div class="card mt-5">
         <h2 class="card-header text-center">Notícias</h2>
         <div class="card-body">

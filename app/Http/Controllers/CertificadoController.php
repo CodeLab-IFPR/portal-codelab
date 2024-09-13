@@ -4,27 +4,40 @@ namespace App\Http\Controllers;
 
 use App\Models\Certificado;
 use App\Models\Membro;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Redirect;
 use setasign\Fpdi\Fpdi;
 use setasign\Fpdf\Fpdf;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Contracts\View\View;
 
 class CertificadoController extends Controller
 {
-    public function create()
+    public function index(): View
+    {
+        $certificados = Certificado::latest()->paginate(5);
+        return view('certificados.index', compact('certificados')); 
+    }
+    public function create(): View
     {
         $membros = Membro::all();
         return view('certificados.create', compact('membros'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'membros_id' => 'required',
-            'descricao' => 'required|string',
+            'descricao' => 'required|max=520',
             'horas' => 'required|integer',
             'data' => 'required|date',
+        ],[
+            'membros_id.required' => 'O campo membro é obrigatório',
+            'descricao.required' => 'O campo descrição é obrigatório',
+            'horas.required' => 'O campo horas é obrigatório',
+            'data.required' => 'O campo data é obrigatório',
         ]);
 
         $certificado = Certificado::create([
@@ -35,10 +48,11 @@ class CertificadoController extends Controller
             'data' => $request->data,
         ]);
 
-        return redirect()->route('certificados.show', $certificado);
+        return redirect()->route("certificados.index")
+            ->with("success", "Certificado criado com sucesso.");
     }
 
-    public function show(Certificado $certificado)
+    public function show(Certificado $certificado): View
     {
         return view('certificados.show', compact('certificado'));
     }

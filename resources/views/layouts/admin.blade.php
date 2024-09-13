@@ -21,6 +21,7 @@
         integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
         integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" integrity="sha384-Qsx5lrStHZyR9REqhUF8iQt73X06c8LGIUPzpOhwRrI=" crossorigin="anonymous">
     <script src="https://cdn.tiny.cloud/1/no-key/tinymce/7/tinymce.min.js">
     </script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -216,7 +217,6 @@
                 </ul>
             </li>
 
-            <!-- Lista Section -->
             <li class="nav-item {{ request()->routeIs('membros.index') ? 'menu-open' : '' }}">
                 <a href="#" class="nav-link">
                     <i class="nav-icon bi bi-box-seam-fill"></i>
@@ -239,9 +239,26 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ route('parceiros.index') }}" class="nav-link {{ request()->routeIs('parceiros.index') ? 'active' : ''}}">
+                            <i class="nav-icon bi {{ request()->routeIs('parceiros.index') ? 'bi-circle-fill' : 'bi-circle' }} "></i>
+                            <p>Parceiro</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item {{ request()->routeIs('certificados.index') ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon bi bi-box-seam-fill"></i>
+                    <p>
+                        Certificado
+                        <i class="nav-arrow bi bi-chevron-right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon bi bi-circle"></i>
-                            <p>Parceiro</p>
+                            <p>Notícia</p>
                         </a>
                     </li>
                 </ul>
@@ -334,6 +351,46 @@
                     ['insert', ['link', 'picture', 'video']],
                     ['view', ['fullscreen', 'codeview', 'help']]
                 ]
+            });
+        </script>
+        <style>
+            .focus-ring-green:focus {
+            border-color: green;
+            box-shadow: 0 0 0 0.25rem rgba(0, 128, 0, 0.25);
+            }
+            .focus-ring-orange:focus {
+            border-color: orange;
+            box-shadow: 0 0 0 0.25rem rgba(255, 165, 0, 0.25);
+            }
+            .focus-ring-red:focus {
+            border-color: red;
+            box-shadow: 0 0 0 0.25rem rgba(255, 0, 0, 0.25);
+            }
+        </style>
+        <script>
+            function updateCharacterCount() {
+            const textarea = document.getElementById('descricao');
+            const charCount = document.getElementById('charCount');
+            const maxLength = 520;
+            const currentLength = textarea.value.length;
+
+            charCount.textContent = `${currentLength}/${maxLength}`;
+
+            textarea.classList.remove('focus-ring-green', 'focus-ring-orange', 'focus-ring-red');
+
+            if (currentLength < maxLength / 2) {
+                textarea.classList.add('focus-ring-green');
+            } else if (currentLength < maxLength) {
+                textarea.classList.add('focus-ring-orange');
+            } else {
+                textarea.classList.add('focus-ring-red');
+            }
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+            const textarea = document.getElementById('descricao');
+            textarea.addEventListener('input', updateCharacterCount);
+            updateCharacterCount(); 
             });
         </script>
 </body>

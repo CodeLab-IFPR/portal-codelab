@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('certificados', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('membros_id')->constrained()->onDelete('cascade');
+            $table->foreignId(column: 'membros_id')->constrained()->onDelete('cascade');
             $table->string('token')->unique();
             $table->text('descricao');
             $table->integer('horas');
