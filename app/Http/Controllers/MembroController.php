@@ -35,6 +35,8 @@ class MembroController extends Controller
         $request->validate([
             'nome' => 'required|min:3|max:255',
             'cargo' => 'required|min:5|max:100',
+            'ativo' => 'required|boolean',
+            'cpf' => 'required|unique:membros,cpf',
             'biografia' => 'required|min:10',
             'linkedin' => 'nullable|url',
             'github' => 'nullable|url',
@@ -77,11 +79,31 @@ class MembroController extends Controller
         $request->validate([
             'nome' => 'required|min:3|max:255',
             'cargo' => 'required|min:5|max:100',
+            'ativo' => 'required|boolean',
+            'cpf' => 'required|unique:membros,cpf',
             'biografia' => 'required|min:10',
             'linkedin' => 'nullable|url',
             'github' => 'nullable|url',
             'alt' => 'required|min:5|max:255',
             'imagem' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ], [
+            'cpf.unique' => 'CPF já cadastrado.',
+            'cpf.required' => 'O campo CPF é obrigatório.',
+            'nome.required' => 'O campo nome é obrigatório.',
+            'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres.',
+            'nome.max' => 'O campo nome deve ter no máximo 255 caracteres.',
+            'cargo.required' => 'O campo cargo é obrigatório.',
+            'cargo.max' => 'O campo cargo deve ter no máximo 100 caracteres.',
+            'biografia.required' => 'O campo biografia é obrigatório.',
+            'biografia.min' => 'O campo biografia deve ter no mínimo 10 caracteres.',
+            'linkedin.url' => 'O campo linkedin deve ser uma URL válida.',
+            'github.url' => 'O campo github deve ser uma URL válida.',
+            'alt.required' => 'O campo alt é obrigatório.',
+            'alt.min' => 'O campo alt deve ter no mínimo 5 caracteres.',
+            'alt.max' => 'O campo alt deve ter no máximo 255 caracteres.',
+            'imagem.image' => 'O arquivo deve ser uma imagem.',
+            'imagem.mimes' => 'O arquivo deve ser uma imagem do tipo: jpeg, png, jpg, gif, svg.',
+            'imagem.max' => 'O arquivo deve ter no máximo 2048 KB.',
         ]);
     
         $entrada = $request->all();

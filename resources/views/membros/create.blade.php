@@ -46,6 +46,22 @@ Membros - Cadastro
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="mb-3">
+    <label for="inputCpf" class="form-label"><strong>*CPF:</strong></label>
+    <input type="text" class="form-control @error('cpf') inválido @enderror" name="cpf" id="inputCpf"
+        placeholder="CPF..." required>
+    @error('cpf')
+        <div class="form-text text-danger">{{ $message }}</div>
+    @enderror
+</div>
+
+<div class="mb-3">
+    <label for="inputAtivo" class="form-label"><strong>*Ativo:</strong></label>
+    <input type="checkbox" class="form-check-input @error('ativo') inválido @enderror" name="ativo" id="inputAtivo" value="1" required>
+    @error('ativo')
+        <div class="form-text text-danger">{{ $message }}</div>
+    @enderror
+</div>
 
             <div class="mb-3">
                 <label for="inputBiografia" class="form-label"><strong>*Biografia:</strong></label>

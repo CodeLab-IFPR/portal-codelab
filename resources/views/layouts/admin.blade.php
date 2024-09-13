@@ -336,6 +336,13 @@
                 ]
             });
         </script>
+        <!-- Script para máscara de CPF -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+            <script>
+                $(document).ready(function(){
+                    $('#inputCpf').mask('000.000.000-00', {reverse: true});
+                });
+            </script>
 </body>
 
 </html>

@@ -43,6 +43,22 @@ Membros - Edição
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="mb-3">
+    <label for="inputCpf" class="form-label"><strong>CPF:</strong></label>
+    <input type="text" name="cpf" value="{{ old('cpf', $membro->cpf) }}"
+        class="form-control @error('cpf') is-invalid @enderror" id="inputCpf" placeholder="CPF...">
+    @error('cpf')
+        <div class="form-text text-danger">{{ $message }}</div>
+    @enderror
+</div>
+
+<div class="mb-3">
+    <label for="inputAtivo" class="form-label"><strong>Ativo:</strong></label>
+    <input type="checkbox" name="ativo" class="form-check-input @error('ativo') is-invalid @enderror" id="inputAtivo" value="1" {{ old('ativo', $membro->ativo) ? 'checked' : '' }}>
+    @error('ativo')
+        <div class="form-text text-danger">{{ $message }}</div>
+    @enderror
+</div>    
 
             <div class="mb-3">
                 <label for="inputBiografia" class="form-label"><strong>Biografia:</strong></label>

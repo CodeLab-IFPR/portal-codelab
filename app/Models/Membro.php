@@ -12,6 +12,8 @@ class Membro extends Model
     protected $fillable = [
         'nome',
         'cargo',
+        'cpf',
+        'ativo',
         'biografia',
         'imagem',
         'alt',
