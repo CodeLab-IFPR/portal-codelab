@@ -21,12 +21,14 @@
         integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
         integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" integrity="sha384-Qsx5lrStHZyR9REqhUF8iQt73X06c8LGIUPzpOhwRrI=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+        integrity="sha384-Qsx5lrStHZyR9REqhUF8iQt73X06c8LGIUPzpOhwRrI=" crossorigin="anonymous">
     <script src="https://cdn.tiny.cloud/1/no-key/tinymce/7/tinymce.min.js">
     </script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" />
@@ -47,6 +49,7 @@
                 ],
             });
         </script>
+        
 </head>
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
@@ -183,90 +186,116 @@
                         class="brand-image opacity-75 shadow"><span class="brand-text fw-light">AdminLTE 4</span></a>
             </div>
             <div class="sidebar-wrapper">
-    <nav class="mt-2">
-        <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
+                <nav class="mt-2">
+                    <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
+                        data-accordion="false">
 
-            <!-- Cadastro Section -->
-            <li class="nav-item {{ request()->routeIs('noticias.create') || request()->routeIs('membros.create') || request()->routeIs('parceiros.create') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link"> 
-                    <i class="nav-icon bi bi-speedometer"></i>
-                    <p>
-                        Cadastro
-                        <i class="nav-arrow bi bi-chevron-right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('noticias.create') }}" class="nav-link {{ request()->routeIs('noticias.create') ? 'active' : '' }}">
-                            <i class="nav-icon bi {{ request()->routeIs('noticias.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
-                            <p>Nova Notícia</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('membros.create') }}" class="nav-link {{ request()->routeIs('membros.create') ? 'active' : '' }}">
-                            <i class="nav-icon bi {{ request()->routeIs('membros.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
-                            <p>Novo Membro</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('parceiros.create') }}" class="nav-link {{ request()->routeIs('parceiros.create') ? 'active' : '' }}">
-                            <i class="nav-icon bi {{ request()->routeIs('parceiros.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
-                            <p>Novo Parceiro</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+                        <!-- Cadastro Section -->
+                        <li
+                            class="nav-item {{ request()->routeIs('noticias.create') || request()->routeIs('membros.create') || request()->routeIs('parceiros.create') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-speedometer"></i>
+                                <p>
+                                    Cadastro
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('noticias.create') }}"
+                                        class="nav-link {{ request()->routeIs('noticias.create') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('noticias.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Nova Notícia</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('membros.create') }}"
+                                        class="nav-link {{ request()->routeIs('membros.create') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('membros.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Novo Membro</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('parceiros.create') }}"
+                                        class="nav-link {{ request()->routeIs('parceiros.create') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('parceiros.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Novo Parceiro</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-            <li class="nav-item {{ request()->routeIs('membros.index') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon bi bi-box-seam-fill"></i>
-                    <p>
-                        Lista
-                        <i class="nav-arrow bi bi-chevron-right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-circle"></i>
-                            <p>Notícia</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('membros.index') }}" class="nav-link {{ request()->routeIs('membros.index') ? 'active' : '' }}">
-                            <i class="nav-icon bi {{ request()->routeIs('membros.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
-                            <p>Membro</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('parceiros.index') }}" class="nav-link {{ request()->routeIs('parceiros.index') ? 'active' : ''}}">
-                            <i class="nav-icon bi {{ request()->routeIs('parceiros.index') ? 'bi-circle-fill' : 'bi-circle' }} "></i>
-                            <p>Parceiro</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item {{ request()->routeIs('certificados.index') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon bi bi-box-seam-fill"></i>
-                    <p>
-                        Certificado
-                        <i class="nav-arrow bi bi-chevron-right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-circle"></i>
-                            <p>Notícia</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+                        <li
+                            class="nav-item {{ request()->routeIs('membros.index') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-box-seam-fill"></i>
+                                <p>
+                                    Lista
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Notícia</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('membros.index') }}"
+                                        class="nav-link {{ request()->routeIs('membros.index') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('membros.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Membro</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('parceiros.index') }}"
+                                        class="nav-link {{ request()->routeIs('parceiros.index') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('parceiros.index') ? 'bi-circle-fill' : 'bi-circle' }} "></i>
+                                        <p>Parceiro</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li
+                            class="nav-item {{ request()->routeIs('certificados.index') || request()->routeIs('certificados.create') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-box-seam-fill"></i>
+                                <p>
+                                    Certificado
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('certificados.create') }}"
+                                        class="nav-link {{ request()->routeIs('certificados.create') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('certificados.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Novo Certificado</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('certificados.index') }}"
+                                        class="nav-link {{ request()->routeIs('certificados.index') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('certificados.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Todos Certificados</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-        </ul>
-    </nav>
-</div>
+                    </ul>
+                </nav>
+            </div>
 
         </aside>
         <main class="app-main">
@@ -280,6 +309,48 @@
             All rights reserved.
         </footer>
     </div>
+    <style>
+                .focus-ring-green:focus {
+                    border-color: green;
+                    box-shadow: 0 0 0 0.25rem rgba(0, 128, 0, 0.25);
+                }
+
+                .focus-ring-orange:focus {
+                    border-color: orange;
+                    box-shadow: 0 0 0 0.25rem rgba(255, 165, 0, 0.25);
+                }
+
+                .focus-ring-red:focus {
+                    border-color: red;
+                    box-shadow: 0 0 0 0.25rem rgba(255, 0, 0, 0.25);
+                }
+            </style>
+            <script>
+                function updateCharacterCount() {
+                    const textarea = document.getElementById('descricao');
+                    const charCount = document.getElementById('charCount');
+                    const maxLength = 520;
+                    const currentLength = textarea.value.length;
+
+                    charCount.textContent = `${currentLength}/${maxLength}`;
+
+                    textarea.classList.remove('focus-ring-green', 'focus-ring-orange', 'focus-ring-red');
+
+                    if (currentLength < maxLength / 2) {
+                        textarea.classList.add('focus-ring-green');
+                    } else if (currentLength < maxLength) {
+                        textarea.classList.add('focus-ring-orange');
+                    } else {
+                        textarea.classList.add('focus-ring-red');
+                    }
+                }
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    const textarea = document.getElementById('descricao');
+                    textarea.addEventListener('input', updateCharacterCount);
+                    updateCharacterCount();
+                });
+            </script>
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js"
         integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -287,112 +358,69 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script>
     @vite('resources/js/adminlte.js')
-    @vite('resources/js/menu.js')
-        <script>
-            const SELECTOR_SIDEBAR_WRAPPER = ".sidebar-wrapper";
-            const Default = {
-                scrollbarTheme: "os-theme-light",
-                scrollbarAutoHide: "leave",
-                scrollbarClickScroll: true,
+        @vite('resources/js/menu.js')
+    <script>
+        const SELECTOR_SIDEBAR_WRAPPER = ".sidebar-wrapper";
+        const Default = {
+            scrollbarTheme: "os-theme-light",
+            scrollbarAutoHide: "leave",
+            scrollbarClickScroll: true,
             };
             document.addEventListener("DOMContentLoaded", function () {
-                const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
-                if (
-                    sidebarWrapper &&
-                    typeof OverlayScrollbarsGlobal ? .OverlayScrollbars !== "undefined"
-                ) {
-                    OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
-                        scrollbars: {
+            const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+            if (sidebarWrapper && typeof OverlayScrollbarsGlobal ? .OverlayScrollbars !== "undefined") {
+                OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+                scrollbars: {
                             theme: Default.scrollbarTheme,
                             autoHide: Default.scrollbarAutoHide,
                             clickScroll: Default.scrollbarClickScroll,
-                        },
+                            },
                     });
                 }
             });
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"
-            integrity="sha256-ipiJrswvAR4VAx/th+6zWsdeYmVae0iJuiR+6OqHJHQ=" crossorigin="anonymous"></script>
-        <!-- sortablejs -->
-        <script>
-            const connectedSortables =
-                document.querySelectorAll(".connectedSortable");
-            connectedSortables.forEach((connectedSortable) => {
-                let sortable = new Sortable(connectedSortable, {
-                    group: "shared",
-                    handle: ".card-header",
+            </script>
+            <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"
+                integrity="sha256-ipiJrswvAR4VAx/th+6zWsdeYmVae0iJuiR+6OqHJHQ=" crossorigin="anonymous"></script>
+            <!-- sortablejs -->
+            <script>
+                const connectedSortables =
+                    document.querySelectorAll(".connectedSortable");
+                connectedSortables.forEach((connectedSortable) => {
+                    let sortable = new Sortable(connectedSortable, {
+                        group: "shared",
+                        handle: ".card-header",
+                    });
                 });
-            });
 
-            const cardHeaders = document.querySelectorAll(
-                ".connectedSortable .card-header",
-            );
-            cardHeaders.forEach((cardHeader) => {
-                cardHeader.style.cursor = "move";
-            });
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
-            integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"
-            integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y=" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
-            integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY=" crossorigin="anonymous"></script>
-        <script>
-            $('#conteudo').summernote({
-                placeholder: 'Hello stand alone ui',
-                tabsize: 2,
-                height: 120,
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'codeview', 'help']]
-                ]
-            });
-        </script>
-        <style>
-            .focus-ring-green:focus {
-            border-color: green;
-            box-shadow: 0 0 0 0.25rem rgba(0, 128, 0, 0.25);
-            }
-            .focus-ring-orange:focus {
-            border-color: orange;
-            box-shadow: 0 0 0 0.25rem rgba(255, 165, 0, 0.25);
-            }
-            .focus-ring-red:focus {
-            border-color: red;
-            box-shadow: 0 0 0 0.25rem rgba(255, 0, 0, 0.25);
-            }
-        </style>
-        <script>
-            function updateCharacterCount() {
-            const textarea = document.getElementById('descricao');
-            const charCount = document.getElementById('charCount');
-            const maxLength = 520;
-            const currentLength = textarea.value.length;
-
-            charCount.textContent = `${currentLength}/${maxLength}`;
-
-            textarea.classList.remove('focus-ring-green', 'focus-ring-orange', 'focus-ring-red');
-
-            if (currentLength < maxLength / 2) {
-                textarea.classList.add('focus-ring-green');
-            } else if (currentLength < maxLength) {
-                textarea.classList.add('focus-ring-orange');
-            } else {
-                textarea.classList.add('focus-ring-red');
-            }
-            }
-
-            document.addEventListener('DOMContentLoaded', function () {
-            const textarea = document.getElementById('descricao');
-            textarea.addEventListener('input', updateCharacterCount);
-            updateCharacterCount(); 
-            });
-        </script>
+                const cardHeaders = document.querySelectorAll(
+                    ".connectedSortable .card-header",
+                );
+                cardHeaders.forEach((cardHeader) => {
+                    cardHeader.style.cursor = "move";
+                });
+            </script>
+            <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
+                integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"
+                integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y=" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
+                integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY=" crossorigin="anonymous"></script>
+            <script>
+                $('#conteudo').summernote({
+                    placeholder: 'Hello stand alone ui',
+                    tabsize: 2,
+                    height: 120,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['view', ['fullscreen', 'codeview', 'help']]
+                    ]
+                });
+            </script>
 </body>
 
 </html>
