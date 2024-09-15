@@ -38,7 +38,7 @@ Route::get('/dashboard', function () {
 Route::resource('certificados', CertificadoController::class);
 Route::get('certificados/{id}/download', [CertificadoController::class, 'download'])->name('certificados.download');
 Route::get('/certificados/{certificado}/view', [CertificadoController::class, 'viewCertificate'])->name('certificados.view');
-
+Route::delete('certificados/{certificado}', [CertificadoController::class, 'destroy'])->name('certificados.destroy');
 Route::get('noticias/create', [NoticiasController::class, 'create'])->name('noticias.create');
 Route::get('noticias/{slug}/edit', [NoticiasController::class, 'edit'])->name('noticias.edit');
 Route::post('noticias', [NoticiasController::class, 'store'])->name('noticias.store');

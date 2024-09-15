@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="title" content="AdminLTE v4 | Dashboard">
     <meta name="author" content="ColorlibHQ">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description"
         content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS.">
     <meta name="keywords"
@@ -49,7 +50,7 @@
                 ],
             });
         </script>
-        
+
 </head>
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
@@ -310,47 +311,102 @@
         </footer>
     </div>
     <style>
-                .focus-ring-green:focus {
-                    border-color: green;
-                    box-shadow: 0 0 0 0.25rem rgba(0, 128, 0, 0.25);
-                }
+        .focus-ring-green:focus {
+            border-color: green;
+            box-shadow: 0 0 0 0.25rem rgba(0, 128, 0, 0.25);
+        }
 
-                .focus-ring-orange:focus {
-                    border-color: orange;
-                    box-shadow: 0 0 0 0.25rem rgba(255, 165, 0, 0.25);
-                }
+        .focus-ring-orange:focus {
+            border-color: orange;
+            box-shadow: 0 0 0 0.25rem rgba(255, 165, 0, 0.25);
+        }
 
-                .focus-ring-red:focus {
-                    border-color: red;
-                    box-shadow: 0 0 0 0.25rem rgba(255, 0, 0, 0.25);
-                }
-            </style>
-            <script>
-                function updateCharacterCount() {
-                    const textarea = document.getElementById('descricao');
-                    const charCount = document.getElementById('charCount');
-                    const maxLength = 520;
-                    const currentLength = textarea.value.length;
+        .focus-ring-red:focus {
+            border-color: red;
+            box-shadow: 0 0 0 0.25rem rgba(255, 0, 0, 0.25);
+        }
+    </style>
+    <style>
+        .alert {
+            position: fixed;
+            top: 110px;
+            left: 30%;
+            transform: translateX(-50%);
+            padding: 1rem;
+            margin: 0;
+            border: 1px solid transparent;
+            border-radius: .20rem;
+            z-index: 1050;
+        }
+        .progress-bar-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: #f1f1f1;
+            overflow: hidden;
+        }
 
-                    charCount.textContent = `${currentLength}/${maxLength}`;
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #28a745;
+            transition: width 0.5s linear;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var alert = document.getElementById('alert');
+            var progressBar = document.getElementById('progress-bar');
 
-                    textarea.classList.remove('focus-ring-green', 'focus-ring-orange', 'focus-ring-red');
+            if (alert && progressBar) {
+                var duration = 5000;
+                var interval = 10;
+                var progress = 0;
 
-                    if (currentLength < maxLength / 2) {
-                        textarea.classList.add('focus-ring-green');
-                    } else if (currentLength < maxLength) {
-                        textarea.classList.add('focus-ring-orange');
-                    } else {
-                        textarea.classList.add('focus-ring-red');
+                function updateProgressBar() {
+                    progress += (interval / duration) * 100;
+                    progressBar.style.width = progress + '%';
+                    if (progress >= 100) {
+                        clearInterval(progressInterval);
+                        setTimeout(function () {
+                            alert.classList.remove('show');
+                            alert.classList.add('fade');
+                        }, 500);
                     }
                 }
+                var progressInterval = setInterval(updateProgressBar, interval);
+            }
+        });
+    </script>
 
-                document.addEventListener('DOMContentLoaded', function () {
-                    const textarea = document.getElementById('descricao');
-                    textarea.addEventListener('input', updateCharacterCount);
-                    updateCharacterCount();
-                });
-            </script>
+    <script>
+        function updateCharacterCount() {
+            const textarea = document.getElementById('descricao');
+            const charCount = document.getElementById('charCount');
+            const maxLength = 520;
+            const currentLength = textarea.value.length;
+
+            charCount.textContent = `${currentLength}/${maxLength}`;
+
+            textarea.classList.remove('focus-ring-green', 'focus-ring-orange', 'focus-ring-red');
+
+            if (currentLength < maxLength / 2) {
+                textarea.classList.add('focus-ring-green');
+            } else if (currentLength < maxLength) {
+                textarea.classList.add('focus-ring-orange');
+            } else {
+                textarea.classList.add('focus-ring-red');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const textarea = document.getElementById('descricao');
+            textarea.addEventListener('input', updateCharacterCount);
+            updateCharacterCount();
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js"
         integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -359,25 +415,25 @@
         integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script>
     @vite('resources/js/adminlte.js')
         @vite('resources/js/menu.js')
-    <script>
-        const SELECTOR_SIDEBAR_WRAPPER = ".sidebar-wrapper";
-        const Default = {
-            scrollbarTheme: "os-theme-light",
-            scrollbarAutoHide: "leave",
-            scrollbarClickScroll: true,
-            };
-            document.addEventListener("DOMContentLoaded", function () {
-            const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
-            if (sidebarWrapper && typeof OverlayScrollbarsGlobal ? .OverlayScrollbars !== "undefined") {
-                OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
-                scrollbars: {
-                            theme: Default.scrollbarTheme,
-                            autoHide: Default.scrollbarAutoHide,
-                            clickScroll: Default.scrollbarClickScroll,
+            <script>
+                const SELECTOR_SIDEBAR_WRAPPER = ".sidebar-wrapper";
+                const Default = {
+                    scrollbarTheme: "os-theme-light",
+                    scrollbarAutoHide: "leave",
+                    scrollbarClickScroll: true,
+                };
+                document.addEventListener("DOMContentLoaded", function () {
+                    const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+                    if (sidebarWrapper && typeof OverlayScrollbarsGlobal ? .OverlayScrollbars !== "undefined") {
+                        OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+                            scrollbars: {
+                                theme: Default.scrollbarTheme,
+                                autoHide: Default.scrollbarAutoHide,
+                                clickScroll: Default.scrollbarClickScroll,
                             },
-                    });
-                }
-            });
+                        });
+                    }
+                });
             </script>
             <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"
                 integrity="sha256-ipiJrswvAR4VAx/th+6zWsdeYmVae0iJuiR+6OqHJHQ=" crossorigin="anonymous"></script>
