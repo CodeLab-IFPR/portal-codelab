@@ -4,6 +4,7 @@ use App\Http\Controllers\MembroController;
 use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\ParceiroController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CertificadoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -34,6 +35,15 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::controller(CertificadoController::class)->group(function(){
+    Route::get('/certificados/create', 'create')->name('certificados.create');
+    Route::post('/certificados', 'store')->name('certificados.store');
+    Route::get('/certificados/{certificado}', 'show')->name('certificados.show');
+    Route::get('/certificados/{certificado}/download', 'download')->name('certificados.download');
+    Route::get('/certificados/{certificado}/view', 'viewCertificate')->name('certificados.view');
+    Route::get('/certificados/{certificado}/download-certificate', 'downloadCertificate')->name('certificados.downloadCertificate');
+});
+
 Route::get('noticias/create', [NoticiasController::class, 'create'])->name('noticias.create');
 Route::get('noticias/{slug}/edit', [NoticiasController::class, 'edit'])->name('noticias.edit');
 Route::post('noticias', [NoticiasController::class, 'store'])->name('noticias.store');
@@ -46,11 +56,12 @@ Route::get('noticias', [NoticiasController::class, 'index'])->name('noticias.ind
 
 Route::get('/about', [MembroController::class, 'about'])->name('about');
 
+Route::resource('membros', MembroController::class);
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('membros', MembroController::class);
+
     Route::resource('parceiros', ParceiroController::class);
 });
 require __DIR__.'/auth.php';

@@ -29,6 +29,7 @@
                 <tr>
                     <th>Imagem</th>
                     <th>Nome</th>
+                    <th>Ativo</th>
                     <th>Cargo</th>
                     <th>Biografia</th>
                     <th>Links</th>
@@ -42,6 +43,7 @@
 
                         <td><img src="/imagens/{{ $membro->imagem }}" alt="{{ $membro->alt }}" width="100px"></td>
                         <td>{{ $membro->nome }}</td>
+                        <td>{{ $membro->ativo ? 'Sim' : 'Não' }}</td>
                         <td>{{ $membro->cargo }}</td>
                         <td>{{ mb_strimwidth("$membro->biografia", 0, 250, "...") }}
                         </td>

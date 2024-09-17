@@ -112,7 +112,7 @@ Sobre Nós
         </div>
     </div>
     <div class="py-8">
-    <h2 class="display-5 fw-bold mb-6 text-center">Our team</h2>
+    <h2 class="display-5 fw-bold mb-6 text-center">Nossa equipe</h2>
     <div class="row g-6">
         @foreach ($membros as $membro)
         <div class="col-12 col-md-4">

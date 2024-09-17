@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->string('cargo');
+            $table->string('cpf')->unique();
+            $table->boolean('ativo')->default(true)->nullable();
             $table->text('biografia');
             $table->string('alt');
             $table->string('imagem');

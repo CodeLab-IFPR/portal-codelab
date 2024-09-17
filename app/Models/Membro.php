@@ -12,11 +12,17 @@ class Membro extends Model
     protected $fillable = [
         'nome',
         'cargo',
+        'cpf',
+        'ativo',
         'biografia',
         'imagem',
         'alt',
         'linkedin',
         'github'
     ];
-    
+
+    public function certificados()
+    {
+        return $this->hasMany(Certificado::class, 'membros_id');
+    }
 }

@@ -2,6 +2,11 @@
 
 return [
 
+    'aliases' => [
+    'PDF' => Barryvdh\DomPDF\Facade::class,
+    'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

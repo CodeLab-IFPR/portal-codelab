@@ -24,8 +24,8 @@ Membros - Cadastro
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="card-body">
+<div class="container d-flex justify-content-center">
+    <div class="card-body" style="max-width: 600px;">
         <form action="{{ route('membros.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
@@ -41,8 +41,23 @@ Membros - Cadastro
             <div class="mb-3">
                 <label for="inputCargo" class="form-label"><strong>*Cargo:</strong></label>
                 <input type="text" class="form-control @error('cargo') inválido @enderror" name="cargo" id="inputCargo"
-                    placeholder="Cargo..." value=" {{ old('cargo') }}" required>
+                    placeholder="Cargo..." value="{{ old('cargo') }}" required>
                 @error('cargo')
+                    <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label for="inputCpf" class="form-label"><strong>*CPF:</strong></label>
+                <input type="text" class="form-control @error('cpf') inválido @enderror" name="cpf" id="inputCpf"
+                    placeholder="CPF..." value="{{ old('cpf') }}" required>
+                @error('cpf')
+                    <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label for="inputAtivo" class="form-label"><strong>Ativo:</strong></label>
+                <input type="checkbox" name="ativo" class="form-check-input @error('ativo') is-invalid @enderror" id="inputAtivo" value="1" {{ $membro->ativo ?? 1 ? 'checked' : '' }}>
+                @error('ativo')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
@@ -74,24 +89,31 @@ Membros - Cadastro
                 @enderror
             </div>
 
-            <div id="additional-links"></div>
-
             <div class="mb-3">
-                <label for="inputImagem" class="form-label"><strong>*Imagem:</strong></label>
-                <input type="file" name="imagem" class="form-control @error('imagem') inválido @enderror"
-                    id="inputImagem" required>
-                @error('imagem')
+                <label for="inputAlt" class="form-label"><strong>*Alt:</strong></label>
+                <input type="text" class="form-control @error('alt') is-invalid @enderror" name="alt" id="inputAlt"
+                    placeholder="Texto alternativo..." value="{{ old('alt') }}" required>
+                @error('alt')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
 
+            <div id="additional-links"></div>
+
             <div class="mb-3">
-                <label for="inputAlt" class="form-label"><strong>Alt:</strong></label>
-                <input type="text" class="form-control @error('alt') inválido @enderror" name="alt" id="inputAlt"
-                    placeholder="Descrição da imagem..." value="{{ old('alt') }}" required>
-                @error('alt')
+                <label for="inputImagem" class="form-label"><strong>Imagem:</strong></label>
+                <input type="file" name="imagem" class="form-control @error('imagem') is-invalid @enderror image" id="inputImagem">
+                @error('imagem')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
+                <input type="hidden" name="cropped_image" id="cropped_image">
+            </div>
+
+            <div class="mb-3" id="croppedImageContainer" style="display: none;">
+                <label for="croppedImagePreview" class="form-label"><strong>Preview da Imagem:</strong></label>
+                <div id="croppedImagePreview" style="width: 160px; height: 160px; border: 1px solid #ddd; border-radius: 50%; overflow: hidden;">
+                    <img id="croppedImage" src="" alt="Imagem recortada" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
             </div>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -101,21 +123,117 @@ Membros - Cadastro
     </div>
 </div>
 
+<!-- Modal para Cropper.js -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Recortar Imagem</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="img-container" style="max-width: 100%; margin-top: 20px;">
+                            <img id="image" src="" alt="Imagem para recortar" style="max-width: 100%;">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="preview" style="width: 140px; height: 140px; border: 1px solid #ddd; border-radius: 50%; overflow: hidden;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="cancel-button">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="crop">Recortar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts necessários para Cropper.js -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.js"></script>
+
 <script>
-    document.getElementById('add-link').addEventListener('click', function () {
-        var additionalLinks = document.getElementById('additional-links');
-        var newField = document.createElement('div');
-        newField.classList.add('mb-3', 'input-group');
-        newField.innerHTML = `
-            <input class="form-control" name="link[]" placeholder="LinkedIn/Github/Discord...">
-            <button type="button" class="btn btn-outline-danger remove-link"><strong>-</strong></button>
-        `;
-        additionalLinks.appendChild(newField);
-    });
-    document.getElementById('additional-links').addEventListener('click', function (e) {
-        if (e.target.classList.contains('remove-link')) {
-            e.target.closest('.input-group').remove();
+// Manter o modal e a lógica de exibição da imagem ao recortar
+var $modal = $('#modal');
+var image = document.getElementById('image');
+var cropper;
+
+$("body").on("change", ".image", function(e){
+    var files = e.target.files;
+    var done = function (url) {
+        image.src = url;
+        $modal.modal('show');
+    };
+
+    var reader;
+    var file;
+
+    if (files && files.length > 0) {
+        file = files[0];
+
+        if (URL) {
+            done(URL.createObjectURL(file));
+        } else if (FileReader) {
+            reader = new FileReader();
+            reader.onload = function (e) {
+                done(reader.result);
+            };
+            reader.readAsDataURL(file);
         }
+    }
+});
+
+$modal.on('shown.bs.modal', function () {
+    cropper = new Cropper(image, {
+        aspectRatio: 1,
+        viewMode: 3,
+        preview: '.preview'
     });
+}).on('hidden.bs.modal', function () {
+    cropper.destroy();
+    cropper = null;
+});
+
+$("#crop").click(function(){
+    var canvas = cropper.getCroppedCanvas({
+        width: 160,
+        height: 160,
+    });
+
+    // Criando o canvas circular
+    var circleCanvas = document.createElement('canvas');
+    var circleCtx = circleCanvas.getContext('2d');
+    circleCanvas.width = 160;
+    circleCanvas.height = 160;
+
+    circleCtx.beginPath();
+    circleCtx.arc(80, 80, 80, 0, 2 * Math.PI);
+    circleCtx.closePath();
+    circleCtx.clip();
+
+    circleCtx.drawImage(canvas, 0, 0, 160, 160);
+
+    circleCanvas.toBlob(function(blob) {
+        var url = URL.createObjectURL(blob);
+        var reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = function() {
+            var base64data = reader.result; 
+            $('#cropped_image').val(base64data);
+            $('#croppedImage').attr('src', base64data); // Atualizar o src da imagem do preview
+            $('#croppedImagePreview').show(); // Mostrar o preview da imagem
+            $modal.modal('hide');
+        };
+    });
+});
+
 </script>
 @endsection
