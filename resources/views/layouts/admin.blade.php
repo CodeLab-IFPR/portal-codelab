@@ -448,35 +448,74 @@
                     });
                 });
 
-                const cardHeaders = document.querySelectorAll(
-                    ".connectedSortable .card-header",
-                );
-                cardHeaders.forEach((cardHeader) => {
-                    cardHeader.style.cursor = "move";
-                });
-            </script>
-            <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
-                integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"
-                integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y=" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
-                integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY=" crossorigin="anonymous"></script>
-            <script>
-                $('#conteudo').summernote({
-                    placeholder: 'Hello stand alone ui',
-                    tabsize: 2,
-                    height: 120,
-                    toolbar: [
-                        ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['table', ['table']],
-                        ['insert', ['link', 'picture', 'video']],
-                        ['view', ['fullscreen', 'codeview', 'help']]
-                    ]
-                });
-            </script>
+<script>
+    const cardHeaders = document.querySelectorAll(
+        ".connectedSortable .card-header",
+    );
+    cardHeaders.forEach((cardHeader) => {
+        cardHeader.style.cursor = "move";
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
+    integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"
+    integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
+    integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY=" crossorigin="anonymous"></script>
+<script>
+    $('#conteudo').summernote({
+        placeholder: 'Hello stand alone ui',
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#inputCpf').mask('000.000.000-00', {reverse: true});
+    });
+</script>
+<script>
+    document.querySelector('#cancel-button').addEventListener('click', function() {
+        $('#modal').modal('hide');
+        document.querySelector('#inputImagem').value = ''; 
+    });
+</script>
+<script>
+    document.getElementById('crop').addEventListener('click', function() {
+        document.getElementById('croppedImageContainer').style.display = 'block';
+    });
+</script>
+<script>
+    document.getElementById('inputImagem').addEventListener('change', function() {
+        if (this.files.length > 0) {
+            var file = this.files[0];
+            var done = function (url) {
+                document.getElementById('image').src = url;
+                $('#modal').modal('show');
+            };
+
+            if (URL) {
+                done(URL.createObjectURL(file));
+            } else if (FileReader) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    done(reader.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    });
+</script>
 </body>
 
 </html>

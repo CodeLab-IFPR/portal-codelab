@@ -24,15 +24,15 @@ Membros - Cadastro
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="card-body">
+<div class="container d-flex justify-content-center">
+    <div class="card-body" style="max-width: 600px;">
         <form action="{{ route('membros.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-3">
                 <label for="inputNome" class="form-label"><strong>*Nome:</strong></label>
                 <input type="text" name="nome" class="form-control @error('nome') inválido @enderror" id="inputNome"
-                    placeholder="Nome..." required>
+                    placeholder="Nome..." value="{{ old('nome') }}" required>
                 @error('nome')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -41,8 +41,23 @@ Membros - Cadastro
             <div class="mb-3">
                 <label for="inputCargo" class="form-label"><strong>*Cargo:</strong></label>
                 <input type="text" class="form-control @error('cargo') inválido @enderror" name="cargo" id="inputCargo"
-                    placeholder="Cargo..." required>
+                    placeholder="Cargo..." value="{{ old('cargo') }}" required>
                 @error('cargo')
+                    <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label for="inputCpf" class="form-label"><strong>*CPF:</strong></label>
+                <input type="text" class="form-control @error('cpf') inválido @enderror" name="cpf" id="inputCpf"
+                    placeholder="CPF..." value="{{ old('cpf') }}" required>
+                @error('cpf')
+                    <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label for="inputAtivo" class="form-label"><strong>Ativo:</strong></label>
+                <input type="checkbox" name="ativo" class="form-check-input @error('ativo') is-invalid @enderror" id="inputAtivo" value="1" {{ $membro->ativo ?? 1 ? 'checked' : '' }}>
+                @error('ativo')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
@@ -50,7 +65,7 @@ Membros - Cadastro
             <div class="mb-3">
                 <label for="inputBiografia" class="form-label"><strong>*Biografia:</strong></label>
                 <textarea class="form-control @error('biografia') inválido @enderror" style="height:150px"
-                    name="biografia" id="inputBiografia" placeholder="Biografia..." required></textarea>
+                    name="biografia" id="inputBiografia" placeholder="Biografia..." required>{{ old('biografia') }}</textarea>
                 @error('biografia')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -59,7 +74,7 @@ Membros - Cadastro
             <div class="mb-3">
                 <label for="inputLinkedin" class="form-label"><strong>LinkedIn:</strong></label>
                 <input type="url" class="form-control @error('linkedin') is-invalid @enderror" name="linkedin" id="inputLinkedin"
-                    placeholder="LinkedIn URL">
+                    placeholder="LinkedIn URL" value="{{ old('linkedin') }}">
                 @error('linkedin')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -68,7 +83,7 @@ Membros - Cadastro
             <div class="mb-3">
                 <label for="inputGithub" class="form-label"><strong>GitHub:</strong></label>
                 <input type="url" class="form-control @error('github') is-invalid @enderror" name="github" id="inputGithub"
-                    placeholder="GitHub URL">
+                    placeholder="GitHub URL" value="{{ old('github') }}">
                 @error('github')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -77,7 +92,7 @@ Membros - Cadastro
             <div class="mb-3">
                 <label for="inputAlt" class="form-label"><strong>*Alt:</strong></label>
                 <input type="text" class="form-control @error('alt') is-invalid @enderror" name="alt" id="inputAlt"
-                    placeholder="Texto alternativo..." required>
+                    placeholder="Texto alternativo..." value="{{ old('alt') }}" required>
                 @error('alt')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -86,12 +101,19 @@ Membros - Cadastro
             <div id="additional-links"></div>
 
             <div class="mb-3">
-                <label for="inputImagem" class="form-label"><strong>*Imagem:</strong></label>
-                <input type="file" name="imagem" class="form-control @error('imagem') inválido @enderror image" id="inputImagem" required>
+                <label for="inputImagem" class="form-label"><strong>Imagem:</strong></label>
+                <input type="file" name="imagem" class="form-control @error('imagem') is-invalid @enderror image" id="inputImagem">
                 @error('imagem')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
                 <input type="hidden" name="cropped_image" id="cropped_image">
+            </div>
+
+            <div class="mb-3" id="croppedImageContainer" style="display: none;">
+                <label for="croppedImagePreview" class="form-label"><strong>Preview da Imagem:</strong></label>
+                <div id="croppedImagePreview" style="width: 160px; height: 160px; border: 1px solid #ddd; border-radius: 50%; overflow: hidden;">
+                    <img id="croppedImage" src="" alt="Imagem recortada" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
             </div>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -106,26 +128,26 @@ Membros - Cadastro
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">Cortar Imagem</h5>
+                <h5 class="modal-title" id="modalLabel">Recortar Imagem</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="img-container">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <img id="image" src="" style="max-width: 100%; height: auto;">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="img-container" style="max-width: 100%; margin-top: 20px;">
+                            <img id="image" src="" alt="Imagem para recortar" style="max-width: 100%;">
                         </div>
-                        <div class="col-md-4">
-                            <div class="preview" style="width: 100%; height: 200px; overflow: hidden; border-radius: 50%;"></div>
-                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="preview" style="width: 140px; height: 140px; border: 1px solid #ddd; border-radius: 50%; overflow: hidden;"></div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="cancelButton">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="crop">Cortar</button>
+                <button type="button" class="btn btn-danger" id="cancel-button">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="crop">Recortar</button>
             </div>
         </div>
     </div>
@@ -139,76 +161,79 @@ Membros - Cadastro
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.js"></script>
 
 <script>
-    var $modal = $('#modal');
-    var image = document.getElementById('image');
-    var cropper;
+// Manter o modal e a lógica de exibição da imagem ao recortar
+var $modal = $('#modal');
+var image = document.getElementById('image');
+var cropper;
 
-    $("body").on("change", ".image", function(e){
-        var files = e.target.files;
-        var done = function (url) {
-            image.src = url;
-            $modal.modal('show');
-        };
+$("body").on("change", ".image", function(e){
+    var files = e.target.files;
+    var done = function (url) {
+        image.src = url;
+        $modal.modal('show');
+    };
 
-        var reader;
-        var file;
-        var url;
+    var reader;
+    var file;
 
-        if (files && files.length > 0) {
-            file = files[0];
+    if (files && files.length > 0) {
+        file = files[0];
 
-            if (URL) {
-                done(URL.createObjectURL(file));
-            } else if (FileReader) {
-                reader = new FileReader();
-                reader.onload = function (e) {
-                    done(reader.result);
-                };
-                reader.readAsDataURL(file);
-            }
+        if (URL) {
+            done(URL.createObjectURL(file));
+        } else if (FileReader) {
+            reader = new FileReader();
+            reader.onload = function (e) {
+                done(reader.result);
+            };
+            reader.readAsDataURL(file);
         }
+    }
+});
+
+$modal.on('shown.bs.modal', function () {
+    cropper = new Cropper(image, {
+        aspectRatio: 1,
+        viewMode: 3,
+        preview: '.preview'
+    });
+}).on('hidden.bs.modal', function () {
+    cropper.destroy();
+    cropper = null;
+});
+
+$("#crop").click(function(){
+    var canvas = cropper.getCroppedCanvas({
+        width: 160,
+        height: 160,
     });
 
-    $modal.on('shown.bs.modal', function () {
-        cropper = new Cropper(image, {
-            aspectRatio: 1, // Mantenha a proporção 1:1 para um círculo
-            viewMode: 3,
-            preview: '.preview'
-        });
-    }).on('hidden.bs.modal', function () {
-        cropper.destroy();
-        cropper = null;
+    // Criando o canvas circular
+    var circleCanvas = document.createElement('canvas');
+    var circleCtx = circleCanvas.getContext('2d');
+    circleCanvas.width = 160;
+    circleCanvas.height = 160;
+
+    circleCtx.beginPath();
+    circleCtx.arc(80, 80, 80, 0, 2 * Math.PI);
+    circleCtx.closePath();
+    circleCtx.clip();
+
+    circleCtx.drawImage(canvas, 0, 0, 160, 160);
+
+    circleCanvas.toBlob(function(blob) {
+        var url = URL.createObjectURL(blob);
+        var reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = function() {
+            var base64data = reader.result; 
+            $('#cropped_image').val(base64data);
+            $('#croppedImage').attr('src', base64data); // Atualizar o src da imagem do preview
+            $('#croppedImagePreview').show(); // Mostrar o preview da imagem
+            $modal.modal('hide');
+        };
     });
+});
 
-    $("#crop").click(function(){
-        canvas = cropper.getCroppedCanvas({
-            width: 160,
-            height: 160,
-        });
-
-        // Crie um canvas circular
-        var circleCanvas = document.createElement('canvas');
-        var circleCtx = circleCanvas.getContext('2d');
-        circleCanvas.width = 160;
-        circleCanvas.height = 160;
-
-        circleCtx.beginPath();
-        circleCtx.arc(80, 80, 80, 0, 2 * Math.PI);
-        circleCtx.closePath();
-        circleCtx.clip();
-
-        circleCtx.drawImage(canvas, 0, 0, 160, 160);
-
-        circleCanvas.toBlob(function(blob) {
-            url = URL.createObjectURL(blob);
-            var reader = new FileReader();
-            reader.readAsDataURL(blob);
-            reader.onloadend = function() {
-                var base64data = reader.result; 
-                $('#cropped_image').val(base64data);
-                $modal.modal('hide');
-            }
-        });
-    });
 </script>
 @endsection
