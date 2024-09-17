@@ -336,13 +336,78 @@
                 ]
             });
         </script>
-        <!-- Script para máscara de CPF -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-            <script>
-                $(document).ready(function(){
-                    $('#inputCpf').mask('000.000.000-00', {reverse: true});
-                });
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('#inputCpf').mask('000.000.000-00', {reverse: true});
+            });
             </script>
+        <script>
+            document.querySelector('#cancel-button').addEventListener('click', function() {
+            $('#modal').modal('hide');
+            document.querySelector('#inputImagem').value = ''; 
+        });
+        </script>
+        <script>
+            document.getElementById('crop').addEventListener('click', function() {
+            document.getElementById('croppedImageContainer').style.display = 'block';
+            });
+        </script>
+        <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var dropzone = document.getElementById('dropzone');
+        var inputImagem = document.getElementById('inputImagem');
+
+        dropzone.addEventListener('click', function() {
+            inputImagem.click();
+        });
+
+        dropzone.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            dropzone.classList.add('border-primary');
+        });
+
+        dropzone.addEventListener('dragleave', function() {
+            dropzone.classList.remove('border-primary');
+        });
+
+        dropzone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            dropzone.classList.remove('border-primary');
+            var files = e.dataTransfer.files;
+            if (files.length > 0) {
+                inputImagem.files = files;
+                var event = new Event('change');
+                inputImagem.dispatchEvent(event);
+            }
+        });
+
+        inputImagem.addEventListener('change', function() {
+            if (inputImagem.files.length > 0) {
+                dropzone.textContent = inputImagem.files[0].name;
+                // Abrir o modal quando a imagem é selecionada ou arrastada
+                var files = inputImagem.files;
+                var done = function (url) {
+                    document.getElementById('image').src = url;
+                    $('#modal').modal('show');
+                };
+
+                if (files && files.length > 0) {
+                    var file = files[0];
+                    if (URL) {
+                        done(URL.createObjectURL(file));
+                    } else if (FileReader) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            done(reader.result);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
+            }
+        });
+    });
+</script>
 </body>
 
 </html>

@@ -46,6 +46,7 @@ class CertificadoController extends Controller
     public function generateCertificate(Certificado $certificado, $download = false)
     {
         $name = $certificado->membro->nome;
+        $cpf = $certificado->membro->cpf;
         $credential = $certificado->token;
         $description = $certificado->descricao;
         $hours = $certificado->horas;
@@ -82,15 +83,18 @@ class CertificadoController extends Controller
 
 
         $pdf->AddFont('DejaVuSerifCondensed', '', 'AMAZI___.ttf',true);
+        $pdf->AddFont('DejaVuSans', '', 'DejaVuSans.ttf',true);
+
         $pdf->SetFont('DejaVuSerifCondensed', '', 12);
         $pdf->SetFontSize(30);
         $pdf->SetXY(35, 110);
         $pdf->Write(0, $name);
 
-        $pdf->SetFont('Helvetica');
+        $pdf->SetFont('DejaVuSans');
         $pdf->SetFontSize(12);
         $pdf->SetXY(35, 120);
-        $pdf->MultiCell(170, 8, $description);
+        $text = "O CDT certifica que $name, inscrito(a) no CPF $cpf $description, perfazendo um total de $hours horas de atividades.";
+        $pdf->MultiCell(170, 8, $text);
         
         $pdf->SetFont('Helvetica');
         $pdf->SetFontSize(12);
