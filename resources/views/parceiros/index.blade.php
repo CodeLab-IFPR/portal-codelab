@@ -1,4 +1,4 @@
-@extends('parceiros.layout')
+@extends('layouts.admin')
 
 @section('content')
 <div class="card mt-5">

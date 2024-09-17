@@ -4,27 +4,96 @@ namespace App\Http\Controllers;
 
 use App\Models\Certificado;
 use App\Models\Membro;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use setasign\Fpdi\Fpdi;
-use setasign\Fpdf\Fpdf;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Contracts\View\View;
 
 class CertificadoController extends Controller
 {
-    public function create()
+    public function index(Request $request): View
+{
+    $certificadosQuery = Certificado::latest();
+
+    if ($request->search) {
+        $certificadosQuery->where(function (Builder $builder) use ($request) {
+            $builder->where('descricao', 'like', "%{$request->search}%")
+                ->orWhere('horas', 'like', "%{$request->search}%")
+                ->orWhere('data', 'like', "%{$request->search}%")
+                ->orWhereHas('membro', function (Builder $query) use ($request) {
+                    $query->where('nome', 'like', "%{$request->search}%");
+                })
+                ->orWhere('token', 'like', "%{$request->search}%");
+        });
+    }
+
+    $certificados = $certificadosQuery->paginate(5);
+
+    if ($request->ajax()) {
+        return view('certificados.table', compact('certificados'));
+    }
+
+    return view('certificados.index', compact('certificados')); 
+}
+    public function create(): View
     {
         $membros = Membro::all();
         return view('certificados.create', compact('membros'));
     }
 
-    public function store(Request $request)
+    public function edit(Certificado $certificado): View
+    {
+        $membros = Membro::all();
+        $selectedMembro = $certificado->membros_id;
+        return view('certificados.edit', ['certificado' => $certificado, 'membros' => $membros,'selectedMembroId' => $selectedMembro, compact('certificado', 'membros')]);
+    }
+
+    public function update(Request $request, Certificado $certificado): RedirectResponse
     {
         $request->validate([
             'membros_id' => 'required',
-            'descricao' => 'required|string',
+            'descricao' => 'required|max:520',
             'horas' => 'required|integer',
             'data' => 'required|date',
+        ],[
+            'membros_id.required' => 'O campo membro é obrigatório',
+            'descricao.required' => 'O campo descrição é obrigatório',
+            'descricao.max' => 'O campo descrição deve ter no máximo 520 caracteres',
+            'horas.required' => 'O campo horas é obrigatório',
+            'horas.integer' => 'O campo horas deve ser um número inteiro',
+            'data.required' => 'O campo data é obrigatório',
+            'data.date' => 'O campo data deve ser uma data válida',
+        ]);
+
+        $certificado->update([
+            'membros_id' => $request->membros_id,
+            'descricao' => $request->descricao,
+            'horas' => $request->horas,
+            'data' => $request->data,
+        ]);
+
+        return redirect()->route("certificados.index")
+            ->with("success", "Certificado atualizado com sucesso.");
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'membros_id' => 'required',
+            'descricao' => 'required|max:520',
+            'horas' => 'required|integer',
+            'data' => 'required|date',
+        ],[
+            'membros_id.required' => 'O campo membro é obrigatório',
+            'descricao.required' => 'O campo descrição é obrigatório',
+            'descricao.max' => 'O campo descrição deve ter no máximo 520 caracteres',
+            'horas.required' => 'O campo horas é obrigatório',
+            'horas.integer' => 'O campo horas deve ser um número inteiro',
+            'data.required' => 'O campo data é obrigatório',
+            'data.date' => 'O campo data deve ser uma data válida',
         ]);
 
         $certificado = Certificado::create([
@@ -35,10 +104,11 @@ class CertificadoController extends Controller
             'data' => $request->data,
         ]);
 
-        return redirect()->route('certificados.show', $certificado);
+        return redirect()->route("certificados.index")
+            ->with("success", "Certificado criado com sucesso.");
     }
 
-    public function show(Certificado $certificado)
+    public function show(Certificado $certificado): View
     {
         return view('certificados.show', compact('certificado'));
     }
@@ -136,4 +206,38 @@ class CertificadoController extends Controller
     {
         return $this->generateCertificate($certificado, true);
     }
+
+    public function destroy($id)
+    {
+        try {
+            $certificado = Certificado::findOrFail($id);
+            $certificado->delete();
+
+            $certificados = Certificado::paginate(5);
+
+            if (request()->ajax()) {
+                return response()->json([
+                    'table' => view('certificados.table', compact('certificados'))->render()
+                ]);
+            }
+
+            return redirect()->route('certificados.index')->with('success', 'Certificado excluído com sucesso.');
+        } catch (\Exception $e) {
+            \Log::error('Erro ao excluir certificado: ' . $e->getMessage());
+            return response()->json(['error' => 'Erro ao excluir o certificado.'], 500);
+        }
+    }
+
+/**
+ *
+ * @param string $filePath
+ * @return void
+ */
+protected function deleteFileIfExists(string $filePath): void
+{
+    if (file_exists($filePath)) {
+        unlink($filePath);
+    }
+}
+
 }
