@@ -1,4 +1,4 @@
-@forelse($certificados as $certificado)
+<table class="table table-bordered table-striped mt-4">
     <thead>
         <tr>
             <th>Membro - Nome</th>
@@ -9,15 +9,13 @@
             <th>Ação</th>
         </tr>
     </thead>
-
     <tbody>
+        @forelse($certificados as $certificado)
             <tr>
                 <td>{{ $certificado->membro->nome }}</td>
-                <td>{{ mb_strimwidth("$certificado->descricao", 0, 250, "...") }}
-                </td>
-                <td>{{ $certificado->horas }} </td>
-                <td>{{ \Carbon\Carbon::parse($certificado->data)->format('d/m/Y') }}
-                </td>
+                <td>{{ mb_strimwidth("$certificado->descricao", 0, 250, "...") }}</td>
+                <td>{{ $certificado->horas }}</td>
+                <td>{{ \Carbon\Carbon::parse($certificado->data)->format('d/m/Y') }}</td>
                 <td>{{ $certificado->token }}</td>
                 <td>
                     <div class="dropdown">
@@ -40,9 +38,7 @@
                                 </a>
                             </li>
                             <li>
-                                <form
-                                    action="{{ route('certificados.destroy',$certificado->id) }}"
-                                    method="POST" style="display:inline;">
+                                <form action="{{ route('certificados.destroy',$certificado->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="dropdown-item d-flex align-items-center">
@@ -58,11 +54,12 @@
             <tr>
                 <td colspan="6">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                        <a class="btn btn-outline-success btn-sm"
-                            href="{{ route('certificados.create') }}"> <i class="fa fa-plus"></i>
-                            Adicionar Certificado</a>
+                        <a class="btn btn-outline-success btn-sm" href="{{ route('certificados.create') }}">
+                            <i class="fa fa-plus"></i> Adicionar Certificado
+                        </a>
                     </div>
                 </td>
             </tr>
+        @endforelse
     </tbody>
-@endforelse
+</table>
