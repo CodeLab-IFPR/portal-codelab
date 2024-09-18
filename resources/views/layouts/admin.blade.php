@@ -240,9 +240,11 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon bi bi-circle"></i>
-                                        <p>Notícia</p>
+                                <a href="{{ route('noticias.index') }}"
+                                        class="nav-link {{ request()->routeIs('noticias.index') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('membros.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Noticias</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
