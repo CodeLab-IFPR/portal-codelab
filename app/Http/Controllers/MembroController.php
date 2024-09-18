@@ -166,7 +166,6 @@ class MembroController extends Controller
 
             return redirect()->route('membros.index')->with('success', 'Membro excluído com sucesso.');
         } catch (\Exception $e) {
-            \Log::error('Erro ao excluir membro: ' . $e->getMessage());
             return response()->json(['error' => 'Erro ao excluir o membro.'], 500);
         }
     }

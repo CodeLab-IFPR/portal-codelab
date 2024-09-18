@@ -69,7 +69,7 @@ Membros - Lista
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $membro->id }}">
                                     <li>
                                         <a class="dropdown-item d-flex align-items-center"
-                                            href="{{ route('membros.view', $membro->id) }}">
+                                            href="{{ route('membros.show', $membro->id) }}">
                                             <i class="bi bi-eye text-secondary me-2"></i> Visualizar
                                         </a>
                                     </li>
@@ -150,6 +150,7 @@ Membros - Lista
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
         $('body').on('click', '.btn-delete', function (e) {
             e.preventDefault();
             var url = $(this).data('url');
@@ -175,8 +176,12 @@ Membros - Lista
                 url: url,
                 method: 'DELETE',
                 success: function (response) {
-                    $('#membros-table').html(response.table);
-                    $('#confirmDeleteModal').modal('hide');
+                    if (response.table) {
+                        $('#membros-table').html(response.table);
+                        $('#confirmDeleteModal').modal('hide');
+                    } else {
+                        alert('Erro ao atualizar a tabela.');
+                    }
                 },
                 error: function (xhr) {
                     console.log(xhr.responseText);
