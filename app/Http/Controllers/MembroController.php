@@ -6,7 +6,6 @@ use App\Models\Membro;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
 
 class MembroController extends Controller
@@ -137,20 +136,28 @@ class MembroController extends Controller
         return redirect()->route("membros.index")
             ->with("success", "Membro atualizado com sucesso.");
     }
+    
 
     public function destroy(Membro $membro): RedirectResponse
     {
-        // Remove a imagem associada ao membro se existir
-        if ($membro->imagem) {
-            $imagePath = public_path('imagens/' . $membro->imagem);
-            if (File::exists($imagePath)) {
-                File::delete($imagePath);
+        try {
+
+            if ($membro->imagem) {
+                $imagePath = public_path('imagens/' . $membro->imagem);
+                if (File::exists($imagePath)) {
+                    File::delete($imagePath);
+                }
             }
+
+            $membro = Membro::findOrFail($membro->id);
+            $membro->delete();
+
+            $membros = Membro::paginate(5);
+
+            return redirect()->route('membros.index')->with('success', 'Membro excluído com sucesso.');
+        } catch (\Exception $e) {
+            \Log::error('Erro ao excluir membro: ' . $e->getMessage());
+            return response()->json(['error' => 'Erro ao excluir o membro.'], 500);
         }
-
-        $membro->delete();
-
-        return redirect()->route('membros.index')
-                         ->with('success', 'Membro deletado.');
     }
 }

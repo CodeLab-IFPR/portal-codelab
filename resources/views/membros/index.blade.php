@@ -158,23 +158,12 @@
             $('#membro-cargo').text(cargo);
             $('#membro-ativo').text(ativo);
 
-            $('#confirmDeleteButton').data('url', url);
+            $('#deleteForm').attr('action', url); // Atualize a ação do formulário
             $('#confirmDeleteModal').modal('show');
         });
 
         $('#confirmDeleteButton').on('click', function () {
-            var url = $(this).data('url');
-            $.ajax({
-                url: url,
-                method: 'DELETE',
-                success: function (response) {
-                    location.reload();
-                },
-                error: function (xhr) {
-                    console.log(xhr.responseText);
-                    alert('Ocorreu um erro ao tentar excluir o membro.');
-                }
-            });
+            $('#deleteForm').submit(); // Submeta o formulário de exclusão
         });
     });
 </script>
