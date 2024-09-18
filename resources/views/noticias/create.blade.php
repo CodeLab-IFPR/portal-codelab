@@ -17,8 +17,8 @@
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="card-body">
+<div class="container d-flex justify-content-center">
+    <div class="card-body" style="max-width: 600px;">
         <form action="{{ route('noticias.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
@@ -67,12 +67,10 @@
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-            <input type="submit" class="btn btn-outline-secondary" value="Salvar">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <input type="submit" class="btn btn-outline-success" value="Salvar">
             </div>
-
         </form>
-
     </div>
 </div>
 @endsection 
