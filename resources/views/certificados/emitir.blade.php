@@ -9,7 +9,6 @@ Emitir Certificado
     <div class="text-center">
         <h1>Emitir Certificados</h1>
 
-        <!-- Formulário para busca de certificados por CPF -->
         <form id="cpfForm" class="mb-2">
             <div class="mb-3">
                 <label for="cpf" class="form-label">Digite seu CPF:</label>
@@ -18,19 +17,15 @@ Emitir Certificado
             <button type="submit" class="btn btn-primary">Buscar Certificados</button>
         </form>
 
-        <!-- Onde os certificados aparecerão -->
         <div id="certificadosList"></div>
     </div>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        console.log('Script de emissão carregado'); // Verifica se o script está carregado
-
-        // Função para aplicar a máscara de CPF
         function aplicarMascaraCPF(valor) {
-            valor = valor.replace(/\D/g, ''); // Remove tudo que não é número
-            valor = valor.substring(0, 11); // Limita o comprimento a 11 caracteres
+            valor = valor.replace(/\D/g, '');
+            valor = valor.substring(0, 11);
             if (valor.length > 9) {
                 valor = valor.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
             } else if (valor.length > 6) {
@@ -49,13 +44,10 @@ Emitir Certificado
         });
 
         document.getElementById('cpfForm').addEventListener('submit', function (e) {
-            e.preventDefault(); // Previne o comportamento padrão de submit
-            console.log('Formulário enviado'); // Verifica se o formulário está sendo enviado
+            e.preventDefault();
 
-            let cpf = document.getElementById('cpf').value; // Obtém o valor do CPF digitado
-            console.log('CPF digitado:', cpf); // Mostra o CPF no console
+            let cpf = document.getElementById('cpf').value; 
 
-            // Envia a requisição AJAX para a rota de buscar certificados
             fetch('{{ route('certificados.buscar') }}', {
                     method: 'POST',
                     headers: {
@@ -64,16 +56,14 @@ Emitir Certificado
                     },
                     body: JSON.stringify({
                         cpf: cpf
-                    }) // Envia o CPF no corpo da requisição
+                    })
                 })
                 .then(response => {
-                    console.log('Resposta recebida:', response); // Verifica a resposta da requisição
-                    return response.json(); // Processa a resposta como JSON
+                    return response.json();
                 })
                 .then(data => {
-                    console.log('Dados recebidos:', data); // Verifica os dados recebidos
                     let certificadosList = document.getElementById('certificadosList');
-                    certificadosList.innerHTML = ''; // Limpa a lista de certificados
+                    certificadosList.innerHTML = '';
 
                     if (data.certificados && data.certificados.length > 0) {
                         let table = '<table class="table"><thead><tr><th>Descrição</th><th>Horas</th><th>Ações</th></tr></thead><tbody>';
@@ -94,7 +84,7 @@ Emitir Certificado
                     }
                 })
                 .catch(error => {
-                    console.error('Erro ao buscar certificados:', error); // Exibe erros no console
+                    console.error('Erro ao buscar certificados:', error); 
                 });
         });
     });

@@ -14,6 +14,44 @@
     <link rel="mask-icon" src="{{ asset('img/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        if (token) {
+            const campoToken = document.getElementById('token');
+            if (campoToken) {
+                campoToken.value = token;
+            }
+
+            const formulario = document.getElementById('validar-certificado-form');
+            if (formulario) {
+                // Enviar o formulário via JavaScript
+                fetch('{{ route('certificados.validar.post') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: new URLSearchParams({
+                        'token': token,
+                        '_token': '{{ csrf_token() }}'
+                    })
+                })
+                .then(response => response.json())
+                .then(data => handleResponse(data))
+                .catch(error => {
+                    console.error('Erro:', error);
+                    document.getElementById('error-message').innerText = 'Ocorreu um erro ao validar o certificado.';
+                    document.getElementById('error-message').style.display = 'block';
+                    document.getElementById('certificado-detalhes').style.display = 'none';
+                });
+            }
+        }
+    });
+</script>
+
     
     @vite('resources/css/libs.bundle.css')    
     @vite('resources/css/theme.bundle.css')
@@ -67,7 +105,7 @@
                                         <div class="position-relative">
                                             <h6 class="dropdown-heading">Validar Certificado</h6>
                                             <p class="text-muted">Valide certificados de participação.</p>
-                                            <a href="#" class="fw-medium fs-7 text-decoration-none link-cover">Acessar &rarr;</a>
+                                            <a href="{{ route('certificados.validar') }}" class="fw-medium fs-7 text-decoration-none link-cover">Acessar &rarr;</a>
                                         </div>
                                     </div>                              
                                 </div>

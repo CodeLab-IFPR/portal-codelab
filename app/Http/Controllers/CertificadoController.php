@@ -195,7 +195,6 @@ class CertificadoController extends Controller
 
     public function generateCertificate(Certificado $certificado, $download = false)
 {
-    // Verifica se o membro está carregado corretamente
     $membro = $certificado->membro;
     if (!$membro) {
         Log::error('Membro associado ao certificado não encontrado.', ['certificado_id' => $certificado->id]);
@@ -208,8 +207,8 @@ class CertificadoController extends Controller
     $description = $certificado->descricao;
     $hours = $certificado->horas;
     $date = (new \DateTime($certificado->data))->format('d/m/Y');
-
-    $qrCode = QrCode::format('png')->size(500)->generate($credential);
+    $url = route('certificados.validar', ['token' => $credential]);
+    $qrCode = QrCode::format('png')->size(500)->generate($url);
     $qrCodeDir = public_path('qr');
     $qrCodePath = $qrCodeDir . '/' . $credential . '.png';
 
