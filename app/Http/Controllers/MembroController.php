@@ -10,9 +10,13 @@ use Illuminate\Support\Facades\File;
 
 class MembroController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         $membros = Membro::latest()->paginate(5);
+
+        if ($request->ajax()) {
+            return view('membros.table', compact('membros'));
+        }
         
         return view('membros.index',compact('membros'));
     }
@@ -138,9 +142,10 @@ class MembroController extends Controller
     }
     
 
-    public function destroy(Membro $membro): RedirectResponse
+    public function destroy($id)
     {
         try {
+            $membro = Membro::findOrFail($id);
 
             if ($membro->imagem) {
                 $imagePath = public_path('imagens/' . $membro->imagem);
@@ -149,10 +154,15 @@ class MembroController extends Controller
                 }
             }
 
-            $membro = Membro::findOrFail($membro->id);
             $membro->delete();
 
             $membros = Membro::paginate(5);
+
+            if (request()->ajax()) {
+                return response()->json([
+                    'table' => view('membros.table', compact('membros'))->render()
+                ]);
+            }
 
             return redirect()->route('membros.index')->with('success', 'Membro excluído com sucesso.');
         } catch (\Exception $e) {

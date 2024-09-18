@@ -52,6 +52,7 @@ Route::get('noticias', [NoticiasController::class, 'index'])->name('noticias.ind
 Route::get('/about', [MembroController::class, 'about'])->name('about');
 
 Route::resource('membros', MembroController::class);
+Route::get('/membros/{membro}/view', [MembroController::class, 'viewMembro'])->name('membros.view');
 Route::delete('membros/{membro}', [MembroController::class, 'destroy'])->name('membros.destroy');
 
 Route::resource('parceiros', ParceiroController::class);

@@ -1,16 +1,23 @@
 @extends('layouts.admin')
+
+<!-- Título -->
+@section('title')
+Membros - Lista
+@endsection
+<!-- Título -->
+
 @section('content')
 <div class="app-content-header">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h3 class="mb-0">Membro - Lista</h3>
+                <h3 class="mb-0">Membros - Lista</h3>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        Membro - Lista
+                        Membros - Lista
                     </li>
                 </ol>
             </div>
@@ -18,6 +25,7 @@
     </div>
 </div>
 <div class="container">
+
     <div class="card-body">
 
         @if(session('success'))
@@ -31,15 +39,14 @@
             </div>
         @endif
 
-        <table class="table table-bordered table-striped mt-4">
+        <table class="table table-bordered table-striped mt-4" id="membros-table">
             <thead>
                 <tr>
                     <th>Imagem</th>
                     <th>Nome</th>
+                    <th>Cpf</th>
                     <th>Ativo</th>
                     <th>Cargo</th>
-                    <th>Biografia</th>
-                    <th>Links</th>
                     <th>Ação</th>
                 </tr>
             </thead>
@@ -49,13 +56,9 @@
                     <tr>
                         <td><img src="/imagens/{{ $membro->imagem }}" alt="{{ $membro->alt }}" width="100px"></td>
                         <td>{{ $membro->nome }}</td>
+                        <td>{{ $membro->cpf }}</td>
                         <td>{{ $membro->ativo ? 'Sim' : 'Não' }}</td>
                         <td>{{ $membro->cargo }}</td>
-                        <td>{{ mb_strimwidth("$membro->biografia", 0, 250, "...") }}</td>
-                        <td>
-                            <a href="{{ $membro->linkedin }}" target="_blank">LinkedIn</a>
-                            <a href="{{ $membro->github }}" target="_blank">GitHub</a>
-                        </td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"
@@ -66,7 +69,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $membro->id }}">
                                     <li>
                                         <a class="dropdown-item d-flex align-items-center"
-                                            href="{{ route('membros.show', $membro->id) }}">
+                                            href="{{ route('membros.view', $membro->id) }}">
                                             <i class="bi bi-eye text-secondary me-2"></i> Visualizar
                                         </a>
                                     </li>
@@ -80,9 +83,8 @@
                                         <a href="#" class="dropdown-item d-flex align-items-center btn-delete"
                                             data-url="{{ route('membros.destroy', $membro->id) }}"
                                             data-nome="{{ $membro->nome }}"
-                                            data-descricao="{{ $membro->biografia }}"
-                                            data-cargo="{{ $membro->cargo }}"
-                                            data-ativo="{{ $membro->ativo ? 'Sim' : 'Não' }}">
+                                            data-cpf="{{ $membro->cpf }}"
+                                            data-cargo="{{ $membro->cargo }}">
                                             <i class="bi bi-trash text-danger me-2"></i> Deletar
                                         </a>
                                     </li>
@@ -92,11 +94,12 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7">
+                        <td colspan="6">
                             <div class="d-grid gap-2 d-md-flex justify-content-md-center">
                                 <a class="btn btn-outline-success btn-sm"
-                                    href="{{ route('membros.create') }}"> <i class="fa fa-plus"></i>
-                                    Adicionar membro</a>
+                                    href="{{ route('membros.create') }}">
+                                    <i class="fa fa-plus"></i> Adicionar Membro
+                                </a>
                             </div>
                         </td>
                     </tr>
@@ -120,10 +123,10 @@
             <div class="modal-body">
                 <p>Tem certeza de que deseja excluir este membro? Esta ação não pode ser desfeita.</p>
                 <div id="membro-info">
+                    <p><strong><img src="/imagens/{{ $membro->imagem }}" alt="{{ $membro->alt }}" width="100px"></p>
                     <p><strong>Nome:</strong> <span id="membro-nome"></span></p>
-                    <p><strong>Descrição:</strong> <span id="membro-descricao"></span></p>
+                    <p><strong>Cpf:</strong> <span id="membro-cpf"></span></p>
                     <p><strong>Cargo:</strong> <span id="membro-cargo"></span></p>
-                    <p><strong>Ativo:</strong> <span id="membro-ativo"></span></p>
                 </div>
             </div>
             <div class="modal-footer">
@@ -149,21 +152,31 @@
             e.preventDefault();
             var url = $(this).data('url');
             var nome = $(this).data('nome');
-            var descricao = $(this).data('descricao');
+            var cpf = $(this).data('cpf');
             var cargo = $(this).data('cargo');
-            var ativo = $(this).data('ativo');
 
             $('#membro-nome').text(nome);
-            $('#membro-descricao').text(descricao);
+            $('#membro-cpf').text(cpf);
             $('#membro-cargo').text(cargo);
-            $('#membro-ativo').text(ativo);
 
-            $('#deleteForm').attr('action', url); // Atualize a ação do formulário
+            $('#confirmDeleteButton').data('url', url);
             $('#confirmDeleteModal').modal('show');
         });
 
         $('#confirmDeleteButton').on('click', function () {
-            $('#deleteForm').submit(); // Submeta o formulário de exclusão
+            var url = $(this).data('url');
+            $.ajax({
+                url: url,
+                method: 'DELETE',
+                success: function (response) {
+                    $('#membros-table').html(response.table);
+                    $('#confirmDeleteModal').modal('hide');
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                    alert('Ocorreu um erro ao tentar excluir o membro.');
+                }
+            });
         });
     });
 </script>
