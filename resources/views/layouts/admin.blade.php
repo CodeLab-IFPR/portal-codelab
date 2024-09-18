@@ -191,11 +191,10 @@
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
                         data-accordion="false">
 
-                        <!-- Cadastro Section -->
                         <li
                             class="nav-item {{ request()->routeIs('noticias.create') || request()->routeIs('membros.create') || request()->routeIs('parceiros.create') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-speedometer"></i>
+                                <i class="nav-icon bi bi-journal-plus"></i>
                                 <p>
                                     Cadastro
                                     <i class="nav-arrow bi bi-chevron-right"></i>
@@ -206,7 +205,7 @@
                                     <a href="{{ route('noticias.create') }}"
                                         class="nav-link {{ request()->routeIs('noticias.create') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('noticias.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                            class="nav-icon bi {{ request()->routeIs('noticias.create') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Nova Notícia</p>
                                     </a>
                                 </li>
@@ -214,7 +213,7 @@
                                     <a href="{{ route('membros.create') }}"
                                         class="nav-link {{ request()->routeIs('membros.create') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('membros.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                            class="nav-icon bi {{ request()->routeIs('membros.create') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Novo Membro</p>
                                     </a>
                                 </li>
@@ -222,7 +221,7 @@
                                     <a href="{{ route('parceiros.create') }}"
                                         class="nav-link {{ request()->routeIs('parceiros.create') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('parceiros.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                            class="nav-icon bi {{ request()->routeIs('parceiros.create') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Novo Parceiro</p>
                                     </a>
                                 </li>
@@ -230,9 +229,9 @@
                         </li>
 
                         <li
-                            class="nav-item {{ request()->routeIs('membros.index') ? 'menu-open' : '' }}">
+                            class="nav-item {{ request()->routeIs('membros.index') || request()->routeIs('parceiros.index') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-box-seam-fill"></i>
+                                <i class="nav-icon bi bi-journal-text"></i>
                                 <p>
                                     Lista
                                     <i class="nav-arrow bi bi-chevron-right"></i>
@@ -241,7 +240,7 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="nav-icon bi bi-circle"></i>
+                                        <i class="nav-icon bi bi-play"></i>
                                         <p>Notícia</p>
                                     </a>
                                 </li>
@@ -249,7 +248,7 @@
                                     <a href="{{ route('membros.index') }}"
                                         class="nav-link {{ request()->routeIs('membros.index') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('membros.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                            class="nav-icon bi {{ request()->routeIs('membros.index') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Membro</p>
                                     </a>
                                 </li>
@@ -257,7 +256,7 @@
                                     <a href="{{ route('parceiros.index') }}"
                                         class="nav-link {{ request()->routeIs('parceiros.index') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('parceiros.index') ? 'bi-circle-fill' : 'bi-circle' }} "></i>
+                                            class="nav-icon bi {{ request()->routeIs('parceiros.index') ? 'bi-play-fill' : 'bi-play' }} "></i>
                                         <p>Parceiro</p>
                                     </a>
                                 </li>
@@ -266,7 +265,7 @@
                         <li
                             class="nav-item {{ request()->routeIs('certificados.index') || request()->routeIs('certificados.create') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-box-seam-fill"></i>
+                                <i class="nav-icon bi bi-award"></i>
                                 <p>
                                     Certificado
                                     <i class="nav-arrow bi bi-chevron-right"></i>

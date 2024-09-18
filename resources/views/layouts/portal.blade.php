@@ -55,9 +55,9 @@
                                             <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline opacity=".4" points="2 12 12 17 22 12"></polyline></svg>
                                         </span>
                                         <div class="position-relative">
-                                            <h6 class="dropdown-heading">Planejador de tarefas</h6>
-                                            <p class="text-muted">Planeje e agende suas tarefas semanais na web ou no celular por meio de nossos aplicativos para desktop ou celular.</p>
-                                            <a href="#" class="fw-medium fs-7 text-decoration-none link-cover">Leia mais &rarr;</a>
+                                            <h6 class="dropdown-heading">Certificado</h6>
+                                            <p class="text-muted">Emita seu certificado de participação</p>
+                                            <a href="{{ route('certificados.emitir') }}" class="fw-medium fs-7 text-decoration-none link-cover">Acessar &rarr;</a>
                                         </div>
                                     </div>
                                     <div class="col-auto me-4 mb-4 me-lg-0 mb-lg-0 col-lg-4 d-flex align-items-start">
@@ -65,21 +65,11 @@
                                             <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect opacity=".3" x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
                                         </span>
                                         <div class="position-relative">
-                                            <h6 class="dropdown-heading">Colaboração em equipe</h6>
-                                            <p class="text-muted">Convide membros ilimitados da equipe para visualizar, editar, comentar e criar páginas de destino com você.</p>
-                                            <a href="#" class="fw-medium fs-7 text-decoration-none link-cover">Leia mais &rarr;</a>
+                                            <h6 class="dropdown-heading">Validar Certificado</h6>
+                                            <p class="text-muted">Valide certificados de participação.</p>
+                                            <a href="#" class="fw-medium fs-7 text-decoration-none link-cover">Acessar &rarr;</a>
                                         </div>
-                                    </div>
-                                    <div class="col-auto me-4 mb-4 me-lg-0 mb-lg-0 col-lg-4 d-flex align-items-start">
-                                        <span class="f-w-16 d-block text-primary me-4 d-none d-lg-flex">
-                                            <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path opacity=".4" d="M13 6h3a2 2 0 0 1 2 2v7"></path><line opacity=".4" x1="6" y1="9" x2="6" y2="21"></line></svg>
-                                        </span>
-                                        <div class="position-relative">
-                                            <h6 class="dropdown-heading">Controle de versão</h6>
-                                            <p class="text-muted">Integração completa com Git, GitLab e Bitbucket para permitir facilmente o controle de versão.</p>
-                                            <a href="#" class="fw-medium fs-7 text-decoration-none link-cover">Leia mais &rarr;</a>
-                                        </div>
-                                    </div>                                
+                                    </div>                              
                                 </div>
                                 <div class="mt-4 border-top d-none d-lg-flex flex-column py-5">
                                     <p class="text-muted">Do blog</p>

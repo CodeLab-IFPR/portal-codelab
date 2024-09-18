@@ -7,6 +7,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CertificadoController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/certificados/emitir', [CertificadoController::class, 'emitir'])->name('certificados.emitir');
+Route::post('certificados/buscar', [CertificadoController::class, 'buscarCertificados'])->name('certificados.buscar');
+Route::get('/certificados/{certificado}/view', [CertificadoController::class, 'viewCertificate'])->name('certificados.view');
+Route::get('/certificados/{certificado}/download', [CertificadoController::class, 'downloadCertificate'])->name('certificados.download');
+Route::get('/certificados/validar', [CertificadoController::class, 'showValidationForm'])->name('certificados.validar');
+Route::post('/certificados/validar', [CertificadoController::class, 'validarCertificado'])->name('certificados.validar.post');
+
 Route::get('/', function () {
     return view('home');
 })->name('home');
@@ -51,6 +58,7 @@ Route::get('noticias', [NoticiasController::class, 'index'])->name('noticias.ind
 
 Route::get('/about', [MembroController::class, 'about'])->name('about');
 
+
 Route::resource('membros', MembroController::class);
 Route::resource('parceiros', ParceiroController::class);
 Route::middleware('auth')->group(function () {
@@ -58,5 +66,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-});
+});    
+
+
 require __DIR__.'/auth.php';

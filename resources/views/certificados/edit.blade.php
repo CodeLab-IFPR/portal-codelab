@@ -15,13 +15,17 @@ Certificado - Edição
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
+                    <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Certificado - Edição
+                    </li>
                 </ol>
             </div>
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="card-body">
+<div class="container d-flex justify-content-center">
+    <div class="card-body" style="max-width: 600px;">
         <form action="{{ route('certificados.update', $certificado->id) }}" method="POST"
             enctype="multipart/form-data">
             @csrf
@@ -71,8 +75,10 @@ Certificado - Edição
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <input type="submit" class="btn btn-outline-success" value="Atualizar Certificado">
+            <div class="d-flex justify-content-between">
+                <a href="{{ route('certificados.index') }}"
+                    class="btn btn-outline-danger">Cancelar</a>
+                <input type="submit" class="btn btn-outline-success" value="Atualizar">
             </div>
         </form>
     </div>
