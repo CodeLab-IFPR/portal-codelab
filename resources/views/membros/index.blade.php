@@ -84,7 +84,9 @@ Membros - Lista
                                             data-url="{{ route('membros.destroy', $membro->id) }}"
                                             data-nome="{{ $membro->nome }}"
                                             data-cpf="{{ $membro->cpf }}"
-                                            data-cargo="{{ $membro->cargo }}">
+                                            data-cargo="{{ $membro->cargo }}"
+                                            data-imagem="/imagens/{{ $membro->imagem }}"
+                                            data-alt="{{ $membro->alt }}">
                                             <i class="bi bi-trash text-danger me-2"></i> Deletar
                                         </a>
                                     </li>
@@ -123,7 +125,7 @@ Membros - Lista
             <div class="modal-body">
                 <p>Tem certeza de que deseja excluir este membro? Esta ação não pode ser desfeita.</p>
                 <div id="membro-info">
-                    <p><strong><img src="/imagens/{{ $membro->imagem }}" alt="{{ $membro->alt }}" width="100px"></p>
+                    <img id="membro-imagem" src="" alt="Imagem do Membro" width="100px">
                     <p><strong>Nome:</strong> <span id="membro-nome"></span></p>
                     <p><strong>Cpf:</strong> <span id="membro-cpf"></span></p>
                     <p><strong>Cargo:</strong> <span id="membro-cargo"></span></p>
@@ -154,10 +156,14 @@ Membros - Lista
             var nome = $(this).data('nome');
             var cpf = $(this).data('cpf');
             var cargo = $(this).data('cargo');
+            var imagem = $(this).data('imagem');
+            var alt = $(this).data('alt');
 
             $('#membro-nome').text(nome);
             $('#membro-cpf').text(cpf);
             $('#membro-cargo').text(cargo);
+            $('#membro-imagem').attr('src', imagem);
+            $('#membro-imagem').attr('alt', alt);
 
             $('#confirmDeleteButton').data('url', url);
             $('#confirmDeleteModal').modal('show');
