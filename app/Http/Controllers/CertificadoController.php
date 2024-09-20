@@ -23,33 +23,28 @@ class CertificadoController extends Controller
     public function buscarCertificados(Request $request): JsonResponse
     {
         try {
-            Log::info('Início da busca de certificados.', ['request' => $request->all()]);
 
             $request->validate([
                 'cpf' => 'required|string|max:14'
             ]);
 
             $cpf = $request->input('cpf');
-            Log::info('CPF recebido para busca:', ['cpf' => $cpf]);
 
             $membro = Membro::where('cpf', $cpf)->first();
             
             if ($membro) {
                 $certificados = Certificado::where('membros_id', $membro->id)->get();
-                Log::info('Certificados encontrados:', ['certificados' => $certificados]);
 
                 return response()->json([
                     'certificados' => $certificados
                 ]);
             } else {
-                Log::info('Nenhum membro encontrado com o CPF:', ['cpf' => $cpf]);
 
                 return response()->json([
                     'certificados' => []
                 ]);
             }
         } catch (\Exception $e) {
-            Log::error('Erro ao buscar certificados:', ['exception' => $e->getMessage()]);
             return response()->json(['error' => 'Erro ao buscar certificados.'], 500);
         }
     }
@@ -61,29 +56,22 @@ class CertificadoController extends Controller
 
     public function validarCertificado(Request $request): JsonResponse
     {
-        Log::info('Início da validação do certificado.');
 
         try {
             $request->validate([
                 'token' => 'required|string|max:10'
             ]);
 
-            Log::info('Validação do token foi bem-sucedida.');
-
             $token = $request->input('token');
-            Log::info('Token recebido: ' . $token);
 
             $certificado = Certificado::where('token', $token)->with('membro')->first();
             
             if ($certificado) {
-                Log::info('Certificado encontrado: ' . $certificado->id);
                 return response()->json(['certificado' => $certificado]);
             } else {
-                Log::warning('Certificado não encontrado para o token: ' . $token);
                 return response()->json(['error' => 'Certificado não encontrado.'], 404);
             }
         } catch (\Exception $e) {
-            Log::error('Erro ao validar certificado: ' . $e->getMessage());
             return response()->json(['error' => 'Ocorreu um erro ao validar o certificado.'], 500);
         }
     }
@@ -198,7 +186,6 @@ class CertificadoController extends Controller
 {
     $membro = $certificado->membro;
     if (!$membro) {
-        Log::error('Membro associado ao certificado não encontrado.', ['certificado_id' => $certificado->id]);
         throw new \Exception("Membro associado ao certificado não encontrado.");
     }
 
