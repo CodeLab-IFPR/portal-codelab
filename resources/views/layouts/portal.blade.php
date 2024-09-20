@@ -91,7 +91,7 @@
                         </div>
                     </li>    
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('noticias.index')}}">Notícias</a>
+                        <a class="nav-link" href="{{route('noticias.cards')}}">Notícias</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('about') }}">Sobre Nós</a>
@@ -132,7 +132,7 @@
                         <li><a href="{{ route('about') }}">Sobre Nós</a></li>
                         <li><a href="#">Junte-se</a></li>
                         <li><a href="#">Blog</a></li>
-                        <li><a href="#">Ultimas Noticias</a></li>
+                        <li><a href="#">Últimas Noticias</a></li>
                     </ul>
                 </div>
                 <div class="w-100 w-sm-50 w-lg-auto mb-4 mb-lg-0">
