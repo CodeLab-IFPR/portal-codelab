@@ -68,7 +68,9 @@
                 @enderror
             </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <input type="submit" class="btn btn-outline-success" value="Salvar">
+                <button type="submit" class="btn btn-outline-success">
+                    <i class="fas fa-plus"></i> Salvar
+                </button>
             </div>
         </form>
     </div>
