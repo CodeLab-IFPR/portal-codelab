@@ -25,8 +25,11 @@ Membros - Lista
     </div>
 </div>
 <div class="container">
-
-    <div class="card-body">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right: 10px;">
+            <a class="btn btn-outline-success btn-sm" href="{{ route('membros.create') }}">
+                <i class="fa fa-plus"></i> Adicionar Membro
+            </a>
+        </div>
 
         @if(session('success'))
             <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">
@@ -38,80 +41,21 @@ Membros - Lista
                 </div>
             </div>
         @endif
+        <div class="d-flex justify-content-center mb-4">
+            <form id="search-form" class="d-flex" method="GET" action="{{ route('membros.index') }}">
+            <input id="search-input" class="form-control me-2" type="search" name="search" placeholder="Buscar Membros"
+                aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+            </form>
+        </div>
 
-        <table class="table table-bordered table-striped mt-4" id="membros-table">
-            <thead>
-                <tr>
-                    <th>Imagem</th>
-                    <th>Nome</th>
-                    <th>Cpf</th>
-                    <th>Ativo</th>
-                    <th>Cargo</th>
-                    <th>Ação</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                @forelse($membros as $membro)
-                    <tr>
-                        <td><img src="/imagens/{{ $membro->imagem }}" alt="{{ $membro->alt }}" width="100px"></td>
-                        <td>{{ $membro->nome }}</td>
-                        <td>{{ $membro->cpf }}</td>
-                        <td>{{ $membro->ativo ? 'Sim' : 'Não' }}</td>
-                        <td>{{ $membro->cargo }}</td>
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"
-                                    id="dropdownMenuButton{{ $membro->id }}" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <i class="bi bi-gear"></i>
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $membro->id }}">
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center"
-                                            href="{{ route('membros.show', $membro->id) }}">
-                                            <i class="bi bi-eye text-secondary me-2"></i> Visualizar
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center"
-                                            href="{{ route('membros.edit', $membro->id) }}">
-                                            <i class="bi bi-pencil-square text-warning me-2"></i> Editar
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="dropdown-item d-flex align-items-center btn-delete"
-                                            data-url="{{ route('membros.destroy', $membro->id) }}"
-                                            data-nome="{{ $membro->nome }}"
-                                            data-cpf="{{ $membro->cpf }}"
-                                            data-cargo="{{ $membro->cargo }}"
-                                            data-imagem="/imagens/{{ $membro->imagem }}"
-                                            data-alt="{{ $membro->alt }}">
-                                            <i class="bi bi-trash text-danger me-2"></i> Deletar
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="6">
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                                <a class="btn btn-outline-success btn-sm"
-                                    href="{{ route('membros.create') }}">
-                                    <i class="fa fa-plus"></i> Adicionar Membro
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-
-        {!! $membros->withQueryString()->links('pagination::bootstrap-5') !!}
-
-    </div>
+        <div class="card-body">
+            <div id="membros-table-container">
+                @include('membros.table', ['membros' => $membros])
+            </div>
+        </div>
 </div>
 
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
@@ -151,6 +95,23 @@ Membros - Lista
             }
         });
 
+        $('#search-form').on('submit', function (e) {
+            e.preventDefault();
+            var query = $('#search-input').val();
+            $.ajax({
+                url: "{{ route('membros.index') }}",
+                type: 'GET',
+                data: { search: query },
+                success: function (response) {
+                    $('#membros-table-container').html(response.table);
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                    alert('Ocorreu um erro ao tentar buscar os membros.');
+                }
+            });
+        });
+
         $('body').on('click', '.btn-delete', function (e) {
             e.preventDefault();
             var url = $(this).data('url');
@@ -177,10 +138,10 @@ Membros - Lista
                 method: 'DELETE',
                 success: function (response) {
                     if (response.table) {
-                        $('#membros-table').html(response.table);
+                        $('#membros-table-container').html(response.table);
                         $('#confirmDeleteModal').modal('hide');
                     } else {
-                        alert('Erro ao atualizar a tabela.');
+                        location.reload();
                     }
                 },
                 error: function (xhr) {

@@ -13,7 +13,7 @@
     <tbody>
         @forelse($membros as $membro)
             <tr>
-                <td><img src="/imagens/{{ $membro->imagem }}" alt="{{ $membro->alt }}" width="100px"></td>
+                <td><img src="/imagens/membros/{{ $membro->imagem }}" alt="{{ $membro->alt }}" width="80px"></td>
                 <td>{{ $membro->nome }}</td>
                 <td>{{ $membro->cpf }}</td>
                 <td>{{ $membro->ativo ? 'Sim' : 'Não' }}</td>
@@ -44,7 +44,7 @@
                                     data-nome="{{ $membro->nome }}"
                                     data-cpf="{{ $membro->cpf }}"
                                     data-cargo="{{ $membro->cargo }}"
-                                    data-imagem="/imagens/{{ $membro->imagem }}"
+                                    data-imagem="/imagens/membros/{{ $membro->imagem }}"
                                     data-alt="{{ $membro->alt }}">
                                     <i class="bi bi-trash text-danger me-2"></i> Deletar
                                 </a>

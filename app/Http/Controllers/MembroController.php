@@ -4,21 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Models\Membro;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\File;
 
 class MembroController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request)
     {
-        $membros = Membro::latest()->paginate(5);
-
-        if ($request->ajax()) {
-            return view('membros.table', compact('membros'));
+        $membrosQuery = Membro::latest();
+    
+        if ($request->search) {
+            $membrosQuery->where(function (Builder $builder) use ($request) {
+                $builder->where('nome', 'like', "%{$request->search}%")
+                        ->orWhere('cpf', 'like', "%{$request->search}%")
+                        ->orWhere('cargo', 'like', "%{$request->search}%");
+            });
         }
-        
-        return view('membros.index',compact('membros'));
+    
+        $membros = $membrosQuery->paginate(5);
+    
+        if ($request->ajax()) {
+            return response()->json([
+                'table' => view('membros.table', compact('membros'))->render()
+            ]);
+        }
+    
+        return view('membros.index', compact('membros'));
     }
 
     public function about(): View
@@ -50,7 +63,10 @@ class MembroController extends Controller
         $entrada['ativo'] = $request->has('ativo') ? $request->ativo : false;
     
         if ($request->has('cropped_image')) {
-            $folderPath = public_path('imagens/');
+            $folderPath = public_path('imagens/membros/');
+            if (!File::exists($folderPath)) {
+                File::makeDirectory($folderPath, 0755, true);
+            }
             $image_parts = explode(";base64,", $request->cropped_image);
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
@@ -114,14 +130,14 @@ class MembroController extends Controller
         if ($request->has('cropped_image') && $request->cropped_image) {
             // Remove a imagem antiga se existir
             if ($membro->imagem) {
-                $oldImagePath = public_path('imagens/' . $membro->imagem);
+                $oldImagePath = public_path('imagens/membros/' . $membro->imagem);
                 if (File::exists($oldImagePath)) {
                     File::delete($oldImagePath);
                 }
             }
     
             // Salva a nova imagem
-            $folderPath = public_path('imagens/');
+            $folderPath = public_path('imagens/membros/');
             $image_parts = explode(";base64,", $request->cropped_image);
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
@@ -148,7 +164,7 @@ class MembroController extends Controller
             $membro = Membro::findOrFail($id);
 
             if ($membro->imagem) {
-                $imagePath = public_path('imagens/' . $membro->imagem);
+                $imagePath = public_path('imagens/membros/' . $membro->imagem);
                 if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
