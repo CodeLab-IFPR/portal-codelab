@@ -20,8 +20,8 @@ Certificado - Edição
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="card-body">
+<div class="container d-flex justify-content-center">
+    <div class="card-body" style="max-width: 600px;">
         <form action="{{ route('certificados.update', $certificado->id) }}" method="POST"
             enctype="multipart/form-data">
             @csrf
@@ -72,7 +72,9 @@ Certificado - Edição
                 @enderror
             </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <input type="submit" class="btn btn-outline-success" value="Atualizar Certificado">
+                <button type="submit" class="btn btn-outline-primary">
+                    <i class="fa-solid fa-floppy-disk"></i> Atualizar
+                </button>
             </div>
         </form>
     </div>

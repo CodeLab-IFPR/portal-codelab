@@ -34,6 +34,16 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tiny.cloud/1/7zo9iyuj1gb1fyw0uccbyarr0akkym7ki4hkoeb6tfq12zg5/tinymce/7/tinymce.min.js"
+        referrerpolicy="origin"></script>
     @vite('resources/css/adminlte.css"')
         <script>
             tinymce.init({
@@ -240,9 +250,11 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon bi bi-circle"></i>
-                                        <p>Notícia</p>
+                                <a href="{{ route('noticias.index') }}"
+                                        class="nav-link {{ request()->routeIs('noticias.index') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('membros.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Noticias</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -516,6 +528,79 @@
         }
     });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const mainElement = document.querySelector('main.app-main');
+
+        if (!mainElement) {
+            console.error('Elemento principal "main.app-main" não encontrado!');
+            return;
+        }
+
+        // Função para carregar e substituir conteúdo
+        const loadContent = (url) => {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP status ${response.status}`);
+                    return response.text();
+                })
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newContent = doc.querySelector('main.app-main');
+                    
+                    if (newContent) {
+                        mainElement.innerHTML = newContent.innerHTML;
+                        history.pushState(null, '', url);
+                    } else {
+                        console.error('O novo conteúdo não possui o seletor "main.app-main".');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar a página:', error);
+                });
+        };
+
+        // Adiciona apenas um event listener com event delegation
+        document.body.addEventListener('click', function (e) {
+            const link = e.target.closest('a');
+            if (link) {
+                const url = link.getAttribute('href');
+                if (url && url.startsWith('{{ url('/') }}') && !link.classList.contains('external-link')) {
+                    e.preventDefault();
+                    if (window.history && window.history.pushState) {
+                        loadContent(url);
+                    } else {
+                        location.href = url;
+                    }
+                }
+            }
+        });
+
+        // Lida com navegação de volta (popstate)
+        window.addEventListener('popstate', function () {
+            location.reload();
+        });
+    });
+</script>
+
+
+<script>
+        tinymce.init({
+            selector: '#inputConteudo',
+            language: 'pt_BR',
+            directionality: 'ltr',
+            toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons',
+            plugins: [
+                'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor',
+                'pagebreak',
+                'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen',
+                'insertdatetime',
+                'media', 'table', 'emoticons', 'help'
+            ],
+        });
+    </script>
 </body>
 
 </html>

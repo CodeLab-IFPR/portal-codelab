@@ -18,19 +18,5 @@ class Noticias extends Model
         'imagem',
         'categoria',
         'alt',
-        'slug',
     ];
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($noticia) {
-            $noticia->slug = Str::slug($noticia->titulo);
-        });
-
-        static::updating(function ($noticia) {
-            $noticia->slug = Str::slug($noticia->titulo);
-        });
-    }
 }

@@ -22,23 +22,23 @@ Submissão de Demandas
                 <div class="row g-5">
                     <div class="col-12 col-md-6">
                         <label class="form-label">Nome</label>
-                        <input type="text" class="form-control" name="name" placeholder="Seu Nome">
+                        <input type="text" class="form-control rounded" name="name" placeholder="Seu Nome">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" placeholder="seuemail@dominio.com">
+                        <input type="email" class="form-control rounded" name="email" placeholder="seuemail@dominio.com">
                     </div>
                     <div class="col-12">
                         <label class="form-label">Descrição da Demanda</label>
-                        <textarea name="demand_description" class="form-control" style="resize: none; height: 150px;" placeholder="Detalhe sua demanda aqui..."></textarea>
+                        <textarea name="demand_description" class="form-control rounded" style="resize: none; height: 150px;" placeholder="Detalhe sua demanda aqui..."></textarea>
                     </div>
                     <div class="col-12">
                         <label class="form-label">Utilidade Esperada</label>
-                        <textarea name="expected_utility" class="form-control" style="resize: none; height: 100px;" placeholder="Descreva a utilidade esperada..."></textarea>
+                        <textarea name="expected_utility" class="form-control rounded" style="resize: none; height: 100px;" placeholder="Descreva a utilidade esperada..."></textarea>
                     </div>
                     <div class="col-12">
                         <label class="form-label">Arquivo de Suporte (Anexo)</label>
-                        <input type="file" class="form-control" name="supporting_file">
+                        <input type="file" class="form-control rounded" name="supporting_file">
                     </div>
                     <div class="col-12 justify-content-end d-flex">
                         <button class="btn btn-primary" type="submit">Enviar Demanda</button>

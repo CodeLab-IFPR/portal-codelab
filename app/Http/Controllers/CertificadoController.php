@@ -5,46 +5,49 @@ namespace App\Http\Controllers;
 use App\Models\Certificado;
 use App\Models\Membro;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use setasign\Fpdi\Fpdi;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Illuminate\Contracts\View\View;
 
 class CertificadoController extends Controller
 {
-    public function index(Request $request): View
-{
-    $certificadosQuery = Certificado::latest();
+    public function index(Request $request)
+    {
+        $certificadosQuery = Certificado::latest();
 
-    if ($request->search) {
-        $certificadosQuery->where(function (Builder $builder) use ($request) {
-            $builder->where('descricao', 'like', "%{$request->search}%")
-                ->orWhere('horas', 'like', "%{$request->search}%")
-                ->orWhere('data', 'like', "%{$request->search}%")
-                ->orWhereHas('membro', function (Builder $query) use ($request) {
-                    $query->where('nome', 'like', "%{$request->search}%");
-                })
-                ->orWhere('token', 'like', "%{$request->search}%");
-        });
+        if ($request->search) {
+            $certificadosQuery->where(function (Builder $builder) use ($request) {
+                $builder->where('descricao', 'like', "%{$request->search}%")
+                    ->orWhere('horas', 'like', "%{$request->search}%")
+                    ->orWhere('data', 'like', "%{$request->search}%")
+                    ->orWhereHas('membro', function (Builder $query) use ($request) {
+                        $query->where('nome', 'like', "%{$request->search}%");
+                    })
+                    ->orWhere('token', 'like', "%{$request->search}%");
+            });
+        }
+
+        $certificados = $certificadosQuery->paginate(5);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'table' => view('certificados.table', compact('certificados'))->render()
+            ]);
+        }
+
+        return view('certificados.index', compact('certificados')); 
     }
 
-    $certificados = $certificadosQuery->paginate(5);
-
-    if ($request->ajax()) {
-        return view('certificados.table', compact('certificados'));
-    }
-
-    return view('certificados.index', compact('certificados')); 
-}
-    public function create(): View
+    public function create()
     {
         $membros = Membro::all();
         return view('certificados.create', compact('membros'));
     }
 
-    public function edit(Certificado $certificado): View
+    public function edit(Certificado $certificado)
     {
         $membros = Membro::all();
         $selectedMembro = $certificado->membros_id;
@@ -108,7 +111,7 @@ class CertificadoController extends Controller
             ->with("success", "Certificado criado com sucesso.");
     }
 
-    public function show(Certificado $certificado): View
+    public function show(Certificado $certificado)
     {
         return view('certificados.show', compact('certificado'));
     }
@@ -223,7 +226,6 @@ class CertificadoController extends Controller
 
             return redirect()->route('certificados.index')->with('success', 'Certificado excluído com sucesso.');
         } catch (\Exception $e) {
-            \Log::error('Erro ao excluir certificado: ' . $e->getMessage());
             return response()->json(['error' => 'Erro ao excluir o certificado.'], 500);
         }
     }

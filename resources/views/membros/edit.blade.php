@@ -99,7 +99,7 @@ Membros - Edição
                 <input type="file" name="imagem" class="form-control @error('imagem') is-invalid @enderror image" id="inputImagem">
                 @if($membro->imagem)
                     <p class="mt-2"><strong>Imagem atual:</strong></p>
-                    <img src="/imagens/{{ $membro->imagem }}" width="160px" class="mt-2">
+                    <img src="/imagens/membros/{{ $membro->imagem }}" width="160px" class="mt-2">
                 @endif
                 @error('imagem')
                     <div class="form-text text-danger">{{ $message }}</div>
@@ -115,7 +115,7 @@ Membros - Edição
             </div>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button type="submit" class="btn btn-outline-primary">Atualizar</button>
+                <button type="submit" class="btn btn-outline-primary"><i class="fa-solid fa-floppy-disk"></i> Atualizar</button>
             </div>
         </form>
     </div>

@@ -5,28 +5,49 @@ namespace App\Http\Controllers;
 use App\Models\Noticias;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 
 class NoticiasController extends Controller
 {
-    public function index(): View
+    public function index(Request $request)
     {
-        $noticias = Noticias::latest()->paginate(5);
+        $noticiasQuery = Noticias::latest();
+    
+        if ($request->search) {
+            $noticiasQuery->where(function (Builder $builder) use ($request) {
+                $builder->where('titulo', 'like', "%{$request->search}%")
+                        ->orWhere('autor', 'like', "%{$request->search}%")
+                        ->orWhere('categoria', 'like', "%{$request->search}%");
+            });
+        }
+    
+        $noticias = $noticiasQuery->paginate(5);
+    
+        if ($request->ajax()) {
+            return response()->json([
+                'table' => view('noticias.table', compact('noticias'))->render()
+            ]);
+        }
+    
         return view('noticias.index', compact('noticias'));
     }
 
     public function home(): View
-{
-    $noticias = Noticias::latest()->take(3)->get();
-    return view('home', compact('noticias'));
-}
+    {
+        $noticias = Noticias::latest()->take(3)->get();
+        return view('home', compact('noticias'));
+    }
+
+    public function cards(): View
+    {
+        $noticias = Noticias::latest()->paginate(6);
+        return view('noticias.cards', compact('noticias'));
+    }
 
     public function create(): View
     {
-        Log::info('Método create chamado.');
         return view('noticias.create');
     }
 
@@ -57,10 +78,12 @@ class NoticiasController extends Controller
         ]);
 
         $entrada = $request->all();
-        $entrada['slug'] = Str::slug($request->input('titulo'));
 
         if ($imagem = $request->file('imagem')) {
-            $destinationPath = 'imagens/';
+            $destinationPath = 'imagens/noticias/';
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0755, true);
+            }
             $profileImage = date('YmdHis') . "." . $imagem->getClientOriginalExtension();
             $imagem->move($destinationPath, $profileImage);
             $entrada['imagem'] = $profileImage;
@@ -71,22 +94,22 @@ class NoticiasController extends Controller
         return redirect()->route("noticias.index")
             ->with("success", "Notícia criada com sucesso.");
     }
-    public function show(string $slug): View
+
+    public function show(int $id): View
     {
-        $noticia = Noticias::where('slug', $slug)->firstOrFail();
+        $noticia = Noticias::findOrFail($id);
         return view("noticias.show", compact("noticia"));
     }
-    public function edit(string $slug): View
+
+    public function edit(int $id): View
     {
-        $noticia = Noticias::where('slug', $slug)->firstOrFail();
+        $noticia = Noticias::findOrFail($id);
         return view('noticias.edit', compact('noticia'));
     }
 
-    public function update(Request $request, string $slug): RedirectResponse
+    public function update(Request $request, $id): RedirectResponse
     {
-        Log::info('Método update chamado.');
-        Log::info('Dados recebidos: ', $request->all());
-
+    
         $request->validate([
             'titulo' => 'nullable|min:5|max:255',
             'autor' => 'nullable|min:3|max:255',
@@ -105,58 +128,66 @@ class NoticiasController extends Controller
             'imagem.mimes' => 'A imagem deve ser um dos seguintes formatos: jpeg, png, jpg.',
             'imagem.max' => 'A imagem não pode ter mais que 2MB.',
         ]);
-
-        Log::info('Validação concluída.');
-
+    
+    
         $entrada = $request->all();
-        $entrada['slug'] = Str::slug($request->input('titulo'));
-
-        $noticia = Noticias::where('slug', $slug)->firstOrFail();
-
+    
+        $noticia = Noticias::findOrFail($id);
+    
         if ($imagem = $request->file('imagem')) {
             if ($noticia->imagem) {
-                $oldImagePath = public_path('imagens/' . $noticia->imagem);
+                $oldImagePath = public_path('imagens/noticias/' . $noticia->imagem);
                 if (File::exists($oldImagePath)) {
                     File::delete($oldImagePath);
                 }
             }
-
-            $destinationPath = 'imagens/';
+    
+            $destinationPath = 'imagens/noticias/';
             $profileImage = date('YmdHis') . "_" . $noticia->id . "." . $imagem->getClientOriginalExtension();
             $imagem->move($destinationPath, $profileImage);
             $entrada['imagem'] = $profileImage;
         } else {
             unset($entrada['imagem']);
         }
-
-        Log::info('Dados para atualização: ', $entrada);
-
+    
+    
         try {
             $noticia->update($entrada);
-            Log::info('Atualização concluída.');
-
+    
             return redirect()->route('noticias.index')
                              ->with('success', 'Notícia atualizada com sucesso.');
         } catch (\Exception $e) {
-            Log::error('Erro ao atualizar a notícia: ' . $e->getMessage());
-
+    
             return redirect()->route('noticias.index')
                              ->with('error', 'Erro ao atualizar a notícia.');
         }
     }
 
-    public function destroy(string $slug): RedirectResponse
+    public function destroy($id)
     {
-        $noticia = Noticias::where('slug', $slug)->firstOrFail();
-        
-        if ($noticia->imagem) {
-            $imagePath = public_path('imagens/' . $noticia->imagem);
-            if (File::exists($imagePath)) {
-                File::delete($imagePath);
+        try {
+            $noticia = Noticias::findOrFail($id);
+    
+            if ($noticia->imagem) {
+                $imagePath = public_path('imagens/noticias/' . $noticia->imagem);
+                if (File::exists($imagePath)) {
+                    File::delete($imagePath);
+                }
             }
+    
+            $noticia->delete();
+    
+            $noticias = Noticias::paginate(5);
+    
+            if (request()->ajax()) {
+                return response()->json([
+                    'table' => view('noticias.table', compact('noticias'))->render()
+                ]);
+            }
+    
+            return redirect()->route('noticias.index')->with('success', 'Notícia excluída com sucesso.');
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao excluir a notícia.'], 500);
         }
-
-        return redirect()->route("noticias.index")
-            ->with("success", "Notícia deletada com sucesso.");
     }
 }

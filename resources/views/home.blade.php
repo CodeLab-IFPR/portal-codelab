@@ -709,34 +709,34 @@ Index
         </div>
         <!-- /Customer Reviews-->
 
-<!-- Latest Blog Posts-->
-<div class="bg-primary py-10">
+<!-- Latest news Posts-->
+<div id="noticias" class="bg-primary py-10">
     <div class="container">
-        <h4 class="fs-1 fw-bold mb-6 text-white text-center">Our latest articles</h4>
+        <h4 class="fs-1 fw-bold mb-6 text-white text-center">Últimas noticias</h4>
 
         <div class="row g-5">
             @foreach($noticias as $noticia)
-            <!-- Blog Post-->
+            <!-- News Post-->
             <div class="col-12 col-sm-6 col-lg-4">
-                <div class="d-flex h-100 bg-white rounded card overflow-hidden shadow-lg position-relative hover-lift">
+                <div class="d-flex h-100 bg-white rounded-4 card overflow-hidden shadow-lg position-relative hover-lift">
                     <picture>
-                        <img class="img-fluid" src="{{ asset('imagens/' . $noticia->imagem) }}" alt="{{ $noticia->alt }}">
+                        <img class="img-fluid" src="{{ asset('imagens/noticias/' . $noticia->imagem) }}" alt="{{ $noticia->alt }}">
                     </picture>
 
                     <div class="card-body p-4 p-lg-5">
                         <p class="card-title fw-medium mb-4">{{ $noticia->titulo }}</p>
-                        <a href="{{ route('noticias.show', $noticia->slug) }}" class="fw-medium fs-7 text-decoration-none link-cover">Read more &rarr;</a>
+                        <a href="{{ route('noticias.show', $noticia->id) }}" class="fw-medium fs-7 text-decoration-none link-cover">Ler mais... &rarr;</a>
                     </div>
                 </div>
             </div>
-            <!-- / Blog Post-->
+            <!-- / News Post-->
             @endforeach
         </div>
 
-        <a href="{{ route('noticias.index') }}" class="btn btn-white mx-auto mt-7 d-table fw-medium w-100 w-md-auto">More articles &rarr;</a>
+        <a href="{{ route('noticias.cards') }}" class="btn btn-white mx-auto mt-7 d-table fw-medium w-100 w-md-auto">Mais Noticias &rarr;</a>
     </div>
 </div>
-<!-- / Latest Blog Posts-->
+<!-- / Latest News Posts-->
 
         <!-- Product Features summary-->
         <div class="py-10">
