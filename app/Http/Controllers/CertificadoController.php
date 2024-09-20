@@ -12,11 +12,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use setasign\Fpdi\Fpdi;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Illuminate\Support\Facades\Log;
 
 class CertificadoController extends Controller
 {
-    public function emitir(): View
+    public function emitir()
     {
         return view('certificados.emitir');
     }
@@ -55,7 +54,7 @@ class CertificadoController extends Controller
         }
     }
 
-    public function showValidationForm(): View
+    public function showValidationForm()
     {
         return view('certificados.validar');
     }
@@ -89,7 +88,7 @@ class CertificadoController extends Controller
         }
     }
 
-    public function index(Request $request): View
+    public function index(Request $request)
     {
         $certificadosQuery = Certificado::latest();
 
@@ -116,7 +115,7 @@ class CertificadoController extends Controller
         return view('certificados.index', compact('certificados'));
     }
 
-    public function create(): View
+    public function create()
     {
         $membros = Membro::all();
         return view('certificados.create', compact('membros'));
