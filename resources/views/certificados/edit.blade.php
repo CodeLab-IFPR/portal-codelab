@@ -75,10 +75,11 @@ Certificado - Edição
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="d-flex justify-content-between">
-                <a href="{{ route('certificados.index') }}"
-                    class="btn btn-outline-danger">Cancelar</a>
-                <input type="submit" class="btn btn-outline-success" value="Atualizar">
+            <div class="d-grid gap-2 d-md-flex justify-content-between">
+                <a href="{{ route('certificados.index') }}" class="btn btn-outline-danger">Cancelar</a>
+                  <button type="submit" class="btn btn-outline-primary">
+                    <i class="fa-solid fa-floppy-disk"></i> Atualizar
+                  </button>
             </div>
         </form>
     </div>

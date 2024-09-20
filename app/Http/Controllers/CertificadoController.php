@@ -6,12 +6,12 @@ use App\Models\Certificado;
 use App\Models\Membro;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use setasign\Fpdi\Fpdi;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 
 class CertificadoController extends Controller
@@ -21,30 +21,30 @@ class CertificadoController extends Controller
         return view('certificados.emitir');
     }
 
-    public function buscarCertificados(Request $request)
+    public function buscarCertificados(Request $request): JsonResponse
     {
         try {
             Log::info('Início da busca de certificados.', ['request' => $request->all()]);
-    
+
             $request->validate([
                 'cpf' => 'required|string|max:14'
             ]);
-    
+
             $cpf = $request->input('cpf');
             Log::info('CPF recebido para busca:', ['cpf' => $cpf]);
-    
+
             $membro = Membro::where('cpf', $cpf)->first();
             
             if ($membro) {
                 $certificados = Certificado::where('membros_id', $membro->id)->get();
                 Log::info('Certificados encontrados:', ['certificados' => $certificados]);
-    
+
                 return response()->json([
                     'certificados' => $certificados
                 ]);
             } else {
                 Log::info('Nenhum membro encontrado com o CPF:', ['cpf' => $cpf]);
-    
+
                 return response()->json([
                     'certificados' => []
                 ]);
@@ -108,7 +108,9 @@ class CertificadoController extends Controller
         $certificados = $certificadosQuery->paginate(5);
 
         if ($request->ajax()) {
-            return view('certificados.table', compact('certificados'));
+            return response()->json([
+                'table' => view('certificados.table', compact('certificados'))->render()
+            ]);
         }
 
         return view('certificados.index', compact('certificados'));
@@ -120,7 +122,7 @@ class CertificadoController extends Controller
         return view('certificados.create', compact('membros'));
     }
 
-    public function edit(Certificado $certificado): View
+    public function edit(Certificado $certificado)
     {
         $membros = Membro::all();
         $selectedMembro = $certificado->membros_id;
@@ -188,7 +190,7 @@ class CertificadoController extends Controller
             ->with("success", "Certificado criado com sucesso.");
     }
 
-    public function show(Certificado $certificado): View
+    public function show(Certificado $certificado)
     {
         return view('certificados.show', compact('certificado'));
     }
@@ -307,7 +309,6 @@ class CertificadoController extends Controller
 
             return redirect()->route('certificados.index')->with('success', 'Certificado excluído com sucesso.');
         } catch (\Exception $e) {
-            Log::error('Erro ao excluir certificado: ' . $e->getMessage());
             return response()->json(['error' => 'Erro ao excluir o certificado.'], 500);
         }
     }

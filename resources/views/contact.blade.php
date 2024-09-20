@@ -79,26 +79,26 @@ Contate Nos
                 <div class="row g-5">
                     <div class="col-12 col-md-6">
                         <label class="form-label">Nome</label>
-                        <input type="text" class="form-control" name="name" placeholder="Faustão">
+                        <input type="text" class="form-control rounded" name="name" placeholder="Faustão">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" placeholder="xuxa@rainhadosexos.com.br">
+                        <input type="email" class="form-control rounded" name="email" placeholder="xuxa@rainhadosexos.com.br">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label">Compania</label>
-                        <input type="text" class="form-control" name="company" placeholder="Globo">
+                        <input type="text" class="form-control rounded" name="company" placeholder="Globo">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label">Telefone</label>
-                        <input type="text" class="form-control" name="telephone" placeholder="+55 (11) 9-9999-9999">
+                        <input type="text" class="form-control rounded" name="telephone" placeholder="+55 (11) 9-9999-9999">
                     </div>
                     <div class="col-12">
                         <label class="form-label">Mensagem</label>
-                        <textarea name="about" class="form-control" cols="30" rows="10"></textarea>
+                        <textarea name="about" class="form-control rounded" cols="30" rows="10"></textarea>
                     </div>
                     <div class="col-12 justify-content-end d-flex">
-                        <button class="btn btn-primary" type="submit">Enviar mensagem</button>
+                        <button class="btn btn-primary rounded" type="submit">Enviar mensagem</button>
                     </div>
                 </div>
             </form>
