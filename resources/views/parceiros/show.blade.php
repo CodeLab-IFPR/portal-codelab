@@ -1,42 +1,55 @@
-@extends('parceiros.layout')
+@extends('layouts.admin')
+
+<!-- Titulo -->
+@section('title')
+{{ $parceiro->nome }}
+@endsection
+<!-- Titulo -->
 
 @section('content')
-<div class="card mt-5">
-    <h2 class="card-header">Parceiro - {{ $parceiro->nome }}</h2>
-    <div class="card-body">
-
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a class="btn btn-primary btn-sm" href="{{ route('parceiros.index') }}"><i
-                    class="fa fa-arrow-left"></i> Voltar</a>
-        </div>
-
+<div class="app-content-header">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Nome:</strong> <br />
-                    {{ $parceiro->nome }}
-                </div>
+            <div class="col-sm-6">
+                <h3 class="mb-0">Parceiro - Visualização</h3>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>E-mail:</strong> <br />
-                    {{ $parceiro->email }}
-                </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                    <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Parceiro - Visualização
+                    </li>
+                </ol>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 mt-2">
-                <div class="form-group">
-                    <strong>URL:</strong> <br />
-                    {{ $parceiro->link }}
-                </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex align-items-center">
+                <img src="/imagens/parceiros/{{ $parceiro->imagem }}" alt="{{ $parceiro->alt }}" class="img-fluid rounded me-3" width="80px">
+                <h4 class="mb-0">{{ $parceiro->nome }}</h4>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Imagem:</strong><br />
-                    <img src="/imagens/{{ $parceiro->imagem }}" alt="{{ $parceiro->alt }}" width="500px">
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <strong>Nome:</strong>
+                        <p>{{ $parceiro->nome }}</p>
+                    </div>
+                    <div class="form-group">
+                        <strong>E-mail:</strong>
+                        <p>{{ $parceiro->email }}</p>
+                    </div>
+                    <div class="form-group">
+                        <strong>URL:</strong>
+                        <p><a href="{{ $parceiro->link }}" target="_blank">{{ $parceiro->link }}</a></p>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 @endsection
