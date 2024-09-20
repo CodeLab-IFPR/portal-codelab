@@ -226,7 +226,6 @@ class CertificadoController extends Controller
 
             return redirect()->route('certificados.index')->with('success', 'Certificado excluído com sucesso.');
         } catch (\Exception $e) {
-            \Log::error('Erro ao excluir certificado: ' . $e->getMessage());
             return response()->json(['error' => 'Erro ao excluir o certificado.'], 500);
         }
     }

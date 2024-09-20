@@ -6,7 +6,6 @@ use App\Models\Noticias;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -49,7 +48,6 @@ class NoticiasController extends Controller
 
     public function create(): View
     {
-        Log::info('Método create chamado.');
         return view('noticias.create');
     }
 
@@ -111,8 +109,6 @@ class NoticiasController extends Controller
 
     public function update(Request $request, $id): RedirectResponse
     {
-        Log::info('Método update chamado.');
-        Log::info('Dados recebidos: ', $request->all());
     
         $request->validate([
             'titulo' => 'nullable|min:5|max:255',
@@ -133,7 +129,6 @@ class NoticiasController extends Controller
             'imagem.max' => 'A imagem não pode ter mais que 2MB.',
         ]);
     
-        Log::info('Validação concluída.');
     
         $entrada = $request->all();
     
@@ -155,16 +150,13 @@ class NoticiasController extends Controller
             unset($entrada['imagem']);
         }
     
-        Log::info('Dados para atualização: ', $entrada);
     
         try {
             $noticia->update($entrada);
-            Log::info('Atualização concluída.');
     
             return redirect()->route('noticias.index')
                              ->with('success', 'Notícia atualizada com sucesso.');
         } catch (\Exception $e) {
-            Log::error('Erro ao atualizar a notícia: ' . $e->getMessage());
     
             return redirect()->route('noticias.index')
                              ->with('error', 'Erro ao atualizar a notícia.');
