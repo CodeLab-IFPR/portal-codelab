@@ -70,7 +70,9 @@ Certicados
                 @enderror
             </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <input type="submit" class="btn btn-outline-success" value="Criar Certificado">
+                <button type="submit" class="btn btn-outline-success">
+                    <i class="fas fa-plus"></i> Criar Certificado
+                </button>
             </div>
         </form>
     </div>
