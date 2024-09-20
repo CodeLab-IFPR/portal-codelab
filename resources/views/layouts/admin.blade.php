@@ -531,31 +531,60 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const links = document.querySelectorAll('a');
-        links.forEach(link => {
-            link.addEventListener('click', function (e) {
-                const url = this.getAttribute('href');
-                if (url && url.startsWith('{{ url('/') }}')) {
+        const mainElement = document.querySelector('main.app-main');
+
+        if (!mainElement) {
+            console.error('Elemento principal "main.app-main" não encontrado!');
+            return;
+        }
+
+        // Função para carregar e substituir conteúdo
+        const loadContent = (url) => {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP status ${response.status}`);
+                    return response.text();
+                })
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newContent = doc.querySelector('main.app-main');
+                    
+                    if (newContent) {
+                        mainElement.innerHTML = newContent.innerHTML;
+                        history.pushState(null, '', url);
+                    } else {
+                        console.error('O novo conteúdo não possui o seletor "main.app-main".');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar a página:', error);
+                });
+        };
+
+        // Adiciona apenas um event listener com event delegation
+        document.body.addEventListener('click', function (e) {
+            const link = e.target.closest('a');
+            if (link) {
+                const url = link.getAttribute('href');
+                if (url && url.startsWith('{{ url('/') }}') && !link.classList.contains('external-link')) {
                     e.preventDefault();
-                    fetch(url)
-                        .then(response => response.text())
-                        .then(html => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(html, 'text/html');
-                            const newContent = doc.querySelector('main.app-main').innerHTML;
-                            document.querySelector('main.app-main').innerHTML = newContent;
-                            history.pushState(null, '', url);
-                        })
-                        .catch(error => console.error('Erro ao carregar a página:', error));
+                    if (window.history && window.history.pushState) {
+                        loadContent(url);
+                    } else {
+                        location.href = url;
+                    }
                 }
-            });
+            }
         });
 
+        // Lida com navegação de volta (popstate)
         window.addEventListener('popstate', function () {
             location.reload();
         });
     });
 </script>
+
 
 <script>
         tinymce.init({

@@ -102,7 +102,7 @@ Notícias - Lista
                 },
                 error: function (xhr) {
                     console.log(xhr.responseText);
-                    alert('Ocorreu um erro ao tentar buscar as notícias.');
+                    alert('Ocorreu um erro ao tentar buscar os noticias.');
                 }
             });
         });
@@ -113,10 +113,13 @@ Notícias - Lista
             var titulo = $(this).data('titulo');
             var autor = $(this).data('autor');
             var categoria = $(this).data('categoria');
+            
+
 
             $('#noticia-titulo').text(titulo);
             $('#noticia-autor').text(autor);
             $('#noticia-categoria').text(categoria);
+
 
             $('#confirmDeleteButton').data('url', url);
             $('#confirmDeleteModal').modal('show');
@@ -137,7 +140,7 @@ Notícias - Lista
                 },
                 error: function (xhr) {
                     console.log(xhr.responseText);
-                    alert('Ocorreu um erro ao tentar excluir a notícia.');
+                    alert('Ocorreu um erro ao tentar excluir o noticia.');
                 }
             });
         });

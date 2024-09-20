@@ -25,10 +25,9 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $noticia->id }}">
                             <li>
-                                <a class="dropdown-item d-flex align-items-center"
-                                    href="{{ route('noticias.show', $noticia->id) }}">
-                                    <i class="bi bi-eye text-secondary me-2"></i> Visualizar
-                                </a>
+                            <a class="dropdown-item d-flex align-items-center external-link" href="{{ route('noticias.show', $noticia->id) }}">
+                                <i class="bi bi-eye text-secondary me-2"></i> Visualizar
+                            </a>
                             </li>
                             <li>
                                 <a class="dropdown-item d-flex align-items-center"

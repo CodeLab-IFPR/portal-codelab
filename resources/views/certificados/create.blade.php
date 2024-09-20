@@ -11,13 +11,13 @@ Certicados
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h3 class="mb-0">Certificado</h3>
+                <h3 class="mb-0">Certificado - Cadastro</h3>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        Certificado
+                    Certificado - Cadastro
                     </li>
                 </ol>
             </div>
