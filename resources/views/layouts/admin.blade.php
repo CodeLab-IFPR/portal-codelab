@@ -24,7 +24,7 @@
         integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
         integrity="sha384-Qsx5lrStHZyR9REqhUF8iQt73X06c8LGIUPzpOhwRrI=" crossorigin="anonymous">
-    <script src="https://cdn.tiny.cloud/1/no-key/tinymce/7/tinymce.min.js">
+    <script src="https://cdn.tiny.cloud/1/i6174a4p21k3bvgofjdjglzvdfxrle8qza1n62srherxw93i/tinymce/7/tinymce.min.js">
     </script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
@@ -201,11 +201,10 @@
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
                         data-accordion="false">
 
-                        <!-- Cadastro Section -->
                         <li
                             class="nav-item {{ request()->routeIs('noticias.create') || request()->routeIs('membros.create') || request()->routeIs('parceiros.create') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-speedometer"></i>
+                                <i class="nav-icon bi bi-journal-plus"></i>
                                 <p>
                                     Cadastro
                                     <i class="nav-arrow bi bi-chevron-right"></i>
@@ -216,7 +215,7 @@
                                     <a href="{{ route('noticias.create') }}"
                                         class="nav-link {{ request()->routeIs('noticias.create') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('noticias.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                            class="nav-icon bi {{ request()->routeIs('noticias.create') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Nova Notícia</p>
                                     </a>
                                 </li>
@@ -224,7 +223,7 @@
                                     <a href="{{ route('membros.create') }}"
                                         class="nav-link {{ request()->routeIs('membros.create') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('membros.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                            class="nav-icon bi {{ request()->routeIs('membros.create') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Novo Membro</p>
                                     </a>
                                 </li>
@@ -232,7 +231,7 @@
                                     <a href="{{ route('parceiros.create') }}"
                                         class="nav-link {{ request()->routeIs('parceiros.create') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('parceiros.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                            class="nav-icon bi {{ request()->routeIs('parceiros.create') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Novo Parceiro</p>
                                     </a>
                                 </li>
@@ -240,9 +239,9 @@
                         </li>
 
                         <li
-                            class="nav-item {{ request()->routeIs('membros.index') ? 'menu-open' : '' }}">
+                            class="nav-item {{ request()->routeIs('membros.index') || request()->routeIs('parceiros.index') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-box-seam-fill"></i>
+                                <i class="nav-icon bi bi-journal-text"></i>
                                 <p>
                                     Lista
                                     <i class="nav-arrow bi bi-chevron-right"></i>
@@ -261,7 +260,7 @@
                                     <a href="{{ route('membros.index') }}"
                                         class="nav-link {{ request()->routeIs('membros.index') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('membros.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                            class="nav-icon bi {{ request()->routeIs('membros.index') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Membro</p>
                                     </a>
                                 </li>
@@ -269,7 +268,7 @@
                                     <a href="{{ route('parceiros.index') }}"
                                         class="nav-link {{ request()->routeIs('parceiros.index') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('parceiros.index') ? 'bi-circle-fill' : 'bi-circle' }} "></i>
+                                            class="nav-icon bi {{ request()->routeIs('parceiros.index') ? 'bi-play-fill' : 'bi-play' }} "></i>
                                         <p>Parceiro</p>
                                     </a>
                                 </li>
@@ -278,7 +277,7 @@
                         <li
                             class="nav-item {{ request()->routeIs('certificados.index') || request()->routeIs('certificados.create') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-box-seam-fill"></i>
+                                <i class="nav-icon bi bi-award"></i>
                                 <p>
                                     Certificado
                                     <i class="nav-arrow bi bi-chevron-right"></i>

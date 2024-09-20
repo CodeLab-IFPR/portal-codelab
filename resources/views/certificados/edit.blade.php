@@ -15,6 +15,10 @@ Certificado - Edição
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
+                    <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Certificado - Edição
+                    </li>
                 </ol>
             </div>
         </div>
@@ -71,10 +75,11 @@ Certificado - Edição
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button type="submit" class="btn btn-outline-primary">
+            <div class="d-grid gap-2 d-md-flex justify-content-between">
+                <a href="{{ route('certificados.index') }}" class="btn btn-outline-danger">Cancelar</a>
+                  <button type="submit" class="btn btn-outline-primary">
                     <i class="fa-solid fa-floppy-disk"></i> Atualizar
-                </button>
+                  </button>
             </div>
         </form>
     </div>
