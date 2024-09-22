@@ -54,13 +54,17 @@ Parceiros - Edição
             </div>
             <div class="mb-3">
                 <label for="inputImagem" class="form-label"><strong>Imagem:</strong></label>
-                <input type="file" name="imagem" class="form-control @error('imagem') inválida @enderror"
-                    id="inputImagem">
-                <img src="/imagens/parceiros/{{ $parceiro->imagem }}" width="300px">
+                <input type="file" name="imagem" class="form-control @error('imagem') is-invalid @enderror image" id="inputImagem">
+                @if($parceiro->imagem)
+                    <p class="mt-2"><strong>Imagem atual:</strong></p>
+                    <img src="/imagens/parceiros/{{ $parceiro->imagem }}" width="160px" class="mt-2">
+                @endif
                 @error('imagem')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
+                <div id="newImagePreview" class="mt-2"></div>
             </div>
+
             <div class="mb-3">
                 <label for="inputAlt" class="form-label"><strong>Alt:</strong></label>
                 <input type="text" name="alt" value="{{ $parceiro->alt }}"

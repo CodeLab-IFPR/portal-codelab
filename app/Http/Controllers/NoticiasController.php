@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Noticias;
+use App\Providers\ImageUploader;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\Builder;
@@ -79,14 +80,11 @@ class NoticiasController extends Controller
 
         $entrada = $request->all();
 
-        if ($imagem = $request->file('imagem')) {
-            $destinationPath = 'imagens/noticias/';
-            if (!File::exists($destinationPath)) {
-                File::makeDirectory($destinationPath, 0755, true);
-            }
-            $profileImage = date('YmdHis') . "." . $imagem->getClientOriginalExtension();
-            $imagem->move($destinationPath, $profileImage);
-            $entrada['imagem'] = $profileImage;
+        if ($request->hasFile('imagem')) {
+            $uploader = new ImageUploader();
+            $uploader->setCompression(65);
+            $uploader->setDestinationPath('noticias/');
+            $entrada['imagem'] = $uploader->upload($request->file('imagem'));
         }
 
         Noticias::create($entrada);
@@ -109,7 +107,6 @@ class NoticiasController extends Controller
 
     public function update(Request $request, $id): RedirectResponse
     {
-    
         $request->validate([
             'titulo' => 'nullable|min:5|max:255',
             'autor' => 'nullable|min:3|max:255',
@@ -128,36 +125,26 @@ class NoticiasController extends Controller
             'imagem.mimes' => 'A imagem deve ser um dos seguintes formatos: jpeg, png, jpg.',
             'imagem.max' => 'A imagem não pode ter mais que 2MB.',
         ]);
-    
-    
+
         $entrada = $request->all();
-    
+
         $noticia = Noticias::findOrFail($id);
-    
-        if ($imagem = $request->file('imagem')) {
-            if ($noticia->imagem) {
-                $oldImagePath = public_path('imagens/noticias/' . $noticia->imagem);
-                if (File::exists($oldImagePath)) {
-                    File::delete($oldImagePath);
-                }
-            }
-    
-            $destinationPath = 'imagens/noticias/';
-            $profileImage = date('YmdHis') . "_" . $noticia->id . "." . $imagem->getClientOriginalExtension();
-            $imagem->move($destinationPath, $profileImage);
-            $entrada['imagem'] = $profileImage;
+
+        if ($request->hasFile('imagem')) {
+            $uploader = new ImageUploader();
+            $uploader->setCompression (65);
+            $uploader->setDestinationPath('noticias/');
+            $entrada['imagem'] = $uploader->upload($request->file('imagem'), $noticia->imagem);
         } else {
             unset($entrada['imagem']);
         }
-    
-    
+
         try {
             $noticia->update($entrada);
-    
+
             return redirect()->route('noticias.index')
                              ->with('success', 'Notícia atualizada com sucesso.');
         } catch (\Exception $e) {
-    
             return redirect()->route('noticias.index')
                              ->with('error', 'Erro ao atualizar a notícia.');
         }

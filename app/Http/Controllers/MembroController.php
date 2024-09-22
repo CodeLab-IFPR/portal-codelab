@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Membro;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\Builder;
+use App\Providers\ImageUploader;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\File;
+
 
 class MembroController extends Controller
 {
@@ -62,19 +64,20 @@ class MembroController extends Controller
         $entrada = $request->all();
         $entrada['ativo'] = $request->has('ativo') ? $request->ativo : false;
     
-        if ($request->has('cropped_image')) {
-            $folderPath = public_path('imagens/membros/');
-            if (!File::exists($folderPath)) {
-                File::makeDirectory($folderPath, 0755, true);
-            }
+        if ($request->has('cropped_image') && $request->cropped_image) {
             $image_parts = explode(";base64,", $request->cropped_image);
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
             $image_base64 = base64_decode($image_parts[1]);
             $imageName = uniqid() . '.png';
-            $imageFullPath = $folderPath . $imageName;
+            $imageFullPath = sys_get_temp_dir() . '/' . $imageName;
             file_put_contents($imageFullPath, $image_base64);
-            $entrada['imagem'] = $imageName;
+    
+            $uploader = new ImageUploader();
+            $uploader->setCompression(30);
+            $uploader->setResolution(160);
+            $uploader->setDestinationPath('membros/');
+            $entrada['imagem'] = $uploader->upload(new \Illuminate\Http\File($imageFullPath));
         }
     
         $membro = Membro::create($entrada);
@@ -128,27 +131,21 @@ class MembroController extends Controller
         $entrada['ativo'] = $request->has('ativo') ? $request->ativo : false;
     
         if ($request->has('cropped_image') && $request->cropped_image) {
-            // Remove a imagem antiga se existir
-            if ($membro->imagem) {
-                $oldImagePath = public_path('imagens/membros/' . $membro->imagem);
-                if (File::exists($oldImagePath)) {
-                    File::delete($oldImagePath);
-                }
-            }
-    
-            // Salva a nova imagem
-            $folderPath = public_path('imagens/membros/');
             $image_parts = explode(";base64,", $request->cropped_image);
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
             $image_base64 = base64_decode($image_parts[1]);
             $imageName = uniqid() . '.png';
-            $imageFullPath = $folderPath . $imageName;
+            $imageFullPath = sys_get_temp_dir() . '/' . $imageName;
             file_put_contents($imageFullPath, $image_base64);
-            $entrada['imagem'] = $imageName;
+    
+            $uploader = new ImageUploader();
+            $uploader->setCompression(30);
+            $uploader->setResolution(160);
+            $uploader->setDestinationPath('membros/');
+            $entrada['imagem'] = $uploader->upload(new \Illuminate\Http\File($imageFullPath), $membro->imagem);
         } else {
-            // Mantém a imagem existente
-            $entrada['imagem'] = $membro->imagem;
+            unset($entrada['imagem']);
         }
     
         $membro->update($entrada);
