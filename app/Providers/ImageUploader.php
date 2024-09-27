@@ -33,6 +33,11 @@ class ImageUploader
     public function setDestinationPath($path)
     {
         $this->destinationPath = ($this->destinationPath) . $path;
+
+        $destinationPath = 'imagens\\'.$path.'\\';
+        if (!File::exists($destinationPath)) {
+        File::makeDirectory($destinationPath, 0755, true);
+        }
     }
 
     public function upload($image, $oldImagePath = null)
