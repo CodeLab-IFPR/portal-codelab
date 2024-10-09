@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Parceiro;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\File;
+use App\Providers\ImageUploader;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
@@ -66,11 +67,11 @@ class ParceiroController extends Controller
         ]);
         $entrada = $request->all();
 
-        if ($imagem = $request->file('imagem')) {
-            $destinationPath = 'imagens/parceiros/';
-            $profileImage = date('YmdHis') . "." . $imagem->getClientOriginalExtension();
-            $imagem->move($destinationPath, $profileImage);
-            $entrada['imagem'] = "$profileImage";
+        if ($request->hasFile('imagem')) {
+            $uploader = new ImageUploader();
+            $uploader->setResolution(480);
+            $uploader->setDestinationPath('parceiros/');
+            $entrada['imagem'] = $uploader->upload($request->file('imagem'));
         }
 
         Parceiro::create($entrada);
@@ -115,18 +116,11 @@ class ParceiroController extends Controller
             ]);
             $entrada = $request->all();
 
-            if ($imagem = $request->file('imagem')) {
-                if ($parceiro->imagem) {
-                    $oldImagePath = public_path('imagens/parceiros/' . $parceiro->imagem);
-                    if (File::exists($oldImagePath)) {
-                        File::delete($oldImagePath);
-                    }
-                }
-            
-                $destinationPath = 'imagens/parceiros/';
-                $profileImage = date('YmdHis') . "." . $imagem->getClientOriginalExtension();
-                $imagem->move($destinationPath, $profileImage);
-                $entrada['imagem'] = "$profileImage";
+            if ($request->hasFile('imagem')) {
+                $uploader = new ImageUploader();
+                $uploader->setCompression (30);
+                $uploader->setDestinationPath('parceiros/');
+                $entrada['imagem'] = $uploader->upload($request->file('imagem'), $parceiro->imagem);
             } else {
                 unset($entrada['imagem']);
             }

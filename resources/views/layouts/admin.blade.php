@@ -528,6 +528,16 @@
     });
 </script>
 
+<script>
+    document.getElementById('inputImagem').addEventListener('change', function(event) {
+    const [file] = event.target.files;
+        if (file) {
+            const preview = document.getElementById('newImagePreview');
+            preview.innerHTML = `<p class="mt-2"><strong>Nova imagem:</strong></p><img src="${URL.createObjectURL(file)}" width="160px" class="mt-2">`;
+        }
+    });
+</script>
+
 
 <script>
         tinymce.init({

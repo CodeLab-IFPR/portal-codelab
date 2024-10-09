@@ -230,8 +230,8 @@ $("#crop").click(function(){
         reader.onloadend = function() {
             var base64data = reader.result; 
             $('#cropped_image').val(base64data);
-            $('#croppedImage').attr('src', base64data); // Atualizar o src da imagem do preview
-            $('#croppedImagePreview').show(); // Mostrar o preview da imagem
+            $('#croppedImage').attr('src', base64data);
+            $('#croppedImagePreview').show();
             $modal.modal('hide');
         };
     });
