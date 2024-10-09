@@ -16,7 +16,7 @@ Contate Nos
     </div>
 </header>
 <div class="container position-relative z-index-20 py-7">
-    <div class="row g-5">
+    <!-- <div class="row g-5">
         <div class="col-12 col-lg-4">
             <div class="card rounded shadow-lg h-100">
                 <div class="card-body d-flex align-items-center flex-column justify-content-center text-center p-5">
@@ -70,7 +70,7 @@ Contate Nos
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="row gx-10 my-10 pt-5">
         <div class="col-12 col-lg-8">
             <p class="mb-3 small fw-bolder tracking-wider text-uppercase text-primary">Entre em contato</p>
@@ -83,7 +83,7 @@ Contate Nos
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control rounded" name="email" placeholder="xuxa@rainhadosexos.com.br">
+                        <input type="email" class="form-control rounded" name="email" placeholder="fausto@silva.com.br">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label">Compania</label>
@@ -108,13 +108,13 @@ Contate Nos
             <p class="mb-4 small fw-bolder tracking-wider text-uppercase text-primary">Nos encontre online</p>
             <ul class="list-unstyled">
             <li class="d-flex align-items-center mb-2"><i class="ri-github-line me-3 ri-lg"></i> <a
-                class="text-muted" href="#">Github</a></li>
-            <li class="d-flex align-items-center mb-2"><i class="ri-facebook-line me-3 ri-lg"></i> <a
+                class="text-muted" href="https://github.com/ifpr-paranavai/portal-cdt" target="_blank">GitHub</a></li>
+            <!-- <li class="d-flex align-items-center mb-2"><i class="ri-facebook-line me-3 ri-lg"></i> <a
                 class="text-muted" href="#">Facebook</a></li>
             <li class="d-flex align-items-center mb-2"><i class="ri-twitter-line me-3 ri-lg"></i> <a
                 class="text-muted" href="#">Twitter</a></li>
             <li class="d-flex align-items-center mb-2"><i class="ri-codepen-line me-3 ri-lg"></i> <a
-                class="text-muted" href="#">Codepen</a></li>
+                class="text-muted" href="#">Codepen</a></li> -->
             </ul>
             </div>
             <p class="mb-4 small fw-bolder tracking-wider text-uppercase text-primary">Nosso endereço</p>

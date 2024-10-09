@@ -14,28 +14,27 @@ Index
 
                 <!-- Hero Text-->
                 <div class="col-12 col-lg-6 position-relative z-index-20 text-center text-lg-start" data-aos="fade-in">
-                    <h1 class="display-3 fw-bold mb-4">Design and launch landing pages faster.</h1>
-                    <h2 class="fs-5 text-muted fw-light lh-base">Collaborate, iterate and launch landing pages through
-                        our app or locally through our NPM package.</h2>
-                    <a href="#" class="text-decoration-none text-primary fw-bolder d-flex fs-7 justify-content-center justify-content-lg-start" data-bs-toggle="modal"
+                    <h1 class="display-3 fw-bold mb-4">Centro de Desenvolvimento Tecnológico do IFPR – Campus Paranavaí</h1>
+                    <h2 class="fs-5 text-muted fw-light lh-base">Portal Web para Projetos de Extensão</h2>
+                    <!-- <a href="#" class="text-decoration-none text-primary fw-bolder d-flex fs-7 justify-content-center justify-content-lg-start" data-bs-toggle="modal"
                         data-bs-target="#videoIframeModal"
                         data-pixr-video-iframe="https://player.vimeo.com/video/307721664?autoplay=1&amp;loop=false&amp;byline=false&amp;portrait=false&amp;title=false&amp;speed=true&amp;transparent=0&amp;gesture=media"
-                        role="button"><i class="ri-play-circle-line align-bottom me-1"></i> How it works</a>
+                        role="button"><i class="ri-play-circle-line align-bottom me-1"></i> Como funciona</a> -->
 
                     <div class="mt-4 pt-1 d-flex flex-column flex-md-row justify-content-center justify-content-lg-start">
-                        <a href="#" class="btn btn-success" role="button">Get started</a>
-                        <a href="#" class="btn btn-link text-decoration-none text-muted ms-2 bg-light-hover"
-                            role="button">Start free trial</a>
+                        <a class="btn btn-success" role="button">Ver Projetos</a>
+                        <a href="{{ route('contact') }}" class="btn btn-link text-decoration-none text-muted ms-2 bg-light-hover"
+                            role="button">Entre em Contato</a>
                     </div>
-                    <ul class="list-unstyled d-none d-md-flex align-items-center small text-muted mt-3 pt-1 fw-medium fs-9 justify-content-center justify-content-lg-start">
+                    <!-- <ul class="list-unstyled d-none d-md-flex align-items-center small text-muted mt-3 pt-1 fw-medium fs-9 justify-content-center justify-content-lg-start">
                         <li class="me-4 d-flex align-items-center"><i
-                                class="ri-checkbox-circle-fill text-success ri-lg me-1"></i> No credit card required
+                                class="ri-checkbox-circle-fill text-success ri-lg me-1"></i> Sem necessidade de cartão de crédito
                         </li>
                         <li class="me-4 d-flex align-items-center"><i
-                                class="ri-checkbox-circle-fill text-success ri-lg me-1"></i> Cancel anytime</li>
+                                class="ri-checkbox-circle-fill text-success ri-lg me-1"></i> Cancelamento a qualquer momento</li>
                         <li class="me-4 d-flex align-items-center"><i
-                                class="ri-checkbox-circle-fill text-success ri-lg me-1"></i> 30 day free trial</li>
-                    </ul>
+                                class="ri-checkbox-circle-fill text-success ri-lg me-1"></i> 30 dias de teste gratuito</li>
+                    </ul> -->
                 </div>
                 <!-- / Hero Text-->
 
@@ -47,9 +46,9 @@ Index
                             <span class="f-w-2 f-h-2 block bg-warning rounded-circle me-2"></span>
                             <span class="f-w-2 f-h-2 block bg-info rounded-circle"></span>
                         </div>
-                        <div class="card-body" style="min-height: 280px;">
+                        <div class="card-body" style="min-height: 300px;">
                             <code class="highlight fs-8"
-                                data-typed='{"backSpeed":2, "strings": ["$&nbsp;npm&nbsp;install&nbsp;sigma<br/><span class=\"text-success\">Sigma&nbsp;package&nbsp;installed 👍</span><br/><br/>$&nbsp;npm&nbsp;start&nbsp;design<br/><span class=\"text-success\">Start&nbsp;sharing&nbsp;your&nbsp;designs&nbsp;instantly...</span><br/><br/>$&nbsp;npm&nbsp;launch&nbsp;design<br/><span class=\"text-success\">Push&nbsp;directly&nbsp;to&nbsp;one&nbsp;of&nbsp;our&nbsp;integrated&nbsp;hosts! 🚀</span>"]}'></code>
+                                data-typed='{"backSpeed":2, "strings": ["$&nbsp;git&nbsp;clone&nbsp;https://github.com/ifpr-paranavai/portal-cdt.git<br/><span class=\"text-success\">Repositório&nbsp;clonado&nbsp;com&nbsp;sucesso 👍</span><br/><br/>$&nbsp;cd&nbsp;portal-cdt<br/><span class=\"text-success\">Diretório&nbsp;alterado&nbsp;para&nbsp;portal-cdt</span><br/><br/>$&nbsp;composer&nbsp;install<br/><span class=\"text-success\">Dependências&nbsp;instaladas&nbsp;com&nbsp;sucesso...</span><br/><br/>$&nbsp;php&nbsp;artisan&nbsp;serve<br/><span class=\"text-success\">Servidor&nbsp;iniciado&nbsp;em&nbsp;http://localhost:8000 🚀</span><br/><br/>$&nbsp;npm&nbsp;install<br/><span class=\"text-success\">Pacotes&nbsp;NPM&nbsp;instalados&nbsp;com&nbsp;sucesso...</span><br/><br/>$&nbsp;npm&nbsp;run&nbsp;dev<br/><span class=\"text-success\">Vite&nbsp;executando&nbsp;em&nbsp;modo&nbsp;de&nbsp;desenvolvimento...</span>"]}'></code>
                         </div>
                     </div>
                 </div>
@@ -80,7 +79,7 @@ Index
         <!-- /hero Content-->
 
         <!-- Logo Showcase-->
-        <div class="bg-primary py-8" data-aos="fade-in">
+        <!-- <div class="bg-primary py-8" data-aos="fade-in">
             <p class="mb-0 text-center small fw-bolder tracking-wider text-uppercase text-white opacity-75">Trusted by
                 thousands of companies worldwide</p>
             <div class="mt-5">
@@ -221,78 +220,115 @@ Index
                     </div>
                 </section>
             </div>
-        </div>
+        </div> -->
         <!-- Logo Showcase-->
 
-        <!-- Integrations-->
-        <div class="bg-dark py-8" data-aos="fade-in">
-            <div class="container py-4">
-                <p class="mb-0 text-center small fw-bolder tracking-wider text-uppercase text-orange">Integrations</p>
-                <h3 class="text-white text-center mt-3 fs-1 mb-3 fw-bold">Integrate with your favourite tools</h3>
-                <p class="text-white opacity-50 text-center">Sync, share and download your work on the systems below.
-                </p>
+        <!-- Latest news Posts-->
+<div id="noticias" class="bg-primary py-8" data-aos="fade-in">
+    <div class="container">
+        <h4 class="fs-1 fw-bold mb-6 text-white text-center">Últimas noticias</h4>
 
-                <div class="row gx-10 gy-7 mt-4">
-                    <!-- Integration-->
-                    <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="000">
-                        <picture class="d-block f-h-10">
-                            <img class="h-100 w-auto" src="{{ asset('img/logos/logo-9.svg') }}" alt="">
-                        </picture>
-                        <p class="text-white fs-4 fw-medium mb-2 mt-3">Figma</p>
-                        <p class="text-white opacity-75 text-center fs-7">Sync your landing page with Figma and open the design as a Figma file.</p>
-                    </div>
-                    <!-- /Integration-->
-                    <!-- Integration-->
-                    <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="100">
-                        <picture class="d-block f-h-10">
-                            <img class="h-100 w-auto" src="{{ asset('img/logos/logo-10.svg') }}" alt="">
-                        </picture>
-                        <p class="text-white fs-4 fw-medium mb-2 mt-3">Sketch</p>
-                        <p class="text-white opacity-75 text-center fs-7">Send your designs to Sketch, open the design directly or download as Sketch file.</p>
-                    </div>
-                    <!-- /Integration-->
-                    <!-- Integration-->
-                    <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="200">
-                        <picture class="d-block f-h-10">
-                            <img class="h-100 w-auto" src="{{ asset('img/logos/logo-11.svg') }}" alt="">
-                        </picture>
-                        <p class="text-white fs-4 fw-medium mb-2 mt-3">Adobe XD</p>
-                        <p class="text-white opacity-75 text-center fs-7">Open your landing page with XD, sync the design directly or download as XD file.</p>
-                    </div>
-                    <!-- /Integration-->
-                    <!-- Integration-->
-                    <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="300">
-                        <picture class="d-block f-h-10">
-                            <img class="h-100 w-auto" src="{{ asset('img/logos/logo-12.svg') }}" alt="">
-                        </picture>
-                        <p class="text-white fs-4 fw-medium mb-2 mt-3">Netlify</p>
-                        <p class="text-white opacity-75 text-center fs-7">Convert your landing page design to HTML and host with Netlify with a click of a button.</p>
-                    </div>
-                    <!-- /Integration-->
-                    <!-- Integration-->
-                    <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="400">
-                        <picture class="d-block f-h-10">
-                            <img class="h-100 w-auto" src="{{ asset('img/logos/logo-13.svg') }}" alt="">
-                        </picture>
-                        <p class="text-white fs-4 fw-medium mb-2 mt-3">Dropbox</p>
-                        <p class="text-white opacity-75 text-center fs-7">Backup your Sigma files directly to your Dropbox account with a single action.</p>
-                    </div>
-                    <!-- /Integration-->
-                    <!-- Integration-->
-                    <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="500">
-                        <picture class="d-block f-h-10">
-                            <img class="h-100 w-auto" src="{{ asset('img/logos/logo-14.svg') }}" alt="">
-                        </picture>
-                        <p class="text-white fs-4 fw-medium mb-2 mt-3">GitHub</p>
-                        <p class="text-white opacity-75 text-center fs-7">Manage your code repositories and collaborate with your team using GitHub.</p>
+        <div class="row g-5">
+            @foreach($noticias as $noticia)
+            <!-- News Post-->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="d-flex h-100 bg-white rounded-4 card overflow-hidden shadow-lg position-relative hover-lift">
+                    <picture>
+                        <img class="img-fluid" src="{{ asset('imagens/noticias/' . $noticia->imagem) }}" alt="{{ $noticia->alt }}">
+                    </picture>
+
+                    <div class="card-body p-4 p-lg-5">
+                        <p class="card-title fw-medium mb-4">{{ $noticia->titulo }}</p>
+                        <a href="{{ route('noticias.show', $noticia->id) }}" class="fw-medium fs-7 text-decoration-none link-cover">Ler mais... &rarr;</a>
                     </div>
                 </div>
+            </div>
+            <!-- / News Post-->
+            @endforeach
+        </div>
 
-                <a href="#" class="btn btn-white d-table mx-auto mt-7 w-100 w-md-auto" role="button">More about our integrations</a>
+        <a href="{{ route('noticias.cards') }}" class="btn btn-white mx-auto mt-7 d-table fw-medium w-100 w-md-auto">Mais Noticias &rarr;</a>
+    </div>
+</div>
+<!-- / Latest News Posts-->
+
+        <!-- Ferramentas-->
+        <div class="bg-dark py-8" data-aos="fade-in">
+            <div class="container py-4">
+            <p class="mb-0 text-center small fw-bolder tracking-wider text-uppercase text-orange">Ferramentas</p>
+            <h3 class="text-white text-center mt-3 fs-1 mb-3 fw-bold">Ferramentas utilizadas no desenvolvimento</h3>
+            <p class="text-white opacity-50 text-center">Abaixo estão listadas as ferramentas que foram utilizadas para o desenvolvimento deste sistema.</p>
+
+            <div class="row gx-10 gy-7 mt-4">
+                <!-- Ferramenta-->
+                <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="100">
+                <picture class="d-block f-h-10">
+                    <img class="h-100 w-auto" src="{{ asset('img/logos/logo-vscode.svg') }}" alt="">
+                </picture>
+                <p class="text-white fs-4 fw-medium mb-2 mt-3">Visual Studio Code</p>
+                <p class="text-white opacity-75 text-center fs-7">IDE leve para diversas linguagens.</p>
+                </div>
+                <!-- /Ferramenta-->
+                <!-- Ferramenta-->
+                <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="200">
+                <picture class="d-block f-h-10">
+                    <img class="h-100 w-auto" src="{{ asset('img/logos/logo-phpstorm.svg') }}" alt="">
+                </picture>
+                <p class="text-white fs-4 fw-medium mb-2 mt-3">PHPStorm</p>
+                <p class="text-white opacity-75 text-center fs-7">IDE completa para desenvolvimento em PHP com várias integrações.</p>
+                </div>
+                <!-- /Ferramenta-->
+                <!-- Ferramenta-->
+                <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="300">
+                <picture class="d-block f-h-10">
+                    <img class="h-100 w-auto" src="{{ asset('img/logos/logo-powerarchitect.png') }}" alt="">
+                </picture>
+                <p class="text-white fs-4 fw-medium mb-2 mt-3">Power Architect</p>
+                <p class="text-white opacity-75 text-center fs-7">Ferramenta de design e modelagem de bancos de dados.</p>
+                </div>
+                <!-- /Ferramenta-->
+                <!-- Ferramenta-->
+                <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="400">
+                <picture class="d-block f-h-10">
+                    <img class="h-100 w-auto" src="{{ asset('img/logos/logo-github.svg') }}" alt="">
+                </picture>
+                <p class="text-white fs-4 fw-medium mb-2 mt-3">GitHub</p>
+                <p class="text-white opacity-75 text-center fs-7">Plataforma de hospedagem de código com controle de versão Git.</p>
+                </div>
+                <!-- /Ferramenta-->
+                <!-- Ferramenta-->
+                <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="500">
+                <picture class="d-block f-h-10">
+                    <img class="h-100 w-auto" src="{{ asset('img/logos/logo-php.svg') }}" alt="">
+                </picture>
+                <p class="text-white fs-4 fw-medium mb-2 mt-3">PHP</p>
+                <p class="text-white opacity-75 text-center fs-7">Linguagem de programação para desenvolvimento de aplicações web.</p>
+                </div>
+                <!-- /Ferramenta-->
+                <!-- Ferramenta-->
+                <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="600">
+                <picture class="d-block f-h-10">
+                    <img class="h-100 w-auto" src="{{ asset('img/logos/logo-laravel.svg') }}" alt="">
+                </picture>
+                <p class="text-white fs-4 fw-medium mb-2 mt-3">Laravel</p>
+                <p class="text-white opacity-75 text-center fs-7">Framework PHP para desenvolvimento de aplicações web.</p>
+                </div>
+                <!-- /Ferramenta-->
+                <!-- Ferramenta-->
+                <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="700">
+                <picture class="d-block f-h-10">
+                    <img class="h-100 w-auto" src="{{ asset('img/logos/logo-blade.svg') }}" alt="">
+                </picture>
+                <p class="text-white fs-4 fw-medium mb-2 mt-3">Blade</p>
+                <p class="text-white opacity-75 text-center fs-7">Motor de template nativo do Laravel para criar layouts dinâmicos.</p>
+                </div>
+            </div>
+
+            <!-- <a href="#" class="btn btn-white d-table mx-auto mt-7 w-100 w-md-auto" role="button">Mais sobre nossas ferramentas</a> -->
 
             </div>
         </div>
-        <!-- / Integrations-->
+        <!-- / Ferramentas-->
 
         <!-- Product Highlights-->
         <div class="py-5 py-lg-10">
@@ -319,10 +355,8 @@ Index
                                         class="position-absolute z-index-20 d-block f-w-3 f-h-3 border border-3 border-white bg-success rounded-circle bottom-0 end-8"></span>
                                 </div>
                                 <div class="lh-sm">
-                                    <small class="align-self-center fs-8">I like it. 👍 Can we try a different shade of
-                                        orange for
-                                        the nav? </small>
-                                    <span class="fs-9 text-muted fw-medium mt-1 d-block">12 mins ago</span>
+                                    <small class="align-self-center fs-8">Gostei. 👍 Mas nós podemos tentar colocar uma cor diferente? </small>
+                                    <span class="fs-9 text-muted fw-medium mt-1 d-block">12 mins atrás</span>
                                 </div>
                             </div>
                             <div
@@ -336,9 +370,8 @@ Index
                                         class="position-absolute z-index-20 d-block f-w-3 f-h-3 border border-3 border-white bg-danger rounded-circle bottom-0 end-8"></span>
                                 </div>
                                 <div class="lh-1">
-                                    <small class="align-self-center fs-8 lh-sm">Orange updated in header and
-                                        footer.</small>
-                                    <span class="fs-9 text-muted fw-medium mt-1 d-block">5 mins ago</span>
+                                    <small class="align-self-center fs-8 lh-sm">Não.</small>
+                                    <span class="fs-9 text-muted fw-medium mt-1 d-block">5 mins atrás</span>
                                 </div>
                             </div>
                         </div>
@@ -355,13 +388,12 @@ Index
                     <!-- Highlight One Text Section-->
                     <div class="col-12 col-md-6 col-xl-5 offset-xl-1 position-relative" data-aos="fade-in">
                         <div class="position-relative z-index-20">
-                            <p class="mb-0 small fw-bolder tracking-wider text-uppercase text-primary">Build together
+                            <p class="mb-0 small fw-bolder tracking-wider text-uppercase text-primary">Trabalhem juntos
                             </p>
-                            <h4 class="fs-1 fw-bold mb-4 mt-3">You need collaboration. We've got you covered.</h4>
-                            <p class="text-muted">Use our builder to collaborate with your team members during all
-                                stages of your landing page build.</p>
+                            <h4 class="fs-1 fw-bold mb-4 mt-3">Colaboração é a chave para o sucesso.</h4>
+                            <p class="text-muted">Utilize nosso portal para colaborar com os membros do CDT-IFPR em todas as etapas dos projetos de extensão.</p>
                             <a href="#" class="btn btn-link px-0 me-3 fw-medium text-decoration-none mt-4"
-                                role="button">Let's get started &rarr;</a>
+                                role="button">Comece agora &rarr;</a>
                         </div>
 
                     </div>
@@ -414,13 +446,11 @@ Index
                     <!-- Highlight Two Text Section-->
                     <div class="col-12 col-md-6 col-xl-5 offset-xl-1 position-relative" data-aos="fade-in">
                         <div class="text-start text-lg-end">
-                            <p class="mb-0 small fw-bolder tracking-wider text-uppercase text-orange">Build faster
-                            </p>
-                            <h4 class="fs-1 fw-bold mb-4 mt-3">One-click deployment to your favourite host.</h4>
-                            <p class="text-muted">Use our templates to build and launch your landing page faster than
-                                your dev team.</p>
+                            <p class="mb-0 small fw-bolder tracking-wider text-uppercase text-orange">Centro de Desenvolvimento Tecnológico</p>
+                            <h4 class="fs-1 fw-bold mb-4 mt-3">Portal Web para Projetos de Extensão</h4>
+                            <p class="text-muted">Acesse e participe dos projetos de extensão do CDT-IFPR, contribuindo para o desenvolvimento tecnológico e social da comunidade.</p>
                             <a href="#" class="btn btn-link px-0 me-3 fw-medium text-orange text-decoration-none mt-4"
-                                role="button">Start your free trial &rarr;</a>
+                                role="button">Saiba mais &rarr;</a>
                         </div>
 
                     </div>
@@ -433,8 +463,8 @@ Index
         </div>
         <!-- /Product Highlights-->
 
-        <        <!-- Customer Reviews-->
-        <div class="pb-10">
+                <!-- Customer Reviews-->
+        <!-- <div class="pb-10">
             <div class="container">
                 <p class="mb-3 small fw-bolder tracking-wider text-uppercase text-primary text-center">Our Feedback</p>
                 <h4 class="fs-1 fw-bold mb-6 text-center col-12 col-sm-6 col-md-5 col-lg-6 col-xl-4 mx-auto">What our customers are saying about us</h4>
@@ -706,46 +736,17 @@ Index
                     </div>
                 </section>
             </div>
-        </div>
+        </div> -->
         <!-- /Customer Reviews-->
 
-<!-- Latest news Posts-->
-<div id="noticias" class="bg-primary py-10">
-    <div class="container">
-        <h4 class="fs-1 fw-bold mb-6 text-white text-center">Últimas noticias</h4>
-
-        <div class="row g-5">
-            @foreach($noticias as $noticia)
-            <!-- News Post-->
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="d-flex h-100 bg-white rounded-4 card overflow-hidden shadow-lg position-relative hover-lift">
-                    <picture>
-                        <img class="img-fluid" src="{{ asset('imagens/noticias/' . $noticia->imagem) }}" alt="{{ $noticia->alt }}">
-                    </picture>
-
-                    <div class="card-body p-4 p-lg-5">
-                        <p class="card-title fw-medium mb-4">{{ $noticia->titulo }}</p>
-                        <a href="{{ route('noticias.show', $noticia->id) }}" class="fw-medium fs-7 text-decoration-none link-cover">Ler mais... &rarr;</a>
-                    </div>
-                </div>
-            </div>
-            <!-- / News Post-->
-            @endforeach
-        </div>
-
-        <a href="{{ route('noticias.cards') }}" class="btn btn-white mx-auto mt-7 d-table fw-medium w-100 w-md-auto">Mais Noticias &rarr;</a>
-    </div>
-</div>
-<!-- / Latest News Posts-->
-
         <!-- Product Features summary-->
-        <div class="py-10">
+        <!-- <div class="py-10">
             <div class="container">
                 <h4 class="fs-1 fw-bold mb-3 text-center">Explore our features</h4>
                 <p class="text-muted text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 <div class="row gx-10 gy-7 mt-4">
 
-                    <!-- Feature-->
+
                     <div class="col-12 col-md-6 col-lg-4 d-flex flex-column justify-content-start">
                         <span class="f-w-8 d-block text-primary">
                             <svg class='w-100' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polygon points='12 2 2 7 12 12 22 7 12 2'></polygon><polyline points='2 17 12 22 22 17'></polyline><polyline opacity='.4' points='2 12 12 17 22 12'></polyline></svg>
@@ -753,8 +754,7 @@ Index
                         <p class="fw-medium mb-1 mt-3 fs-5">Tasks planner</p>
                         <span class="text-muted fs-7">Plan and schedule your weekly tasks on web or mobile through our desktop or mobile apps.</span>
                     </div>
-                    <!-- / Feature-->
-                    <!-- Feature-->
+
                     <div class="col-12 col-md-6 col-lg-4 d-flex flex-column justify-content-start">
                         <span class="f-w-8 d-block text-primary">
                             <svg class='w-100' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='4' y='4' width='16' height='16' rx='2' ry='2'></rect><rect opacity='.3' x='9' y='9' width='6' height='6'></rect><line x1='9' y1='1' x2='9' y2='4'></line><line x1='15' y1='1' x2='15' y2='4'></line><line x1='9' y1='20' x2='9' y2='23'></line><line x1='15' y1='20' x2='15' y2='23'></line><line x1='20' y1='9' x2='23' y2='9'></line><line x1='20' y1='14' x2='23' y2='14'></line><line x1='1' y1='9' x2='4' y2='9'></line><line x1='1' y1='14' x2='4' y2='14'></line></svg>
@@ -762,8 +762,7 @@ Index
                         <p class="fw-medium mb-1 mt-3 fs-5">Team collaborations</p>
                         <span class="text-muted fs-7">Invite unlimited team members to view, edit, comment and create landing pages with you.</span>
                     </div>
-                    <!-- / Feature-->
-                    <!-- Feature-->
+
                     <div class="col-12 col-md-6 col-lg-4 d-flex flex-column justify-content-start">
                         <span class="f-w-8 d-block text-primary">
                             <svg class='w-100' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='18' cy='18' r='3'></circle><circle cx='6' cy='6' r='3'></circle><path opacity='.4' d='M13 6h3a2 2 0 0 1 2 2v7'></path><line opacity='.4' x1='6' y1='9' x2='6' y2='21'></line></svg>
@@ -771,8 +770,7 @@ Index
                         <p class="fw-medium mb-1 mt-3 fs-5">Version control</p>
                         <span class="text-muted fs-7">Full integration with Git, GitLab and Bitbucket to easily allow version control.</span>
                     </div>
-                    <!-- / Feature-->
-                    <!-- Feature-->
+
                     <div class="col-12 col-md-6 col-lg-4 d-flex flex-column justify-content-start">
                         <span class="f-w-8 d-block text-primary">
                             <svg class='w-100' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' ><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'></path><circle cx='9' cy='7' r='4'></circle><path opacity='.4' d='M23 21v-2a4 4 0 0 0-3-3.87'></path><path opacity='.4' d='M16 3.13a4 4 0 0 1 0 7.75'></path></svg>
@@ -780,8 +778,7 @@ Index
                         <p class="fw-medium mb-1 mt-3 fs-5">AB testing</p>
                         <span class="text-muted fs-7">Create unlimited AB tests for your landing pages and make the designs public or private.</span>
                     </div>
-                    <!-- / Feature-->
-                    <!-- Feature-->
+
                     <div class="col-12 col-md-6 col-lg-4 d-flex flex-column justify-content-start">
                         <span class="f-w-8 d-block text-primary">
                             <svg class='w-100' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' ><path d='M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9'></path><polyline opacity='.4' points='13 11 9 17 15 17 11 23'></polyline></svg>
@@ -789,8 +786,7 @@ Index
                         <p class="fw-medium mb-1 mt-3 fs-5">One-click export</p>
                         <span class="text-muted fs-7">Export your completed landing pages to HTML in both Bootstrap and Tailwind CSS format.</span>
                     </div>
-                    <!-- / Feature-->
-                    <!-- Feature-->
+
                     <div class="col-12 col-md-6 col-lg-4 d-flex flex-column justify-content-start">
                         <span class="f-w-8 d-block text-primary">
                             <svg class='w-100' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' ><circle opacity='.4' cx='12' cy='12' r='2'></circle><path d='M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14'></path></svg>
@@ -798,7 +794,6 @@ Index
                         <p class="fw-medium mb-1 mt-3 fs-5">Mobile application</p>
                         <span class="text-muted fs-7">Download our mobile app and continue to work on your landing pages through the mobile app.</span>
                     </div>
-                    <!-- / Feature-->
 
                 </div>
 
@@ -814,11 +809,11 @@ Index
                             class="ri-checkbox-circle-fill text-primary ri-lg me-1"></i> 30 day free trial</li>
                 </ul>
             </div>
-        </div>
+        </div> -->
         <!-- Product Features summary-->
 
         <!-- About Us-->
-        <div class="pt-10 bg-light">
+        <!-- <div class="pt-10 bg-light">
             <div class="container">
                 <div class="col-12 mx-auto col-sm-10 col-md-8 col-lg-6 text-center">
                     <h4 class="fs-1 fw-bold mb-4">Who we are</h4>
@@ -837,7 +832,7 @@ Index
                             <span class="display-3 fw-bold text-primary d-block">160</span>
                             <span class="d-block fs-9 fw-bolder tracking-wide text-uppercase text-muted">Staff</span>
                         </div>
-                    </div>                    <!-- / Stats-->
+                    </div> 
 
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="#">Sed lobortis nibh augue</a>,
                         ut blandit <a href="#">lorem hendrerit non</a>. Donec finibus at lacus in efficitur nunc
@@ -845,13 +840,12 @@ Index
                         vestibulum varius.</p>
                     <a href="#" class="btn btn-success mt-4">Find out more</a>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="position-relative mt-10">
+            <!-- <div class="position-relative mt-10">
                 <picture class="d-table mx-auto mt-5 col-12 col-sm-10 position-relative z-index-20">
                     <img class="img-fluid d-table mx-auto" src="{{ asset('img/team-photo.png') }}" alt="HTML Bootstrap Template by Pixel Rocket">
                 </picture>
-                <!-- SVG shapes-->
                 <div class="position-absolute top-0 end-0 start-0 bottom-0 z-index-0 d-none d-lg-block">
                     <div class="d-block f-w-6 position-absolute top-n13 end-50">
                         <span class="d-block">
@@ -889,5 +883,5 @@ Index
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
    @endsection

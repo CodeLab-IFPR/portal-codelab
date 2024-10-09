@@ -109,12 +109,12 @@
                                         </div>
                                     </div>                              
                                 </div>
-                                <div class="mt-4 border-top d-none d-lg-flex flex-column py-5">
+                                <!-- <div class="mt-4 border-top d-none d-lg-flex flex-column py-5">
                                     <p class="text-muted">Do blog</p>
                                     <a href="#">O guia definitivo para gerenciamento de projetos de eventos &rarr;</a>
                                     <a href="#">Como usar o Agile para implementar o método Scrum &rarr;</a>
                                     <a href="#">Qual é o melhor controle de versão de software? &rarr;</a>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </li>    

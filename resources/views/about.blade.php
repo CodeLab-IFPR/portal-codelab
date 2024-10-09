@@ -76,7 +76,7 @@ Sobre Nós
             </div>
         </div>
     </div>
-    <div class="col-12 col-md-8 col-lg-6 mx-auto text-center py-4 border-bottom mb-5">
+    <!-- <div class="col-12 col-md-8 col-lg-6 mx-auto text-center py-4 border-bottom mb-5">
         <div class="my-5 d-none d-md-flex align-items-start justify-content-between">
             <div>
                 <span class="display-3 fw-bold text-primary d-block">12</span>
@@ -91,8 +91,8 @@ Sobre Nós
                 <span class="d-block fs-9 fw-bolder tracking-wide text-uppercase text-muted">Staff</span>
             </div>
         </div>
-    </div>
-    <div class="py-6 row gx-8 align-items-center">
+    </div> -->
+    <!-- <div class="py-6 row gx-8 align-items-center">
         <div class="col-12 col-lg-6">
             <p class="mb-3 small fw-bolder tracking-wider text-uppercase text-primary">How it started</p>
             <h2 class="display-5 fw-bold mb-6">Our story</h2>
@@ -110,7 +110,7 @@ Sobre Nós
                     alt="HTML Bootstrap Template by Pixel Rocket">
             </picture>
         </div>
-    </div>
+    </div> -->
     <div class="py-8">
     <h2 class="display-5 fw-bold mb-6 text-center">Nossa equipe</h2>
     <div class="row g-6">
@@ -142,7 +142,7 @@ Sobre Nós
 
     <div class="d-flex justify-content-center my-5">
         <div class="rounded-pill border px-5 py-3 text-muted d-flex align-items-center">
-            Want to join our team? <a href="#" class="fw-bold d-flex align-items-center ms-2">We are hiring <i
+            Quer se juntar ao nosso time? <a href="#" class="fw-bold d-flex align-items-center ms-2">Estamos esperando <i
                     class="ri-arrow-right-line ms-1"></i></a>
         </div>
     </div>
