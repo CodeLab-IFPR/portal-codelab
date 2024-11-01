@@ -17,7 +17,7 @@ Sobre Nós
 </header>
 <div class="container position-relative z-index-20 py-7">
     <div class="row g-3">
-        <div class="col-12 col-lg-6 d-none d-lg-block">
+        <!-- <div class="col-12 col-lg-6 d-none d-lg-block">
             <div class="row g-3">
                 <div class="col-12 col-md-6">
                     <picture>
@@ -75,7 +75,7 @@ Sobre Nós
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- <div class="col-12 col-md-8 col-lg-6 mx-auto text-center py-4 border-bottom mb-5">
         <div class="my-5 d-none d-md-flex align-items-start justify-content-between">
             <div>
