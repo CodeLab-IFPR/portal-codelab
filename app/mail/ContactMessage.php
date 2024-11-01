@@ -30,7 +30,7 @@ class ContactMessage extends Mailable
     public function build()
     {
         return $this->from('cdt.projetos@gmail.com', config('app.name'))
-                    ->to('frank.willian@ifpr.edu.br')
+                    ->to('cdt.projetos@gmail.com')
                     ->view('emails.contact_message')
                     ->with('data', $this->data)
                     ->subject('Nova Mensagem de Contato');
