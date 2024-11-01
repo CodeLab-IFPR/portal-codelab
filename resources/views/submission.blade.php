@@ -16,7 +16,7 @@ Submissão de Demandas
 <div class="container position-relative z-index-20 py-7">
     <div class="row g-5">
         <div class="col-12 col-lg-8">
-            <form id="submissionForm" method="POST" action="{{ route('submit-demand') }}" enctype="multipart/form-data" aria-labelledby="formTitle">
+            <form id="submissionForm" method="POST" action="{{ route('submission.submit') }}" enctype="multipart/form-data" aria-labelledby="formTitle">
                 @csrf
                 <div class="row g-5">
                     <div class="col-12 col-md-6">

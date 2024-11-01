@@ -47,6 +47,7 @@ Route::get('/dashboard', function () {
 Route::get('/about', [MembroController::class, 'about'])->name('about');
 
 Route::post('/submit-demand', [SubmissionController::class, 'submit'])->name('submit-demand');
+Route::post('/submit', [SubmissionController::class, 'submit'])->name('submission.submit');
 Route::post('/send-message', [ContactController::class, 'sendMessage'])->name('send-message');
 
 Route::resource('certificados', CertificadoController::class);

@@ -1,10 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Mail\DemandSubmission;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Submission;
 
 class SubmissionController extends Controller
 {
@@ -18,9 +18,17 @@ class SubmissionController extends Controller
             $data['files'] = $files;
         }
 
+        // Salvar a submissão no banco de dados
+        $submission = Submission::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'demand_description' => $data['demand_description'],
+            'expected_utility' => $data['expected_utility'],
+        ]);
+
         // Enviar e-mail
         Mail::send(new DemandSubmission($data));
 
-        return redirect()->back()->with('success', 'Demanda enviada com sucesso!');
+        return redirect()->back()->with('success', 'Submissão enviada com sucesso!');
     }
 }
