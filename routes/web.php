@@ -6,6 +6,7 @@ use App\Http\Controllers\ParceiroController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CertificadoController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SubmissionController;
 
 Route::get('/certificados/emitir', [CertificadoController::class, 'emitir'])->name('certificados.emitir');
 Route::post('certificados/buscar', [CertificadoController::class, 'buscarCertificados'])->name('certificados.buscar');
@@ -43,6 +44,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/about', [MembroController::class, 'about'])->name('about');
+
+Route::post('/submit-demand', [SubmissionController::class, 'submit'])->name('submit-demand');
 
 Route::resource('certificados', CertificadoController::class);
 Route::get('certificados/{id}/download', [CertificadoController::class, 'download'])->name('certificados.download');
