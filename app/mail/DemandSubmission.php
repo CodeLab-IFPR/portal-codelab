@@ -29,10 +29,22 @@ class DemandSubmission extends Mailable
      */
     public function build()
     {
-        return $this->from('seu-email@hotmail.com', config('app.name'))
-                    ->to('carloseduardomarianogarciapereira@hotmail.com')
-                    ->view('emails.demand_submission')
-                    ->with('data', $this->data)
-                    ->subject('Nova Submissão de Demanda');
+        $email = $this->from('cdt.projetos@gmail.com', config('app.name'))
+                      ->to('cdt.projetos@gmail.com')
+                      ->view('emails.demand_submission')
+                      ->with('data', $this->data)
+                      ->subject('Nova Submissão de Demanda');
+
+        // Anexar arquivos, se houver
+        if (isset($this->data['files'])) {
+            foreach ($this->data['files'] as $file) {
+                $email->attach($file->getRealPath(), [
+                    'as' => $file->getClientOriginalName(),
+                    'mime' => $file->getMimeType(),
+                ]);
+            }
+        }
+
+        return $email;
     }
 }

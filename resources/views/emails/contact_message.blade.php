@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Nova Submissão de Demanda</title>
+    <title>Nova Mensagem de Contato</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -36,11 +36,11 @@
 </head>
 <body>
     <div class="container">
-        <h1>Nova Submissão de Demanda</h1>
+        <h1>Nova Mensagem de Contato</h1>
         <p><strong>Nome:</strong> {{ $data['name'] }}</p>
         <p><strong>E-mail:</strong> {{ $data['email'] }}</p>
-        <p><strong>Descrição da Demanda:</strong> {{ $data['demand_description'] }}</p>
-        <p><strong>Utilidade Esperada:</strong> {{ $data['expected_utility'] }}</p>
+        <p><strong>Celular:</strong> {{ $data['telephone'] }}</p>
+        <p><strong>Mensagem:</strong> {{ $data['message'] }}</p>
     </div>
 </body>
 </html>

@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CertificadoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SubmissionController;
+use App\Http\Controllers\ContactController;
 
 Route::get('/certificados/emitir', [CertificadoController::class, 'emitir'])->name('certificados.emitir');
 Route::post('certificados/buscar', [CertificadoController::class, 'buscarCertificados'])->name('certificados.buscar');
@@ -46,6 +47,7 @@ Route::get('/dashboard', function () {
 Route::get('/about', [MembroController::class, 'about'])->name('about');
 
 Route::post('/submit-demand', [SubmissionController::class, 'submit'])->name('submit-demand');
+Route::post('/send-message', [ContactController::class, 'sendMessage'])->name('send-message');
 
 Route::resource('certificados', CertificadoController::class);
 Route::get('certificados/{id}/download', [CertificadoController::class, 'download'])->name('certificados.download');

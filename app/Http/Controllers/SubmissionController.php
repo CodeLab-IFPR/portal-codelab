@@ -12,6 +12,12 @@ class SubmissionController extends Controller
     {
         $data = $request->all();
 
+        // Verificar e processar arquivos anexados
+        if ($request->hasFile('supporting_files')) {
+            $files = $request->file('supporting_files');
+            $data['files'] = $files;
+        }
+
         // Enviar e-mail
         Mail::send(new DemandSubmission($data));
 

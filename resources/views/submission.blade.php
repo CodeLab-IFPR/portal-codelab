@@ -1,10 +1,8 @@
 @extends('layouts.portal')
 
-<!-- Título -->
 @section('title')
 Submissão de Demandas
 @endsection
-<!-- Título -->
 
 @section('content')
 <header class="pt-10">

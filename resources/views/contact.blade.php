@@ -20,7 +20,7 @@ Contate Nos
         <div class="col-12 col-lg-8">
             <p class="mb-3 small fw-bolder tracking-wider text-uppercase text-primary">Entre em contato</p>
             <h2 class="display-5 fw-bold mb-6">Envie-nos uma mensagem</h2>
-            <form id="contactForm" method="POST" action="/send-message" aria-labelledby="formTitle">
+            <form id="contactForm" method="POST" action="{{ route('send-message') }}" aria-labelledby="formTitle">
                 @csrf
                 <div class="row g-5">
                     <div class="col-12 col-md-6">
