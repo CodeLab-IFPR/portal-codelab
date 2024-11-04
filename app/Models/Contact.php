@@ -14,5 +14,7 @@ class Contact extends Model
         'email',
         'message',
         'read',
+        'attachments',
+        'subject', // Adicionar subject ao fillable
     ];
 }

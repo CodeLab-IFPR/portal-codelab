@@ -53,6 +53,10 @@ class SubmissionController extends Controller
     public function show($id)
     {
         $submission = Submission::findOrFail($id);
+        // Marcar como lida
+        if (!$submission->read) {
+            $submission->update(['read' => true]);
+        }
         return view('submissions.show', compact('submission'));
     }
 
@@ -95,14 +99,33 @@ class SubmissionController extends Controller
             return response()->json(['error' => 'Nenhuma submissão selecionada.'], 400);
         }
 
-        Submission::whereIn('id', $request->ids)->delete();
+        $submissions = Submission::whereIn('id', $request->ids)->get();
+        foreach ($submissions as $submission) {
+            $this->deleteAttachments($submission);
+            $submission->delete();
+        }
+
         return response()->json(['success' => 'Submissões excluídas com sucesso.']);
     }
 
     public function destroy($id)
     {
         $submission = Submission::findOrFail($id);
+        $this->deleteAttachments($submission);
         $submission->delete();
         return response()->json(['success' => 'Submissão excluída com sucesso.']);
+    }
+
+    private function deleteAttachments($submission)
+    {
+        if ($submission->attachments) {
+            $attachments = json_decode($submission->attachments, true);
+            foreach ($attachments as $attachment) {
+                $filePath = public_path($attachment);
+                if (File::exists($filePath)) {
+                    File::delete($filePath);
+                }
+            }
+        }
     }
 }

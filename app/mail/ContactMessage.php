@@ -29,10 +29,19 @@ class ContactMessage extends Mailable
      */
     public function build()
     {
-        return $this->from('cdt.projetos@gmail.com', config('app.name'))
-                    ->to('cdt.projetos@gmail.com')
-                    ->view('emails.contact_message')
-                    ->with('data', $this->data)
-                    ->subject('Nova Mensagem de Contato');
+            $email = $this->from('cdt.projetos@gmail.com', config('app.name'))
+            ->to('cdt.projetos@gmail.com')
+            ->view('emails.contact_message')
+            ->with('data', $this->data)
+            ->subject('Nova Mensagem de Contato');
+
+            // Anexar arquivos, se houver
+            if (isset($this->data['attachments'])) {
+            $attachments = json_decode($this->data['attachments'], true);
+            foreach ($attachments as $filePath) {
+            $email->attach(public_path($filePath));
+            }
+        }
+        return $email;
     }
 }

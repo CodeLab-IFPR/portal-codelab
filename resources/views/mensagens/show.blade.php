@@ -29,6 +29,12 @@ Visualizar Mensagem
             <h4 class="mb-0">{{ $mensagem->name }}</h4>
         </div>
         <div class="card-body">
+            @if(!empty($mensagem->subject))
+                <div class="form-group">
+                    <strong>Assunto:</strong>
+                    <p>{{ $mensagem->subject }}</p>
+                </div>
+            @endif
             <div class="form-group">
                 <strong>Nome:</strong>
                 <p>{{ $mensagem->name }}</p>
@@ -44,6 +50,18 @@ Visualizar Mensagem
             <div class="form-group">
                 <strong>Status:</strong>
                 <p>{{ $mensagem->read ? 'Lida' : 'Não Lida' }}</p>
+            </div>
+            <div class="form-group">
+                <strong>Anexos:</strong>
+                @if($mensagem->attachments)
+                    <ul>
+                        @foreach(json_decode($mensagem->attachments) as $attachment)
+                            <li><a href="{{ asset($attachment) }}" target="_blank">{{ basename($attachment) }}</a></li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p>Não há anexos.</p>
+                @endif
             </div>
         </div>
     </div>

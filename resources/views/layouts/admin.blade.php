@@ -258,6 +258,18 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('mensagens.index') }}" class="nav-link">
+                                <i class="nav-icon bi bi-envelope"></i>
+                                <p>Contato</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('submissions.index') }}" class="nav-link">
+                                <i class="nav-icon bi bi-file-earmark-text"></i>
+                                <p>Submissões</p>
+                            </a>
+                        </li>
 
                     </ul>
                 </nav>

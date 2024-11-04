@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Mail\ContactMessage;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Contact;
+use Illuminate\Support\Facades\File;
 
 class ContactController extends Controller
 {
@@ -17,6 +18,7 @@ class ContactController extends Controller
     public function show($id)
     {
         $mensagem = Contact::findOrFail($id);
+        $mensagem->update(['read' => true]);
         return view('mensagens.show', compact('mensagem'));
     }
     
@@ -30,8 +32,37 @@ class ContactController extends Controller
     public function destroy($id)
     {
         $mensagem = Contact::findOrFail($id);
+        $this->deleteAttachments($mensagem);
         $mensagem->delete();
         return response()->json(['success' => 'Mensagem excluída com sucesso.']);
+    }
+
+    public function deleteSelected(Request $request)
+    {
+        if (!$request->has('ids') || empty($request->ids)) {
+            return response()->json(['error' => 'Nenhuma mensagem selecionada.'], 400);
+        }
+
+        $mensagens = Contact::whereIn('id', $request->ids)->get();
+        foreach ($mensagens as $mensagem) {
+            $this->deleteAttachments($mensagem);
+            $mensagem->delete();
+        }
+
+        return response()->json(['success' => 'Mensagens excluídas com sucesso.']);
+    }
+
+    private function deleteAttachments($mensagem)
+    {
+        if ($mensagem->attachments) {
+            $attachments = json_decode($mensagem->attachments, true);
+            foreach ($attachments as $attachment) {
+                $filePath = public_path($attachment);
+                if (File::exists($filePath)) {
+                    File::delete($filePath);
+                }
+            }
+        }
     }
 
     public function sendMessage(Request $request)
@@ -50,8 +81,6 @@ class ContactController extends Controller
 
         return redirect()->back()->with('success', 'Mensagem enviada com sucesso!');
     }
-
-
 
     public function markUnread($id)
     {
@@ -77,15 +106,5 @@ class ContactController extends Controller
     {
         Contact::whereIn('id', $request->ids)->update(['read' => false]);
         return response()->json(['success' => 'Mensagens marcadas como não lidas.']);
-    }
-
-    public function deleteSelected(Request $request)
-    {
-        if (!$request->has('ids') || empty($request->ids)) {
-            return response()->json(['error' => 'Nenhuma mensagem selecionada.'], 400);
-        }
-    
-        Contact::whereIn('id', $request->ids)->delete();
-        return response()->json(['success' => 'Mensagens excluídas com sucesso.']);
     }
 }

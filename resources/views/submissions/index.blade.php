@@ -34,10 +34,10 @@ Submissões
     <div class="card">
         <div class="card-body">
             <div class="mb-3">
-            <button id="mark-read-selected" class="btn btn-success btn-sm" title="Marcar Selecionadas como Lidas">
-                <i class="bi bi-envelope-open"></i>
+            <button id="mark-read-selected" class="btn btn-primary btn-sm" title="Marcar Selecionadas como Lidas">
+            <i class="bi bi-envelope-open"></i>
             </button>
-            <button id="mark-unread-selected" class="btn btn-warning btn-sm" title="Marcar Selecionadas como Não Lidas">
+            <button id="mark-unread-selected" class="btn btn-success btn-sm" title="Marcar Selecionadas como Não Lidas">
                 <i class="bi bi-envelope"></i>
             </button>
             <button id="delete-selected" class="btn btn-danger btn-sm" title="Excluir Selecionadas">
@@ -70,7 +70,7 @@ Submissões
                         <tr>
                             <td><input type="checkbox" class="submission-checkbox" data-id="{{ $submission->id }}"></td>
                             <td>
-                                <i class="bi {{ $submission->read ? 'bi-envelope-open' : 'bi-envelope' }} text-primary toggle-read" data-id="{{ $submission->id }}"></i>
+                                <i class="bi {{ $submission->read ? 'bi-envelope-open text-primary' : 'bi-envelope text-success' }} toggle-read" data-id="{{ $submission->id }}"></i>
                             </td>
                             <td class="clickable-cell" data-href="{{ route('submissions.show', $submission->id) }}">{{ $submission->name }}</td>
                             <td class="clickable-cell" data-href="{{ route('submissions.show', $submission->id) }}">{{ $submission->email }}</td>
