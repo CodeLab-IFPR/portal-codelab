@@ -46,6 +46,17 @@ Route::get('/dashboard', function () {
 
 Route::get('/about', [MembroController::class, 'about'])->name('about');
 
+Route::get('/mensagens', [ContactController::class, 'index'])->name('mensagens.index');
+Route::get('/mensagens/{id}', [ContactController::class, 'show'])->name('mensagens.show');
+Route::delete('/mensagens/deleteSelected', [ContactController::class, 'deleteSelected'])->name('mensagens.deleteSelected');
+Route::post('/mensagens/{id}/mark-read', [ContactController::class, 'markRead'])->name('mensagens.markRead');
+Route::delete('/mensagens/{id}', [ContactController::class, 'destroy'])->name('mensagens.destroy');
+Route::post('/mensagens/{id}/mark-read', [ContactController::class, 'markRead'])->name('mensagens.markRead');
+Route::post('/mensagens/{id}/mark-unread', [ContactController::class, 'markUnread'])->name('mensagens.markUnread');
+Route::post('/mensagens/{id}/toggleRead', [ContactController::class, 'toggleRead'])->name('mensagens.toggleRead');
+Route::post('/mensagens/markReadSelected', [ContactController::class, 'markReadSelected'])->name('mensagens.markReadSelected');
+Route::post('/mensagens/markUnreadSelected', [ContactController::class, 'markUnreadSelected'])->name('mensagens.markUnreadSelected');
+
 Route::post('/submit-demand', [SubmissionController::class, 'submit'])->name('submit-demand');
 Route::post('/submit', [SubmissionController::class, 'submit'])->name('submission.submit');
 Route::post('/send-message', [ContactController::class, 'sendMessage'])->name('send-message');
