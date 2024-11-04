@@ -36,12 +36,10 @@ class DemandSubmission extends Mailable
                       ->subject('Nova Submissão de Demanda');
 
         // Anexar arquivos, se houver
-        if (isset($this->data['files'])) {
-            foreach ($this->data['files'] as $file) {
-                $email->attach($file->getRealPath(), [
-                    'as' => $file->getClientOriginalName(),
-                    'mime' => $file->getMimeType(),
-                ]);
+        if (isset($this->data['attachments'])) {
+            $attachments = json_decode($this->data['attachments'], true);
+            foreach ($attachments as $filePath) {
+                $email->attach(public_path($filePath));
             }
         }
 

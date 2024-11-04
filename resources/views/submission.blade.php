@@ -50,7 +50,7 @@ Submissão de Demandas
                 <p class="mb-4 small fw-bolder tracking-wider text-uppercase text-primary">FAQs sobre Submissão de Demandas</p>
                 <ul class="list-unstyled">
                     <li class="mb-3"><strong>Qual o tempo de resposta?</strong> Geralmente respondemos em até 48 horas.</li>
-                    <li class="mb-3"><strong>Posso enviar mais de um anexo?</strong> No momento, apenas um arquivo pode ser anexado.</li>
+                    <li class="mb-3"><strong>Posso enviar mais de um anexo?</strong> Sim, você pode enviar múltiplos arquivos.</li>
                     <li class="mb-3"><strong>Quais tipos de arquivos são suportados?</strong> Aceitamos PDFs e DOCs.</li>
                 </ul>
             </div>

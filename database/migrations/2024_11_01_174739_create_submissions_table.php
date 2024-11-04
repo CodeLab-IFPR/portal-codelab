@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('email');
             $table->text('demand_description');
             $table->text('expected_utility');
+            $table->json('attachments')->nullable();
+            $table->boolean('read')->default(false);
             $table->timestamps();
         });
     }

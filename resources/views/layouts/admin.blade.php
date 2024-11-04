@@ -1,11 +1,17 @@
 <?php
 // admin.blade.php
 use App\Models\Contact;
+use App\Models\Submission;
 
 $unreadMessagesCount = Contact::where('read', false)->count();
 $lastMessage = Contact::where('read', false)->orderBy('created_at', 'desc')->first();
 $lastMessageTime = $lastMessage ? $lastMessage->created_at->diffForHumans() : 'Nenhuma mensagem';
+
+$unreadSubmissionsCount = Submission::where('read', false)->count();
+$lastSubmission = Submission::where('read', false)->orderBy('created_at', 'desc')->first();
+$lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHumans() : 'Nenhuma submissão';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -90,18 +96,19 @@ $lastMessageTime = $lastMessage ? $lastMessage->created_at->diffForHumans() : 'N
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-bs-toggle="dropdown" href="#">
                             <i class="bi bi-bell-fill"></i>
-                            <span class="navbar-badge badge text-bg-warning">{{ $unreadMessagesCount }}</span>
+                            <span class="navbar-badge badge text-bg-warning">{{ $unreadMessagesCount + $unreadSubmissionsCount }}</span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                            <span class="dropdown-item dropdown-header">{{ $unreadMessagesCount }} Notificações</span>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end" style="max-height: 400px; overflow-y: auto;">
+                            <span class="dropdown-item dropdown-header">{{ $unreadMessagesCount + $unreadSubmissionsCount }} Notificações</span>
                             <div class="dropdown-divider"></div>
                             <a href="{{ route('mensagens.index') }}" class="dropdown-item">
                                 <i class="bi bi-envelope me-2"></i> {{ $unreadMessagesCount }} novas mensagens
-                                <span class="float-end text-secondary fs-7">{{ $lastMessageTime }}</span>
+                                <span class="float-end text-secondary fs-8">{{ $lastMessageTime }}</span>
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item dropdown-footer">
-                                Ver Todas as Notificações
+                            <a href="{{ route('submissions.index') }}" class="dropdown-item">
+                                <i class="bi bi-file-earmark-text me-2"></i> {{ $unreadSubmissionsCount }} novas submissões
+                                <span class="float-end text-secondary fs-8">{{ $lastSubmissionTime }}</span>
                             </a>
                         </div>
                     </li>

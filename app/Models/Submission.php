@@ -14,5 +14,7 @@ class Submission extends Model
         'email',
         'demand_description',
         'expected_utility',
+        'read',
+        'attachments',
     ];
 }

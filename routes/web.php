@@ -78,7 +78,15 @@ Route::get('noticias', [NoticiasController::class, 'index'])->name('noticias.ind
 Route::put('noticias/{noticia}', [NoticiasController::class, 'update'])->name('noticias.update');
 Route::delete('noticias/{membro}', [NoticiasController::class, 'destroy'])->name('noticias.destroy');
 
-
+Route::get('/submissions', [SubmissionController::class, 'index'])->name('submissions.index');
+Route::get('/submissions/{id}', [SubmissionController::class, 'show'])->name('submissions.show');
+Route::post('/submissions/{id}/mark-read', [SubmissionController::class, 'markRead'])->name('submissions.markRead');
+Route::post('/submissions/{id}/mark-unread', [SubmissionController::class, 'markUnread'])->name('submissions.markUnread');
+Route::post('/submissions/{id}/toggleRead', [SubmissionController::class, 'toggleRead'])->name('submissions.toggleRead');
+Route::post('/submissions/markReadSelected', [SubmissionController::class, 'markReadSelected'])->name('submissions.markReadSelected');
+Route::post('/submissions/markUnreadSelected', [SubmissionController::class, 'markUnreadSelected'])->name('submissions.markUnreadSelected');
+Route::delete('/submissions/deleteSelected', [SubmissionController::class, 'deleteSelected'])->name('submissions.deleteSelected');
+Route::delete('/submissions/{id}', [SubmissionController::class, 'destroy'])->name('submissions.destroy');
 
 Route::resource('membros', MembroController::class);
 Route::get('membros', [MembroController::class, 'index'])->name('membros.index');

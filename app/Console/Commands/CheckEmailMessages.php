@@ -26,9 +26,15 @@ class CheckEmailMessages extends Command
             Log::info('Número de mensagens não lidas: ' . $messages->count());
 
             foreach ($messages as $message) {
+                $fromEmail = $message->getFrom()[0]->mail;
+                
+                if ($fromEmail === 'cdt.projetos@gmail.com') {
+                    continue;
+                }
+
                 Contact::create([
                     'name' => $message->getFrom()[0]->personal,
-                    'email' => $message->getFrom()[0]->mail,
+                    'email' => $fromEmail,
                     'message' => $message->getTextBody(),
                     'read' => false,
                 ]);
@@ -36,7 +42,7 @@ class CheckEmailMessages extends Command
                 // Marcar a mensagem como lida
                 $message->setFlag('Seen');
 
-                Log::info('Mensagem de ' . $message->getFrom()[0]->mail . ' salva no banco de dados.');
+                Log::info('Mensagem de ' . $fromEmail . ' salva no banco de dados.');
             }
 
             $this->info('Email messages checked and saved to the database.');
