@@ -10,18 +10,21 @@ Index
 
         <!-- Hero Content-->
         <div class="container pt-4 pt-md-6 pt-lg-8 pb-8 pb-lg-10 position-relative">
-            <div class="row gx-10 align-items-center">
+            <div class="row gx-10 align-items-center justify-content-center">
 
-                <!-- Hero Text-->
-                <div class="col-12 col-lg-6 position-relative z-index-20 text-center text-lg-start" data-aos="fade-in">
-                    <h1 class="display-3 fw-bold mb-4">Centro de Desenvolvimento Tecnológico do IFPR – Campus Paranavaí</h1>
-                    <h2 class="fs-5 text-muted fw-light lh-base">Portal Web para Projetos de Extensão</h2>
+            <!-- Hero Text-->
+            <div class="col-12 col-lg-8 position-relative z-index-20 text-center" data-aos="fade-in">
+                <h1 class="display-3 fw-bold mb-4">Centro de Desenvolvimento Tecnológico do IFPR – Campus Paranavaí</h1>
+                    @php
+                        $fraseInicio = \App\Models\FraseInicio::find(1)->frase ?? 'Frase não encontrada';
+                    @endphp
+                <p class="lead text-muted mb-5">{{ $fraseInicio }}</p>
                     <!-- <a href="#" class="text-decoration-none text-primary fw-bolder d-flex fs-7 justify-content-center justify-content-lg-start" data-bs-toggle="modal"
                         data-bs-target="#videoIframeModal"
                         data-pixr-video-iframe="https://player.vimeo.com/video/307721664?autoplay=1&amp;loop=false&amp;byline=false&amp;portrait=false&amp;title=false&amp;speed=true&amp;transparent=0&amp;gesture=media"
                         role="button"><i class="ri-play-circle-line align-bottom me-1"></i> Como funciona</a> -->
 
-                    <div class="mt-4 pt-1 d-flex flex-column flex-md-row justify-content-center justify-content-lg-start">
+                    <div class="mt-4 pt-1 d-flex flex-column flex-md-row justify-content-center">
                         <a class="btn btn-success" role="button">Ver Projetos</a>
                         <a href="{{ route('contact') }}" class="btn btn-link text-decoration-none text-muted ms-2 bg-light-hover"
                             role="button">Entre em Contato</a>
@@ -39,7 +42,7 @@ Index
                 <!-- / Hero Text-->
 
                 <!-- Hero Graphic-->
-                <div class="col-12 col-lg-6 mt-5 mt-lg-0 align-self-stretch position-relative z-index-20" data-aos="fade-in">
+                <!-- <div class="col-12 col-lg-6 mt-5 mt-lg-0 align-self-stretch position-relative z-index-20" data-aos="fade-in">
                     <div class="d-flex h-100 bg-dark rounded-3 shadow-lg card">
                         <div class="card-header border-white-10 border-1 py-4 d-flex align-items-center">
                             <span class="f-w-2 f-h-2 block bg-danger rounded-circle me-2"></span>
@@ -51,7 +54,7 @@ Index
                                 data-typed='{"backSpeed":2, "strings": ["$&nbsp;git&nbsp;clone&nbsp;https://github.com/ifpr-paranavai/portal-cdt.git<br/><span class=\"text-success\">Repositório&nbsp;clonado&nbsp;com&nbsp;sucesso 👍</span><br/><br/>$&nbsp;cd&nbsp;portal-cdt<br/><span class=\"text-success\">Diretório&nbsp;alterado&nbsp;para&nbsp;portal-cdt</span><br/><br/>$&nbsp;composer&nbsp;install<br/><span class=\"text-success\">Dependências&nbsp;instaladas&nbsp;com&nbsp;sucesso...</span><br/><br/>$&nbsp;php&nbsp;artisan&nbsp;serve<br/><span class=\"text-success\">Servidor&nbsp;iniciado&nbsp;em&nbsp;http://localhost:8000 🚀</span><br/><br/>$&nbsp;npm&nbsp;install<br/><span class=\"text-success\">Pacotes&nbsp;NPM&nbsp;instalados&nbsp;com&nbsp;sucesso...</span><br/><br/>$&nbsp;npm&nbsp;run&nbsp;dev<br/><span class=\"text-success\">Vite&nbsp;executando&nbsp;em&nbsp;modo&nbsp;de&nbsp;desenvolvimento...</span>"]}'></code>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- / Hero Graphic-->
 
             </div>

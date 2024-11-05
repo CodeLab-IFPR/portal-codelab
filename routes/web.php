@@ -5,6 +5,7 @@ use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\ParceiroController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CertificadoController;
+use App\Http\Controllers\Admin\FraseInicioController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/certificados/emitir', [CertificadoController::class, 'emitir'])->name('certificados.emitir');
@@ -49,6 +50,12 @@ Route::get('certificados/{id}/download', [CertificadoController::class, 'downloa
 Route::get('/certificados/{certificado}/view', [CertificadoController::class, 'viewCertificate'])->name('certificados.view');
 Route::delete('certificados/{certificado}', [CertificadoController::class, 'destroy'])->name('certificados.destroy');
 
+
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('frase-inicio/editar', [App\Http\Controllers\Admin\FraseInicioController::class, 'editar'])->name('frase_inicio.editar');
+    Route::put('frase-inicio/atualizar', [App\Http\Controllers\Admin\FraseInicioController::class, 'atualizar'])->name('frase_inicio.atualizar');
+});
 
 Route::get('/', [NoticiasController::class, 'home'])->name('home');
 Route::resource('noticias', NoticiasController::class);

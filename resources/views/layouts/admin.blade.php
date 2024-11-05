@@ -303,6 +303,12 @@
                                     </a>
                                 </li>
                             </ul>
+                            <li class="nav-item">
+                                    <a href="{{ route('admin.frase_inicio.editar') }}" class="nav-link {{ request()->routeIs('admin.frase_inicio.editar') ? 'active' : '' }}">
+                                        <i class="nav-icon bi bi-pencil-square"></i>
+                                        <p>Editar Páginas</p>
+                                    </a>
+                            </li>
                         </li>
 
                     </ul>
