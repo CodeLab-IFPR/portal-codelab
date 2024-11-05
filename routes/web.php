@@ -5,7 +5,10 @@ use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\ParceiroController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CertificadoController;
+use App\Http\Controllers\Admin\FraseInicioController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SubmissionController;
+use App\Http\Controllers\ContactController;
 
 Route::get('/certificados/emitir', [CertificadoController::class, 'emitir'])->name('certificados.emitir');
 Route::post('certificados/buscar', [CertificadoController::class, 'buscarCertificados'])->name('certificados.buscar');
@@ -44,11 +47,32 @@ Route::get('/dashboard', function () {
 
 Route::get('/about', [MembroController::class, 'about'])->name('about');
 
+Route::get('/mensagens', [ContactController::class, 'index'])->name('mensagens.index');
+Route::get('/mensagens/{id}', [ContactController::class, 'show'])->name('mensagens.show');
+Route::delete('/mensagens/deleteSelected', [ContactController::class, 'deleteSelected'])->name('mensagens.deleteSelected');
+Route::post('/mensagens/{id}/mark-read', [ContactController::class, 'markRead'])->name('mensagens.markRead');
+Route::delete('/mensagens/{id}', [ContactController::class, 'destroy'])->name('mensagens.destroy');
+Route::post('/mensagens/{id}/mark-read', [ContactController::class, 'markRead'])->name('mensagens.markRead');
+Route::post('/mensagens/{id}/mark-unread', [ContactController::class, 'markUnread'])->name('mensagens.markUnread');
+Route::post('/mensagens/{id}/toggleRead', [ContactController::class, 'toggleRead'])->name('mensagens.toggleRead');
+Route::post('/mensagens/markReadSelected', [ContactController::class, 'markReadSelected'])->name('mensagens.markReadSelected');
+Route::post('/mensagens/markUnreadSelected', [ContactController::class, 'markUnreadSelected'])->name('mensagens.markUnreadSelected');
+
+Route::post('/submit-demand', [SubmissionController::class, 'submit'])->name('submit-demand');
+Route::post('/submit', [SubmissionController::class, 'submit'])->name('submission.submit');
+Route::post('/send-message', [ContactController::class, 'sendMessage'])->name('send-message');
+
 Route::resource('certificados', CertificadoController::class);
 Route::get('certificados/{id}/download', [CertificadoController::class, 'download'])->name('certificados.download');
 Route::get('/certificados/{certificado}/view', [CertificadoController::class, 'viewCertificate'])->name('certificados.view');
 Route::delete('certificados/{certificado}', [CertificadoController::class, 'destroy'])->name('certificados.destroy');
 
+
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('frase-inicio/editar', [App\Http\Controllers\Admin\FraseInicioController::class, 'editar'])->name('frase_inicio.editar');
+    Route::put('frase-inicio/atualizar', [App\Http\Controllers\Admin\FraseInicioController::class, 'atualizar'])->name('frase_inicio.atualizar');
+});
 
 Route::get('/', [NoticiasController::class, 'home'])->name('home');
 Route::resource('noticias', NoticiasController::class);
@@ -61,7 +85,15 @@ Route::get('noticias', [NoticiasController::class, 'index'])->name('noticias.ind
 Route::put('noticias/{noticia}', [NoticiasController::class, 'update'])->name('noticias.update');
 Route::delete('noticias/{membro}', [NoticiasController::class, 'destroy'])->name('noticias.destroy');
 
-
+Route::get('/submissions', [SubmissionController::class, 'index'])->name('submissions.index');
+Route::get('/submissions/{id}', [SubmissionController::class, 'show'])->name('submissions.show');
+Route::post('/submissions/{id}/mark-read', [SubmissionController::class, 'markRead'])->name('submissions.markRead');
+Route::post('/submissions/{id}/mark-unread', [SubmissionController::class, 'markUnread'])->name('submissions.markUnread');
+Route::post('/submissions/{id}/toggleRead', [SubmissionController::class, 'toggleRead'])->name('submissions.toggleRead');
+Route::post('/submissions/markReadSelected', [SubmissionController::class, 'markReadSelected'])->name('submissions.markReadSelected');
+Route::post('/submissions/markUnreadSelected', [SubmissionController::class, 'markUnreadSelected'])->name('submissions.markUnreadSelected');
+Route::delete('/submissions/deleteSelected', [SubmissionController::class, 'deleteSelected'])->name('submissions.deleteSelected');
+Route::delete('/submissions/{id}', [SubmissionController::class, 'destroy'])->name('submissions.destroy');
 
 Route::resource('membros', MembroController::class);
 Route::get('membros', [MembroController::class, 'index'])->name('membros.index');

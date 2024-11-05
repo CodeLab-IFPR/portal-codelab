@@ -11,13 +11,16 @@ Sobre Nós
     <div class="container">
         <div class="text-center col-12 col-sm-9 col-lg-7 col-xl-6 mx-auto position-relative z-index-20">
             <h1 class="display-3 fw-bold mb-3">Sobre Nós</h1>
-            <p class="text-muted lead mb-0">Lançado em 2024, o CDT (Centro de Desenvolvimento de Tecnologia) é uma plataforma online que visa mostrar projetos de desenvolvimento de software a todos no IFPR (Instituto Federal do Paraná).</p>
+            @php
+                $fraseSobre = \App\Models\FraseInicio::find(2)->frase ?? 'Frase não encontrada';
+            @endphp
+            <p class="text-muted lead mb-0">{{ $fraseSobre }}</p>
         </div>
     </div>
 </header>
 <div class="container position-relative z-index-20 py-7">
     <div class="row g-3">
-        <div class="col-12 col-lg-6 d-none d-lg-block">
+        <!-- <div class="col-12 col-lg-6 d-none d-lg-block">
             <div class="row g-3">
                 <div class="col-12 col-md-6">
                     <picture>
@@ -75,8 +78,8 @@ Sobre Nós
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-12 col-md-8 col-lg-6 mx-auto text-center py-4 border-bottom mb-5">
+    </div> -->
+    <!-- <div class="col-12 col-md-8 col-lg-6 mx-auto text-center py-4 border-bottom mb-5">
         <div class="my-5 d-none d-md-flex align-items-start justify-content-between">
             <div>
                 <span class="display-3 fw-bold text-primary d-block">12</span>
@@ -91,8 +94,8 @@ Sobre Nós
                 <span class="d-block fs-9 fw-bolder tracking-wide text-uppercase text-muted">Staff</span>
             </div>
         </div>
-    </div>
-    <div class="py-6 row gx-8 align-items-center">
+    </div> -->
+    <!-- <div class="py-6 row gx-8 align-items-center">
         <div class="col-12 col-lg-6">
             <p class="mb-3 small fw-bolder tracking-wider text-uppercase text-primary">How it started</p>
             <h2 class="display-5 fw-bold mb-6">Our story</h2>
@@ -110,7 +113,7 @@ Sobre Nós
                     alt="HTML Bootstrap Template by Pixel Rocket">
             </picture>
         </div>
-    </div>
+    </div> -->
     <div class="py-8">
     <h2 class="display-5 fw-bold mb-6 text-center">Nossa equipe</h2>
     <div class="row g-6">
@@ -142,7 +145,7 @@ Sobre Nós
 
     <div class="d-flex justify-content-center my-5">
         <div class="rounded-pill border px-5 py-3 text-muted d-flex align-items-center">
-            Want to join our team? <a href="#" class="fw-bold d-flex align-items-center ms-2">We are hiring <i
+            Quer se juntar ao nosso time? <a href="#" class="fw-bold d-flex align-items-center ms-2">Estamos esperando <i
                     class="ri-arrow-right-line ms-1"></i></a>
         </div>
     </div>

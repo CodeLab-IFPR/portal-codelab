@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Portal CDT - Submissão de Demandas, Certificados e mais.">
+    <meta name="author" content="Cadu e João">
     <meta name="keywords" content="">
 
     <link rel="apple-touch-icon" sizes="180x180" src="{{ asset('img/favicon/apple-touch-icon.png') }}">
@@ -109,12 +109,12 @@
                                         </div>
                                     </div>                              
                                 </div>
-                                <div class="mt-4 border-top d-none d-lg-flex flex-column py-5">
+                                <!-- <div class="mt-4 border-top d-none d-lg-flex flex-column py-5">
                                     <p class="text-muted">Do blog</p>
                                     <a href="#">O guia definitivo para gerenciamento de projetos de eventos &rarr;</a>
                                     <a href="#">Como usar o Agile para implementar o método Scrum &rarr;</a>
                                     <a href="#">Qual é o melhor controle de versão de software? &rarr;</a>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </li>    
