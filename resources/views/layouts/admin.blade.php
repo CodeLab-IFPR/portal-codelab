@@ -1,3 +1,18 @@
+<?php
+// admin.blade.php
+use App\Models\Contact;
+use App\Models\Submission;
+
+$unreadMessagesCount = Contact::where('read', false)->count();
+$lastMessage = Contact::where('read', false)->orderBy('created_at', 'desc')->first();
+$lastMessageTime = $lastMessage ? $lastMessage->created_at->diffForHumans() : 'Nenhuma mensagem';
+
+$unreadSubmissionsCount = Submission::where('read', false)->count();
+$lastSubmission = Submission::where('read', false)->orderBy('created_at', 'desc')->first();
+$lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHumans() : 'Nenhuma submissão';
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -76,89 +91,28 @@
                             class="nav-link">Contato</a> </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"> <a class="nav-link" data-widget="navbar-search" href="#" role="button"> <i
-                                class="bi bi-search"></i> </a> </li>
-                    <li class="nav-item dropdown"> <a class="nav-link" data-bs-toggle="dropdown" href="#"> <i
-                                class="bi bi-chat-text"></i> <span class="navbar-badge badge text-bg-danger">3</span>
+
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-bs-toggle="dropdown" href="#">
+                            <i class="bi bi-bell-fill"></i>
+                            <span class="navbar-badge badge text-bg-warning">{{ $unreadMessagesCount + $unreadSubmissionsCount }}</span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <a href="#"
-                                class="dropdown-item">
-                                <div class="d-flex">
-                                    <div class="flex-shrink-0"> <img
-                                            src="{{ asset('/img/user1-128x128.jpg') }}"
-                                            alt="User Avatar" class="img-size-50 rounded-circle me-3"> </div>
-                                    <div class="flex-grow-1">
-                                        <h3 class="dropdown-item-title">
-                                            Brad Diesel
-                                            <span class="float-end fs-7 text-danger"><i
-                                                    class="bi bi-star-fill"></i></span>
-                                        </h3>
-                                        <p class="fs-7">Call me whenever you can...</p>
-                                        <p class="fs-7 text-secondary"> <i class="bi bi-clock-fill me-1"></i> 4 Hours
-                                            Ago
-                                        </p>
-                                    </div>
-                                </div>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end" style="max-height: 400px; overflow-y: auto;">
+                            <span class="dropdown-item dropdown-header">{{ $unreadMessagesCount + $unreadSubmissionsCount }} Notificações</span>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ route('mensagens.index') }}" class="dropdown-item">
+                                <i class="bi bi-envelope me-2"></i> {{ $unreadMessagesCount }} novas mensagens
+                                <span class="float-end text-secondary fs-8">{{ $lastMessageTime }}</span>
                             </a>
-                            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item">
-                                <div class="d-flex">
-                                    <div class="flex-shrink-0"> <img
-                                            src="{{ asset('/img/user8-128x128.jpg') }}"
-                                            alt="User Avatar" class="img-size-50 rounded-circle me-3"> </div>
-                                    <div class="flex-grow-1">
-                                        <h3 class="dropdown-item-title">
-                                            John Pierce
-                                            <span class="float-end fs-7 text-secondary"> <i class="bi bi-star-fill"></i>
-                                            </span>
-                                        </h3>
-                                        <p class="fs-7">I got your message bro</p>
-                                        <p class="fs-7 text-secondary"> <i class="bi bi-clock-fill me-1"></i> 4 Hours
-                                            Ago
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item">
-                                <div class="d-flex">
-                                    <div class="flex-shrink-0"> <img
-                                            src="{{ asset('/img/user3-128x128.jpg') }}"
-                                            alt="User Avatar" class="img-size-50 rounded-circle me-3"> </div>
-                                    <div class="flex-grow-1">
-                                        <h3 class="dropdown-item-title">
-                                            Nora Silvester
-                                            <span class="float-end fs-7 text-warning"> <i class="bi bi-star-fill"></i>
-                                            </span>
-                                        </h3>
-                                        <p class="fs-7">The subject goes here</p>
-                                        <p class="fs-7 text-secondary"> <i class="bi bi-clock-fill me-1"></i> 4 Hours
-                                            Ago
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item dropdown-footer">See
-                                All Messages</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown"> <a class="nav-link" data-bs-toggle="dropdown" href="#"> <i
-                                class="bi bi-bell-fill"></i> <span class="navbar-badge badge text-bg-warning">15</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <span
-                                class="dropdown-item dropdown-header">15 Notifications</span>
-                            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"> <i
-                                    class="bi bi-envelope me-2"></i> 4 new messages
-                                <span class="float-end text-secondary fs-7">3 mins</span> </a>
-                            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"> <i
-                                    class="bi bi-people-fill me-2"></i> 8 friend requests
-                                <span class="float-end text-secondary fs-7">12 hours</span> </a>
-                            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"> <i
-                                    class="bi bi-file-earmark-fill me-2"></i> 3 new reports
-                                <span class="float-end text-secondary fs-7">2 days</span> </a>
-                            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item dropdown-footer">
-                                See All Notifications
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ route('submissions.index') }}" class="dropdown-item">
+                                <i class="bi bi-file-earmark-text me-2"></i> {{ $unreadSubmissionsCount }} novas submissões
+                                <span class="float-end text-secondary fs-8">{{ $lastSubmissionTime }}</span>
                             </a>
                         </div>
                     </li>
+
                     <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i
                                 data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i
                                 data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a>
@@ -309,6 +263,18 @@
                                         <p>Editar Páginas</p>
                                     </a>
                             </li>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('mensagens.index') }}" class="nav-link">
+                                <i class="nav-icon bi bi-envelope"></i>
+                                <p>Contato</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('submissions.index') }}" class="nav-link">
+                                <i class="nav-icon bi bi-file-earmark-text"></i>
+                                <p>Submissões</p>
+                            </a>
                         </li>
 
                     </ul>
