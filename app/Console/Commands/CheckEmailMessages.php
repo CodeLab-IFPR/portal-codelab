@@ -47,12 +47,12 @@ class CheckEmailMessages extends Command
 
     
                 Contact::create([
-                    'name' => $message->getFrom()[0]->personal,
+                    'name' => imap_utf8($message->getFrom()[0]->personal),
                     'email' => $fromEmail,
                     'message' => $message->getTextBody(),
                     'read' => false,
                     'attachments' => json_encode($attachments),
-                    'subject' => $message->getSubject(),
+                    'subject' => imap_utf8($message->getSubject()),
                 ]);
     
                 // Marcar a mensagem como lida
