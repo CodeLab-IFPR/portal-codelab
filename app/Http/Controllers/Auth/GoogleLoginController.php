@@ -22,7 +22,7 @@ class GoogleLoginController extends Controller
             $user = User::where('email', $googleUser->getEmail())->first();
 
             if (!$user) {
-                return redirect()->route('login')->with('error', 'Usuário não autorizado.');
+                return redirect()->route('login')->with('error', 'Usuário não autorizado, falar com o administrador.');
             }
 
             // Gerar uma senha Google se não existir
@@ -34,7 +34,7 @@ class GoogleLoginController extends Controller
             // Faça o login do usuário
             Auth::login($user);
 
-            return redirect()->route('home'); // Redirecione para a página inicial
+            return redirect()->route('admin'); // Redirecione para a página inicial
         } catch (\Exception $e) {
             return redirect()->route('login')->with('error', 'Falha no login com Google.');
         }
