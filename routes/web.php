@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\AtividadeController;
 use App\Http\Controllers\MembroController;
 use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\ParceiroController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CertificadoController;
+use App\Http\Controllers\ProjetoController;
+use App\Http\Controllers\ServicoController;
+use App\Http\Controllers\TarefaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/certificados/emitir', [CertificadoController::class, 'emitir'])->name('certificados.emitir');
@@ -81,5 +85,13 @@ Route::middleware('auth')->group(function () {
 
 });    
 
+Route::resource('projetos', ProjetoController::class);
+Route::resource('projetos.tarefas', TarefaController::class);
+Route::resource('tarefas.atividades', AtividadeController::class)->shallow();
+Route::get('tarefas/{tarefa}/atividades/create', [AtividadeController::class, 'create'])->name('tarefas.atividades.create');
+Route::post('tarefas/{tarefa}/atividades', [AtividadeController::class, 'store'])->name('tarefas.atividades.store');
+Route::get('tarefas/{tarefa}/atividades', [AtividadeController::class, 'index'])->name('tarefas.atividades.index');
+Route::get('/projetos/{id}/tarefas/create', [ProjetoController::class, 'createTarefa'])->name('projetos.tarefas.create');
+Route::get('/projetos/{id}/tarefas', [ProjetoController::class, 'indexTarefas'])->name('projetos.tarefas.index');
 
 require __DIR__.'/auth.php';

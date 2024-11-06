@@ -44,6 +44,10 @@
         rel="stylesheet">
     <script src="https://cdn.tiny.cloud/1/7zo9iyuj1gb1fyw0uccbyarr0akkym7ki4hkoeb6tfq12zg5/tinymce/7/tinymce.min.js"
         referrerpolicy="origin"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+
     @vite('resources/css/adminlte.css"')
         <script>
             tinymce.init({
@@ -60,7 +64,6 @@
                 ],
             });
         </script>
-
 </head>
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
@@ -194,7 +197,7 @@
         <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
             <div class="sidebar-brand"><a href="{{ route('admin') }}" class="brand-link"> <img
                         src="{{ asset('/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
-                        class="brand-image opacity-75 shadow"><span class="brand-text fw-light">AdminLTE 4</span></a>
+                        class="brand-image opacity-75 shadow"><span class="brand-text fw-light">Portal CDT</span></a>
             </div>
             <div class="sidebar-wrapper">
                 <nav class="mt-2">
@@ -249,7 +252,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                <a href="{{ route('noticias.index') }}"
+                                    <a href="{{ route('noticias.index') }}"
                                         class="nav-link {{ request()->routeIs('noticias.index') ? 'active' : '' }}">
                                         <i
                                             class="nav-icon bi {{ request()->routeIs('membros.index') ? 'bi-play-fill' : 'bi-play' }}"></i>
@@ -304,7 +307,36 @@
                                 </li>
                             </ul>
                         </li>
-
+                        <li
+                            class="nav-item {{ request()->routeIs('projetos.index') || request()->routeIs('projetos.create') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-award"></i>
+                                <p>
+                                    Projeto
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('projetos.create') }}"
+                                        class="nav-link {{ request()->routeIs('projetos.create') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('projetos.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Novo Projeto</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('projetos.index') }}"
+                                        class="nav-link {{ request()->routeIs('projetos.index') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('projetos.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Todos Projetos</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -349,6 +381,7 @@
             border-radius: .20rem;
             z-index: 1050;
         }
+
         .progress-bar-container {
             position: absolute;
             bottom: 0;
@@ -459,101 +492,108 @@
                     });
                 });
 
-<script>
-    const cardHeaders = document.querySelectorAll(
-        ".connectedSortable .card-header",
-    );
-    cardHeaders.forEach((cardHeader) => {
-        cardHeader.style.cursor = "move";
-    });
-</script>
-<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
-    integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"
-    integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
-    integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY=" crossorigin="anonymous"></script>
-<script>
-    $('#conteudo').summernote({
-        placeholder: 'Hello stand alone ui',
-        tabsize: 2,
-        height: 120,
-        toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'underline', 'clear']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['table', ['table']],
-            ['insert', ['link', 'picture', 'video']],
-            ['view', ['fullscreen', 'codeview', 'help']]
-        ]
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-<script>
-    $(document).ready(function(){
-        $('#inputCpf').mask('000.000.000-00', {reverse: true});
-    });
-</script>
-<script>
-    document.querySelector('#cancel-button').addEventListener('click', function() {
-        $('#modal').modal('hide');
-        document.querySelector('#inputImagem').value = ''; 
-    });
-</script>
-<script>
-    document.getElementById('crop').addEventListener('click', function() {
-        document.getElementById('croppedImageContainer').style.display = 'block';
-    });
-</script>
-<script>
-    document.getElementById('inputImagem').addEventListener('change', function() {
-        if (this.files.length > 0) {
-            var file = this.files[0];
-            var done = function (url) {
-                document.getElementById('image').src = url;
-                $('#modal').modal('show');
-            };
+                <
+                script >
+                    const cardHeaders = document.querySelectorAll(
+                        ".connectedSortable .card-header",
+                    );
+                cardHeaders.forEach((cardHeader) => {
+                    cardHeader.style.cursor = "move";
+                });
+            </script>
+            <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
+                integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"
+                integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y=" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
+                integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY=" crossorigin="anonymous"></script>
+            <script>
+                $('#conteudo').summernote({
+                    placeholder: 'Hello stand alone ui',
+                    tabsize: 2,
+                    height: 120,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['view', ['fullscreen', 'codeview', 'help']]
+                    ]
+                });
+            </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $('#inputCpf').mask('000.000.000-00', {
+                        reverse: true
+                    });
+                });
+            </script>
+            <script>
+                document.querySelector('#cancel-button').addEventListener('click', function () {
+                    $('#modal').modal('hide');
+                    document.querySelector('#inputImagem').value = '';
+                });
+            </script>
+            <script>
+                document.getElementById('crop').addEventListener('click', function () {
+                    document.getElementById('croppedImageContainer').style.display = 'block';
+                });
+            </script>
+            <script>
+                document.getElementById('inputImagem').addEventListener('change', function () {
+                    if (this.files.length > 0) {
+                        var file = this.files[0];
+                        var done = function (url) {
+                            document.getElementById('image').src = url;
+                            $('#modal').modal('show');
+                        };
 
-            if (URL) {
-                done(URL.createObjectURL(file));
-            } else if (FileReader) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    done(reader.result);
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-    });
-</script>
+                        if (URL) {
+                            done(URL.createObjectURL(file));
+                        } else if (FileReader) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                done(reader.result);
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    }
+                });
+            </script>
 
-<script>
-    document.getElementById('inputImagem').addEventListener('change', function(event) {
-    const [file] = event.target.files;
-        if (file) {
-            const preview = document.getElementById('newImagePreview');
-            preview.innerHTML = `<p class="mt-2"><strong>Nova imagem:</strong></p><img src="${URL.createObjectURL(file)}" width="160px" class="mt-2">`;
-        }
-    });
-</script>
+            <script>
+                document.getElementById('inputImagem').addEventListener('change', function (event) {
+                    const [file] = event.target.files;
+                    if (file) {
+                        const preview = document.getElementById('newImagePreview');
+                        preview.innerHTML =
+                            `<p class="mt-2"><strong>Nova imagem:</strong></p><img src="${URL.createObjectURL(file)}" width="160px" class="mt-2">`;
+                    }
+                });
+            </script>
 
 
-<script>
-        tinymce.init({
-            selector: '#inputConteudo',
-            language: 'pt_BR',
-            directionality: 'ltr',
-            toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons',
-            plugins: [
-                'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor',
-                'pagebreak',
-                'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen',
-                'insertdatetime',
-                'media', 'table', 'emoticons', 'help'
-            ],
-        });
-    </script>
+            <script>
+                tinymce.init({
+                    selector: '#inputConteudo',
+                    language: 'pt_BR',
+                    directionality: 'ltr',
+                    toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons',
+                    plugins: [
+                        'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor',
+                        'pagebreak',
+                        'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen',
+                        'insertdatetime',
+                        'media', 'table', 'emoticons', 'help'
+                    ],
+                });
+            </script>
+            <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </body>
 
 </html>

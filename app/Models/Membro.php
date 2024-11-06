@@ -25,4 +25,9 @@ class Membro extends Model
     {
         return $this->hasMany(Certificado::class, 'membros_id');
     }
+
+    public function tarefas()
+    {
+        return $this->hasMany(Tarefa::class);
+    }
 }
