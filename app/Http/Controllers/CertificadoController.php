@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Certificado;
 use App\Models\Membro;
+use App\Models\Tarefa;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
@@ -15,6 +16,54 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class CertificadoController extends Controller
 {
+    public function generateFromTasks(Request $request): JsonResponse
+    {
+        $tasks = $request->input('tasks', []);
+        $membros = [];
+        $projetoNome = '';
+    
+        foreach ($tasks as $taskId) {
+            $tarefa = Tarefa::find($taskId);
+            if ($tarefa && !$tarefa->certificado_gerado) {
+                $membroId = $tarefa->membro_id;
+                if (!isset($membros[$membroId])) {
+                    $membros[$membroId] = 0;
+                }
+                $membros[$membroId] += $tarefa->atividades->sum('horas_trabalhadas');
+                $projetoNome = $tarefa->projeto->nome;
+            }
+        }
+    
+        $certificadosData = [];
+        foreach ($membros as $membroId => $horas) {
+            $certificadosData[] = [
+                'membro_id' => $membroId,
+                'horas' => $horas,
+                'descricao' => $projetoNome
+            ];
+        }
+    
+        $generatedTaskIds = [];
+        foreach ($certificadosData as $data) {
+            $certificado = new Certificado();
+            $certificado->membro_id = $data['membro_id'];
+            $certificado->horas = $data['horas'];
+            $certificado->descricao = $data['descricao'];
+            $certificado->token = Str::random(10);
+            $certificado->data = now();
+            $certificado->save();
+    
+            $generatedTaskIds[] = $data['membro_id'];
+        }
+    
+        Tarefa::whereIn('id', $tasks)->update(['certificado_gerado' => true]);
+    
+        return response()->json([
+            'success' => true,
+            'redirect' => route('certificados.create', ['data' => json_encode($certificadosData)]),
+            'generatedTaskIds' => $generatedTaskIds
+        ]);
+    }
     public function emitir()
     {
         return view('certificados.emitir');
@@ -33,7 +82,7 @@ class CertificadoController extends Controller
             $membro = Membro::where('cpf', $cpf)->first();
             
             if ($membro) {
-                $certificados = Certificado::where('membros_id', $membro->id)->get();
+                $certificados = Certificado::where('membro_id', $membro->id)->get();
 
                 return response()->json([
                     'certificados' => $certificados
@@ -103,10 +152,11 @@ class CertificadoController extends Controller
         return view('certificados.index', compact('certificados'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        $certificadosData = json_decode($request->input('data'), true);
         $membros = Membro::all();
-        return view('certificados.create', compact('membros'));
+        return view('certificados.create', compact('membros', 'certificadosData'));
     }
 
     public function edit(Certificado $certificado)
@@ -150,32 +200,44 @@ class CertificadoController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'membros_id' => 'required',
-            'descricao' => 'required|max:520',
-            'horas' => 'required|integer',
-            'data' => 'required|date',
-        ],[
-            'membros_id.required' => 'O campo membro é obrigatório',
-            'descricao.required' => 'O campo descrição é obrigatório',
-            'descricao.max' => 'O campo descrição deve ter no máximo 520 caracteres',
-            'horas.required' => 'O campo horas é obrigatório',
-            'horas.integer' => 'O campo horas deve ser um número inteiro',
-            'data.required' => 'O campo data é obrigatório',
-            'data.date' => 'O campo data deve ser uma data válida',
-        ]);
+        $certificados = $request->input('certificados', []);
+        $manualCertificado = $request->input('manual_certificado', []);
+        $descricao = $request->input('descricao');
 
-        $certificado = Certificado::create([
-            'membros_id' => $request->membros_id,
-            'token' => Str::random(10),
-            'descricao' => $request->descricao,
-            'horas' => $request->horas,
-            'data' => $request->data,
-        ]);
+        foreach ($certificados as $certificadoData) {
+            $existingCertificado = Certificado::where('membro_id', $certificadoData['membros_id'])
+                ->where('descricao', $descricao)
+                ->first();
 
-        return redirect()->route("certificados.index")
-            ->with("success", "Certificado criado com sucesso.");
-    }
+            if (!$existingCertificado) {
+                $certificado = new Certificado();
+                $certificado->membro_id = $certificadoData['membros_id'];
+                $certificado->horas = $certificadoData['horas'];
+                $certificado->descricao = $descricao;
+                $certificado->token = Str::random(10);
+                $certificado->data = now();
+                $certificado->save();
+            }
+        }
+
+        if (!empty($manualCertificado)) {
+            $existingCertificado = Certificado::where('membro_id', $manualCertificado['membros_id'])
+                ->where('descricao', $manualCertificado['descricao'])
+                ->first();
+
+            if (!$existingCertificado) {
+                $certificado = new Certificado();
+                $certificado->membro_id = $manualCertificado['membros_id'];
+                $certificado->horas = $manualCertificado['horas'];
+                $certificado->descricao = $manualCertificado['descricao'];
+                $certificado->token = Str::random(10);
+                $certificado->data = now();
+                $certificado->save();
+            }
+        }
+
+    return redirect()->route('certificados.index')->with('success', 'Certificados criados com sucesso.');
+}
 
     public function show(Certificado $certificado)
     {

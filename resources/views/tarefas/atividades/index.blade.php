@@ -7,14 +7,31 @@
 @section('content')
 
 @if(isset($projeto) && isset($tarefa))
+@if(session('success'))
+            <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+                <div class="alert-content">
+                    <strong>{{ session('success') }}</strong>
+                </div>
+                <div class="progress-bar-container">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+            </div>
+        @endif
     <div class="d-flex justify-content-center">
         <div class="text-center w-75">
             <h2 class="mt-4">Atividades</h2>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                <a class="btn btn-info btn-sm"
+                <a class="btn btn-outline-info btn-sm"
                     href="{{ route('projetos.tarefas.edit', [$projeto->id, $tarefa->id]) }}">
                     <i class="fa-solid fa-pen-to-square"></i> Editar Tarefa
+                </a>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+                <a class="btn btn-outline-info btn-sm"
+                    href="{{ route('projetos.tarefas.index', [$projeto->id, $tarefa->id]) }}">
+                    <i class="fa-solid fa-pen-to-square"></i> Voltar para Tarefas
                 </a>
             </div>
 
@@ -38,11 +55,17 @@
                             </td>
                             <td>{{ \Carbon\Carbon::parse($atividade->data_final)->format('d/m/Y') }}
                             </td>
-                            <td>{{ $atividade->horas_trabalhadas }} Horas.</td>
+                            <td>
+                            @if($atividade->horas_trabalhadas > 1)
+                                    {{ $atividade->horas_trabalhadas }} horas
+                            @else
+                                    {{ $atividade->horas_trabalhadas }} hora
+                            @endif
+                            </td>
                             <td><a href="{{ $atividade->link }}" target="_blank">{{ $atividade->link }}</a></td>
                             <td>
                                 <div class="dropdown d-inline"></div>
-                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
+                                <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"
                                     id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-gear"></i>
                                 </button>

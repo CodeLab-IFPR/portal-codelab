@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('title')
+Editar - {{ $projeto->nome }}
+@endsection
+
 @section('content')
 <div class="app-content-header">
     <div class="container-fluid">
@@ -16,8 +20,8 @@
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="card-body">
+<div class="container d-flex justify-content-center">
+    <div class="card-body" style="max-width: 600px; width: 100%;">
         <form action="{{ route('projetos.update', $projeto->id) }}" method="POST">
             @csrf
             @method('PUT')
@@ -48,25 +52,35 @@
                 </div>
             </div>
 
-            <div class="mb-3"></div>
+            <div class="mb-3">
                 <label for="inputMembros" class="form-label"><strong>Membros:</strong></label>
-                @foreach($membros as $membro)
-                    <div class="form-check"></div>
-                        <input class="form-check-input" type="checkbox" name="membros[]" value="{{ $membro->id }}" id="membro{{ $membro->id }}" {{ in_array($membro->id, $projeto->membros->pluck('id')->toArray()) ? 'checked' : '' }}>
-                        <label class="form-check-label" for="membro{{ $membro->id }}">
+                <select name="membros[]" class="select2 form-select" id="inputMembros" multiple="multiple">
+                    @foreach($membros as $membro)
+                        <option value="{{ $membro->id }}" {{ in_array($membro->id, $projeto->membros->pluck('id')->toArray()) ? 'selected' : '' }}>
                             {{ $membro->nome }}
-                        </label>
-                    </div>
-                @endforeach
+                        </option>
+                    @endforeach
+                </select>
                 @error('membros')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
 
-            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                <input type="submit" class="btn btn-outline-secondary" value="Salvar">
+            <div class="d-flex justify-content-between">
+                <a href="{{ route('projetos.index') }}"
+                    class="btn btn-outline-danger">Voltar</a>
+                <button type="submit" class="btn btn-outline-success">Salvar</button>
             </div>
         </form>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('.select2').select2({
+            theme: 'bootstrap-5',
+            placeholder: 'Selecione um ou mais membros',
+
+        });
+    });
+</script>
 @endsection

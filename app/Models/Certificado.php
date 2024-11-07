@@ -12,6 +12,6 @@ class Certificado extends Model
 
     public function membro()
     {
-        return $this->belongsTo(Membro::class, 'membros_id');
+        return $this->belongsTo(Membro::class, 'membro_id');
     }
 }

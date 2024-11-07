@@ -1,10 +1,8 @@
 @extends('layouts.admin')
 
-<!-- Titulo -->
 @section('title')
-Certicados
+Certificados
 @endsection
-<!-- Titulo -->
 
 @section('content')
 <div class="app-content-header">
@@ -26,55 +24,74 @@ Certicados
 </div>
 <div class="container d-flex justify-content-center">
     <div class="card-body" style="max-width: 600px;">
+    
+    @if(!empty($certificadosData))
         <form method="POST" action="{{ route('certificados.store') }}">
-            @csrf
-
+        @csrf
+        @foreach($certificadosData as $index => $data)
             <div class="mb-3">
-                <label for="membros_id" class="form-label"><strong>Membro*</strong></label>
-                <select id="membros_id" name="membros_id" class="form-select" required>
-                    <option value="" disabled selected class="text-disable">Selecione</option>
+                <label for="membros_id_{{ $index }}" class="form-label"><strong>Membro*</strong></label>
+                <select id="membros_id_{{ $index }}" name="certificados[{{ $index }}][membros_id]" class="form-select" required>
                     @foreach($membros as $membro)
-                        <option value="{{ $membro->id }}"> {{ $membro->nome }} </option>
+                        <option value="{{ $membro->id }}" {{ $membro->id == $data['membro_id'] ? 'selected' : '' }}>
+                            {{ $membro->nome }}
+                        </option>
                     @endforeach
                 </select>
-
-                @error('nome')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
             </div>
 
             <div class="mb-3">
-                <label for="descricao" class="form-label"><strong>Descrição</strong></label>
-                <textarea class="form-control @error('descricao') inválido @enderror" id="descricao" name="descricao"
-                    required placeholder="Descrição..." minlength="20" maxlength="520" rows="4"
-                    oninput="updateCharacterCount()">{{ old('descricao') }}</textarea>
-                <div id="charCount">0/520</div>
-                @error('descricao')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
+                <label for="horas_{{ $index }}" class="form-label"><strong>Horas:*</strong></label>
+                <input type="text" class="form-control" id="horas_{{ $index }}" name="certificados[{{ $index }}][horas]" value="{{ $data['horas'] }}" required>
             </div>
-            <div class="mb-3">
-                <label for="horas" class="form-label"><strong>Horas:*</strong></label>
-                <input type="text" class="form-control @error('horas') inválido @enderror" id="horas" name="horas"
-                    placeholder="Horas..." value="{{ old('horas') }}" required>
-                @error('horas')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label for="data" class="form-label"><strong>Data Certificado:*</strong></label>
-                <input type="date" id="data" name="data" class="form-control @error('data') inválida @enderror"
-                  value="{{ old('data') }}"  required>
-                @error('data')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button type="submit" class="btn btn-outline-success">
-                    <i class="fas fa-plus"></i> Criar Certificado
-                </button>
-            </div>
+        @endforeach
+
+        <div class="mb-3">
+            <label for="descricao" class="form-label"><strong>Descrição</strong></label>
+            <textarea class="form-control" id="descricao" name="descricao" required>{{ $certificadosData[0]['descricao'] }}</textarea>
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="submit" class="btn btn-outline-success">
+                <i class="fas fa-plus"></i> Criar Certificado
+            </button>
+        </div>
         </form>
+    @else
+        Formulário para criação manual de certificados
+        <form method="POST" action="{{ route('certificados.store') }}">
+        @csrf
+        <div class="mb-3">
+            <label for="manual_membro_id" class="form-label"><strong>Membro*</strong></label>
+            <select id="manual_membro_id" name="manual_certificado[membros_id]" class="form-select" required>
+                @foreach($membros as $membro)
+                    <option value="{{ $membro->id }}">{{ $membro->nome }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="manual_data" class="form-label"><strong>Data:*</strong></label>
+            <input type="date" class="form-control" id="manual_data" name="manual_certificado[data]" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="manual_horas" class="form-label"><strong>Horas:*</strong></label>
+            <input type="text" class="form-control" id="manual_horas" name="manual_certificado[horas]" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="manual_descricao" class="form-label"><strong>Descrição</strong></label>
+            <textarea class="form-control" id="manual_descricao" name="manual_certificado[descricao]" required></textarea>
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="submit" class="btn btn-outline-success">
+                <i class="fas fa-plus"></i> Adicionar Certificado
+            </button>
+        </div>
+        </form>
+    @endif
     </div>
 </div>
 @endsection

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('membro_id')->constrained()->onDelete('cascade');
             $table->string('nome');
             $table->string('status')->default('em aberto');
+            $table->boolean('checkbox_estado')->default(false);
+            $table->boolean('certificado_gerado')->default(false);
             $table->timestamps();
         });
     }

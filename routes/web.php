@@ -17,6 +17,7 @@ Route::get('/certificados/{certificado}/view', [CertificadoController::class, 'v
 Route::get('/certificados/{certificado}/download', [CertificadoController::class, 'downloadCertificate'])->name('certificados.download');
 Route::get('/certificados/validar', [CertificadoController::class, 'showValidationForm'])->name('certificados.validar');
 Route::post('/certificados/validar', [CertificadoController::class, 'validarCertificado'])->name('certificados.validar.post');
+Route::post('/certificados/generate', [CertificadoController::class, 'generateFromTasks'])->name('certificados.generate');
 
 Route::get('/', function () {
     return view('home');
@@ -52,7 +53,9 @@ Route::resource('certificados', CertificadoController::class);
 Route::get('certificados/{id}/download', [CertificadoController::class, 'download'])->name('certificados.download');
 Route::get('/certificados/{certificado}/view', [CertificadoController::class, 'viewCertificate'])->name('certificados.view');
 Route::delete('certificados/{certificado}', [CertificadoController::class, 'destroy'])->name('certificados.destroy');
-
+Route::post('/certificados/generate', [CertificadoController::class, 'generateFromTasks'])->name('certificados.generate');
+Route::get('/certificados/create', [CertificadoController::class, 'create'])->name('certificados.create');
+Route::post('/certificados', [CertificadoController::class, 'store'])->name('certificados.store');
 
 Route::get('/', [NoticiasController::class, 'home'])->name('home');
 Route::resource('noticias', NoticiasController::class);
@@ -93,5 +96,6 @@ Route::post('tarefas/{tarefa}/atividades', [AtividadeController::class, 'store']
 Route::get('tarefas/{tarefa}/atividades', [AtividadeController::class, 'index'])->name('tarefas.atividades.index');
 Route::get('/projetos/{id}/tarefas/create', [ProjetoController::class, 'createTarefa'])->name('projetos.tarefas.create');
 Route::get('/projetos/{id}/tarefas', [ProjetoController::class, 'indexTarefas'])->name('projetos.tarefas.index');
-
+Route::post('/projetos/{projeto}/tarefas', [TarefaController::class, 'store'])->name('tarefas.store');
+Route::post('/tarefas/{id}/update-checkbox', [TarefaController::class, 'updateCheckbox'])->name('tarefas.updateCheckbox');
 require __DIR__.'/auth.php';

@@ -44,7 +44,7 @@ Projeto - Criar
             </div>
             <div class="mb-3">
                 <label for="inputMembros" class="form-label"><strong>Membros:</strong></label>
-                <select class="select2 form-select" id="inputMembros" multiple="multiple">
+                <select name="membros[]" class="select2 form-select" id="inputMembros" multiple="multiple">
                     @foreach($membros as $membro)
                         <option value="{{ $membro->id }}">{{ $membro->nome }}</option>
                     @endforeach
@@ -62,19 +62,21 @@ Projeto - Criar
                     </label>
                 </div>
             </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                <input type="submit" class="btn btn-outline-secondary" value="Salvar">
+            <div class="d-flex justify-content-between">
+                <a href="{{ route('projetos.index') }}"
+                    class="btn btn-outline-danger">Voltar</a>
+                <button type="submit" class="btn btn-outline-success">Salvar</button>
             </div>
         </form>
     </div>
 </div>
 <script>
-$(document).ready(function() {
-    $('.select2').select2({
-        theme: 'bootstrap-5',
-        placeholder: 'Selecione um ou mais membros',
+    $(document).ready(function () {
+        $('.select2').select2({
+            theme: 'bootstrap-5',
+            placeholder: 'Selecione um ou mais membros',
 
+        });
     });
-});
 </script>
 @endsection

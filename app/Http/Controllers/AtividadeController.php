@@ -12,13 +12,13 @@ class AtividadeController extends Controller
 {
     public function create(Tarefa $tarefa): View
     {
-        $projeto = $tarefa->projeto; // Assumindo que a relação entre Tarefa e Projeto está definida
+        $projeto = $tarefa->projeto;
         return view('tarefas.atividades.create', compact('tarefa', 'projeto'));
     }
 
     public function index(Tarefa $tarefa): View
 {
-    $projeto = $tarefa->projeto; // Assumindo que a relação entre Tarefa e Projeto está definida
+    $projeto = $tarefa->projeto;
     return view('tarefas.atividades.index', compact('tarefa', 'projeto'));
 }
 public function store(Request $request, Tarefa $tarefa): RedirectResponse
@@ -41,12 +41,10 @@ public function store(Request $request, Tarefa $tarefa): RedirectResponse
         'link.url' => 'O campo link deve ser uma URL válida.',
     ]);
 
-    // Cria a nova atividade
     $atividade = new Atividade($request->only('data_inicio', 'data_final', 'horas_trabalhadas', 'link'));
     $atividade->tarefa_id = $tarefa->id;
     $atividade->save();
 
-    // Atualiza o status da tarefa para 'concluido'
     $tarefa->status = 'concluido';
     $tarefa->save();
 
@@ -87,9 +85,11 @@ public function update(Request $request, Atividade $atividade): RedirectResponse
     
     public function destroy(Atividade $atividade): RedirectResponse
 {
-    $tarefaId = $atividade->tarefa_id;
+    $tarefa = $atividade->tarefa;
     $atividade->delete();
-    return redirect()->route('tarefas.atividades.index', $tarefaId)
-        ->with('success', 'Atividade deletada.');
+    $tarefa->status = 'em aberto';
+    $tarefa->save();
+    return redirect()->route('tarefas.atividades.index', $tarefa->id)
+        ->with('success', 'Atividade deletada e status atualizado');
 }
 }

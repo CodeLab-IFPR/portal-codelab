@@ -9,7 +9,7 @@ class Tarefa extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'status', 'projeto_id', 'membro_id'];
+    protected $fillable = ['nome', 'status', 'certificado_gerado', 'projeto_id', 'membro_id', 'checkbox_estado'];
 
     public function projeto()
     {
@@ -24,4 +24,5 @@ class Tarefa extends Model
     {
         return $this->hasMany(Atividade::class);
     }
+    
 }
