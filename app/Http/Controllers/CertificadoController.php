@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Certificado;
-use App\Models\Membro;
+use App\Models\User;
 use App\Models\Tarefa;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
@@ -19,25 +19,25 @@ class CertificadoController extends Controller
     public function generateFromTasks(Request $request): JsonResponse
     {
         $tasks = $request->input('tasks', []);
-        $membros = [];
+        $users = [];
         $projetoNome = '';
     
         foreach ($tasks as $taskId) {
             $tarefa = Tarefa::find($taskId);
             if ($tarefa && !$tarefa->certificado_gerado) {
-                $membroId = $tarefa->membro_id;
-                if (!isset($membros[$membroId])) {
-                    $membros[$membroId] = 0;
+                $userId = $tarefa->user_id;
+                if (!isset($users[$userId])) {
+                    $users[$userId] = 0;
                 }
-                $membros[$membroId] += $tarefa->atividades->sum('horas_trabalhadas');
+                $users[$userId] += $tarefa->atividades->sum('horas_trabalhadas');
                 $projetoNome = $tarefa->projeto->nome;
             }
         }
     
         $certificadosData = [];
-        foreach ($membros as $membroId => $horas) {
+        foreach ($users as $userId => $horas) {
             $certificadosData[] = [
-                'membro_id' => $membroId,
+                'user_id' => $userId,
                 'horas' => $horas,
                 'descricao' => $projetoNome
             ];
@@ -46,14 +46,14 @@ class CertificadoController extends Controller
         $generatedTaskIds = [];
         foreach ($certificadosData as $data) {
             $certificado = new Certificado();
-            $certificado->membro_id = $data['membro_id'];
+            $certificado->user_id = $data['user_id'];
             $certificado->horas = $data['horas'];
             $certificado->descricao = $data['descricao'];
             $certificado->token = Str::random(10);
             $certificado->data = now();
             $certificado->save();
     
-            $generatedTaskIds[] = $data['membro_id'];
+            $generatedTaskIds[] = $data['user_id'];
         }
     
         Tarefa::whereIn('id', $tasks)->update(['certificado_gerado' => true]);
@@ -79,10 +79,10 @@ class CertificadoController extends Controller
 
             $cpf = $request->input('cpf');
 
-            $membro = Membro::where('cpf', $cpf)->first();
+            $user = User::where('cpf', $cpf)->first();
             
-            if ($membro) {
-                $certificados = Certificado::where('membro_id', $membro->id)->get();
+            if ($user) {
+                $certificados = Certificado::where('user_id', $user->id)->get();
 
                 return response()->json([
                     'certificados' => $certificados
@@ -113,7 +113,7 @@ class CertificadoController extends Controller
 
             $token = $request->input('token');
 
-            $certificado = Certificado::where('token', $token)->with('membro')->first();
+            $certificado = Certificado::where('token', $token)->with('user')->first();
             
             if ($certificado) {
                 return response()->json(['certificado' => $certificado]);
@@ -134,7 +134,7 @@ class CertificadoController extends Controller
                 $builder->where('descricao', 'like', "%{$request->search}%")
                     ->orWhere('horas', 'like', "%{$request->search}%")
                     ->orWhere('data', 'like', "%{$request->search}%")
-                    ->orWhereHas('membro', function (Builder $query) use ($request) {
+                    ->orWhereHas('user', function (Builder $query) use ($request) {
                         $query->where('nome', 'like', "%{$request->search}%");
                     })
                     ->orWhere('token', 'like', "%{$request->search}%");
@@ -155,30 +155,30 @@ class CertificadoController extends Controller
     public function create(Request $request)
     {
         $certificadosData = json_decode($request->input('data'), true);
-        $membros = Membro::all();
-        return view('certificados.create', compact('membros', 'certificadosData'));
+        $users = User::all();
+        return view('certificados.create', compact('users', 'certificadosData'));
     }
 
     public function edit(Certificado $certificado)
     {
-        $membros = Membro::all();
-        $selectedMembro = $certificado->membros_id;
+        $users = User::all();
+        $selectedUser = $certificado->users_id;
         return view('certificados.edit', [
             'certificado' => $certificado,
-            'membros' => $membros,
-            'selectedMembroId' => $selectedMembro
+            'users' => $users,
+            'selectedUserId' => $selectedUser
         ]);
     }
 
     public function update(Request $request, Certificado $certificado): RedirectResponse
     {
         $request->validate([
-            'membros_id' => 'required',
+            'users_id' => 'required',
             'descricao' => 'required|max:520',
             'horas' => 'required|integer',
             'data' => 'required|date',
         ],[
-            'membros_id.required' => 'O campo membro é obrigatório',
+            'users_id.required' => 'O campo user é obrigatório',
             'descricao.required' => 'O campo descrição é obrigatório',
             'descricao.max' => 'O campo descrição deve ter no máximo 520 caracteres',
             'horas.required' => 'O campo horas é obrigatório',
@@ -188,7 +188,7 @@ class CertificadoController extends Controller
         ]);
 
         $certificado->update([
-            'membros_id' => $request->membros_id,
+            'users_id' => $request->users_id,
             'descricao' => $request->descricao,
             'horas' => $request->horas,
             'data' => $request->data,
@@ -205,13 +205,13 @@ class CertificadoController extends Controller
         $descricao = $request->input('descricao');
 
         foreach ($certificados as $certificadoData) {
-            $existingCertificado = Certificado::where('membro_id', $certificadoData['membros_id'])
+            $existingCertificado = Certificado::where('user_id', $certificadoData['users_id'])
                 ->where('descricao', $descricao)
                 ->first();
 
             if (!$existingCertificado) {
                 $certificado = new Certificado();
-                $certificado->membro_id = $certificadoData['membros_id'];
+                $certificado->user_id = $certificadoData['users_id'];
                 $certificado->horas = $certificadoData['horas'];
                 $certificado->descricao = $descricao;
                 $certificado->token = Str::random(10);
@@ -221,13 +221,13 @@ class CertificadoController extends Controller
         }
 
         if (!empty($manualCertificado)) {
-            $existingCertificado = Certificado::where('membro_id', $manualCertificado['membros_id'])
+            $existingCertificado = Certificado::where('user_id', $manualCertificado['users_id'])
                 ->where('descricao', $manualCertificado['descricao'])
                 ->first();
 
             if (!$existingCertificado) {
                 $certificado = new Certificado();
-                $certificado->membro_id = $manualCertificado['membros_id'];
+                $certificado->user_id = $manualCertificado['users_id'];
                 $certificado->horas = $manualCertificado['horas'];
                 $certificado->descricao = $manualCertificado['descricao'];
                 $certificado->token = Str::random(10);
@@ -246,13 +246,13 @@ class CertificadoController extends Controller
 
     public function generateCertificate(Certificado $certificado, $download = false)
 {
-    $membro = $certificado->membro;
-    if (!$membro) {
-        throw new \Exception("Membro associado ao certificado não encontrado.");
+    $user = $certificado->user;
+    if (!$user) {
+        throw new \Exception("User associado ao certificado não encontrado.");
     }
 
-    $name = $membro->nome;
-    $cpf = $membro->cpf;
+    $name = $user->nome;
+    $cpf = $user->cpf;
     $credential = $certificado->token;
     $description = $certificado->descricao;
     $hours = $certificado->horas;

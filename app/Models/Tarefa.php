@@ -9,16 +9,16 @@ class Tarefa extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'status', 'certificado_gerado', 'projeto_id', 'membro_id', 'checkbox_estado'];
+    protected $fillable = ['nome', 'status', 'certificado_gerado', 'projeto_id', 'user_id', 'checkbox_estado'];
 
     public function projeto()
     {
         return $this->belongsTo(Projeto::class);
     }
 
-    public function membro()
+    public function user()
     {
-        return $this->belongsTo(Membro::class);
+        return $this->belongsTo(User::class);
     }
     public function atividades()
     {

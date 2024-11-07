@@ -2,7 +2,7 @@
 
 <!-- Título -->
 @section('title')
-Membros - Lista
+Users - Lista
 @endsection
 <!-- Título -->
 
@@ -11,13 +11,13 @@ Membros - Lista
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h3 class="mb-0">Membros - Lista</h3>
+                <h3 class="mb-0">Users - Lista</h3>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        Membros - Lista
+                        Users - Lista
                     </li>
                 </ol>
             </div>
@@ -26,8 +26,8 @@ Membros - Lista
 </div>
 <div class="container">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right: 10px;">
-            <a class="btn btn-outline-success btn-sm" href="{{ route('membros.create') }}">
-                <i class="fa fa-plus"></i> Adicionar Membro
+            <a class="btn btn-outline-success btn-sm" href="{{ route('users.create') }}">
+                <i class="fa fa-plus"></i> Adicionar User
             </a>
         </div>
 
@@ -42,8 +42,8 @@ Membros - Lista
             </div>
         @endif
         <div class="d-flex justify-content-center mb-4">
-            <form id="search-form" class="d-flex" method="GET" action="{{ route('membros.index') }}">
-            <input id="search-input" class="form-control me-2" type="search" name="search" placeholder="Buscar Membros"
+            <form id="search-form" class="d-flex" method="GET" action="{{ route('users.index') }}">
+            <input id="search-input" class="form-control me-2" type="search" name="search" placeholder="Buscar Users"
                 aria-label="Search">
             <button class="btn btn-outline-success" type="submit">
                 <i class="bi bi-search"></i>
@@ -52,8 +52,8 @@ Membros - Lista
         </div>
 
         <div class="card-body">
-            <div id="membros-table-container">
-                @include('membros.table', ['membros' => $membros])
+            <div id="users-table-container">
+                @include('users.table', ['users' => $users])
             </div>
         </div>
 </div>
@@ -67,12 +67,12 @@ Membros - Lista
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Tem certeza de que deseja excluir este membro? Esta ação não pode ser desfeita.</p>
-                <div id="membro-info">
-                    <img id="membro-imagem" src="" alt="Imagem do Membro" width="100px">
-                    <p><strong>Nome:</strong> <span id="membro-nome"></span></p>
-                    <p><strong>Cpf:</strong> <span id="membro-cpf"></span></p>
-                    <p><strong>Cargo:</strong> <span id="membro-cargo"></span></p>
+                <p>Tem certeza de que deseja excluir este user? Esta ação não pode ser desfeita.</p>
+                <div id="user-info">
+                    <img id="user-imagem" src="" alt="Imagem do User" width="100px">
+                    <p><strong>Nome:</strong> <span id="user-name"></span></p>
+                    <p><strong>Cpf:</strong> <span id="user-cpf"></span></p>
+                    <p><strong>Cargo:</strong> <span id="user-cargo"></span></p>
                 </div>
             </div>
             <div class="modal-footer">
@@ -99,15 +99,15 @@ Membros - Lista
             e.preventDefault();
             var query = $('#search-input').val();
             $.ajax({
-                url: "{{ route('membros.index') }}",
+                url: "{{ route('users.index') }}",
                 type: 'GET',
                 data: { search: query },
                 success: function (response) {
-                    $('#membros-table-container').html(response.table);
+                    $('#users-table-container').html(response.table);
                 },
                 error: function (xhr) {
                     console.log(xhr.responseText);
-                    alert('Ocorreu um erro ao tentar buscar os membros.');
+                    alert('Ocorreu um erro ao tentar buscar os users.');
                 }
             });
         });
@@ -115,17 +115,17 @@ Membros - Lista
         $('body').on('click', '.btn-delete', function (e) {
             e.preventDefault();
             var url = $(this).data('url');
-            var nome = $(this).data('nome');
+            var nome = $(this).data('name');
             var cpf = $(this).data('cpf');
             var cargo = $(this).data('cargo');
             var imagem = $(this).data('imagem');
             var alt = $(this).data('alt');
 
-            $('#membro-nome').text(nome);
-            $('#membro-cpf').text(cpf);
-            $('#membro-cargo').text(cargo);
-            $('#membro-imagem').attr('src', imagem);
-            $('#membro-imagem').attr('alt', alt);
+            $('#user-name').text(name);
+            $('#user-cpf').text(cpf);
+            $('#user-cargo').text(cargo);
+            $('#user-imagem').attr('src', imagem);
+            $('#user-imagem').attr('alt', alt);
 
             $('#confirmDeleteButton').data('url', url);
             $('#confirmDeleteModal').modal('show');
@@ -138,7 +138,7 @@ Membros - Lista
                 method: 'DELETE',
                 success: function (response) {
                     if (response.table) {
-                        $('#membros-table-container').html(response.table);
+                        $('#users-table-container').html(response.table);
                         $('#confirmDeleteModal').modal('hide');
                     } else {
                         location.reload();
@@ -146,7 +146,7 @@ Membros - Lista
                 },
                 error: function (xhr) {
                     console.log(xhr.responseText);
-                    alert('Ocorreu um erro ao tentar excluir o membro.');
+                    alert('Ocorreu um erro ao tentar excluir o user.');
                 }
             });
         });

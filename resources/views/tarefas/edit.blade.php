@@ -42,13 +42,13 @@
             </div>
 
             <div class="mb-3">
-                <label for="inputMembro" class="form-label"><strong>Membro:</strong></label>
-                <select name="membro_id" class="form-control @error('membro_id') is-invalid @enderror" id="inputMembro">
-                    @foreach($membros as $membro)
-                        <option value="{{ $membro->id }}" {{ $tarefa->membro_id == $membro->id ? 'selected' : '' }}>{{ $membro->nome }}</option>
+                <label for="inputUser" class="form-label"><strong>User:</strong></label>
+                <select name="user_id" class="form-control @error('user_id') is-invalid @enderror" id="inputUser">
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}" {{ $tarefa->user_id == $user->id ? 'selected' : '' }}>{{ $user->nome }}</option>
                     @endforeach
                 </select>
-                @error('membro_id')
+                @error('user_id')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>

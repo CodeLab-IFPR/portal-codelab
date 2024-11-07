@@ -32,19 +32,19 @@ Certificado - Edição
             @method('PUT')
 
             <div class="mb-3">
-                <label for="membros_id" class="form-label"><strong>Membro*</strong></label>
-                <select id="membros_id" name="membros_id" class="form-select" required>
+                <label for="users_id" class="form-label"><strong>User*</strong></label>
+                <select id="users_id" name="users_id" class="form-select" required>
                     <option value="" disabled
-                        {{ empty($selectedMembroId) ? 'selected' : '' }}
+                        {{ empty($selectedUserId) ? 'selected' : '' }}
                         class="text-disable">Selecione</option>
-                    @foreach($membros as $membro)
-                        <option value="{{ $membro->id }}"
-                            {{ $selectedMembroId == $membro->id ? 'selected' : '' }}>
-                            {{ $membro->nome }}
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}"
+                            {{ $selectedUserId == $user->id ? 'selected' : '' }}>
+                            {{ $user->nome }}
                         </option>
                     @endforeach
                 </select>
-                @error('membros_id')
+                @error('users_id')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>

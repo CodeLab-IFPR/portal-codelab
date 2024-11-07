@@ -2,7 +2,7 @@
 
 <!-- Titulo -->
 @section('title')
-Membros - Cadastro
+Users - Cadastro
 @endsection
 <!-- Titulo -->
 
@@ -11,13 +11,13 @@ Membros - Cadastro
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h3 class="mb-0">Membro - Cadastro</h3>
+                <h3 class="mb-0">User - Cadastro</h3>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        Membro - Cadastro
+                        User - Cadastro
                     </li>
                 </ol>
             </div>
@@ -26,13 +26,13 @@ Membros - Cadastro
 </div>
 <div class="container d-flex justify-content-center">
     <div class="card-body" style="max-width: 600px;">
-        <form action="{{ route('membros.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-3">
-                <label for="inputNome" class="form-label"><strong>*Nome:</strong></label>
-                <input type="text" name="nome" class="form-control @error('nome') inválido @enderror" id="inputNome"
-                    placeholder="Nome..." value="{{ old('nome') }}" required>
+                <label for="inputName" class="form-label"><strong>*Name:</strong></label>
+                <input type="text" name="nome" class="form-control @error('nome') inválido @enderror" id="inputName"
+                    placeholder="Name..." value="{{ old('nome') }}" required>
                 @error('nome')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -56,7 +56,7 @@ Membros - Cadastro
             </div>
             <div class="mb-3">
                 <label for="inputAtivo" class="form-label"><strong>Ativo:</strong></label>
-                <input type="checkbox" name="ativo" class="form-check-input @error('ativo') is-invalid @enderror" id="inputAtivo" value="1" {{ $membro->ativo ?? 1 ? 'checked' : '' }}>
+                <input type="checkbox" name="ativo" class="form-check-input @error('ativo') is-invalid @enderror" id="inputAtivo" value="1" {{ $user->ativo ?? 1 ? 'checked' : '' }}>
                 @error('ativo')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror

@@ -30,11 +30,11 @@ Certificados
         @csrf
         @foreach($certificadosData as $index => $data)
             <div class="mb-3">
-                <label for="membros_id_{{ $index }}" class="form-label"><strong>Membro*</strong></label>
-                <select id="membros_id_{{ $index }}" name="certificados[{{ $index }}][membros_id]" class="form-select" required>
-                    @foreach($membros as $membro)
-                        <option value="{{ $membro->id }}" {{ $membro->id == $data['membro_id'] ? 'selected' : '' }}>
-                            {{ $membro->nome }}
+                <label for="users_id_{{ $index }}" class="form-label"><strong>User*</strong></label>
+                <select id="users_id_{{ $index }}" name="certificados[{{ $index }}][users_id]" class="form-select" required>
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}" {{ $user->id == $data['user_id'] ? 'selected' : '' }}>
+                            {{ $user->nome }}
                         </option>
                     @endforeach
                 </select>
@@ -62,10 +62,10 @@ Certificados
         <form method="POST" action="{{ route('certificados.store') }}">
         @csrf
         <div class="mb-3">
-            <label for="manual_membro_id" class="form-label"><strong>Membro*</strong></label>
-            <select id="manual_membro_id" name="manual_certificado[membros_id]" class="form-select" required>
-                @foreach($membros as $membro)
-                    <option value="{{ $membro->id }}">{{ $membro->nome }}</option>
+            <label for="manual_user_id" class="form-label"><strong>User*</strong></label>
+            <select id="manual_user_id" name="manual_certificado[users_id]" class="form-select" required>
+                @foreach($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->nome }}</option>
                 @endforeach
             </select>
         </div>

@@ -13,7 +13,7 @@ return new class extends Migration
         Schema::create('tarefas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('projeto_id')->constrained()->onDelete('cascade');
-            $table->foreignId('membro_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('nome');
             $table->string('status')->default('em aberto');
             $table->boolean('checkbox_estado')->default(false);

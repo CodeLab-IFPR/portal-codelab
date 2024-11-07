@@ -123,7 +123,7 @@
                         data-accordion="false">
 
                         <li
-                            class="nav-item {{ request()->routeIs('noticias.create') || request()->routeIs('membros.create') || request()->routeIs('parceiros.create') ? 'menu-open' : '' }}">
+                            class="nav-item {{ request()->routeIs('noticias.create') || request()->routeIs('users.create') || request()->routeIs('parceiros.create') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-journal-plus"></i>
                                 <p>
@@ -141,11 +141,11 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('membros.create') }}"
-                                        class="nav-link {{ request()->routeIs('membros.create') ? 'active' : '' }}">
+                                    <a href="{{ route('users.create') }}"
+                                        class="nav-link {{ request()->routeIs('users.create') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('membros.create') ? 'bi-play-fill' : 'bi-play' }}"></i>
-                                        <p>Novo Membro</p>
+                                            class="nav-icon bi {{ request()->routeIs('users.create') ? 'bi-play-fill' : 'bi-play' }}"></i>
+                                        <p>Novo User</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -160,7 +160,7 @@
                         </li>
 
                         <li
-                            class="nav-item {{ request()->routeIs('membros.index') || request()->routeIs('parceiros.index') ? 'menu-open' : '' }}">
+                            class="nav-item {{ request()->routeIs('users.index') || request()->routeIs('parceiros.index') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-journal-text"></i>
                                 <p>
@@ -173,16 +173,16 @@
                                     <a href="{{ route('noticias.index') }}"
                                         class="nav-link {{ request()->routeIs('noticias.index') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('membros.index') ? 'bi-play-fill' : 'bi-play' }}"></i>
+                                            class="nav-icon bi {{ request()->routeIs('users.index') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Noticias</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('membros.index') }}"
-                                        class="nav-link {{ request()->routeIs('membros.index') ? 'active' : '' }}">
+                                    <a href="{{ route('users.index') }}"
+                                        class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('membros.index') ? 'bi-play-fill' : 'bi-play' }}"></i>
-                                        <p>Membro</p>
+                                            class="nav-icon bi {{ request()->routeIs('users.index') ? 'bi-play-fill' : 'bi-play' }}"></i>
+                                        <p>User</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
