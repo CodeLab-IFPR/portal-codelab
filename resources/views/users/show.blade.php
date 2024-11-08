@@ -2,7 +2,7 @@
 
 <!-- Titulo -->
 @section('title')
-{{ $membro->nome }}
+{{ $user->name }}
 @endsection
 <!-- Titulo -->
 
@@ -28,42 +28,46 @@
     <div class="card">
         <div class="card-header">
             <div class="d-flex align-items-center">
-                <img src="/imagens/membros/{{ $membro->imagem }}" alt="{{ $membro->alt }}" class="img-fluid rounded me-3" width="80px">
-                <h4 class="mb-0">{{ $membro->nome }}</h4>
+                <img src="/imagens/users/{{ $user->imagem }}" alt="{{ $user->alt }}" class="img-fluid rounded me-3" width="80px">
+                <h4 class="mb-0">{{ $user->name }}</h4>
             </div>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
+                        <strong>Email:</strong>
+                        <p>{{ $user->email }}</p>
+                    </div>
+                    <div class="form-group">
                         <strong>Nome:</strong>
-                        <p>{{ $membro->nome }}</p>
+                        <p>{{ $user->name }}</p>
                     </div>
                     <div class="form-group">
                         <strong>Cargo:</strong>
-                        <p>{{ $membro->cargo }}</p>
+                        <p>{{ $user->cargo }}</p>
                     </div>
                     <div class="form-group">
                         <strong>Biografia:</strong>
-                        <p>{{ $membro->biografia }}</p>
+                        <p>{{ $user->biografia }}</p>
                     </div>
                     <div class="form-group">
                         <strong>LinkedIn:</strong>
-                        <p><a href="{{ $membro->linkedin }}" target="_blank">{{ $membro->linkedin }}</a></p>
+                        <p><a href="{{ $user->linkedin }}" target="_blank">{{ $user->linkedin }}</a></p>
                     </div>
                     <div class="form-group">
                         <strong>GitHub:</strong>
-                        <p><a href="{{ $membro->github }}" target="_blank">{{ $membro->github }}</a></p>
+                        <p><a href="{{ $user->github }}" target="_blank">{{ $user->github }}</a></p>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <strong>CPF:</strong>
-                        <p>{{ $membro->cpf }}</p>
+                        <p>{{ $user->cpf }}</p>
                     </div>
                     <div class="form-group">
                         <strong>Ativo:</strong>
-                        <p>{{ $membro->ativo ? 'Sim' : 'Não' }}</p>
+                        <p>{{ $user->ativo ? 'Sim' : 'Não' }}</p>
                     </div>
                 </div>
             </div>

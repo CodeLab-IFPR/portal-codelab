@@ -42,7 +42,7 @@ Validar Certificado
 
     function handleResponse(data) {
         if (data.certificado) {
-            document.getElementById('nome').innerText = data.certificado.membro.nome || 'N/A';
+            document.getElementById('nome').innerText = data.certificado.user.name || 'N/A';
             document.getElementById('descricao').innerText = data.certificado.descricao || 'N/A';
             document.getElementById('horas').innerText = data.certificado.horas || 'N/A';
             document.getElementById('data').innerText = formatDate(data.certificado.data) || 'N/A';

@@ -2,7 +2,7 @@
 
 <!-- Titulo -->
 @section('title')
-Membros - Cadastro
+Membros - Edição
 @endsection
 <!-- Titulo -->
 
@@ -11,14 +11,10 @@ Membros - Cadastro
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h3 class="mb-0">Membro - Cadastro</h3>
+                <h3 class="mb-0">Membro - Edição</h3>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
-                    <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        Membro - Cadastro
-                    </li>
                 </ol>
             </div>
         </div>
@@ -26,46 +22,58 @@ Membros - Cadastro
 </div>
 <div class="container d-flex justify-content-center">
     <div class="card-body" style="max-width: 600px;">
-        <form action="{{ route('membros.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
 
             <div class="mb-3">
-                <label for="inputNome" class="form-label"><strong>*Nome:</strong></label>
-                <input type="text" name="nome" class="form-control @error('nome') inválido @enderror" id="inputNome"
-                    placeholder="Nome..." value="{{ old('nome') }}" required>
-                @error('nome')
+                <label for="inputNome" class="form-label"><strong>Nome:</strong></label>
+                <input type="text" name="name" value="{{ old('name', $user->name) }}"
+                    class="form-control @error('name') is-invalid @enderror" id="inputNome" placeholder="Nome...">
+                @error('name')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3">
-                <label for="inputCargo" class="form-label"><strong>*Cargo:</strong></label>
-                <input type="text" class="form-control @error('cargo') inválido @enderror" name="cargo" id="inputCargo"
-                    placeholder="Cargo..." value="{{ old('cargo') }}" required>
+                <label for="inputCargo" class="form-label"><strong>Cargo:</strong></label>
+                <input type="text" name="cargo" value="{{ old('cargo', $user->cargo) }}"
+                    class="form-control @error('cargo') is-invalid @enderror" id="inputCargo" placeholder="Cargo...">
                 @error('cargo')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="mb-3">
-                <label for="inputCpf" class="form-label"><strong>*CPF:</strong></label>
-                <input type="text" class="form-control @error('cpf') inválido @enderror" name="cpf" id="inputCpf"
-                    placeholder="CPF..." value="{{ old('cpf') }}" required>
+                <label for="inputCpf" class="form-label"><strong>CPF:</strong></label>
+                <input type="text" name="cpf" value="{{ old('cpf', $user->cpf) }}"
+                    class="form-control @error('cpf') is-invalid @enderror" id="inputCpf" placeholder="CPF...">
                 @error('cpf')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
+
+            <div class="mb-3">
+                <label for="inputEmail" class="form-label"><strong>Email:</strong></label>
+                <input type="email" name="email" value="{{ old('email', $user->email) }}"
+                    class="form-control @error('email') is-invalid @enderror" id="inputEmail" placeholder="Email...">
+                @error('email')
+                    <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
             <div class="mb-3">
                 <label for="inputAtivo" class="form-label"><strong>Ativo:</strong></label>
-                <input type="checkbox" name="ativo" class="form-check-input @error('ativo') is-invalid @enderror" id="inputAtivo" value="1" {{ $membro->ativo ?? 1 ? 'checked' : '' }}>
+                <input type="checkbox" name="ativo" class="form-check-input @error('ativo') is-invalid @enderror" id="inputAtivo" value="1" {{ old('ativo', $user->ativo ?? 1) ? 'checked' : '' }}>
                 @error('ativo')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3">
-                <label for="inputBiografia" class="form-label"><strong>*Biografia:</strong></label>
-                <textarea class="form-control @error('biografia') inválido @enderror" style="height:150px"
-                    name="biografia" id="inputBiografia" placeholder="Biografia..." required>{{ old('biografia') }}</textarea>
+                <label for="inputBiografia" class="form-label"><strong>Biografia:</strong></label>
+                <textarea class="form-control @error('biografia') is-invalid @enderror" style="height:150px"
+                    name="biografia" id="inputBiografia" placeholder="Biografia...">{{ old('biografia', $user->biografia) }}</textarea>
                 @error('biografia')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -74,7 +82,7 @@ Membros - Cadastro
             <div class="mb-3">
                 <label for="inputLinkedin" class="form-label"><strong>LinkedIn:</strong></label>
                 <input type="url" class="form-control @error('linkedin') is-invalid @enderror" name="linkedin" id="inputLinkedin"
-                    placeholder="LinkedIn URL" value="{{ old('linkedin') }}">
+                    placeholder="LinkedIn URL" value="{{ old('linkedin', $user->linkedin) }}">
                 @error('linkedin')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -83,43 +91,40 @@ Membros - Cadastro
             <div class="mb-3">
                 <label for="inputGithub" class="form-label"><strong>GitHub:</strong></label>
                 <input type="url" class="form-control @error('github') is-invalid @enderror" name="github" id="inputGithub"
-                    placeholder="GitHub URL" value="{{ old('github') }}">
-                @error('github')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
+                    placeholder="GitHub URL" value="{{ old('github', $user->github) }}">
             </div>
 
             <div class="mb-3">
-                <label for="inputAlt" class="form-label"><strong>*Alt:</strong></label>
+                <label for="inputAlt" class="form-label"><strong>Alt:</strong></label>
                 <input type="text" class="form-control @error('alt') is-invalid @enderror" name="alt" id="inputAlt"
-                    placeholder="Texto alternativo..." value="{{ old('alt') }}" required>
+                    placeholder="Texto alternativo..." value="{{ old('alt', $user->alt) }}">
                 @error('alt')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
 
-            <div id="additional-links"></div>
-
             <div class="mb-3">
                 <label for="inputImagem" class="form-label"><strong>Imagem:</strong></label>
                 <input type="file" name="imagem" class="form-control @error('imagem') is-invalid @enderror image" id="inputImagem">
+                @if($user->imagem && !old('cropped_image'))
+                    <p class="mt-2"><strong>Imagem atual:</strong></p>
+                    <img src="/imagens/users/{{ $user->imagem }}" width="160px" class="mt-2">
+                @endif
                 @error('imagem')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
-                <input type="hidden" name="cropped_image" id="cropped_image">
+                <input type="hidden" name="cropped_image" id="cropped_image" value="{{ old('cropped_image') }}">
             </div>
 
-            <div class="mb-3" id="croppedImageContainer" style="display: none;">
-                <label for="croppedImagePreview" class="form-label"><strong>Preview da Imagem:</strong></label>
+            <div class="mb-3" id="croppedImageContainer" style="{{ old('cropped_image') ? '' : 'display: none;' }}">
+                <label for="croppedImagePreview" class="form-label"><strong>Imagem atualizada:</strong></label>
                 <div id="croppedImagePreview" style="width: 160px; height: 160px; border: 1px solid #ddd; border-radius: 50%; overflow: hidden;">
-                    <img id="croppedImage" src="" alt="Imagem recortada" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img id="croppedImage" src="{{ old('cropped_image') }}" alt="Imagem recortada" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
             </div>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button type="submit" class="btn btn-outline-success">
-                    <i class="fas fa-plus"></i> Salvar
-                </button>
+                <button type="submit" class="btn btn-outline-primary"><i class="fa-solid fa-floppy-disk"></i> Atualizar</button>
             </div>
         </form>
     </div>
@@ -230,12 +235,17 @@ $("#crop").click(function(){
         reader.onloadend = function() {
             var base64data = reader.result; 
             $('#cropped_image').val(base64data);
-            $('#croppedImage').attr('src', base64data);
-            $('#croppedImagePreview').show();
+            $('#croppedImage').attr('src', base64data); // Atualizar o src da imagem do preview
+            $('#croppedImagePreview').show(); // Mostrar o preview da imagem
             $modal.modal('hide');
         };
     });
 });
 
+@if(old('cropped_image'))
+    $(document).ready(function() {
+        $('#croppedImageContainer').show();
+    });
+@endif
 </script>
 @endsection
