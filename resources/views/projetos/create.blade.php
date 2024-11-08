@@ -43,13 +43,13 @@ Projeto - Criar
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="inputMembros" class="form-label"><strong>Membros:</strong></label>
-                <select name="membros[]" class="select2 form-select" id="inputMembros" multiple="multiple">
-                    @foreach($membros as $membro)
-                        <option value="{{ $membro->id }}">{{ $membro->nome }}</option>
+                <label for="inputUsers" class="form-label"><strong>Membros:</strong></label>
+                <select name="users[]" class="select2 form-select" id="inputUsers" multiple="multiple">
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
                     @endforeach
                 </select>
-                @error('membros')
+                @error('users')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>

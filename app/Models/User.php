@@ -20,6 +20,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'cargo',
+        'cpf',
+        'ativo',
+        'biografia',
+        'imagem',
+        'alt',
+        'linkedin',
+        'github'
     ];
 
     /**
@@ -43,5 +51,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function certificados()
+    {
+        return $this->hasMany(Certificado::class, 'users_id');
+    }
+
+    public function tarefas()
+    {
+        return $this->hasMany(Tarefa::class);
     }
 }

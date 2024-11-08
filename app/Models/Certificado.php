@@ -8,10 +8,10 @@ class Certificado extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['membros_id', 'token', 'descricao', 'horas', 'data'];
+    protected $fillable = ['users_id', 'token', 'descricao', 'horas', 'data'];
 
-    public function membro()
+    public function user()
     {
-        return $this->belongsTo(Membro::class, 'membro_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

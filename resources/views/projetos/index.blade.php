@@ -50,8 +50,8 @@
                             <td>{{ $projeto->nome }}</td>
                             <td>{{ $projeto->descricao ?? 'Sem descrição' }}</td>
                             <td>
-                                @foreach($projeto->membros as $membro)
-                                    {{ $membro->nome }}@if(!$loop->last), @endif
+                                @foreach($projeto->users as $user)
+                                    {{ $user->name }}@if(!$loop->last), @endif
                                 @endforeach
                             </td>
                             <td>

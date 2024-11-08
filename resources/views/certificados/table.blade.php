@@ -13,7 +13,7 @@
             <tbody>
                 @forelse($certificados as $certificado)
                     <tr>
-                        <td>{{ $certificado->membro->nome }}</td>
+                        <td>{{ $certificado->user->name }}</td>
                         <td>{{ mb_strimwidth("$certificado->descricao", 0, 250, "...") }}
                         </td>
                         <td>{{ $certificado->horas }} </td>
@@ -40,7 +40,7 @@
                                     <li>
                                         <a href="#" class="dropdown-item d-flex align-items-center btn-delete"
                                             data-url="{{ route('certificados.destroy', $certificado->id) }}"
-                                            data-nome="{{ $certificado->membro->nome }}"
+                                            data-nome="{{ $certificado->user->name }}"
                                             data-descricao="{{ $certificado->descricao }}"
                                             data-horas="{{ $certificado->horas }}"
                                             data-data="{{ \Carbon\Carbon::parse($certificado->data)->format('d/m/Y') }}"

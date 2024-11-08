@@ -391,7 +391,7 @@ Index
                             <p class="mb-0 small fw-bolder tracking-wider text-uppercase text-primary">Trabalhem juntos
                             </p>
                             <h4 class="fs-1 fw-bold mb-4 mt-3">Colaboração é a chave para o sucesso.</h4>
-                            <p class="text-muted">Utilize nosso portal para colaborar com os membros do CDT-IFPR em todas as etapas dos projetos de extensão.</p>
+                            <p class="text-muted">Utilize nosso portal para colaborar com os users do CDT-IFPR em todas as etapas dos projetos de extensão.</p>
                             <a href="#" class="btn btn-link px-0 me-3 fw-medium text-decoration-none mt-4"
                                 role="button">Comece agora &rarr;</a>
                         </div>

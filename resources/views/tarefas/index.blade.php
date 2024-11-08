@@ -60,9 +60,9 @@ Tarefas
                                 @endif
                             </td>
                             <td>
-                                @foreach($projeto->membros as $membro)
-                                    @if($membro->id == $tarefa->membro_id)
-                                        {{ $membro->nome }}
+                                @foreach($projeto->users as $user)
+                                    @if($user->id == $tarefa->user_id)
+                                        {{ $user->name }}
                                     @endif
                                 @endforeach
                             </td>
