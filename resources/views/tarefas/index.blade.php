@@ -36,7 +36,7 @@ Tarefas
                     <tr>
                         <th>Selecionar</th>
                         <th>Nome</th>
-                        <th>User</th>
+                        <th>Membro</th>
                         <th>Horas Trabalhadas</th>
                         <th>Status</th>
                         <th width="250px">Ação</th>
@@ -60,9 +60,9 @@ Tarefas
                                 @endif
                             </td>
                             <td>
-                                @foreach($projeto->users as $user)
-                                    @if($user->id == $tarefa->user_id)
-                                        {{ $user->nome }}
+                                @foreach($projeto->membros as $membro)
+                                    @if($membro->id == $tarefa->membro_id)
+                                        {{ $membro->nome }}
                                     @endif
                                 @endforeach
                             </td>

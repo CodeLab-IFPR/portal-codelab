@@ -1,4 +1,4 @@
-<table class="table table-bordered table-striped mt-4" id="users-table">
+<table class="table table-bordered table-striped mt-4" id="membros-table">
     <thead>
         <tr>
             <th>Imagem</th>
@@ -11,41 +11,41 @@
     </thead>
 
     <tbody>
-        @forelse($users as $user)
+        @forelse($membros as $membro)
             <tr>
-                <td><img src="/imagens/users/{{ $user->imagem }}" alt="{{ $user->alt }}" width="80px"></td>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->cpf }}</td>
-                <td>{{ $user->ativo ? 'Sim' : 'Não' }}</td>
-                <td>{{ $user->cargo }}</td>
+                <td><img src="/imagens/membros/{{ $membro->imagem }}" alt="{{ $membro->alt }}" width="80px"></td>
+                <td>{{ $membro->nome }}</td>
+                <td>{{ $membro->cpf }}</td>
+                <td>{{ $membro->ativo ? 'Sim' : 'Não' }}</td>
+                <td>{{ $membro->cargo }}</td>
                 <td>
                     <div class="dropdown">
                         <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"
-                            id="dropdownMenuButton{{ $user->id }}" data-bs-toggle="dropdown"
+                            id="dropdownMenuButton{{ $membro->id }}" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             <i class="bi bi-gear"></i>
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $user->id }}">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $membro->id }}">
                             <li>
                                 <a class="dropdown-item d-flex align-items-center"
-                                    href="{{ route('users.show', $user->id) }}">
+                                    href="{{ route('membros.show', $membro->id) }}">
                                     <i class="bi bi-eye text-secondary me-2"></i> Visualizar
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item d-flex align-items-center"
-                                    href="{{ route('users.edit', $user->id) }}">
+                                    href="{{ route('membros.edit', $membro->id) }}">
                                     <i class="bi bi-pencil-square text-warning me-2"></i> Editar
                                 </a>
                             </li>
                             <li>
                                 <a href="#" class="dropdown-item d-flex align-items-center btn-delete"
-                                    data-url="{{ route('users.destroy', $user->id) }}"
-                                    data-nome="{{ $user->name }}"
-                                    data-cpf="{{ $user->cpf }}"
-                                    data-cargo="{{ $user->cargo }}"
-                                    data-imagem="/imagens/users/{{ $user->imagem }}"
-                                    data-alt="{{ $user->alt }}">
+                                    data-url="{{ route('membros.destroy', $membro->id) }}"
+                                    data-nome="{{ $membro->nome }}"
+                                    data-cpf="{{ $membro->cpf }}"
+                                    data-cargo="{{ $membro->cargo }}"
+                                    data-imagem="/imagens/membros/{{ $membro->imagem }}"
+                                    data-alt="{{ $membro->alt }}">
                                     <i class="bi bi-trash text-danger me-2"></i> Deletar
                                 </a>
                             </li>
@@ -58,8 +58,8 @@
                 <td colspan="6">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-center">
                         <a class="btn btn-outline-success btn-sm"
-                            href="{{ route('users.create') }}">
-                            <i class="fa fa-plus"></i> Adicionar User
+                            href="{{ route('membros.create') }}">
+                            <i class="fa fa-plus"></i> Adicionar Membro
                         </a>
                     </div>
                 </td>
@@ -68,4 +68,4 @@
     </tbody>
 </table>
 
-{!! $users->withQueryString()->links('pagination::bootstrap-5') !!}
+{!! $membros->withQueryString()->links('pagination::bootstrap-5') !!}

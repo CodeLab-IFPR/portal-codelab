@@ -17,14 +17,6 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('cargo')->nullable();;
-            $table->string('cpf')->unique()->nullable();;
-            $table->boolean('ativo')->default(true)->nullable();
-            $table->text('biografia')->nullable();;
-            $table->string('alt')->nullable();;
-            $table->string('imagem')->nullable();;
-            $table->string('linkedin')->nullable();
-            $table->string('github')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -114,22 +114,22 @@ Sobre Nós
     <div class="py-8">
     <h2 class="display-5 fw-bold mb-6 text-center">Nossa equipe</h2>
     <div class="row g-6">
-        @foreach ($users as $user)
+        @foreach ($membros as $membro)
         <div class="col-12 col-md-4">
             <div class="shadow-lg hover-lift" style="position:relative; display:flex; flex-direction:column; min-width:0; word-wrap:break-word; background-color:#fff; background-clip:border-box; border-radius:0.25rem; box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075); height:100%;">
                 <div style="flex:1 1 auto; padding:1rem; text-align:center;">
                     <div style="margin-bottom:1rem;">
-                        <img style="width:80px; height:80px; border-radius:50%;" src="{{ asset('imagens/users/' . $user->imagem) }}" alt="{{ $user->alt }}">
+                        <img style="width:80px; height:80px; border-radius:50%;" src="{{ asset('imagens/membros/' . $membro->imagem) }}" alt="{{ $membro->alt }}">
                     </div>
-                    <p style="font-weight:bold; margin-bottom:0.5rem; margin-top:1rem;">{{ $user->nome }}</p>
-                    <p style="color:#007bff; font-weight:bold; margin-bottom:1rem; font-size:small;">{{ $user->cargo }}</p>
-                    <p style="color:#6c757d; margin-bottom:1rem; line-height:1.5; word-wrap:break-word; overflow-wrap:break-word; white-space:normal;">{{ $user->biografia }}</p>
+                    <p style="font-weight:bold; margin-bottom:0.5rem; margin-top:1rem;">{{ $membro->nome }}</p>
+                    <p style="color:#007bff; font-weight:bold; margin-bottom:1rem; font-size:small;">{{ $membro->cargo }}</p>
+                    <p style="color:#6c757d; margin-bottom:1rem; line-height:1.5; word-wrap:break-word; overflow-wrap:break-word; white-space:normal;">{{ $membro->biografia }}</p>
                     <ul style="list-style:none; padding-left:0; display:flex; align-items:center; justify-content:center; margin-bottom:0;">
-                        @if ($user->linkedin)
-                        <li style="margin:0 0.5rem;"><a href="{{ $user->linkedin }}" style="text-decoration:none;" target="_blank"><i class="ri-linkedin-box-fill ri-2x"></i></a></li>
+                        @if ($membro->linkedin)
+                        <li style="margin:0 0.5rem;"><a href="{{ $membro->linkedin }}" style="text-decoration:none;" target="_blank"><i class="ri-linkedin-box-fill ri-2x"></i></a></li>
                         @endif
-                        @if ($user->github)
-                        <li style="margin:0 0.5rem;"><a href="{{ $user->github }}" style="text-decoration:none;" target="_blank"><i class="ri-github-fill ri-2x"></i></a></li>
+                        @if ($membro->github)
+                        <li style="margin:0 0.5rem;"><a href="{{ $membro->github }}" style="text-decoration:none;" target="_blank"><i class="ri-github-fill ri-2x"></i></a></li>
                         @endif
                     </ul>
                 </div>

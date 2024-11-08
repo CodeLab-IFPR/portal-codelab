@@ -18,9 +18,9 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('users_projeto', function (Blueprint $table) {
+        Schema::create('membros_projeto', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('membro_id')->constrained()->onDelete('cascade');
             $table->foreignId('projeto_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
@@ -31,7 +31,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users_projeto');
+        Schema::dropIfExists('membros_projeto');
         Schema::dropIfExists('projetos');
     }
 };

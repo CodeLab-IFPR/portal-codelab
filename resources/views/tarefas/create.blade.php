@@ -45,11 +45,11 @@ Criar Tarefa
             </div>
 
             <div class="mb-3">
-                <label for="user_id" class="form-label"><strong>User:</strong></label>
-                <select name="user_id" class="select2 form-select" required autocomplete="off">
-                    @foreach($projeto->users as $user)
-                        <option value="{{ $user->id }}">
-                            {{ $user->nome }}
+                <label for="membro_id" class="form-label"><strong>Membro:</strong></label>
+                <select name="membro_id" class="select2 form-select" required autocomplete="off">
+                    @foreach($projeto->membros as $membro)
+                        <option value="{{ $membro->id }}">
+                            {{ $membro->nome }}
                         </option>
                     @endforeach
                 </select>

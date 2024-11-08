@@ -10,13 +10,13 @@ class Projeto extends Model
     use HasFactory;
     protected $fillable = ['nome', 'descricao', 'status'];
 
-    public function users()
+    public function membros()
     {
-        return $this->belongsToMany(User::class, 'users_projeto');
+        return $this->belongsToMany(Membro::class, 'membros_projeto');
     }
     public function projetos()
     {
-        return $this->belongsToMany(Projeto::class, 'users_projeto');
+        return $this->belongsToMany(Projeto::class, 'membros_projeto');
     }
 
     public function tarefas()

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Membro;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\Builder;
 use App\Providers\ImageUploader;
@@ -11,49 +11,49 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\File;
 
 
-class UserController extends Controller
+class MembroController extends Controller
 {
     public function index(Request $request)
     {
-        $usersQuery = User::latest();
+        $membrosQuery = Membro::latest();
     
         if ($request->search) {
-            $usersQuery->where(function (Builder $builder) use ($request) {
-                $builder->where('name', 'like', "%{$request->search}%")
+            $membrosQuery->where(function (Builder $builder) use ($request) {
+                $builder->where('nome', 'like', "%{$request->search}%")
                         ->orWhere('cpf', 'like', "%{$request->search}%")
                         ->orWhere('cargo', 'like', "%{$request->search}%");
             });
         }
     
-        $users = $usersQuery->paginate(5);
+        $membros = $membrosQuery->paginate(5);
     
         if ($request->ajax()) {
             return response()->json([
-                'table' => view('users.table', compact('users'))->render()
+                'table' => view('membros.table', compact('membros'))->render()
             ]);
         }
     
-        return view('users.index', compact('users'));
+        return view('membros.index', compact('membros'));
     }
 
     public function about(): View
     {
-        $users = User::where('ativo', true)->get();
+        $membros = Membro::where('ativo', true)->get();
         
-        return view('about', compact('users'));
+        return view('about', compact('membros'));
     }
 
     public function create(): View
     {
-        return view('users.create');
+        return view('membros.create');
     }
 
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|min:3|max:255',
+            'nome' => 'required|min:3|max:255',
             'cargo' => 'required|min:5|max:100',
-            'cpf' => 'required|unique:users,cpf',
+            'cpf' => 'required|unique:membros,cpf',
             'biografia' => 'required|min:10',
             'linkedin' => 'nullable|url',
             'github' => 'nullable|url',
@@ -76,32 +76,32 @@ class UserController extends Controller
             $uploader = new ImageUploader();
             $uploader->setCompression(30);
             $uploader->setResolution(160);
-            $uploader->setDestinationPath('users/');
+            $uploader->setDestinationPath('membros/');
             $entrada['imagem'] = $uploader->upload(new \Illuminate\Http\File($imageFullPath));
         }
     
-        $user = User::create($entrada);
+        $membro = Membro::create($entrada);
     
-        return redirect()->route("users.index")
-            ->with("success", "User criado com sucesso.");
+        return redirect()->route("membros.index")
+            ->with("success", "Membro criado com sucesso.");
     }
 
-    public function show(User $user): View
+    public function show(Membro $membro): View
     {
-        return view("users.show", compact("user"));
+        return view("membros.show", compact("membro"));
     }
 
-    public function edit(User $user): View
+    public function edit(Membro $membro): View
     {
-        return view("users.edit", compact("user"));
+        return view("membros.edit", compact("membro"));
     }
 
-    public function update(Request $request, User $user): RedirectResponse
+    public function update(Request $request, Membro $membro): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|min:3|max:255',
+            'nome' => 'required|min:3|max:255',
             'cargo' => 'required|min:5|max:100',
-            'cpf' => 'required|unique:users,cpf,' . $user->id,
+            'cpf' => 'required|unique:membros,cpf,' . $membro->id,
             'biografia' => 'required|min:10',
             'linkedin' => 'nullable|url',
             'github' => 'nullable|url',
@@ -110,9 +110,9 @@ class UserController extends Controller
         ], [
             'cpf.unique' => 'CPF já cadastrado.',
             'cpf.required' => 'O campo CPF é obrigatório.',
-            'name.required' => 'O campo name é obrigatório.',
-            'name.min' => 'O campo name deve ter no mínimo 3 caracteres.',
-            'name.max' => 'O campo name deve ter no máximo 255 caracteres.',
+            'nome.required' => 'O campo nome é obrigatório.',
+            'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres.',
+            'nome.max' => 'O campo nome deve ter no máximo 255 caracteres.',
             'cargo.required' => 'O campo cargo é obrigatório.',
             'cargo.max' => 'O campo cargo deve ter no máximo 100 caracteres.',
             'biografia.required' => 'O campo biografia é obrigatório.',
@@ -142,44 +142,44 @@ class UserController extends Controller
             $uploader = new ImageUploader();
             $uploader->setCompression(30);
             $uploader->setResolution(160);
-            $uploader->setDestinationPath('users/');
-            $entrada['imagem'] = $uploader->upload(new \Illuminate\Http\File($imageFullPath), $user->imagem);
+            $uploader->setDestinationPath('membros/');
+            $entrada['imagem'] = $uploader->upload(new \Illuminate\Http\File($imageFullPath), $membro->imagem);
         } else {
             unset($entrada['imagem']);
         }
     
-        $user->update($entrada);
+        $membro->update($entrada);
     
-        return redirect()->route("users.index")
-            ->with("success", "User atualizado com sucesso.");
+        return redirect()->route("membros.index")
+            ->with("success", "Membro atualizado com sucesso.");
     }
     
 
     public function destroy($id)
     {
         try {
-            $user = User::findOrFail($id);
+            $membro = Membro::findOrFail($id);
 
-            if ($user->imagem) {
-                $imagePath = public_path('imagens/users/' . $user->imagem);
+            if ($membro->imagem) {
+                $imagePath = public_path('imagens/membros/' . $membro->imagem);
                 if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }
             }
 
-            $user->delete();
+            $membro->delete();
 
-            $users = User::paginate(5);
+            $membros = Membro::paginate(5);
 
             if (request()->ajax()) {
                 return response()->json([
-                    'table' => view('users.table', compact('users'))->render()
+                    'table' => view('membros.table', compact('membros'))->render()
                 ]);
             }
 
-            return redirect()->route('users.index')->with('success', 'User excluído com sucesso.');
+            return redirect()->route('membros.index')->with('success', 'Membro excluído com sucesso.');
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro ao excluir o user.'], 500);
+            return response()->json(['error' => 'Erro ao excluir o membro.'], 500);
         }
     }
 }

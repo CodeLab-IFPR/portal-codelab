@@ -2,7 +2,7 @@
 
 <!-- Titulo -->
 @section('title')
-Users - Edição
+Membros - Edição
 @endsection
 <!-- Titulo -->
 
@@ -11,7 +11,7 @@ Users - Edição
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h3 class="mb-0">User - Edição</h3>
+                <h3 class="mb-0">Membro - Edição</h3>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
@@ -22,13 +22,13 @@ Users - Edição
 </div>
 <div class="container d-flex justify-content-center">
     <div class="card-body" style="max-width: 600px;">
-        <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('membros.update', $membro->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
             <div class="mb-3">
                 <label for="inputNome" class="form-label"><strong>Nome:</strong></label>
-                <input type="text" name="nome" value="{{ old('nome', $user->nome) }}"
+                <input type="text" name="nome" value="{{ old('nome', $membro->nome) }}"
                     class="form-control @error('nome') is-invalid @enderror" id="inputNome" placeholder="Nome...">
                 @error('nome')
                     <div class="form-text text-danger">{{ $message }}</div>
@@ -37,7 +37,7 @@ Users - Edição
 
             <div class="mb-3">
                 <label for="inputCargo" class="form-label"><strong>Cargo:</strong></label>
-                <input type="text" name="cargo" value="{{ old('cargo', $user->cargo) }}"
+                <input type="text" name="cargo" value="{{ old('cargo', $membro->cargo) }}"
                     class="form-control @error('cargo') is-invalid @enderror" id="inputCargo" placeholder="Cargo...">
                 @error('cargo')
                     <div class="form-text text-danger">{{ $message }}</div>
@@ -46,7 +46,7 @@ Users - Edição
 
             <div class="mb-3">
                 <label for="inputCpf" class="form-label"><strong>CPF:</strong></label>
-                <input type="text" name="cpf" value="{{ old('cpf', $user->cpf) }}"
+                <input type="text" name="cpf" value="{{ old('cpf', $membro->cpf) }}"
                     class="form-control @error('cpf') is-invalid @enderror" id="inputCpf" placeholder="CPF...">
                 @error('cpf')
                     <div class="form-text text-danger">{{ $message }}</div>
@@ -55,7 +55,7 @@ Users - Edição
 
             <div class="mb-3">
                 <label for="inputAtivo" class="form-label"><strong>Ativo:</strong></label>
-                <input type="checkbox" name="ativo" class="form-check-input @error('ativo') is-invalid @enderror" id="inputAtivo" value="1" {{ old('ativo', $user->ativo ?? 1) ? 'checked' : '' }}>
+                <input type="checkbox" name="ativo" class="form-check-input @error('ativo') is-invalid @enderror" id="inputAtivo" value="1" {{ old('ativo', $membro->ativo ?? 1) ? 'checked' : '' }}>
                 @error('ativo')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -64,7 +64,7 @@ Users - Edição
             <div class="mb-3">
                 <label for="inputBiografia" class="form-label"><strong>Biografia:</strong></label>
                 <textarea class="form-control @error('biografia') is-invalid @enderror" style="height:150px"
-                    name="biografia" id="inputBiografia" placeholder="Biografia...">{{ old('biografia', $user->biografia) }}</textarea>
+                    name="biografia" id="inputBiografia" placeholder="Biografia...">{{ old('biografia', $membro->biografia) }}</textarea>
                 @error('biografia')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -73,7 +73,7 @@ Users - Edição
             <div class="mb-3">
                 <label for="inputLinkedin" class="form-label"><strong>LinkedIn:</strong></label>
                 <input type="url" class="form-control @error('linkedin') is-invalid @enderror" name="linkedin" id="inputLinkedin"
-                    placeholder="LinkedIn URL" value="{{ old('linkedin', $user->linkedin) }}">
+                    placeholder="LinkedIn URL" value="{{ old('linkedin', $membro->linkedin) }}">
                 @error('linkedin')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -82,13 +82,13 @@ Users - Edição
             <div class="mb-3">
                 <label for="inputGithub" class="form-label"><strong>GitHub:</strong></label>
                 <input type="url" class="form-control @error('github') is-invalid @enderror" name="github" id="inputGithub"
-                    placeholder="GitHub URL" value="{{ old('github', $user->github) }}">
+                    placeholder="GitHub URL" value="{{ old('github', $membro->github) }}">
             </div>
 
             <div class="mb-3">
                 <label for="inputAlt" class="form-label"><strong>Alt:</strong></label>
                 <input type="text" class="form-control @error('alt') is-invalid @enderror" name="alt" id="inputAlt"
-                    placeholder="Texto alternativo..." value="{{ old('alt', $user->alt) }}">
+                    placeholder="Texto alternativo..." value="{{ old('alt', $membro->alt) }}">
                 @error('alt')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
@@ -97,9 +97,9 @@ Users - Edição
             <div class="mb-3">
                 <label for="inputImagem" class="form-label"><strong>Imagem:</strong></label>
                 <input type="file" name="imagem" class="form-control @error('imagem') is-invalid @enderror image" id="inputImagem">
-                @if($user->imagem)
+                @if($membro->imagem)
                     <p class="mt-2"><strong>Imagem atual:</strong></p>
-                    <img src="/imagens/users/{{ $user->imagem }}" width="160px" class="mt-2">
+                    <img src="/imagens/membros/{{ $membro->imagem }}" width="160px" class="mt-2">
                 @endif
                 @error('imagem')
                     <div class="form-text text-danger">{{ $message }}</div>

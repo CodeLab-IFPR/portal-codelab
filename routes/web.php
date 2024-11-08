@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AtividadeController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\MembroController;
 use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\ParceiroController;
 use App\Http\Controllers\ProfileController;
@@ -47,7 +47,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/about', [UserController::class, 'about'])->name('about');
+Route::get('/about', [MembroController::class, 'about'])->name('about');
 
 Route::resource('certificados', CertificadoController::class);
 Route::get('certificados/{id}/download', [CertificadoController::class, 'download'])->name('certificados.download');
@@ -66,14 +66,14 @@ Route::get('noticias/{noticia}', [NoticiasController::class, 'show'])->name('not
 Route::get('cards/noticias', [NoticiasController::class, 'cards'])->name('noticias.cards');
 Route::get('noticias', [NoticiasController::class, 'index'])->name('noticias.index');
 Route::put('noticias/{noticia}', [NoticiasController::class, 'update'])->name('noticias.update');
-Route::delete('noticias/{user}', [NoticiasController::class, 'destroy'])->name('noticias.destroy');
+Route::delete('noticias/{membro}', [NoticiasController::class, 'destroy'])->name('noticias.destroy');
 
 
 
-Route::resource('users', UserController::class);
-Route::get('users', [UserController::class, 'index'])->name('users.index');
-Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-Route::get('users/{user}', [UserController::class, 'show'])->name('users.show');
+Route::resource('membros', MembroController::class);
+Route::get('membros', [MembroController::class, 'index'])->name('membros.index');
+Route::delete('membros/{membro}', [MembroController::class, 'destroy'])->name('membros.destroy');
+Route::get('membros/{membro}', [MembroController::class, 'show'])->name('membros.show');
 
 
 Route::resource('parceiros', ParceiroController::class);

@@ -2,7 +2,7 @@
 // app/Http/Controllers/ProjetoController.php
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Membro;
 use App\Models\Projeto;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -13,8 +13,8 @@ class ProjetoController extends Controller
     public function createTarefa($id)
 {
     $projeto = Projeto::findOrFail($id);
-    $users = User::all();
-    return view('tarefas.create', compact('projeto', 'users'));
+    $membros = Membro::all();
+    return view('tarefas.create', compact('projeto', 'membros'));
 }
 
 public function indexTarefas($id)
@@ -25,14 +25,14 @@ public function indexTarefas($id)
 
     public function index(): View
     {
-        $projetos = Projeto::with('users')->paginate(10);
+        $projetos = Projeto::with('membros')->paginate(10);
         return view('projetos.index', compact('projetos'));
     }
 
     public function create(): View
     {
-        $users = User::all();
-        return view('projetos.create', compact('users'));
+        $membros = Membro::all();
+        return view('projetos.create', compact('membros'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -40,15 +40,15 @@ public function indexTarefas($id)
         $request->validate([
             'nome' => 'required|min:3|max:255',
             'descricao' => 'required|min:5',
-            'users' => 'required|array',
+            'membros' => 'required|array',
         ],[
             'nome.required' => 'O campo nome é obrigatório.',
             'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres.',
             'nome.max' => 'O campo nome deve ter no máximo 255 caracteres.',
             'descricao.required' => 'O campo descrição é obrigatório.',
             'descricao.min' => 'O campo descrição deve ter no mínimo 5 caracteres.',
-            'users.array' => 'Selecione pelo menos um user.',
-            'users.required' => 'Selecione pelo menos um user.',
+            'membros.array' => 'Selecione pelo menos um membro.',
+            'membros.required' => 'Selecione pelo menos um membro.',
         ]);
 
         $status = $request->has('status') ? 'concluido' : 'em aberto';
@@ -59,7 +59,7 @@ public function indexTarefas($id)
             'status' => $status,
         ]);
 
-        $projeto->users()->sync($request->input('users'));
+        $projeto->membros()->sync($request->input('membros'));
 
         return redirect()->route('projetos.index')
             ->with('success', 'Projeto criado com sucesso.');
@@ -67,15 +67,15 @@ public function indexTarefas($id)
     
     public function show(Projeto $projeto): View
     {
-        $projeto->load('tarefas', 'users');
-        $users = User::all();
-        return view('projetos.show', compact('projeto', 'users'));
+        $projeto->load('tarefas', 'membros');
+        $membros = Membro::all();
+        return view('projetos.show', compact('projeto', 'membros'));
     }
     
     public function edit(Projeto $projeto): View
     {
-        $users = User::all();
-        return view('projetos.edit', compact('projeto', 'users'));
+        $membros = Membro::all();
+        return view('projetos.edit', compact('projeto', 'membros'));
     }
 
     public function update(Request $request, Projeto $projeto): RedirectResponse
@@ -83,15 +83,15 @@ public function indexTarefas($id)
         $request->validate([
             'nome' => 'required|min:3|max:255',
             'descricao' => 'required|min:5',
-            'users' => 'required|array',
+            'membros' => 'required|array',
         ],[
             'nome.required' => 'O campo nome é obrigatório.',
             'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres.',
             'nome.max' => 'O campo nome deve ter no máximo 255 caracteres.',
             'descricao.required' => 'O campo descrição é obrigatório.',
             'descricao.min' => 'O campo descrição deve ter no mínimo 5 caracteres.',
-            'users.array' => 'Selecione pelo menos um user.',
-            'users.required' => 'Selecione pelo menos um user.',
+            'membros.array' => 'Selecione pelo menos um membro.',
+            'membros.required' => 'Selecione pelo menos um membro.',
         ]);
 
         $status = $request->has('status') ? 'concluido' : 'em aberto';
@@ -102,7 +102,7 @@ public function indexTarefas($id)
             'status' => $status,
         ]);
 
-        $projeto->users()->sync($request->input('users'));
+        $projeto->membros()->sync($request->input('membros'));
 
         return redirect()->route('projetos.index')
             ->with('success', 'Projeto atualizado com sucesso.');

@@ -1,7 +1,7 @@
 <x-app-layout>
     <div>
         <h1>{{ $certificado->descricao }}</h1>
-        <p>{{ $certificado->user->nome }}</p>
+        <p>{{ $certificado->membro->nome }}</p>
         <p>{{ $certificado->horas }} horas</p>
         <p>{{ $certificado->data }}</p>
         <p>{{ $certificado->token }}</p>

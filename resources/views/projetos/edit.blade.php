@@ -53,15 +53,15 @@ Editar - {{ $projeto->nome }}
             </div>
 
             <div class="mb-3">
-                <label for="inputUsers" class="form-label"><strong>Users:</strong></label>
-                <select name="users[]" class="select2 form-select" id="inputUsers" multiple="multiple">
-                    @foreach($users as $user)
-                        <option value="{{ $user->id }}" {{ in_array($user->id, $projeto->users->pluck('id')->toArray()) ? 'selected' : '' }}>
-                            {{ $user->nome }}
+                <label for="inputMembros" class="form-label"><strong>Membros:</strong></label>
+                <select name="membros[]" class="select2 form-select" id="inputMembros" multiple="multiple">
+                    @foreach($membros as $membro)
+                        <option value="{{ $membro->id }}" {{ in_array($membro->id, $projeto->membros->pluck('id')->toArray()) ? 'selected' : '' }}>
+                            {{ $membro->nome }}
                         </option>
                     @endforeach
                 </select>
-                @error('users')
+                @error('membros')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
@@ -78,7 +78,7 @@ Editar - {{ $projeto->nome }}
     $(document).ready(function () {
         $('.select2').select2({
             theme: 'bootstrap-5',
-            placeholder: 'Selecione um ou mais users',
+            placeholder: 'Selecione um ou mais membros',
 
         });
     });

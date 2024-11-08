@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Projeto;
-use App\Models\User;
+use App\Models\Membro;
 use App\Models\Tarefa;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -19,22 +19,22 @@ class TarefaController extends Controller
     }
     public function create(Projeto $projeto): View
     {
-        $users = User::all();
-        return view('tarefas.create', compact('projeto', 'users'));
+        $membros = Membro::all();
+        return view('tarefas.create', compact('projeto', 'membros'));
     }
 
     public function store(Request $request, Projeto $projeto): RedirectResponse
     {
         $request->validate([
             'nome' => 'required|min:3|max:255',
-            'user_id' => 'required|exists:users,id',
+            'membro_id' => 'required|exists:membros,id',
         ]);
     
         try {
             $tarefa = $projeto->tarefas()->create([
                 'nome' => $request->input('nome'),
                 'status' => $request->has('status') ? 'concluido' : 'em aberto',
-                'user_id' => $request->input('user_id'),
+                'membro_id' => $request->input('membro_id'),
                 'certificado_gerado' => false,
             ]);
     
@@ -47,22 +47,22 @@ class TarefaController extends Controller
 
     public function edit(Projeto $projeto, Tarefa $tarefa): View
     {
-        $users = User::all();
-        return view('tarefas.edit', compact('projeto', 'tarefa', 'users'));
+        $membros = Membro::all();
+        return view('tarefas.edit', compact('projeto', 'tarefa', 'membros'));
     }
 
     public function update(Request $request, Projeto $projeto, Tarefa $tarefa): RedirectResponse
 {
     $request->validate([
         'nome' => 'required|min:3|max:255',
-        'user_id' => 'required|exists:users,id',
+        'membro_id' => 'required|exists:membros,id',
     ]);
 
     try {
         $tarefa->update([
             'nome' => $request->input('nome'),
             'status' => $request->has('status') ? 'concluido' : 'em aberto',
-            'user_id' => $request->input('user_id'),
+            'membro_id' => $request->input('membro_id'),
         ]);
 
         return redirect()->route('projetos.tarefas.index', $projeto->id)
