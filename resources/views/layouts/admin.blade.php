@@ -1,3 +1,6 @@
+@php
+    use Illuminate\Support\Facades\Auth;
+@endphp
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -85,28 +88,27 @@
                                 data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a>
                     </li>
                     <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle"
-                            data-bs-toggle="dropdown"> <img
-                                src="{{ asset('/img/user2-160x160.jpg') }}"
-                                class="user-image rounded-circle shadow" alt="User Image"> <span
-                                class="d-none d-md-inline">Alexander Pierce</span> </a>
+                            data-bs-toggle="dropdown"> 
+                            @if(Auth::check())
+                                <img src="/imagens/users/{{ Auth::user()->imagem }}" class="user-image rounded-circle shadow" alt="User Image"> 
+                                <span class="d-none d-md-inline">{{ Auth::user()->name }}</span> 
+                            @endif
+                        </a>
                         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                            <li class="user-header text-bg-primary"> <img
-                                    src="{{ asset('/img/user2-160x160.jpg') }}"
-                                    class="rounded-circle shadow" alt="User Image">
-                                <p>
-                                    Alexander Pierce - Web Developer
-                                    <small>Member since Nov. 2023</small>
-                                </p>
+                            @if(Auth::check())
+                                <li class="user-header text-bg-primary"> <img
+                                        src="/imagens/users/{{ Auth::user()->imagem }}"
+                                        class="rounded-circle shadow" alt="User Image">
+                                    <p>
+                                        {{ Auth::user()->name }} - Web Developer
+                                        <small>Membro desde {{ Auth::user()->created_at->format('M. Y') }}</small>
+                                    </p>
+                                </li>
+                            @endif
+                            <li class="user-footer"> 
+                                <a href="{{ route('profile.edit') }}" class="btn btn-primary btn-flat">Perfil</a> 
+                                <a href="#" class="btn btn-danger btn-flat float-end">Sair</a> 
                             </li>
-                            <li class="user-body">
-                                <div class="row">
-                                    <div class="col-4 text-center"> <a href="#">Followers</a> </div>
-                                    <div class="col-4 text-center"> <a href="#">Sales</a> </div>
-                                    <div class="col-4 text-center"> <a href="#">Friends</a> </div>
-                                </div>
-                            </li>
-                            <li class="user-footer"> <a href="#" class="btn btn-default btn-flat">Profile</a> <a
-                                    href="#" class="btn btn-default btn-flat float-end">Sign out</a> </li>
                         </ul>
                     </li>
                 </ul>
