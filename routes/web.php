@@ -47,7 +47,7 @@ Route::get('/admin', function () {
 })->name('admin');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('admin/index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/about', [RegisteredUserController::class, 'about'])->name('about');
