@@ -15,13 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->text('descricao')->default('Sem-Descrição');
-            $table->timestamps();
-        });
-
-        Schema::create('users_projeto', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('projeto_id')->constrained()->onDelete('cascade');
+            $table->string('status')->default('Em Aberto');
             $table->timestamps();
         });
     }
@@ -31,7 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users_projeto');
         Schema::dropIfExists('projetos');
     }
 };

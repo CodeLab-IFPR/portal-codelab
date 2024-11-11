@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -10,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('atividades', function (Blueprint $table) {
+        Schema::create('frase_inicio', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tarefa_id')->constrained()->onDelete('cascade');
-            $table->date('data_inicio');
-            $table->date('data_final');
-            $table->integer('horas_trabalhadas');
-            $table->string('link');
+            $table->text('frase');
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('atividades');
+        Schema::dropIfExists('frase_inicio');
     }
 };

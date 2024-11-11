@@ -28,13 +28,6 @@
     24 => 'Intervention\\Image\\ImageServiceProvider',
     25 => 'Laravel\\Breeze\\BreezeServiceProvider',
     26 => 'Laravel\\Sail\\SailServiceProvider',
-    27 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    28 => 'Carbon\\Laravel\\ServiceProvider',
-    29 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    30 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    31 => 'Pest\\Laravel\\PestServiceProvider',
-    32 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
-    33 => 'App\\Providers\\AppServiceProvider',
   ),
   'eager' => 
   array (
@@ -55,7 +48,8 @@
     14 => 'Termwind\\Laravel\\TermwindServiceProvider',
     15 => 'Pest\\Laravel\\PestServiceProvider',
     16 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
-    17 => 'App\\Providers\\AppServiceProvider',
+    17 => 'Webklex\\IMAP\\Providers\\LaravelServiceProvider',
+    18 => 'App\\Providers\\AppServiceProvider',
   ),
   'deferred' => 
   array (
@@ -211,6 +205,7 @@
     'Laravel\\Breeze\\Console\\InstallCommand' => 'Laravel\\Breeze\\BreezeServiceProvider',
     'Laravel\\Sail\\Console\\InstallCommand' => 'Laravel\\Sail\\SailServiceProvider',
     'Laravel\\Sail\\Console\\PublishCommand' => 'Laravel\\Sail\\SailServiceProvider',
+    'Laravel\\Socialite\\Contracts\\Factory' => 'Laravel\\Socialite\\SocialiteServiceProvider',
     'command.tinker' => 'Laravel\\Tinker\\TinkerServiceProvider',
   ),
   'when' => 
@@ -258,6 +253,9 @@
     array (
     ),
     'Laravel\\Sail\\SailServiceProvider' => 
+    array (
+    ),
+    'Laravel\\Socialite\\SocialiteServiceProvider' => 
     array (
     ),
     'Laravel\\Tinker\\TinkerServiceProvider' => 

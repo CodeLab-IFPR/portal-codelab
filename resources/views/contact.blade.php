@@ -20,7 +20,7 @@ Contate Nos
         <div class="col-12 col-lg-8">
             <p class="mb-3 small fw-bolder tracking-wider text-uppercase text-primary">Entre em contato</p>
             <h2 class="display-5 fw-bold mb-6">Envie-nos uma mensagem</h2>
-            <form id="contactForm" method="POST" action="/send-message" aria-labelledby="formTitle">
+            <form id="contactForm" method="POST" action="{{ route('send-message') }}" aria-labelledby="formTitle">
                 @csrf
                 <div class="row g-5">
                     <div class="col-12 col-md-6">
@@ -57,4 +57,14 @@ Contate Nos
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var telephoneInput = document.getElementById('telephone');
+        telephoneInput.addEventListener('input', function (e) {
+            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,1})(\d{0,4})(\d{0,4})/);
+            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '') + (x[4] ? '-' + x[4] : '');
+        });
+    });
+</script>
 @endsection

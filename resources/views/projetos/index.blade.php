@@ -16,31 +16,23 @@
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="card-body">
-    @if(session('success'))
-            <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">
-                <div class="alert-content">
-                    <strong>{{ session('success') }}</strong>
-                </div>
-                <div class="progress-bar-container">
-                    <div id="progress-bar" class="progress-bar"></div>
-                </div>
+<div class="container d-flex justify-content-center">
+    <div class="w-75">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
             </div>
         @endif
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
             <a class="btn btn-outline-success btn-sm" href="{{ route('projetos.create') }}"> <i class="fa fa-plus"></i> Novo projeto</a>
         </div>
-
-        <div class="table-responsive mt-2">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Membros</th>
-                        <th>Status</th>
+                        <th class="col-3">Nome</th>
+                        <th class="col-4">Descrição</th>
+                        <th class="col-2">Status</th>
                         <th>Ação</th>
                     </tr>
                 </thead>
@@ -49,11 +41,6 @@
                         <tr>
                             <td>{{ $projeto->nome }}</td>
                             <td>{{ $projeto->descricao ?? 'Sem descrição' }}</td>
-                            <td>
-                                @foreach($projeto->users as $user)
-                                    {{ $user->name }}@if(!$loop->last), @endif
-                                @endforeach
-                            </td>
                             <td>
                                 <span class="badge {{ $projeto->status == 'concluido' ? 'bg-success' : 'bg-warning' }}">
                                     {{ ucfirst($projeto->status) }}
@@ -65,7 +52,6 @@
                                         <i class="fa fa-cog"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <li><a class="dropdown-item" href="{{ route('projetos.tarefas.index', $projeto->id) }}"><i class="fa-solid fa-eye"></i> Ver Tarefas</a></li>
                                         <li><a class="dropdown-item" href="{{ route('projetos.edit', $projeto->id) }}"><i class="fa-solid fa-pen-to-square"></i> Editar</a></li>
                                         <li>
                                             <form action="{{ route('projetos.destroy', $projeto->id) }}" method="POST" class="d-inline">
@@ -83,7 +69,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">Não há projetos 😢</td>
+                            <td colspan="4" class="text-center">Não há projetos 😢</td>
                         </tr>
                     @endforelse
                 </tbody>

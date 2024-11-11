@@ -196,7 +196,7 @@ class RegisteredUserController extends Controller
                     'table' => view('users.table', compact('users'))->render()
                 ]);
             }
-
+          
             return redirect()->route('users.index')->with('success', 'Usuário excluído com sucesso.');
         } catch (\Exception $e) {
             return response()->json(['error' => 'Erro ao excluir o usuário.'], 500);
