@@ -20,14 +20,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'ativo',
         'cargo',
         'cpf',
-        'ativo',
         'biografia',
-        'imagem',
-        'alt',
         'linkedin',
-        'github'
+        'github',
+        'alt',
+        'imagem'
     ];
 
     /**

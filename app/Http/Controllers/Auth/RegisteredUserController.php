@@ -52,7 +52,7 @@ class RegisteredUserController extends Controller
         $entrada['ativo'] = $request->has('ativo') ? $request->ativo : false;
         $password = $request->input('generated_password');
         $entrada['password'] = Hash::make($password);
-        $entrada['imagem'] = $request->has('cropped_image') && $request->cropped_image ? $entrada['imagem'] : 'default.png'; // Valor padrão para imagem
+        $entrada['imagem'] = $request->has('cropped_image') && $request->cropped_image ? $entrada['imagem'] : 'default.png';
     
         if ($request->has('cropped_image') && $request->cropped_image) {
             $image_parts = explode(";base64,", $request->cropped_image);
