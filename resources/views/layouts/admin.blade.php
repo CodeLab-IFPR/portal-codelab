@@ -1,3 +1,18 @@
+<?php
+// admin.blade.php
+use App\Models\Contact;
+use App\Models\Submission;
+
+$unreadMessagesCount = Contact::where('read', false)->count();
+$lastMessage = Contact::where('read', false)->orderBy('created_at', 'desc')->first();
+$lastMessageTime = $lastMessage ? $lastMessage->created_at->diffForHumans() : 'Nenhuma mensagem';
+
+$unreadSubmissionsCount = Submission::where('read', false)->count();
+$lastSubmission = Submission::where('read', false)->orderBy('created_at', 'desc')->first();
+$lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHumans() : 'Nenhuma submissão';
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -79,7 +94,25 @@
                             class="nav-link">Contato</a> </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
-
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-bs-toggle="dropdown" href="#">
+                            <i class="bi bi-bell-fill"></i>
+                            <span class="navbar-badge badge text-bg-warning">{{ $unreadMessagesCount + $unreadSubmissionsCount }}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end" style="max-height: 400px; overflow-y: auto;">
+                            <span class="dropdown-item dropdown-header">{{ $unreadMessagesCount + $unreadSubmissionsCount }} Notificações</span>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ route('mensagens.index') }}" class="dropdown-item">
+                                <i class="bi bi-envelope me-2"></i> {{ $unreadMessagesCount }} novas mensagens
+                                <span class="float-end text-secondary fs-8">{{ $lastMessageTime }}</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ route('submissions.index') }}" class="dropdown-item">
+                                <i class="bi bi-file-earmark-text me-2"></i> {{ $unreadSubmissionsCount }} novas submissões
+                                <span class="float-end text-secondary fs-8">{{ $lastSubmissionTime }}</span>
+                            </a>
+                        </div>
+                    </li>
                     <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i
                                 data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i
                                 data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a>
@@ -224,6 +257,24 @@
                                     </a>
                                 </li>
                             </ul>
+                            <li class="nav-item">
+                                    <a href="{{ route('admin.frase_inicio.editar') }}" class="nav-link {{ request()->routeIs('admin.frase_inicio.editar') ? 'active' : '' }}">
+                                        <i class="nav-icon bi bi-pencil-square"></i>
+                                        <p>Editar Páginas</p>
+                                    </a>
+                            </li>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('mensagens.index') }}" class="nav-link">
+                                <i class="nav-icon bi bi-envelope"></i>
+                                <p>Contato</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('submissions.index') }}" class="nav-link">
+                                <i class="nav-icon bi bi-file-earmark-text"></i>
+                                <p>Submissões</p>
+                            </a>
                         </li>
                         <li class="nav-item {{ request()->routeIs('projetos.index') || request()->routeIs('projetos.create') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">

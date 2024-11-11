@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('imagem')->nullable();
             $table->string('linkedin')->nullable();
             $table->string('github')->nullable();
+            $table->string('passwordGoogle')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });

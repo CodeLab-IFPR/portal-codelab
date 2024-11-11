@@ -1,10 +1,8 @@
 @extends('layouts.portal')
 
-<!-- Título -->
 @section('title')
 Submissão de Demandas
 @endsection
-<!-- Título -->
 
 @section('content')
 <header class="pt-10">
@@ -18,7 +16,7 @@ Submissão de Demandas
 <div class="container position-relative z-index-20 py-7">
     <div class="row g-5">
         <div class="col-12 col-lg-8">
-            <form id="submissionForm" method="POST" action="{{ route('submit-demand') }}" enctype="multipart/form-data" aria-labelledby="formTitle">
+            <form id="submissionForm" method="POST" action="{{ route('submission.submit') }}" enctype="multipart/form-data" aria-labelledby="formTitle">
                 @csrf
                 <div class="row g-5">
                     <div class="col-12 col-md-6">
@@ -52,7 +50,7 @@ Submissão de Demandas
                 <p class="mb-4 small fw-bolder tracking-wider text-uppercase text-primary">FAQs sobre Submissão de Demandas</p>
                 <ul class="list-unstyled">
                     <li class="mb-3"><strong>Qual o tempo de resposta?</strong> Geralmente respondemos em até 48 horas.</li>
-                    <li class="mb-3"><strong>Posso enviar mais de um anexo?</strong> No momento, apenas um arquivo pode ser anexado.</li>
+                    <li class="mb-3"><strong>Posso enviar mais de um anexo?</strong> Sim, você pode enviar múltiplos arquivos.</li>
                     <li class="mb-3"><strong>Quais tipos de arquivos são suportados?</strong> Aceitamos PDFs e DOCs.</li>
                 </ul>
             </div>
