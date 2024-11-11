@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\FraseInicioController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\GoogleLoginController;
 
 Route::get('/certificados/emitir', [CertificadoController::class, 'emitir'])->name('certificados.emitir');
 Route::post('certificados/buscar', [CertificadoController::class, 'buscarCertificados'])->name('certificados.buscar');
@@ -75,8 +77,8 @@ Route::post('/certificados/generate', [CertificadoController::class, 'generateFr
 Route::get('/certificados/create', [CertificadoController::class, 'create'])->name('certificados.create');
 Route::post('/certificados', [CertificadoController::class, 'store'])->name('certificados.store');
 
-Route::get('/google/redirect', [App\Http\Controllers\Auth\GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
-Route::get('/google/callback', [App\Http\Controllers\Auth\GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
+Route::get('/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('frase-inicio/editar', [App\Http\Controllers\Admin\FraseInicioController::class, 'editar'])->name('frase_inicio.editar');
