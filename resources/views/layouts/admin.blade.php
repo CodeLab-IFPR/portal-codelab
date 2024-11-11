@@ -140,7 +140,10 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             @endif
                             <li class="user-footer"> 
                                 <a href="{{ route('profile.edit') }}" class="btn btn-primary btn-flat">Perfil</a> 
-                                <a href="#" class="btn btn-danger btn-flat float-end">Sair</a> 
+                                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-flat float-end">Sair</button>
+                                </form>
                             </li>
                         </ul>
                     </li>
