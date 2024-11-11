@@ -225,12 +225,11 @@
                                 </li>
                             </ul>
                         </li>
-                        <li
-                            class="nav-item {{ request()->routeIs('certificados.index') || request()->routeIs('certificados.create') ? 'menu-open' : '' }}">
+                        <li class="nav-item {{ request()->routeIs('projetos.index') || request()->routeIs('projetos.create') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon bi bi-award"></i>
+                                <i class="nav-icon bi bi-folder"></i>
                                 <p>
-                                    Projeto
+                                    Projetos
                                     <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
@@ -238,19 +237,65 @@
                                 <li class="nav-item">
                                     <a href="{{ route('projetos.create') }}"
                                         class="nav-link {{ request()->routeIs('projetos.create') ? 'active' : '' }}">
-                                        <i
-                                            class="nav-icon bi {{ request()->routeIs('projetos.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
-                                        <p>Novo Projeto</p>
+                                        <i class="nav-icon bi {{ request()->routeIs('projetos.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Criar Projeto</p>
                                     </a>
                                 </li>
-                            </ul>
-                            <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('projetos.index') }}"
                                         class="nav-link {{ request()->routeIs('projetos.index') ? 'active' : '' }}">
-                                        <i
-                                            class="nav-icon bi {{ request()->routeIs('projetos.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
-                                        <p>Todos Projetos</p>
+                                        <i class="nav-icon bi {{ request()->routeIs('projetos.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Listar Projetos</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item {{ request()->routeIs('servicos.index') || request()->routeIs('servicos.create') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-briefcase"></i>
+                                <p>
+                                    Serviços
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('servicos.create') }}"
+                                        class="nav-link {{ request()->routeIs('servicos.create') ? 'active' : '' }}">
+                                        <i class="nav-icon bi {{ request()->routeIs('servicos.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Criar Serviço</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('servicos.index') }}"
+                                        class="nav-link {{ request()->routeIs('servicos.index') ? 'active' : '' }}">
+                                        <i class="nav-icon bi {{ request()->routeIs('servicos.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Listar Serviços</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item {{ request()->routeIs('lancamentos.index') || request()->routeIs('lancamentos.create') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-calendar-event"></i>
+                                <p>
+                                    Lançamentos
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('lancamentos.create') }}"
+                                        class="nav-link {{ request()->routeIs('lancamentos.create') ? 'active' : '' }}">
+                                        <i class="nav-icon bi {{ request()->routeIs('lancamentos.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Criar Lançamento</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('lancamentos.index') }}"
+                                        class="nav-link {{ request()->routeIs('lancamentos.index') ? 'active' : '' }}">
+                                        <i class="nav-icon bi {{ request()->routeIs('lancamentos.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Listar Lançamentos</p>
                                     </a>
                                 </li>
                             </ul>

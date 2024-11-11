@@ -5,9 +5,23 @@
 @endsection
 
 @section('content')
+<div class="app-content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h3 class="mb-0">Lançamentos</h3>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                    <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Lançamentos</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container d-flex justify-content-center">
     <div class="w-75">
-        <h1 class="text-center">Lançamentos de Serviços</h1>
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}

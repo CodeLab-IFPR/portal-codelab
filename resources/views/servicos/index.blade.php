@@ -20,25 +20,19 @@ Serviços
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="card-body">
-    @if(session('success'))
-            <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">
-                <div class="alert-content">
-                    <strong>{{ session('success') }}</strong>
-                </div>
-                <div class="progress-bar-container">
-                    <div id="progress-bar" class="progress-bar"></div>
-                </div>
+<div class="container d-flex justify-content-center">
+    <div class="w-75">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
             </div>
         @endif
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-            <a class="btn btn-outline-success btn-sm" href="{{ route('servicos.create') }}"> <i class="fa fa-plus"></i> Novo servico</a>
+            <a class="btn btn-outline-success btn-sm" href="{{ route('servicos.create') }}"> <i class="fa fa-plus"></i> Novo serviço</a>
         </div>
-
-        <div class="table-responsive mt-2">
-            <table class="table table-bordered table-striped">
+        <br>
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th class="col-4">Descrição</th>
@@ -72,7 +66,7 @@ Serviços
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="text-center">Não há servicos 😢</td>
+                            <td colspan="4" class="text-center">Não há serviços 😢</td>
                         </tr>
                     @endforelse
                 </tbody>

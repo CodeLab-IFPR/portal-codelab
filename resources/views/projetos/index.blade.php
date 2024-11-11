@@ -16,25 +16,18 @@
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="card-body">
-    @if(session('success'))
-            <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">
-                <div class="alert-content">
-                    <strong>{{ session('success') }}</strong>
-                </div>
-                <div class="progress-bar-container">
-                    <div id="progress-bar" class="progress-bar"></div>
-                </div>
+<div class="container d-flex justify-content-center">
+    <div class="w-75">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
             </div>
         @endif
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
             <a class="btn btn-outline-success btn-sm" href="{{ route('projetos.create') }}"> <i class="fa fa-plus"></i> Novo projeto</a>
         </div>
-
-        <div class="table-responsive mt-2">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th class="col-3">Nome</th>
