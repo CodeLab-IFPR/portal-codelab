@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\AtividadeController;
-use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\LancamentoServicoController;
+use App\Http\Controllers\MembroController;
 use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\ParceiroController;
 use App\Http\Controllers\ProfileController;
@@ -85,13 +86,7 @@ Route::middleware('auth')->group(function () {
 });    
 
 Route::resource('projetos', ProjetoController::class);
-Route::resource('projetos.tarefas', TarefaController::class);
-Route::resource('tarefas.atividades', AtividadeController::class)->shallow();
-Route::get('tarefas/{tarefa}/atividades/create', [AtividadeController::class, 'create'])->name('tarefas.atividades.create');
-Route::post('tarefas/{tarefa}/atividades', [AtividadeController::class, 'store'])->name('tarefas.atividades.store');
-Route::get('tarefas/{tarefa}/atividades', [AtividadeController::class, 'index'])->name('tarefas.atividades.index');
-Route::get('/projetos/{id}/tarefas/create', [ProjetoController::class, 'createTarefa'])->name('projetos.tarefas.create');
-Route::get('/projetos/{id}/tarefas', [ProjetoController::class, 'indexTarefas'])->name('projetos.tarefas.index');
-Route::post('/projetos/{projeto}/tarefas', [TarefaController::class, 'store'])->name('tarefas.store');
-Route::post('/tarefas/{id}/update-checkbox', [TarefaController::class, 'updateCheckbox'])->name('tarefas.updateCheckbox');
+Route::resource('servicos', ServicoController::class);
+Route::resource('lancamentos', LancamentoServicoController::class);
+
 require __DIR__.'/auth.php';

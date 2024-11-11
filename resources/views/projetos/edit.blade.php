@@ -52,20 +52,6 @@ Editar - {{ $projeto->nome }}
                 </div>
             </div>
 
-            <div class="mb-3">
-                <label for="inputUsers" class="form-label"><strong>Membros:</strong></label>
-                <select name="users[]" class="select2 form-select" id="inputUsers" multiple="multiple">
-                    @foreach($users as $user)
-                        <option value="{{ $user->id }}" {{ in_array($user->id, $projeto->users->pluck('id')->toArray()) ? 'selected' : '' }}>
-                            {{ $user->name }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('users')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
             <div class="d-flex justify-content-between">
                 <a href="{{ route('projetos.index') }}"
                     class="btn btn-outline-danger">Voltar</a>
@@ -74,13 +60,4 @@ Editar - {{ $projeto->nome }}
         </form>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $('.select2').select2({
-            theme: 'bootstrap-5',
-            placeholder: 'Selecione um ou mais membros',
-
-        });
-    });
-</script>
 @endsection
