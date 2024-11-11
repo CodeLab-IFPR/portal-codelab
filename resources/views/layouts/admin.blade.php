@@ -57,6 +57,9 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
     <script src="https://cdn.tiny.cloud/1/7zo9iyuj1gb1fyw0uccbyarr0akkym7ki4hkoeb6tfq12zg5/tinymce/7/tinymce.min.js"
         referrerpolicy="origin"></script>
     @vite('resources/css/adminlte.css"')
@@ -91,8 +94,6 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             class="nav-link">Contato</a> </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
-
-
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-bs-toggle="dropdown" href="#">
                             <i class="bi bi-bell-fill"></i>
@@ -112,7 +113,6 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             </a>
                         </div>
                     </li>
-
                     <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i
                                 data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i
                                 data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a>
@@ -156,7 +156,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                         data-accordion="false">
 
                         <li
-                            class="nav-item {{ request()->routeIs('noticias.create') || request()->routeIs('membros.create') || request()->routeIs('parceiros.create') ? 'menu-open' : '' }}">
+                            class="nav-item {{ request()->routeIs('noticias.create') || request()->routeIs('users.create') || request()->routeIs('parceiros.create') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-journal-plus"></i>
                                 <p>
@@ -174,10 +174,10 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('membros.create') }}"
-                                        class="nav-link {{ request()->routeIs('membros.create') ? 'active' : '' }}">
+                                    <a href="{{ route('users.create') }}"
+                                        class="nav-link {{ request()->routeIs('users.create') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('membros.create') ? 'bi-play-fill' : 'bi-play' }}"></i>
+                                            class="nav-icon bi {{ request()->routeIs('users.create') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Novo Membro</p>
                                     </a>
                                 </li>
@@ -193,7 +193,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                         </li>
 
                         <li
-                            class="nav-item {{ request()->routeIs('membros.index') || request()->routeIs('parceiros.index') ? 'menu-open' : '' }}">
+                            class="nav-item {{ request()->routeIs('users.index') || request()->routeIs('parceiros.index') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-journal-text"></i>
                                 <p>
@@ -203,18 +203,18 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                <a href="{{ route('noticias.index') }}"
+                                    <a href="{{ route('noticias.index') }}"
                                         class="nav-link {{ request()->routeIs('noticias.index') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('membros.index') ? 'bi-play-fill' : 'bi-play' }}"></i>
+                                            class="nav-icon bi {{ request()->routeIs('users.index') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Noticias</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('membros.index') }}"
-                                        class="nav-link {{ request()->routeIs('membros.index') ? 'active' : '' }}">
+                                    <a href="{{ route('users.index') }}"
+                                        class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('membros.index') ? 'bi-play-fill' : 'bi-play' }}"></i>
+                                            class="nav-icon bi {{ request()->routeIs('users.index') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Membro</p>
                                     </a>
                                 </li>
@@ -276,7 +276,81 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                                 <p>Submissões</p>
                             </a>
                         </li>
-
+                        <li class="nav-item {{ request()->routeIs('projetos.index') || request()->routeIs('projetos.create') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-folder"></i>
+                                <p>
+                                    Projetos
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('projetos.create') }}"
+                                        class="nav-link {{ request()->routeIs('projetos.create') ? 'active' : '' }}">
+                                        <i class="nav-icon bi {{ request()->routeIs('projetos.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Criar Projeto</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('projetos.index') }}"
+                                        class="nav-link {{ request()->routeIs('projetos.index') ? 'active' : '' }}">
+                                        <i class="nav-icon bi {{ request()->routeIs('projetos.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Listar Projetos</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item {{ request()->routeIs('servicos.index') || request()->routeIs('servicos.create') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-briefcase"></i>
+                                <p>
+                                    Serviços
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('servicos.create') }}"
+                                        class="nav-link {{ request()->routeIs('servicos.create') ? 'active' : '' }}">
+                                        <i class="nav-icon bi {{ request()->routeIs('servicos.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Criar Serviço</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('servicos.index') }}"
+                                        class="nav-link {{ request()->routeIs('servicos.index') ? 'active' : '' }}">
+                                        <i class="nav-icon bi {{ request()->routeIs('servicos.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Listar Serviços</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item {{ request()->routeIs('lancamentos.index') || request()->routeIs('lancamentos.create') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-calendar-event"></i>
+                                <p>
+                                    Lançamentos
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('lancamentos.create') }}"
+                                        class="nav-link {{ request()->routeIs('lancamentos.create') ? 'active' : '' }}">
+                                        <i class="nav-icon bi {{ request()->routeIs('lancamentos.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Criar Lançamento</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('lancamentos.index') }}"
+                                        class="nav-link {{ request()->routeIs('lancamentos.index') ? 'active' : '' }}">
+                                        <i class="nav-icon bi {{ request()->routeIs('lancamentos.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Listar Lançamentos</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -321,6 +395,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
             border-radius: .20rem;
             z-index: 1050;
         }
+
         .progress-bar-container {
             position: absolute;
             bottom: 0;
@@ -431,101 +506,105 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                     });
                 });
 
-<script>
-    const cardHeaders = document.querySelectorAll(
-        ".connectedSortable .card-header",
-    );
-    cardHeaders.forEach((cardHeader) => {
-        cardHeader.style.cursor = "move";
-    });
-</script>
-<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
-    integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"
-    integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
-    integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY=" crossorigin="anonymous"></script>
-<script>
-    $('#conteudo').summernote({
-        placeholder: 'Hello stand alone ui',
-        tabsize: 2,
-        height: 120,
-        toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'underline', 'clear']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['table', ['table']],
-            ['insert', ['link', 'picture', 'video']],
-            ['view', ['fullscreen', 'codeview', 'help']]
-        ]
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-<script>
-    $(document).ready(function(){
-        $('#inputCpf').mask('000.000.000-00', {reverse: true});
-    });
-</script>
-<script>
-    document.querySelector('#cancel-button').addEventListener('click', function() {
-        $('#modal').modal('hide');
-        document.querySelector('#inputImagem').value = ''; 
-    });
-</script>
-<script>
-    document.getElementById('crop').addEventListener('click', function() {
-        document.getElementById('croppedImageContainer').style.display = 'block';
-    });
-</script>
-<script>
-    document.getElementById('inputImagem').addEventListener('change', function() {
-        if (this.files.length > 0) {
-            var file = this.files[0];
-            var done = function (url) {
-                document.getElementById('image').src = url;
-                $('#modal').modal('show');
-            };
+                <
+                script >
+                    const cardHeaders = document.querySelectorAll(
+                        ".connectedSortable .card-header",
+                    );
+                cardHeaders.forEach((cardHeader) => {
+                    cardHeader.style.cursor = "move";
+                });
+            </script>
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
+                integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"
+                integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y=" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
+                integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY=" crossorigin="anonymous"></script>
+            <script>
+                $('#conteudo').summernote({
+                    placeholder: 'Hello stand alone ui',
+                    tabsize: 2,
+                    height: 120,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['view', ['fullscreen', 'codeview', 'help']]
+                    ]
+                });
+            </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $('#inputCpf').mask('000.000.000-00', {
+                        reverse: true
+                    });
+                });
+            </script>
+            <script>
+                document.querySelector('#cancel-button').addEventListener('click', function () {
+                    $('#modal').modal('hide');
+                    document.querySelector('#inputImagem').value = '';
+                });
+            </script>
+            <script>
+                document.getElementById('crop').addEventListener('click', function () {
+                    document.getElementById('croppedImageContainer').style.display = 'block';
+                });
+            </script>
+            <script>
+                document.getElementById('inputImagem').addEventListener('change', function () {
+                    if (this.files.length > 0) {
+                        var file = this.files[0];
+                        var done = function (url) {
+                            document.getElementById('image').src = url;
+                            $('#modal').modal('show');
+                        };
 
-            if (URL) {
-                done(URL.createObjectURL(file));
-            } else if (FileReader) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    done(reader.result);
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-    });
-</script>
+                        if (URL) {
+                            done(URL.createObjectURL(file));
+                        } else if (FileReader) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                done(reader.result);
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    }
+                });
+            </script>
 
-<script>
-    document.getElementById('inputImagem').addEventListener('change', function(event) {
-    const [file] = event.target.files;
-        if (file) {
-            const preview = document.getElementById('newImagePreview');
-            preview.innerHTML = `<p class="mt-2"><strong>Nova imagem:</strong></p><img src="${URL.createObjectURL(file)}" width="160px" class="mt-2">`;
-        }
-    });
-</script>
+            <script>
+                document.getElementById('inputImagem').addEventListener('change', function (event) {
+                    const [file] = event.target.files;
+                    if (file) {
+                        const preview = document.getElementById('newImagePreview');
+                        preview.innerHTML =
+                            `<p class="mt-2"><strong>Nova imagem:</strong></p><img src="${URL.createObjectURL(file)}" width="160px" class="mt-2">`;
+                    }
+                });
+            </script>
 
-
-<script>
-        tinymce.init({
-            selector: '#inputConteudo',
-            language: 'pt_BR',
-            directionality: 'ltr',
-            toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons',
-            plugins: [
-                'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor',
-                'pagebreak',
-                'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen',
-                'insertdatetime',
-                'media', 'table', 'emoticons', 'help'
-            ],
-        });
-    </script>
+            <script>
+                tinymce.init({
+                    selector: '#inputConteudo',
+                    language: 'pt_BR',
+                    directionality: 'ltr',
+                    toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons',
+                    plugins: [
+                        'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor',
+                        'pagebreak',
+                        'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen',
+                        'insertdatetime',
+                        'media', 'table', 'emoticons', 'help'
+                    ],
+                });
+            </script>
 </body>
 
 </html>

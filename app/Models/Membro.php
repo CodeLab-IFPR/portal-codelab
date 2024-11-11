@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Membro extends Model
+class User extends Model
 {
     use HasFactory;
 
@@ -23,6 +23,11 @@ class Membro extends Model
 
     public function certificados()
     {
-        return $this->hasMany(Certificado::class, 'membros_id');
+        return $this->hasMany(Certificado::class, 'users_id');
+    }
+
+    public function tarefas()
+    {
+        return $this->hasMany(Tarefa::class);
     }
 }

@@ -1,10 +1,14 @@
 <?php
 
-use App\Http\Controllers\MembroController;
+use App\Http\Controllers\AtividadeController;
+use App\Http\Controllers\LancamentoServicoController;
 use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\ParceiroController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CertificadoController;
+use App\Http\Controllers\ProjetoController;
+use App\Http\Controllers\ServicoController;
+use App\Http\Controllers\TarefaController;
 use App\Http\Controllers\Admin\FraseInicioController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SubmissionController;
@@ -16,6 +20,7 @@ Route::get('/certificados/{certificado}/view', [CertificadoController::class, 'v
 Route::get('/certificados/{certificado}/download', [CertificadoController::class, 'downloadCertificate'])->name('certificados.download');
 Route::get('/certificados/validar', [CertificadoController::class, 'showValidationForm'])->name('certificados.validar');
 Route::post('/certificados/validar', [CertificadoController::class, 'validarCertificado'])->name('certificados.validar.post');
+Route::post('/certificados/generate', [CertificadoController::class, 'generateFromTasks'])->name('certificados.generate');
 
 Route::get('/', function () {
     return view('home');
@@ -45,7 +50,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/about', [MembroController::class, 'about'])->name('about');
+Route::get('/about', [RegisteredUserController::class, 'about'])->name('about');
 
 Route::get('/mensagens', [ContactController::class, 'index'])->name('mensagens.index');
 Route::get('/mensagens/{id}', [ContactController::class, 'show'])->name('mensagens.show');
@@ -66,6 +71,9 @@ Route::resource('certificados', CertificadoController::class);
 Route::get('certificados/{id}/download', [CertificadoController::class, 'download'])->name('certificados.download');
 Route::get('/certificados/{certificado}/view', [CertificadoController::class, 'viewCertificate'])->name('certificados.view');
 Route::delete('certificados/{certificado}', [CertificadoController::class, 'destroy'])->name('certificados.destroy');
+Route::post('/certificados/generate', [CertificadoController::class, 'generateFromTasks'])->name('certificados.generate');
+Route::get('/certificados/create', [CertificadoController::class, 'create'])->name('certificados.create');
+Route::post('/certificados', [CertificadoController::class, 'store'])->name('certificados.store');
 
 Route::get('/google/redirect', [App\Http\Controllers\Auth\GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('/google/callback', [App\Http\Controllers\Auth\GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
@@ -84,6 +92,7 @@ Route::get('noticias/{noticia}', [NoticiasController::class, 'show'])->name('not
 Route::get('cards/noticias', [NoticiasController::class, 'cards'])->name('noticias.cards');
 Route::get('noticias', [NoticiasController::class, 'index'])->name('noticias.index');
 Route::put('noticias/{noticia}', [NoticiasController::class, 'update'])->name('noticias.update');
+Route::delete('noticias/{user}', [NoticiasController::class, 'destroy'])->name('noticias.destroy');
 Route::delete('noticias/{membro}', [NoticiasController::class, 'destroy'])->name('noticias.destroy');
 
 Route::get('/submissions', [SubmissionController::class, 'index'])->name('submissions.index');
@@ -96,16 +105,15 @@ Route::post('/submissions/markUnreadSelected', [SubmissionController::class, 'ma
 Route::delete('/submissions/deleteSelected', [SubmissionController::class, 'deleteSelected'])->name('submissions.deleteSelected');
 Route::delete('/submissions/{id}', [SubmissionController::class, 'destroy'])->name('submissions.destroy');
 
-Route::resource('membros', MembroController::class);
-Route::get('membros', [MembroController::class, 'index'])->name('membros.index');
-Route::delete('membros/{membro}', [MembroController::class, 'destroy'])->name('membros.destroy');
-Route::get('membros/{membro}', [MembroController::class, 'show'])->name('membros.show');
 
+Route::resource('users', RegisteredUserController::class);
+Route::get('users', [RegisteredUserController::class, 'index'])->name('users.index');
+Route::delete('users/{user}', [RegisteredUserController::class, 'destroy'])->name('users.destroy');
+Route::get('users/{user}', [RegisteredUserController::class, 'show'])->name('users.show');
 
 Route::resource('parceiros', ParceiroController::class);
 Route::get('parceiros', [ParceiroController::class, 'index'])->name('parceiros.index');
 Route::delete('parceiros/{parceiro}', [ParceiroController::class, 'destroy'])->name('parceiros.destroy');
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -114,5 +122,8 @@ Route::middleware('auth')->group(function () {
 
 });    
 
+Route::resource('projetos', ProjetoController::class);
+Route::resource('servicos', ServicoController::class);
+Route::resource('lancamentos', LancamentoServicoController::class);
 
 require __DIR__.'/auth.php';
