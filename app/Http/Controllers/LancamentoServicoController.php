@@ -6,9 +6,21 @@ use App\Models\Projeto;
 use App\Models\Servico;
 use Illuminate\Http\Request;
 use App\Models\LancamentoServico;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class LancamentoServicoController extends Controller
+class LancamentoServicoController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Visualizar Lançamento', only: ['index', 'show']),
+            new Middleware('permission:Criar Lançamento', only: ['create', 'store']),
+            new Middleware('permission:Editar Lançamento', only: ['edit', 'update']),
+            new Middleware('permission:Deletar Lançamento', only: ['destroy']),
+        ];
+        
+    }
     public function index(Request $request)
     {
         $order = $request->get('order', 'created_at');

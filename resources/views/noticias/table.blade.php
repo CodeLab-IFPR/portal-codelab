@@ -30,13 +30,13 @@
                             </a>
                             </li>
                             <li>
-                                <a class="dropdown-item d-flex align-items-center"
+                                <a class="{{ !$podeEditarNoticia ? 'disabled' : '' }} dropdown-item d-flex align-items-center"
                                     href="{{ route('noticias.edit', $noticia->id) }}">
                                     <i class="bi bi-pencil-square text-warning me-2"></i> Editar
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="dropdown-item d-flex align-items-center btn-delete"
+                                <a href="#" class="{{ !$podeDeletarNoticia ? 'disabled' : '' }} dropdown-item d-flex align-items-center btn-delete"
                                     data-url="{{ route('noticias.destroy', $noticia->id) }}"
                                     data-titulo="{{ $noticia->titulo }}"
                                     data-autor="{{ $noticia->autor }}"

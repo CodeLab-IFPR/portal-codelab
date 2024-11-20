@@ -4,6 +4,13 @@
 Serviços
 @endsection
 
+@php
+    use Illuminate\Support\Facades\Auth;
+
+    $podeEditarServico = Auth::user()->can('Editar Serviço');
+    $podeDeletarServico = Auth::user()->can('Deletar Serviço');
+@endphp
+
 @section('content')
 <div class="app-content-header">
     <div class="container-fluid">
@@ -49,12 +56,12 @@ Serviços
                                         <i class="fa fa-cog"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <li><a class="dropdown-item" href="{{ route('servicos.edit', $servico->id) }}"><i class="fa-solid fa-pen-to-square"></i> Editar</a></li>
+                                        <li><a class="{{ !$podeEditarServico ? 'disabled' : '' }} dropdown-item" href="{{ route('servicos.edit', $servico->id) }}"><i class="fa-solid fa-pen-to-square"></i> Editar</a></li>
                                         <li>
                                             <form action="{{ route('servicos.destroy', $servico->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="dropdown-item"
+                                                <button type="submit" class="{{ !$podeDeletarServico ? 'disabled' : '' }} dropdown-item"
                                                     onclick="return confirm('Tem certeza que deseja deletar este serviço?')">
                                                     <i class="fa-solid fa-trash"></i> Deletar
                                                 </button>

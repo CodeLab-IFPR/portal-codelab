@@ -3,12 +3,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Mail\DemandSubmission;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Submission;
 use Illuminate\Support\Facades\File;
 
-class SubmissionController extends Controller
+class SubmissionController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Visualizar Submissão', only: ['index', 'show']),
+            new Middleware('permission:Criar Submissão', only: ['submit']),
+            new Middleware('permission:Editar Submissão', only: ['markRead', 'markUnread', 'toggleRead']),
+            new Middleware('permission:Deletar Submissão', only: ['destroy']),
+        ];
+    }
     public function submit(Request $request)
     {
         $data = $request->all();

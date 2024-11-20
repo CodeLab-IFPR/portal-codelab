@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Mail\SendPasswordMail;
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Jobs\SendPasswordJob;
+use App\Mail\SendPasswordMail;
+use App\Providers\ImageUploader;
+use Illuminate\Validation\Rules;
+use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Validation\Rules;
-use Illuminate\View\View;
-use App\Providers\ImageUploader;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\File;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Queue;
-use App\Jobs\SendPasswordJob;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Database\Eloquent\Builder;
 
 class RegisteredUserController extends Controller
 {
@@ -26,7 +27,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('users.create');
+        $roles = Role::orderBy('name', 'ASC')->get();
+        return view('users.create', compact('roles'));
     }
 
     /**
@@ -71,6 +73,10 @@ class RegisteredUserController extends Controller
         }
     
         $user = User::create($entrada);
+        $user->syncRoles($request->roles);
+    
+        // Enviar email de verificação
+        event(new Registered($user));
     
         // Enviar email de forma assíncrona usando um job
         SendPasswordJob::dispatch($user, $password);
@@ -115,8 +121,11 @@ class RegisteredUserController extends Controller
     }
 
     public function edit(User $user): View
-    {
-        return view("users.edit", compact("user"));
+    {   
+        $user = User::findOrFail($user->id);
+        $roles = Role::orderBy('name', 'ASC')->get();
+        $tem_roles = $user->roles->pluck('id');
+        return view("users.edit", compact("user", "roles", "tem_roles"));
     }
 
     public function update(Request $request, User $user): RedirectResponse
@@ -170,6 +179,7 @@ class RegisteredUserController extends Controller
         }
     
         $user->update($entrada);
+        $user->syncRoles($request->roles);
     
         return redirect()->route("users.index")
             ->with("success", "Usuário atualizado com sucesso.");

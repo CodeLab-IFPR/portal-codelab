@@ -32,13 +32,13 @@
                                     <i class="bi bi-eye text-secondary me-2"></i> Visualizar
                                 </a>
                                     <li>
-                                        <a class="dropdown-item d-flex align-items-center"
+                                        <a class="{{ !$podeEditarCertificado ? 'disabled' : '' }} dropdown-item d-flex align-items-center"
                                             href="{{ route('certificados.edit', $certificado->id) }}">
                                             <i class="bi bi-pencil-square text-warning me-2"></i> Editar
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" class="dropdown-item d-flex align-items-center btn-delete"
+                                        <a href="#" class="{{ !$podeDeletarCertificado ? 'disabled' : '' }} dropdown-item d-flex align-items-center btn-delete"
                                             data-url="{{ route('certificados.destroy', $certificado->id) }}"
                                             data-nome="{{ $certificado->user->name }}"
                                             data-descricao="{{ $certificado->descricao }}"

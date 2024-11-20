@@ -6,6 +6,13 @@ Membro - Lista
 @endsection
 <!-- Título -->
 
+@php
+    use Illuminate\Support\Facades\Auth;
+
+    $podeEditarUser = Auth::user()->can('Editar Membro');
+    $podeDeletarUser = Auth::user()->can('Deletar Membro');
+@endphp
+
 @section('content')
 <div class="app-content-header">
     <div class="container-fluid">

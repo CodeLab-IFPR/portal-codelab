@@ -2,20 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Certificado;
 use App\Models\User;
 use App\Models\Tarefa;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\JsonResponse;
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use setasign\Fpdi\Fpdi;
+use Illuminate\View\View;
+use App\Models\Certificado;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Database\Eloquent\Builder;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class CertificadoController extends Controller
+class CertificadoController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Visualizar Certificado', only: ['index', 'show']),
+            new Middleware('permission:Criar Certificado', only: ['create', 'store']),
+            new Middleware('permission:Editar Certificado', only: ['edit', 'update']),
+            new Middleware('permission:Deletar Certificado', only: ['destroy']),
+        ];
+        
+    }
     public function generateFromTasks(Request $request): JsonResponse
     {
         $tasks = $request->input('tasks', []);

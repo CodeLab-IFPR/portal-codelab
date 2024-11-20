@@ -1,5 +1,16 @@
 @extends('layouts.admin')
 
+@section('title')
+    Projetos
+@endsection
+
+@php
+    use Illuminate\Support\Facades\Auth;
+
+    $podeEditarProjeto = Auth::user()->can('Editar Projeto');
+    $podeDeletarProjeto = Auth::user()->can('Deletar Projeto');
+@endphp
+
 @section('content')
 <div class="app-content-header">
     <div class="container-fluid">
@@ -52,12 +63,12 @@
                                         <i class="fa fa-cog"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <li><a class="dropdown-item" href="{{ route('projetos.edit', $projeto->id) }}"><i class="fa-solid fa-pen-to-square"></i> Editar</a></li>
+                                        <li><a class="{{ !$podeEditarProjeto ? 'disabled' : '' }} dropdown-item" href="{{ route('projetos.edit', $projeto->id) }}"><i class="fa-solid fa-pen-to-square"></i> Editar</a></li>
                                         <li>
                                             <form action="{{ route('projetos.destroy', $projeto->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="dropdown-item"
+                                                <button type="submit" class="{{ !$podeDeletarProjeto ? 'disabled' : '' }} dropdown-item"
                                                     onclick="return confirm('Tem certeza que deseja deletar esta tarefa?')">
                                                     <i class="fa-solid fa-trash"></i> Deletar
                                                 </button>

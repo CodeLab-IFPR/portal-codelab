@@ -28,6 +28,17 @@
     24 => 'Intervention\\Image\\ImageServiceProvider',
     25 => 'Laravel\\Breeze\\BreezeServiceProvider',
     26 => 'Laravel\\Sail\\SailServiceProvider',
+    27 => 'Laravel\\Socialite\\SocialiteServiceProvider',
+    28 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    29 => 'Carbon\\Laravel\\ServiceProvider',
+    30 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    31 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    32 => 'Pest\\Laravel\\PestServiceProvider',
+    33 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
+    34 => 'Spatie\\Permission\\PermissionServiceProvider',
+    35 => 'Webklex\\IMAP\\Providers\\LaravelServiceProvider',
+    36 => 'App\\Providers\\AppServiceProvider',
+    37 => 'Spatie\\Permission\\PermissionServiceProvider',
   ),
   'eager' => 
   array (
@@ -48,8 +59,10 @@
     14 => 'Termwind\\Laravel\\TermwindServiceProvider',
     15 => 'Pest\\Laravel\\PestServiceProvider',
     16 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
-    17 => 'Webklex\\IMAP\\Providers\\LaravelServiceProvider',
-    18 => 'App\\Providers\\AppServiceProvider',
+    17 => 'Spatie\\Permission\\PermissionServiceProvider',
+    18 => 'Webklex\\IMAP\\Providers\\LaravelServiceProvider',
+    19 => 'App\\Providers\\AppServiceProvider',
+    20 => 'Spatie\\Permission\\PermissionServiceProvider',
   ),
   'deferred' => 
   array (
