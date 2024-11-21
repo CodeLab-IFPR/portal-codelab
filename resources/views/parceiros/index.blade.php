@@ -6,13 +6,6 @@ Parceiros - Lista
 @endsection
 <!-- Título -->
 
-@php
-    use Illuminate\Support\Facades\Auth;
-
-    $podeEditarParceiro = Auth::user()->can('Editar Parceiro');
-    $podeDeletarParceiro = Auth::user()->can('Deletar Parceiro');
-@endphp
-
 @section('content')
 <div class="app-content-header">
     <div class="container-fluid">

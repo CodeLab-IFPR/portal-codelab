@@ -13,17 +13,17 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
 
-class MembroController extends Controller implements HasMiddleware
+class MembroController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            new Middleware('permission:Visualizar Membro', only: ['index', 'show']),
-            new Middleware('permission:Criar Membro', only: ['create', 'store']),
-            new Middleware('permission:Editar Membro', only: ['edit', 'update']),
-            new Middleware('permission:Deletar Membro', only: ['destroy']),
-        ];
-    }
+    // public static function middleware(): array
+    // {
+    //     return [
+    //         new Middleware('permission:Visualizar Membro', only: ['index', 'show']),
+    //         new Middleware('permission:Criar Membro', only: ['create', 'store']),
+    //         new Middleware('permission:Editar Membro', only: ['edit', 'update']),
+    //         new Middleware('permission:Deletar Membro', only: ['destroy']),
+    //     ];
+    // }
     public function index(Request $request)
     {
         $usersQuery = User::latest();

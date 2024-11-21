@@ -6,12 +6,6 @@ Notícias - Lista
 @endsection
 <!-- Título -->
 
-@php
-    use Illuminate\Support\Facades\Auth;
-
-    $podeEditarNoticia = Auth::user()->can('Editar Notícia');
-    $podeDeletarNoticia = Auth::user()->can('Deletar Notícia');
-@endphp
 
 @section('content')
 <div class="app-content-header">

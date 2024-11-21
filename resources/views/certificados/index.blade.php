@@ -5,12 +5,6 @@
 Certificados - Lista
 @endsection
 <!-- Título -->
-@php
-    use Illuminate\Support\Facades\Auth;
-
-    $podeEditarCertificado = Auth::user()->can('Editar Certificado');
-    $podeDeletarCertificado = Auth::user()->can('Deletar Certificado');
-@endphp
 
 @section('content')
 <div class="app-content-header">

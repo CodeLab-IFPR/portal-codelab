@@ -44,13 +44,16 @@
                                 </a>
                             </li>
                             <li>
+                                @can('Editar Membro')
                                 <a class="{{ !$podeEditarUser ? 'disabled' : '' }} dropdown-item d-flex align-items-center"
                                     href="{{ route('users.edit', $user->id) }}">
                                     <i class="bi bi-pencil-square text-warning me-2"></i> Editar
                                 </a>
+                                @endcan
                             </li>
                             <li>
-                                <a href="#" class="{{ !$podeDeletarUser ? 'disabled' : '' }} dropdown-item d-flex align-items-center btn-delete"
+                                @can('Deletar Membro')
+                                <a href="#" class="dropdown-item d-flex align-items-center btn-delete"
                                     data-url="{{ route('users.destroy', $user->id) }}"
                                     data-name="{{ $user->name }}"
                                     data-cpf="{{ $user->cpf }}"
@@ -59,6 +62,7 @@
                                     data-alt="{{ $user->alt }}">
                                     <i class="bi bi-trash text-danger me-2"></i> Deletar
                                 </a>
+                                @endcan
                             </li>
                         </ul>
                     </div>

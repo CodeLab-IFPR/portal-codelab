@@ -4,13 +4,6 @@
 Permissões
 @endsection
 
-@php
-    use Illuminate\Support\Facades\Auth;
-
-    $podeEditarPermissao = Auth::user()->can('Editar Permissão');
-    $podeDeletarPermissao = Auth::user()->can('Deletar Permissão');
-@endphp
-
 @section('content')
 <div class="app-content-header">
     <div class="container-fluid">
@@ -65,20 +58,26 @@ Permissões
                                     <i class="fa fa-cog"></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $permissao->id }}">
-                                    <li><a class="dropdown-item {{ !$podeEditarPermissao ? 'disabled' : '' }}"
+                                    <li>
+                                        @can('Editar Permissão')
+                                        <a class="dropdown-item"
                                             href="{{ route('permissoes.edit', $permissao->id) }}"><i
-                                                class="fas fa-pen-to-square"></i> Editar</a></li>
+                                                class="fas fa-pen-to-square"></i> Editar</a>      
+                                        @endcan
+                                    </li>
                                     <li>
                                         <form
                                             action="{{ route('permissoes.destroy', $permissao->id) }}"
                                             method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
+                                            @can('Deletar Permissão')
                                             <button type="submit"
-                                                class="dropdown-item danger {{ !$podeDeletarPermissao ? 'disabled' : '' }}"
+                                                class="dropdown-item danger"
                                                 onclick="return confirm('Tem certeza que deseja deletar esta permissão?')">
                                                 <i class="fas fa-trash"></i> Deletar
                                             </button>
+                                            @endcan
                                         </form>
                                     </li>
                                 </ul>

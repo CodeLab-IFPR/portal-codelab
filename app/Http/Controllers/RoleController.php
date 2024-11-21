@@ -8,17 +8,17 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-class RoleController extends Controller implements HasMiddleware
+class RoleController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            new Middleware('permission:Visualizar Função', only: ['index', 'show']),
-            new Middleware('permission:Criar Função', only: ['create', 'store']),
-            new Middleware('permission:Editar Função', only: ['edit', 'update']),
-            new Middleware('permission:Deletar Função', only: ['destroy']),
-        ];
-    }
+    // public static function middleware(): array
+    // {
+    //     return [
+    //         new Middleware('permission:Visualizar Função', only: ['index', 'show']),
+    //         new Middleware('permission:Criar Função', only: ['create', 'store']),
+    //         new Middleware('permission:Editar Função', only: ['edit', 'update']),
+    //         new Middleware('permission:Deletar Função', only: ['destroy']),
+    //     ];
+    // }
     public function index()
     {
         $roles = Role::all();

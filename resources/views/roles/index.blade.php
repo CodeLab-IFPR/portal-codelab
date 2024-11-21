@@ -4,13 +4,6 @@
 Cargos
 @endsection
 
-@php
-    use Illuminate\Support\Facades\Auth;
-
-    $podeEditarFuncao = Auth::user()->can('Editar Função');
-    $podeDeletarFuncao = Auth::user()->can('Deletar Função');
-@endphp
-
 @section('content')
 <div class="app-content-header">
     <div class="container-fluid">
@@ -62,14 +55,19 @@ Cargos
                                         <i class="fa fa-cog"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $role->id }}">
-                                        <li><a class="{{ !$podeEditarFuncao ? 'disabled' : '' }} dropdown-item" href="{{ route('roles.edit', $role->id) }}"><i class="fas fa-pen-to-square"></i> Editar</a></li>
+                                        <li>
+                                            @can('Editar Função')
+                                            <a class="dropdown-item" href="{{ route('roles.edit', $role->id) }}"><i class="fas fa-pen-to-square"></i> Editar</a></li>
+                                            @endcan
                                         <li>
                                             <form action="{{ route('roles.destroy', $role->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="{{ !$podeDeletarFuncao ? 'disabled' : '' }} dropdown-item danger" onclick="return confirm('Tem certeza que deseja deletar este cargo?')">
+                                                @can('Deletar Função')
+                                                <button type="submit" class="dropdown-item danger" onclick="return confirm('Tem certeza que deseja deletar este cargo?')">
                                                     <i class="fas fa-trash"></i> Deletar
                                                 </button>
+                                                @endcan
                                             </form>
                                         </li>
                                     </ul>

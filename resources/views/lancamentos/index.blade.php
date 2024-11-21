@@ -3,13 +3,6 @@
 @section('title')
     Lançamentos
 @endsection
-@php
-    use Illuminate\Support\Facades\Auth;
-
-    $podeEditarLancamento = Auth::user()->can('Editar Lançamento');
-    $podeDeletarLancamento = Auth::user()->can('Deletar Lançamento');
-
-@endphp
 
 @section('content')
 <div class="app-content-header">
@@ -89,15 +82,21 @@
                                         <i class="fa fa-cog"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <li><a class="{{ !$podeEditarLancamento ? 'disabled' : '' }} dropdown-item" href="{{ route('lancamentos.edit', $lancamento->id) }}"><i class="fa-solid fa-pen-to-square"></i> Editar</a></li>
+                                        <li>
+                                            @can('Editar Lançamento')
+                                            <a class="dropdown-item" href="{{ route('lancamentos.edit', $lancamento->id) }}"><i class="fa-solid fa-pen-to-square"></i> Editar</a>                                                
+                                            @endcan
+                                        </li>
                                         <li>
                                             <form action="{{ route('lancamentos.destroy', $lancamento->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="{{ !$podeDeletarLancamento ? 'disabled' : '' }} dropdown-item"
+                                                @can('Deletar Lançamento')
+                                                <button type="submit" class="dropdown-item"
                                                     onclick="return confirm('Tem certeza que deseja deletar este lançamento?')">
                                                     <i class="fa-solid fa-trash"></i> Deletar
                                                 </button>
+                                                @endcan
                                             </form>
                                         </li>
                                     </ul>
