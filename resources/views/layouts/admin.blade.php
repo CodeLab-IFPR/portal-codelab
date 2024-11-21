@@ -81,9 +81,72 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                 ],
             });
         </script>
+    <style>
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .spinner {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            perspective: 800px;
+        }
+        
+        .spinner:before, .spinner:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 10px solid transparent;
+            border-top-color: #3498db;
+            border-left-color: #3498db;
+            animation: spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+        
+        .spinner:before {
+            transform: rotateX(70deg);
+        }
+        
+        .spinner:after {
+            transform: rotateY(70deg);
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        body {
+            visibility: hidden;
+        }
+
+        body.loaded {
+            visibility: visible;
+        }
+    </style>
 </head>
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+    <div id="loading-screen">
+        <div class="spinner"></div>
+    </div>
+
     <div class="app-wrapper">
         <nav class="app-header navbar navbar-expand bg-body">
             <div class="container-fluid">
@@ -702,6 +765,15 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                     ],
                 });
             </script>
+    <script>
+        window.addEventListener('load', function() {
+            // Aguarda um pequeno delay para garantir que todos os recursos estejam carregados
+            setTimeout(function() {
+                document.body.classList.add('loaded');
+                document.getElementById('loading-screen').style.display = 'none';
+            }, 500);
+        });
+    </script>
 </body>
 
 </html>
