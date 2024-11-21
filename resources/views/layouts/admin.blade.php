@@ -129,9 +129,9 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                         </a>
                         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                             @if(Auth::check())
-                                <li class="user-header text-bg-primary"> <img
+                                <li class="user-header bg-body-secondary"> <img
                                         src="/imagens/users/{{ Auth::user()->imagem }}"
-                                        class="rounded-circle shadow" alt="User Image">
+                                        class="rounded-circle bg-light shadow" alt="User Image">
                                     <p>
                                         {{ Auth::user()->name }} - Web Developer
                                         <small>Membro desde {{ Auth::user()->created_at->format('M. Y') }}</small>
@@ -139,10 +139,10 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                                 </li>
                             @endif
                             <li class="user-footer"> 
-                                <a href="{{ route('profile.edit') }}" class="btn btn-primary btn-flat">Perfil</a> 
+                                <a href="{{ route('profile.edit') }}" class="btn btn-outline-success btn-flat">Perfil</a> 
                                 <form method="POST" action="{{ route('logout') }}" class="d-inline">
                                     @csrf
-                                    <button type="submit" class="btn btn-danger btn-flat float-end">Sair</button>
+                                    <button type="submit" class="btn btn-outline-danger btn-flat float-end">Sair</button>
                                 </form>
                             </li>
                         </ul>
