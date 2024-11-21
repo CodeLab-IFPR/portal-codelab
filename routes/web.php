@@ -36,60 +36,24 @@ Route::get('/certificados/{certificado}/view', [CertificadoController::class, 'v
 Route::get('/certificados/{certificado}/download', [CertificadoController::class, 'downloadCertificate'])->name('certificados.download');
 Route::get('/certificados/validar', [CertificadoController::class, 'showValidationForm'])->name('certificados.validar');
 Route::post('/certificados/validar', [CertificadoController::class, 'validarCertificado'])->name('certificados.validar.post');
-Route::resource('certificados', CertificadoController::class);
-Route::get('certificados/{id}/download', [CertificadoController::class, 'download'])->name('certificados.download');
-Route::get('/certificados/{certificado}/view', [CertificadoController::class, 'viewCertificate'])->name('certificados.view');
-Route::delete('certificados/{certificado}', [CertificadoController::class, 'destroy'])->name('certificados.destroy');
-Route::post('/certificados/generate', [CertificadoController::class, 'generateFromTasks'])->name('certificados.generate');
-Route::get('/certificados/create', [CertificadoController::class, 'create'])->name('certificados.create');
-Route::post('/certificados', [CertificadoController::class, 'store'])->name('certificados.store');
-Route::post('/certificados/generate', [CertificadoController::class, 'generateFromTasks'])->name('certificados.generate');
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
-
-Route::get('/sobre', function () {
-    return view('about');
-})->name('about');
-
-
-Route::get('/contato', function () {
-    return view('contact');
-})->name('contact');
-
-Route::get('/submission', function () {
-    return view('submission');
-})->name('submission');
-
-Route::get('/about', [RegisteredUserController::class, 'about'])->name('about');
-
-Route::get('/google/redirect', [App\Http\Controllers\Auth\GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
-Route::get('/google/callback', [App\Http\Controllers\Auth\GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
-
-Route::resource('users', RegisteredUserController::class);
-Route::get('users', [RegisteredUserController::class, 'index'])->name('users.index');
-Route::delete('users/{user}', [RegisteredUserController::class, 'destroy'])->name('users.destroy');
-Route::get('users/{user}', [RegisteredUserController::class, 'show'])->name('users.show');
-
-Route::get('/', [NoticiasController::class, 'home'])->name('home');
-// Route::resource('noticias', NoticiasController::class);
-
-Route::get('noticias/{noticia}', [NoticiasController::class, 'show'])->name('noticias.show');
-Route::get('cards/noticias', [NoticiasController::class, 'cards'])->name('noticias.cards');
-Route::get('noticias', [NoticiasController::class, 'index'])->name('noticias.index');
-
+// Rotas para submissão de formulários públicos
 Route::post('/submit-demand', [SubmissionController::class, 'submit'])->name('submit-demand');
 Route::post('/send-message', [ContactController::class, 'sendMessage'])->name('send-message');
 Route::post('/submit', [SubmissionController::class, 'submit'])->name('submission.submit');
 
+// rotas de teste
+Route::get('/teste', function () {
+    abort(401);
+});
+
 // Rotas Administrativas
-Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
+Route::prefix('admin')->group(function () {
     // Rota principal do admin (dashboard)
     Route::get('/', function () {
         return view('admin.index');
     })->name('admin');
-    
+
 
     // Rotas de certificados (admin)
     Route::resource('certificados', CertificadoController::class)->except(['show']);
