@@ -15,7 +15,6 @@ class SubmissionController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('permission:Visualizar Submissão', only: ['index', 'show']),
-            new Middleware('permission:Criar Submissão', only: ['submit']),
             new Middleware('permission:Editar Submissão', only: ['markRead', 'markUnread', 'toggleRead']),
             new Middleware('permission:Deletar Submissão', only: ['destroy']),
         ];
