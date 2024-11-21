@@ -47,6 +47,12 @@ Route::get('/submission', function () {
     return view('submission');
 })->name('submission');
 
+
+// Route::get('/teste', function () {
+//      abort(500);
+// });
+
+
 Route::get('/about', [RegisteredUserController::class, 'about'])->name('about');
 
 Route::get('/google/redirect', [App\Http\Controllers\Auth\GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');

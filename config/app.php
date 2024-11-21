@@ -85,6 +85,8 @@ return [
 
     'locale' => 'pt_BR',
 
+    'APP_LOCALE=pt_BR',
+
     'fallback_locale' => 'pt_BR',
 
     'faker_locale' => 'pt_BR',

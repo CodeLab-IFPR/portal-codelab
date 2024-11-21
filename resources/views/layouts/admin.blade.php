@@ -211,7 +211,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                                     @endcan
                                 </li>
                                 <li class="nav-item">
-                                    @can('Ver Permissão')
+                                    @can('Visualizar Permissão')
                                     <a href="{{ route('permissoes.index') }}"
                                         class="nav-link {{ request()->routeIs('permissoes.index') ? 'active' : '' }}">
                                         <i
