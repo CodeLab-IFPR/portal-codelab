@@ -43,7 +43,7 @@ Route::post('/send-message', [ContactController::class, 'sendMessage'])->name('s
 Route::post('/submit', [SubmissionController::class, 'submit'])->name('submission.submit');
 
 // Rotas Administrativas
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     // Rota principal do admin (dashboard)
     Route::get('/', function () {
         return view('admin.index');
