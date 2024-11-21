@@ -59,7 +59,16 @@ Route::prefix('admin')->group(function () {
 
     // Rotas de permissões e funções
     Route::resource('permissoes', PermissaoController::class);
-    Route::resource('funcoes', RoleController::class);
+    
+    // Rotas manuais para funções
+    Route::group(['prefix' => 'funcoes'], function () {
+        Route::get('/', [RoleController::class, 'index'])->name('funcoes.index');
+        Route::get('/create', [RoleController::class, 'create'])->name('funcoes.create');
+        Route::post('/', [RoleController::class, 'store'])->name('funcoes.store');
+        Route::get('/{role}/edit', [RoleController::class, 'edit'])->name('funcoes.edit');
+        Route::put('/{role}', [RoleController::class, 'update'])->name('funcoes.update');
+        Route::delete('/{role}', [RoleController::class, 'destroy'])->name('funcoes.destroy');
+    });
 
     // Outras rotas administrativas
     Route::resource('projetos', ProjetoController::class);

@@ -171,7 +171,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                         data-accordion="false">
 
                         <li
-                            class="nav-item {{ request()->routeIs('roles.index') || request()->routeIs('roles.create') || request()->routeIs('permissoes.create') || request()->routeIs('permissoes.index') ? 'menu-open' : '' }}">
+                            class="nav-item {{ request()->routeIs('funcoes.index') || request()->routeIs('funcoes.create') || request()->routeIs('permissoes.create') || request()->routeIs('permissoes.index') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link ">
                                 <i class="nav-icon bi bi-shield-lock"></i>
                                 <p>
@@ -182,20 +182,20 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     @can('Criar Função')
-                                    <a href="{{ route('roles.create') }}"
-                                        class="nav-link {{ request()->routeIs('roles.create') ? 'active' : '' }}">
+                                    <a href="{{ route('funcoes.create') }}"
+                                        class="nav-link {{ request()->routeIs('funcoes.create') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('roles.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                            class="nav-icon bi {{ request()->routeIs('funcoes.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
                                         <p>Criar Função</p>
                                     </a>
                                     @endcan
                                 </li>
                                 <li class="nav-item">
                                     @can('Ver Função')
-                                    <a href="{{ route('roles.index') }}"
-                                        class="nav-link {{ request()->routeIs('roles.index') ? 'active' : '' }}">
+                                    <a href="{{ route('funcoes.index') }}"
+                                        class="nav-link {{ request()->routeIs('funcoes.index') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('roles.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                            class="nav-icon bi {{ request()->routeIs('funcoes.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
                                         <p>Listar Funções</p>
                                     </a>
                                     @endcan
@@ -330,7 +330,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             </ul>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    @can('Ver Certificado')
+                                    @can('Visualizar Certificado')
                                     <a href="{{ route('certificados.index') }}"
                                         class="nav-link {{ request()->routeIs('certificados.index') ? 'active' : '' }}">
                                         <i
@@ -351,7 +351,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                         </li>
                         </li>
                         <li class="nav-item">
-                            @can('Visualizar Contato')
+                            @can('Visualizar Mensagem')
                             <a href="{{ route('mensagens.index') }}" class="nav-link">
                                 <i class="nav-icon bi bi-envelope"></i>
                                 <p>Contato</p>

@@ -45,7 +45,7 @@
                             </li>
                             <li>
                                 @can('Editar Membro')
-                                <a class="{{ !$podeEditarUser ? 'disabled' : '' }} dropdown-item d-flex align-items-center"
+                                <a class="dropdown-item d-flex align-items-center"
                                     href="{{ route('users.edit', $user->id) }}">
                                     <i class="bi bi-pencil-square text-warning me-2"></i> Editar
                                 </a>
