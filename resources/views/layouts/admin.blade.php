@@ -81,9 +81,72 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                 ],
             });
         </script>
+    <style>
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .spinner {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            perspective: 800px;
+        }
+        
+        .spinner:before, .spinner:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 10px solid transparent;
+            border-top-color: #3498db;
+            border-left-color: #3498db;
+            animation: spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+        
+        .spinner:before {
+            transform: rotateX(70deg);
+        }
+        
+        .spinner:after {
+            transform: rotateY(70deg);
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        body {
+            visibility: hidden;
+        }
+
+        body.loaded {
+            visibility: visible;
+        }
+    </style>
 </head>
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+    <div id="loading-screen">
+        <div class="spinner"></div>
+    </div>
+
     <div class="app-wrapper">
         <nav class="app-header navbar navbar-expand bg-body">
             <div class="container-fluid">
@@ -171,7 +234,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                         data-accordion="false">
 
                         <li
-                            class="nav-item {{ request()->routeIs('roles.index') || request()->routeIs('roles.create') || request()->routeIs('permissoes.create') || request()->routeIs('permissoes.index') ? 'menu-open' : '' }}">
+                            class="nav-item {{ request()->routeIs('funcoes.index') || request()->routeIs('funcoes.create') || request()->routeIs('permissoes.create') || request()->routeIs('permissoes.index') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link ">
                                 <i class="nav-icon bi bi-shield-lock"></i>
                                 <p>
@@ -182,20 +245,20 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     @can('Criar Função')
-                                    <a href="{{ route('roles.create') }}"
-                                        class="nav-link {{ request()->routeIs('roles.create') ? 'active' : '' }}">
+                                    <a href="{{ route('funcoes.create') }}"
+                                        class="nav-link {{ request()->routeIs('funcoes.create') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('roles.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                            class="nav-icon bi {{ request()->routeIs('funcoes.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
                                         <p>Criar Função</p>
                                     </a>
                                     @endcan
                                 </li>
                                 <li class="nav-item">
                                     @can('Ver Função')
-                                    <a href="{{ route('roles.index') }}"
-                                        class="nav-link {{ request()->routeIs('roles.index') ? 'active' : '' }}">
+                                    <a href="{{ route('funcoes.index') }}"
+                                        class="nav-link {{ request()->routeIs('funcoes.index') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('roles.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                            class="nav-icon bi {{ request()->routeIs('funcoes.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
                                         <p>Listar Funções</p>
                                     </a>
                                     @endcan
@@ -330,7 +393,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             </ul>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    @can('Ver Certificado')
+                                    @can('Visualizar Certificado')
                                     <a href="{{ route('certificados.index') }}"
                                         class="nav-link {{ request()->routeIs('certificados.index') ? 'active' : '' }}">
                                         <i
@@ -351,7 +414,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                         </li>
                         </li>
                         <li class="nav-item">
-                            @can('Visualizar Contato')
+                            @can('Visualizar Mensagem')
                             <a href="{{ route('mensagens.index') }}" class="nav-link">
                                 <i class="nav-icon bi bi-envelope"></i>
                                 <p>Contato</p>
@@ -702,6 +765,15 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                     ],
                 });
             </script>
+    <script>
+        window.addEventListener('load', function() {
+            // Aguarda um pequeno delay para garantir que todos os recursos estejam carregados
+            setTimeout(function() {
+                document.body.classList.add('loaded');
+                document.getElementById('loading-screen').style.display = 'none';
+            }, 500);
+        });
+    </script>
 </body>
 
 </html>

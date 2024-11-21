@@ -16,7 +16,7 @@ class RoleControllerTest extends TestCase
         $user->givePermissionTo($permission);
 
         $this->actingAs($user)
-             ->get(route('roles.index'))
+             ->get(route('funcoes.index'))
              ->assertStatus(200);
     }
 
@@ -25,7 +25,7 @@ class RoleControllerTest extends TestCase
         $user = User::factory()->create();
 
         $this->actingAs($user)
-             ->get(route('roles.index'))
+             ->get(route('funcoes.index'))
              ->assertStatus(403);
     }
 }

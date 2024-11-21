@@ -23,13 +23,13 @@ class RoleController extends Controller
     {
         $roles = Role::all();
         $roles = Role::paginate(10);
-        return view('roles.index', compact('roles'));
+        return view('funcoes.index', compact('roles'));
     }
 
     public function create()
     {
         $permissoes = Permission::orderBy('name', 'ASC')->get();
-        return view('roles.create', compact('permissoes'));
+        return view('funcoes.create', compact('permissoes'));
     }
 
     public function store(Request $request)
@@ -53,14 +53,14 @@ class RoleController extends Controller
             }
         }
 
-        return redirect()->route('roles.index')->with("status", "Função criada com sucesso.");
+        return redirect()->route('funcoes.index')->with("status", "Função criada com sucesso.");
     }
 
     public function edit(Role $role): View
     {   
         $tem_permissoes = $role->permissions->pluck('name');
         $permissoes = Permission::orderBy('name', 'ASC')->get();
-        return view("roles.edit", compact("role", "permissoes", "tem_permissoes"));
+        return view("funcoes.edit", compact("role", "permissoes", "tem_permissoes"));
     }
     
     public function update(Request $request, Role $role)
@@ -83,13 +83,13 @@ class RoleController extends Controller
             $role->syncPermissions([]);
         }
 
-        return  redirect()->route('roles.index')->with("status", "Função atualizada com sucesso.");
+        return  redirect()->route('funcoes.index')->with("status", "Função atualizada com sucesso.");
     }
 
     public function destroy($id)
     {
         $role = Role::find($id);
         $role->delete();
-        return  redirect()->route('roles.index')->with("status", "Função deletada com sucesso.");
+        return  redirect()->route('funcoes.index')->with("status", "Função deletada com sucesso.");
     }
 }

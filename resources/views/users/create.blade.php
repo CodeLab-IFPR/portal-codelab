@@ -99,7 +99,7 @@ Membros - Cadastro
 
             @foreach ($roles as $role)
                 <div class="form-check form-check-inline mt-1">
-                    <input type="checkbox" name="roles[]" id="role-{{$role->id}}" class="form-check-input" value="{{ $role->name }}">
+                    <input type="checkbox" name="roles[]" id="role-{{$role->id}}" class="form-check-input" value="{{ $role->name }}" {{ $loop->first ? 'required' : '' }}>
                     <label for="role-{{$role->id}}"><strong>{{$role->name}}</strong></label>
                 </div>
             @endforeach

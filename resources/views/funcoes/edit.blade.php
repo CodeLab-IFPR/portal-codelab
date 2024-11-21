@@ -25,7 +25,7 @@ Edição - {{ $role->name }}
             <h4>Editar Função</h4>
         </div>
         <div class="card-body">
-            <form action="{{ route('roles.update', $role->id) }}" method="POST">
+            <form action="{{ route('funcoes.update', $role->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">
@@ -54,7 +54,7 @@ Edição - {{ $role->name }}
                     </div>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <a href="{{ route('roles.index') }}" class="btn btn-outline-danger">Voltar</a>
+                    <a href="{{ route('funcoes.index') }}" class="btn btn-outline-danger">Voltar</a>
                     <button type="submit" class="btn btn-outline-success">Salvar</button>
                 </div>
             </form>

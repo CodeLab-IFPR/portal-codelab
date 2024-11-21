@@ -22,7 +22,7 @@ Cargos - Criação
 </div>
 <div class="container d-flex justify-content-center">
     <div class="card-body" style="max-width: 600px;">
-        <form action="{{ route('roles.store') }}" method="POST">
+        <form action="{{ route('funcoes.store') }}" method="POST">
             @csrf
 
             <div class="mb-3">
@@ -42,7 +42,7 @@ Cargos - Criação
                 @endforeach
             </div>
             <div class="d-flex justify-content-between">
-                <a href="{{ route('roles.index') }}"
+                <a href="{{ route('funcoes.index') }}"
                     class="btn btn-outline-danger">Voltar</a>
                 <button type="submit" class="btn btn-outline-success">Salvar</button>
             </div>

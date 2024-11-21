@@ -29,7 +29,7 @@ Cargos
         @endif
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-            <a class="btn btn-outline-success btn-sm" href="{{ route('roles.create') }}"> <i class="fa fa-plus"></i> Novo Cargo</a>
+            <a class="btn btn-outline-success btn-sm" href="{{ route('funcoes.create') }}"> <i class="fa fa-plus"></i> Novo Cargo</a>
         </div>
         <br>
             <table class="table table-bordered" id="myTable">
@@ -57,10 +57,10 @@ Cargos
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $role->id }}">
                                         <li>
                                             @can('Editar Função')
-                                            <a class="dropdown-item" href="{{ route('roles.edit', $role->id) }}"><i class="fas fa-pen-to-square"></i> Editar</a></li>
+                                            <a class="dropdown-item" href="{{ route('funcoes.edit', $role->id) }}"><i class="fas fa-pen-to-square"></i> Editar</a></li>
                                             @endcan
                                         <li>
-                                            <form action="{{ route('roles.destroy', $role->id) }}" method="POST" class="d-inline">
+                                            <form action="{{ route('funcoes.destroy', $role->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 @can('Deletar Função')
