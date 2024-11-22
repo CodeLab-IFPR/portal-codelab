@@ -15,10 +15,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-primary">
+<body class="bg-light">
     <main class="container d-flex flex-column justify-content-center align-items-center min-vh-100 text-center">
         <div class="card shadow-sm rounded">
-            <div class="card-body bg-light">
+            <div class="card-body bg-dark">
                 <h1 class="display-1 fw-bold text-danger" aria-hidden="true">@yield('code')</h1>
                 <p class="lead fs-4 text-dark">@yield('message')</p>
                 <div class="container">

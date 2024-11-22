@@ -44,7 +44,7 @@ Route::post('/submit', [SubmissionController::class, 'submit'])->name('submissio
 
 // rotas de teste
 Route::get('/teste', function () {
-    abort(401);
+    abort(404);
 });
 
 // Rotas Administrativas
