@@ -123,7 +123,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                     <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle"
                             data-bs-toggle="dropdown"> 
                             @if(Auth::check())
-                                <img src="/imagens/users/{{ Auth::user()->imagem }}" class="user-image rounded-circle shadow" alt="User Image"> 
+                                <img src="/imagens/users/{{ Auth::user()->imagem }}" class="user-image rounded-circle shadow" alt="{{ Auth::user()->alt }}"> 
                                 <span class="d-none d-md-inline">{{ Auth::user()->name }}</span> 
                             @endif
                         </a>
@@ -131,7 +131,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             @if(Auth::check())
                                 <li class="user-header bg-body-secondary"> <img
                                         src="/imagens/users/{{ Auth::user()->imagem }}"
-                                        class="rounded-circle bg-light shadow" alt="User Image">
+                                        class="rounded-circle bg-light shadow" alt="{{Auth::user()->alt}}">
                                     <p>
                                         {{ Auth::user()->name }} - Web Developer
                                         <small>Membro desde {{ Auth::user()->created_at->format('M. Y') }}</small>
