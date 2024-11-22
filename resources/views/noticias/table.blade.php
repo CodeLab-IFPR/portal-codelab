@@ -30,18 +30,22 @@
                             </a>
                             </li>
                             <li>
+                                @can('Editar Notícia')
                                 <a class="dropdown-item d-flex align-items-center"
                                     href="{{ route('noticias.edit', $noticia->id) }}">
                                     <i class="bi bi-pencil-square text-warning me-2"></i> Editar
                                 </a>
+                                @endcan
                             </li>
                             <li>
+                                @can('Deletar Notícia')
                                 <a href="#" class="dropdown-item d-flex align-items-center btn-delete"
                                     data-url="{{ route('noticias.destroy', $noticia->id) }}"
                                     data-titulo="{{ $noticia->titulo }}"
                                     data-autor="{{ $noticia->autor }}"
                                     data-categoria="{{ $noticia->categoria }}">
                                     <i class="bi bi-trash text-danger me-2"></i> Deletar
+                                @endcan
                                 </a>
                             </li>
                         </ul>

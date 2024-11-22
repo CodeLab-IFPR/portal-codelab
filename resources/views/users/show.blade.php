@@ -69,6 +69,15 @@
                         <strong>Ativo:</strong>
                         <p>{{ $user->ativo ? 'Sim' : 'Não' }}</p>
                     </div>
+                    <div class="form-group">
+                        <strong>Função:</strong>
+                        @if (!empty($user->getRoleNames()))
+                        @foreach ($user->getRoleNames() as $role)
+                            <span class="badge bg-primary mx-1">{{ $role }}</span>
+                        @endforeach
+                
+                    @endif
+                    </div>
                 </div>
             </div>
         </div>

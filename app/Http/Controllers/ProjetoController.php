@@ -3,13 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Projeto;
-use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\Middleware;
 
-class ProjetoController extends Controller
+class ProjetoController extends Controller implements HasMiddleware
 {
-
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Visualizar Projeto', only: ['index', 'show']),
+            new Middleware('permission:Criar Projeto', only: ['create', 'store']),
+            new Middleware('permission:Editar Projeto', only: ['edit', 'update']),
+            new Middleware('permission:Deletar Projeto', only: ['destroy']),
+        ];
+    }
     public function index(): View
     {
         $projetos = Projeto::paginate(10);

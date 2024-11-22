@@ -31,7 +31,7 @@ Membros - Cadastro
 
             <div class="mb-3">
                 <label for="inputNome" class="form-label"><strong>*Nome:</strong></label>
-                <input type="text" name="name" class="form-control @error('name') inválido @enderror" id="inputNome"
+                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="inputNome"
                     placeholder="Nome..." value="{{ old('name') }}" required>
                 @error('name')
                     <div class="form-text text-danger">{{ $message }}</div>
@@ -40,7 +40,7 @@ Membros - Cadastro
 
             <div class="mb-3">
                 <label for="inputEmail" class="form-label"><strong>*Email:</strong></label>
-                <input type="email" name="email" class="form-control @error('email') inválido @enderror" id="inputEmail"
+                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="inputEmail"
                     placeholder="Email..." value="{{ old('email') }}" required>
                 @error('email')
                     <div class="form-text text-danger">{{ $message }}</div>
@@ -49,7 +49,7 @@ Membros - Cadastro
 
             <div class="mb-3">
                 <label for="inputCargo" class="form-label"><strong>Cargo:</strong></label>
-                <input type="text" class="form-control @error('cargo') inválido @enderror" name="cargo" id="inputCargo"
+                <input type="text" class="form-control @error('cargo') is-invalid @enderror" name="cargo" id="inputCargo"
                     placeholder="Cargo..." value="{{ old('cargo') }}">
                 @error('cargo')
                     <div class="form-text text-danger">{{ $message }}</div>
@@ -57,7 +57,7 @@ Membros - Cadastro
             </div>
             <div class="mb-3">
                 <label for="inputCpf" class="form-label"><strong>*CPF:</strong></label>
-                <input type="text" class="form-control @error('cpf') inválido @enderror" name="cpf" id="inputCpf"
+                <input type="text" class="form-control @error('cpf') is-invalid @enderror" name="cpf" id="inputCpf"
                     placeholder="CPF..." value="{{ old('cpf') }}" required>
                 @error('cpf')
                     <div class="form-text text-danger">{{ $message }}</div>
@@ -73,13 +73,12 @@ Membros - Cadastro
 
             <div class="mb-3">
                 <label for="inputBiografia" class="form-label"><strong>Biografia:</strong></label>
-                <textarea class="form-control @error('biografia') inválido @enderror" style="height:150px"
+                <textarea class="form-control @error('biografia') is-invalid @enderror" style="height:150px"
                     name="biografia" id="inputBiografia" placeholder="Biografia...">{{ old('biografia') }}</textarea>
                 @error('biografia')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
-            </div>
-
+            </div>        
             <div class="mb-3">
                 <label for="inputLinkedin" class="form-label"><strong>LinkedIn:</strong></label>
                 <input type="url" class="form-control @error('linkedin') is-invalid @enderror" name="linkedin" id="inputLinkedin"
@@ -97,6 +96,16 @@ Membros - Cadastro
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
+
+            @foreach ($roles as $role)
+                <div class="form-check form-check-inline mt-1">
+                    <input type="checkbox" name="roles[]" id="role-{{$role->id}}" class="form-check-input" value="{{ $role->name }}" {{ $loop->first ? 'required' : '' }}>
+                    <label for="role-{{$role->id}}"><strong>{{$role->name}}</strong></label>
+                </div>
+            @endforeach
+            @error('roles')
+                <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
 
             <div class="mb-3">
                 <label for="inputAlt" class="form-label"><strong>Alt:</strong></label>

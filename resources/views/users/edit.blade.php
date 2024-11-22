@@ -93,6 +93,19 @@ Membros - Edição
                 <input type="url" class="form-control @error('github') is-invalid @enderror" name="github" id="inputGithub"
                     placeholder="GitHub URL" value="{{ old('github', $user->github) }}">
             </div>
+            @error('github')
+                <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+
+            @foreach ($roles as $role)
+                <div class="form-check form-check-inline mt-1">
+                    <input {{ ($tem_roles->contains($role->id)) ? 'checked' : ''}} type="checkbox" name="roles[]" id="role-{{$role->id}}" class="form-check-input" value="{{ $role->name }}">
+                    <label for="role-{{$role->id}}"><strong>{{$role->name}}</strong></label>
+                </div>
+            @endforeach
+            @error('roles')
+                <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
 
             <div class="mb-3">
                 <label for="inputAlt" class="form-label"><strong>Alt:</strong></label>

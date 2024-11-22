@@ -2,11 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Servico;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class ServicoController extends Controller
+class ServicoController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Visualizar Serviço', only: ['index', 'show']),
+            new Middleware('permission:Criar Serviço', only: ['create', 'store']),
+            new Middleware('permission:Editar Serviço', only: ['edit', 'update']),
+            new Middleware('permission:Deletar Serviço', only: ['destroy']),
+        ];
+        
+    }
     public function index()
     {
         $servicos = Servico::all();
@@ -19,7 +33,7 @@ class ServicoController extends Controller
         return view('servicos.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'descricao' => 'required|max:255',

@@ -49,15 +49,20 @@ Serviços
                                         <i class="fa fa-cog"></i>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <li><a class="dropdown-item" href="{{ route('servicos.edit', $servico->id) }}"><i class="fa-solid fa-pen-to-square"></i> Editar</a></li>
+                                        <li>
+                                            @can('Editar Serviço')
+                                            <a class="dropdown-item" href="{{ route('servicos.edit', $servico->id) }}"><i class="fa-solid fa-pen-to-square"></i> Editar</a></li>
+                                            @endcan
                                         <li>
                                             <form action="{{ route('servicos.destroy', $servico->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="dropdown-item"
+                                                @can('Deletar Serviço')
+                                                <button type="submit" class="{{ !$podeDeletarServico ? 'disabled' : '' }} dropdown-item"
                                                     onclick="return confirm('Tem certeza que deseja deletar este serviço?')">
                                                     <i class="fa-solid fa-trash"></i> Deletar
                                                 </button>
+                                                @endcan
                                             </form>
                                         </li>
                                     </ul>

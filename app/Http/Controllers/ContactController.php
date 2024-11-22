@@ -3,12 +3,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Mail\ContactMessage;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Contact;
 use Illuminate\Support\Facades\File;
 
-class ContactController extends Controller
+class ContactController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Visualizar Mensagem', only: ['index', 'show']),
+            new Middleware('permission:Deletar Mensagem', only: ['destroy']),
+            new Middleware('permission:Marcar como Lida', only: ['markRead', 'markReadSelected']),
+            new Middleware('permission:Marcar como Não Lida', only: ['markUnread', 'markUnreadSelected']),
+            new Middleware('permission:Alterar Status da Mensagem', only: ['toggleRead']),
+        ];
+    }
     public function index()
     {
         $mensagens = Contact::paginate(10);

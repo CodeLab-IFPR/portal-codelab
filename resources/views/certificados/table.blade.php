@@ -32,12 +32,15 @@
                                     <i class="bi bi-eye text-secondary me-2"></i> Visualizar
                                 </a>
                                     <li>
+                                        @can('Editar Certificado')
                                         <a class="dropdown-item d-flex align-items-center"
                                             href="{{ route('certificados.edit', $certificado->id) }}">
                                             <i class="bi bi-pencil-square text-warning me-2"></i> Editar
                                         </a>
+                                        @endcan
                                     </li>
                                     <li>
+                                        @can('Deletar Certificado')
                                         <a href="#" class="dropdown-item d-flex align-items-center btn-delete"
                                             data-url="{{ route('certificados.destroy', $certificado->id) }}"
                                             data-nome="{{ $certificado->user->name }}"
@@ -47,6 +50,7 @@
                                             data-token="{{ $certificado->token }}">
                                             <i class="bi bi-trash text-danger me-2"></i> Deletar
                                         </a>
+                                        @endcan
                                     </li>
                                 </ul>
                             </div>

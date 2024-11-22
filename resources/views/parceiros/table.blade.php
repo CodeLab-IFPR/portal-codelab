@@ -29,18 +29,22 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item d-flex align-items-center"
+                                @can('Editar Parceiro')
+                                <a class=" dropdown-item d-flex align-items-center"
                                     href="{{ route('parceiros.edit', $parceiro->id) }}">
                                     <i class="bi bi-pencil-square text-warning me-2"></i> Editar
                                 </a>
+                                @endcan
                             </li>
                             <li>
+                                @can('Deletar Parceiro')
                                 <a href="#" class="dropdown-item d-flex align-items-center btn-delete"
                                     data-url="{{ route('parceiros.destroy', $parceiro->id) }}"
                                     data-nome="{{ $parceiro->nome }}"
                                     data-email="{{ $parceiro->email }}">
                                     <i class="bi bi-trash text-danger me-2"></i> Deletar
                                 </a>
+                                @endcan
                             </li>
                         </ul>
                     </div>

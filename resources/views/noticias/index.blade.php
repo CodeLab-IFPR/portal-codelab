@@ -6,6 +6,7 @@ Notícias - Lista
 @endsection
 <!-- Título -->
 
+
 @section('content')
 <div class="app-content-header">
     <div class="container-fluid">

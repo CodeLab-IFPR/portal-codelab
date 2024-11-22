@@ -3,15 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\Noticias;
-use App\Providers\ImageUploader;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Providers\ImageUploader;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use Illuminate\Routing\Controllers\Middleware;
 
-class NoticiasController extends Controller
+class NoticiasController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Visualizar Notícia', only: ['index', 'show']),
+            new Middleware('permission:Criar Notícia', only: ['create', 'store']),
+            new Middleware('permission:Editar Notícia', only: ['edit', 'update']),
+            new Middleware('permission:Deletar Notícia', only: ['destroy'])
+        ];
+    }
+
     public function index(Request $request)
     {
         $noticiasQuery = Noticias::latest();
@@ -93,13 +105,13 @@ class NoticiasController extends Controller
             ->with("success", "Notícia criada com sucesso.");
     }
 
-    public function show(int $id): View
+    public function show($id): View
     {
         $noticia = Noticias::findOrFail($id);
         return view("noticias.show", compact("noticia"));
     }
 
-    public function edit(int $id): View
+    public function edit($id): View
     {
         $noticia = Noticias::findOrFail($id);
         return view('noticias.edit', compact('noticia'));

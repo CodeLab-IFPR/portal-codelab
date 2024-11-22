@@ -3,15 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\Parceiro;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\File;
-use App\Providers\ImageUploader;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\View\View;
+use App\Providers\ImageUploader;
+use Illuminate\Support\Facades\File;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\Middleware;
 
-class ParceiroController extends Controller
+class ParceiroController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Visualizar Parceiro', only: ['index', 'show']),
+            new Middleware('permission:Criar Parceiro', only: ['create', 'store']),
+            new Middleware('permission:Editar Parceiro', only: ['edit', 'update']),
+            new Middleware('permission:Deletar Parceiro', only: ['destroy']),
+        ];
+        
+    }
     public function index(Request $request): View
     {
         $parceirosQuery = Parceiro::latest();

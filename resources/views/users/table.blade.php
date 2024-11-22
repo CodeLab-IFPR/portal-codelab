@@ -7,6 +7,7 @@
             <th>Email</th>
             <th>Ativo</th>
             <th>Cargo</th>
+            <th>Função</th>
             <th>Ação</th>
         </tr>
     </thead>
@@ -20,6 +21,14 @@
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->ativo ? 'Sim' : 'Não' }}</td>
                 <td>{{ $user->cargo }}</td>
+                <td>
+                    @if (!empty($user->getRoleNames()))
+                        @foreach ($user->getRoleNames() as $role)
+                            <span class="badge bg-primary mx-1">{{ $role }}</span>
+                        @endforeach
+                        
+                    @endif
+                </td>
                 <td>
                     <div class="dropdown">
                         <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"
@@ -35,12 +44,15 @@
                                 </a>
                             </li>
                             <li>
+                                @can('Editar Membro')
                                 <a class="dropdown-item d-flex align-items-center"
                                     href="{{ route('users.edit', $user->id) }}">
                                     <i class="bi bi-pencil-square text-warning me-2"></i> Editar
                                 </a>
+                                @endcan
                             </li>
                             <li>
+                                @can('Deletar Membro')
                                 <a href="#" class="dropdown-item d-flex align-items-center btn-delete"
                                     data-url="{{ route('users.destroy', $user->id) }}"
                                     data-name="{{ $user->name }}"
@@ -50,6 +62,7 @@
                                     data-alt="{{ $user->alt }}">
                                     <i class="bi bi-trash text-danger me-2"></i> Deletar
                                 </a>
+                                @endcan
                             </li>
                         </ul>
                     </div>

@@ -81,10 +81,72 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                 ],
             });
         </script>
+    <style>
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .spinner {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            perspective: 800px;
+        }
+        
+        .spinner:before, .spinner:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 10px solid transparent;
+            border-top-color: #3498db;
+            border-left-color: #3498db;
+            animation: spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+        
+        .spinner:before {
+            transform: rotateX(70deg);
+        }
+        
+        .spinner:after {
+            transform: rotateY(70deg);
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
+        body {
+            visibility: hidden;
+        }
+
+        body.loaded {
+            visibility: visible;
+        }
+    </style>
 </head>
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+    <div id="loading-screen">
+        <div class="spinner"></div>
+    </div>
+
     <div class="app-wrapper">
         <nav class="app-header navbar navbar-expand bg-body">
             <div class="container-fluid">
@@ -100,10 +162,14 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-bs-toggle="dropdown" href="#">
                             <i class="bi bi-bell-fill"></i>
-                            <span class="navbar-badge badge text-bg-warning">{{ $unreadMessagesCount + $unreadSubmissionsCount }}</span>
+                            <span
+                                class="navbar-badge badge text-bg-warning">{{ $unreadMessagesCount + $unreadSubmissionsCount }}</span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end" style="max-height: 400px; overflow-y: auto;">
-                            <span class="dropdown-item dropdown-header">{{ $unreadMessagesCount + $unreadSubmissionsCount }} Notificações</span>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end"
+                            style="max-height: 400px; overflow-y: auto;">
+                            <span
+                                class="dropdown-item dropdown-header">{{ $unreadMessagesCount + $unreadSubmissionsCount }}
+                                Notificações</span>
                             <div class="dropdown-divider"></div>
                             <a href="{{ route('mensagens.index') }}" class="dropdown-item">
                                 <i class="bi bi-envelope me-2"></i> {{ $unreadMessagesCount }} novas mensagens
@@ -111,7 +177,8 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="{{ route('submissions.index') }}" class="dropdown-item">
-                                <i class="bi bi-file-earmark-text me-2"></i> {{ $unreadSubmissionsCount }} novas submissões
+                                <i class="bi bi-file-earmark-text me-2"></i> {{ $unreadSubmissionsCount }} novas
+                                submissões
                                 <span class="float-end text-secondary fs-8">{{ $lastSubmissionTime }}</span>
                             </a>
                         </div>
@@ -121,7 +188,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                                 data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a>
                     </li>
                     <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle"
-                            data-bs-toggle="dropdown"> 
+                            data-bs-toggle="dropdown">
                             @if(Auth::check())
                                 <img src="/imagens/users/{{ Auth::user()->imagem }}" class="user-image rounded-circle shadow" alt="{{ Auth::user()->alt }}"> 
                                 <span class="d-none d-md-inline">{{ Auth::user()->name }}</span> 
@@ -133,8 +200,9 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                                         src="/imagens/users/{{ Auth::user()->imagem }}"
                                         class="rounded-circle bg-light shadow" alt="{{Auth::user()->alt}}">
                                     <p>
-                                        {{ Auth::user()->name }} - Web Developer
-                                        <small>Membro desde {{ Auth::user()->created_at->format('M. Y') }}</small>
+                                        {{ Auth::user()->name }} - {{ Auth::user()->cargo }} -  
+                                        <small>Cadastro desde
+                                            {{ Auth::user()->created_at->format('M, Y.') }}</small>
                                     </p>
                                 </li>
                             @endif
@@ -161,6 +229,58 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                         data-accordion="false">
 
                         <li
+                            class="nav-item {{ request()->routeIs('funcoes.index') || request()->routeIs('funcoes.create') || request()->routeIs('permissoes.create') || request()->routeIs('permissoes.index') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link ">
+                                <i class="nav-icon bi bi-shield-lock"></i>
+                                <p>
+                                    Funções e Permissões
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    @can('Criar Função')
+                                    <a href="{{ route('funcoes.create') }}"
+                                        class="nav-link {{ request()->routeIs('funcoes.create') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('funcoes.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Criar Função</p>
+                                    </a>
+                                    @endcan
+                                </li>
+                                <li class="nav-item">
+                                    @can('Ver Função')
+                                    <a href="{{ route('funcoes.index') }}"
+                                        class="nav-link {{ request()->routeIs('funcoes.index') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('funcoes.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Listar Funções</p>
+                                    </a>
+                                    @endcan
+                                </li>
+                                <li class="nav-item">
+                                    @can('Criar Permissão')
+                                    <a href="{{ route('permissoes.create') }}"
+                                        class="nav-link {{ request()->routeIs('permissoes.create') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('permissoes.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Criar Permissão</p>
+                                    </a>
+                                    @endcan
+                                </li>
+                                <li class="nav-item">
+                                    @can('Visualizar Permissão')
+                                    <a href="{{ route('permissoes.index') }}"
+                                        class="nav-link {{ request()->routeIs('permissoes.index') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('permissoes.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Listar Permissões</p>
+                                    </a>
+                                    @endcan
+                                </li>
+                            </ul>
+                        </li>
+                        <li
                             class="nav-item {{ request()->routeIs('noticias.create') || request()->routeIs('users.create') || request()->routeIs('parceiros.create') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-journal-plus"></i>
@@ -171,28 +291,34 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
+                                    @can('Criar Notícia')
                                     <a href="{{ route('noticias.create') }}"
                                         class="nav-link {{ request()->routeIs('noticias.create') ? 'active' : '' }}">
                                         <i
                                             class="nav-icon bi {{ request()->routeIs('noticias.create') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Nova Notícia</p>
                                     </a>
+                                    @endcan
                                 </li>
                                 <li class="nav-item">
+                                    @can('Criar Membro')
                                     <a href="{{ route('users.create') }}"
-                                        class="nav-link {{ request()->routeIs('users.create') ? 'active' : '' }}">
+                                        class="nav-link  {{ request()->routeIs('users.create') ? 'active' : '' }}">
                                         <i
                                             class="nav-icon bi {{ request()->routeIs('users.create') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Novo Membro</p>
                                     </a>
+                                    @endcan
                                 </li>
                                 <li class="nav-item">
+                                    @can('Criar Parceiro')
                                     <a href="{{ route('parceiros.create') }}"
-                                        class="nav-link {{ request()->routeIs('parceiros.create') ? 'active' : '' }}">
+                                        class="nav-link  {{ request()->routeIs('parceiros.create') ? 'active' : '' }}">
                                         <i
                                             class="nav-icon bi {{ request()->routeIs('parceiros.create') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Novo Parceiro</p>
                                     </a>
+                                    @endcan
                                 </li>
                             </ul>
                         </li>
@@ -208,28 +334,34 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
+                                    @can('Visualizar Notícia')
                                     <a href="{{ route('noticias.index') }}"
                                         class="nav-link {{ request()->routeIs('noticias.index') ? 'active' : '' }}">
                                         <i
                                             class="nav-icon bi {{ request()->routeIs('users.index') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Noticias</p>
                                     </a>
+                                    @endcan
                                 </li>
                                 <li class="nav-item">
+                                    @can('Visualizar Membro')
                                     <a href="{{ route('users.index') }}"
-                                        class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}">
+                                        class="nav-link  {{ request()->routeIs('users.index') ? 'active' : '' }}">
                                         <i
                                             class="nav-icon bi {{ request()->routeIs('users.index') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Membro</p>
                                     </a>
+                                    @endcan
                                 </li>
                                 <li class="nav-item">
+                                    @can('Visualizar Parceiro')
                                     <a href="{{ route('parceiros.index') }}"
                                         class="nav-link {{ request()->routeIs('parceiros.index') ? 'active' : '' }}">
                                         <i
                                             class="nav-icon bi {{ request()->routeIs('parceiros.index') ? 'bi-play-fill' : 'bi-play' }} "></i>
                                         <p>Parceiro</p>
                                     </a>
+                                    @endcan
                                 </li>
                             </ul>
                         </li>
@@ -244,44 +376,56 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
+                                    @can('Criar Certificado')
                                     <a href="{{ route('certificados.create') }}"
                                         class="nav-link {{ request()->routeIs('certificados.create') ? 'active' : '' }}">
                                         <i
                                             class="nav-icon bi {{ request()->routeIs('certificados.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
                                         <p>Novo Certificado</p>
                                     </a>
+                                    @endcan
                                 </li>
                             </ul>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
+                                    @can('Visualizar Certificado')
                                     <a href="{{ route('certificados.index') }}"
                                         class="nav-link {{ request()->routeIs('certificados.index') ? 'active' : '' }}">
                                         <i
                                             class="nav-icon bi {{ request()->routeIs('certificados.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
                                         <p>Todos Certificados</p>
                                     </a>
+                                    @endcan
                                 </li>
                             </ul>
-                            <li class="nav-item">
-                                    <a href="{{ route('admin.frase_inicio.editar') }}" class="nav-link {{ request()->routeIs('admin.frase_inicio.editar') ? 'active' : '' }}">
-                                        <i class="nav-icon bi bi-pencil-square"></i>
-                                        <p>Editar Páginas</p>
-                                    </a>
-                            </li>
+                        <li class="nav-item">
+                            @can('Criar Frase')
+                            <a href="{{ route('admin.frase_inicio.editar') }}"
+                                class="nav-link {{ request()->routeIs('admin.frase_inicio.editar') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-pencil-square"></i>
+                                <p>Editar Páginas</p>
+                            </a>
+                            @endcan
+                        </li>
                         </li>
                         <li class="nav-item">
+                            @can('Visualizar Mensagem')
                             <a href="{{ route('mensagens.index') }}" class="nav-link">
                                 <i class="nav-icon bi bi-envelope"></i>
                                 <p>Contato</p>
                             </a>
+                            @endcan
                         </li>
                         <li class="nav-item">
+                            @can('Visualizar Submissão')
                             <a href="{{ route('submissions.index') }}" class="nav-link">
                                 <i class="nav-icon bi bi-file-earmark-text"></i>
                                 <p>Submissões</p>
                             </a>
+                            @endcan
                         </li>
-                        <li class="nav-item {{ request()->routeIs('projetos.index') || request()->routeIs('projetos.create') ? 'menu-open' : '' }}">
+                        <li
+                            class="nav-item {{ request()->routeIs('projetos.index') || request()->routeIs('projetos.create') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-folder"></i>
                                 <p>
@@ -291,22 +435,30 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
+                                    @can('Criar Projeto')
                                     <a href="{{ route('projetos.create') }}"
-                                        class="nav-link {{ request()->routeIs('projetos.create') ? 'active' : '' }}">
-                                        <i class="nav-icon bi {{ request()->routeIs('projetos.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        class="nav-link  {{ request()->routeIs('projetos.create') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('projetos.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
                                         <p>Criar Projeto</p>
                                     </a>
+                                    @endcan
                                 </li>
                                 <li class="nav-item">
+                                    @can('Visualizar Projeto')
                                     <a href="{{ route('projetos.index') }}"
                                         class="nav-link {{ request()->routeIs('projetos.index') ? 'active' : '' }}">
-                                        <i class="nav-icon bi {{ request()->routeIs('projetos.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('projetos.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
                                         <p>Listar Projetos</p>
                                     </a>
+                                    @endcan
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item {{ request()->routeIs('servicos.index') || request()->routeIs('servicos.create') ? 'menu-open' : '' }}">
+                        <li
+                            class="nav-item {{ request()->routeIs('servicos.index') || request()->routeIs('servicos.create') ? 'menu-open' : '' }}">
+
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-briefcase"></i>
                                 <p>
@@ -316,22 +468,29 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ route('servicos.create') }}"
-                                        class="nav-link {{ request()->routeIs('servicos.create') ? 'active' : '' }}">
-                                        <i class="nav-icon bi {{ request()->routeIs('servicos.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
-                                        <p>Criar Serviço</p>
-                                    </a>
+                                @can('Criar Serviço')
+                                <a href="{{ route('servicos.create') }}"
+                                    class="nav-link {{ request()->routeIs('servicos.create') ? 'active' : '' }}">
+                                    <i
+                                        class="nav-icon bi {{ request()->routeIs('servicos.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                    <p>Criar Serviço</p>
+                                </a>
+                                @endcan
                                 </li>
                                 <li class="nav-item">
+                                    @can('Visualizar Serviço')
                                     <a href="{{ route('servicos.index') }}"
                                         class="nav-link {{ request()->routeIs('servicos.index') ? 'active' : '' }}">
-                                        <i class="nav-icon bi {{ request()->routeIs('servicos.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('servicos.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
                                         <p>Listar Serviços</p>
                                     </a>
+                                    @endcan
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item {{ request()->routeIs('lancamentos.index') || request()->routeIs('lancamentos.create') ? 'menu-open' : '' }}">
+                        <li
+                            class="nav-item {{ request()->routeIs('lancamentos.index') || request()->routeIs('lancamentos.create') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-calendar-event"></i>
                                 <p>
@@ -341,18 +500,24 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
+                                    @can('Criar Lançamento')
                                     <a href="{{ route('lancamentos.create') }}"
                                         class="nav-link {{ request()->routeIs('lancamentos.create') ? 'active' : '' }}">
-                                        <i class="nav-icon bi {{ request()->routeIs('lancamentos.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('lancamentos.create') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
                                         <p>Criar Lançamento</p>
                                     </a>
+                                    @endcan
                                 </li>
                                 <li class="nav-item">
+                                    @can('Visualizar Lançamento')
                                     <a href="{{ route('lancamentos.index') }}"
                                         class="nav-link {{ request()->routeIs('lancamentos.index') ? 'active' : '' }}">
-                                        <i class="nav-icon bi {{ request()->routeIs('lancamentos.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('lancamentos.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
                                         <p>Listar Lançamentos</p>
                                     </a>
+                                    @endcan
                                 </li>
                             </ul>
                         </li>
@@ -527,22 +692,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                 integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y=" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
                 integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY=" crossorigin="anonymous"></script>
-            <script>
-                $('#conteudo').summernote({
-                    placeholder: 'Hello stand alone ui',
-                    tabsize: 2,
-                    height: 120,
-                    toolbar: [
-                        ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['table', ['table']],
-                        ['insert', ['link', 'picture', 'video']],
-                        ['view', ['fullscreen', 'codeview', 'help']]
-                    ]
-                });
-            </script>
+
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
             <script>
                 $(document).ready(function () {
@@ -610,6 +760,15 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                     ],
                 });
             </script>
+    <script>
+        window.addEventListener('load', function() {
+            // Aguarda um pequeno delay para garantir que todos os recursos estejam carregados
+            setTimeout(function() {
+                document.body.classList.add('loaded');
+                document.getElementById('loading-screen').style.display = 'none';
+            }, 500);
+        });
+    </script>
 </body>
 
 </html>
