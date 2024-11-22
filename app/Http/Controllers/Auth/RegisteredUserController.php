@@ -78,6 +78,9 @@ class RegisteredUserController extends Controller
         // Enviar email de verificação
         event(new Registered($user));
     
+        // Enviar email de verificação
+        event(new Registered($user));
+    
         // Enviar email de forma assíncrona usando um job
         SendPasswordJob::dispatch($user, $password);
     

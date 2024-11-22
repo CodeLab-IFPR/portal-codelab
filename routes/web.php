@@ -10,6 +10,7 @@ use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\ParceiroController;
 use App\Http\Controllers\PermissaoController;
 use App\Http\Controllers\SubmissionController;
+use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\CertificadoController;
 use App\Http\Controllers\Admin\FraseInicioController;
 use App\Http\Controllers\LancamentoServicoController;
@@ -42,9 +43,20 @@ Route::post('/submit-demand', [SubmissionController::class, 'submit'])->name('su
 Route::post('/send-message', [ContactController::class, 'sendMessage'])->name('send-message');
 Route::post('/submit', [SubmissionController::class, 'submit'])->name('submission.submit');
 
-// rotas de teste
-Route::get('/teste', function () {
-    abort(404);
+Route::resource('certificados', CertificadoController::class);
+Route::get('certificados/{id}/download', [CertificadoController::class, 'download'])->name('certificados.download');
+Route::get('/certificados/{certificado}/view', [CertificadoController::class, 'viewCertificate'])->name('certificados.view');
+Route::delete('certificados/{certificado}', [CertificadoController::class, 'destroy'])->name('certificados.destroy');
+Route::post('/certificados/generate', [CertificadoController::class, 'generateFromTasks'])->name('certificados.generate');
+Route::get('/certificados/create', [CertificadoController::class, 'create'])->name('certificados.create');
+Route::post('/certificados', [CertificadoController::class, 'store'])->name('certificados.store');
+
+Route::get('/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('frase-inicio/editar', [App\Http\Controllers\Admin\FraseInicioController::class, 'editar'])->name('frase_inicio.editar');
+    Route::put('frase-inicio/atualizar', [App\Http\Controllers\Admin\FraseInicioController::class, 'atualizar'])->name('frase_inicio.atualizar');
 });
 
 // Rotas Administrativas

@@ -1,35 +1,30 @@
 @extends('layouts.admin')
 
+@section('title')
+Perfil
+@endsection
+
 @section('content')
-    <div class="py-12">
-        <!-- Adicionar o alerta aqui -->
+    <div class="py-4 d-flex justify-content-center">
         @if(session('status'))
-            <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+            <div id="alert" class="alert {{ session('status') === 'password-error' ? 'alert-danger' : 'alert-success' }} alert-dismissible fade show" role="alert">
                 <div class="alert-content">
-                    <strong>{{ __(session('status')) }}</strong>
+                    @if(session('status') === 'password-error')
+                        <strong>{{ __('Erro: Senha atual incorreta ou senhas não coincidem.') }}</strong>
+                    @else
+                        <strong>{{ __(session('status')) }}</strong>
+                    @endif
                 </div>
                 <div class="progress-bar-container">
-                    <div id="progress-bar" class="progress-bar"></div>
+                    <div id="progress-bar" class="progress-bar" style="background-color: {{ session('status') === 'password-error' ? 'rgba(220,53,69,0.2)' : 'rgba(0,0,0,0.2)' }};"></div>
                 </div>
             </div>
         @endif
 
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6" style="width: 50%;">
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg rounded-4">
                 <div class="max-w-xl">
                     @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
                 </div>
             </div>
         </div>

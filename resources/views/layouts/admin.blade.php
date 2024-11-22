@@ -190,19 +190,15 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                     <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle"
                             data-bs-toggle="dropdown">
                             @if(Auth::check())
-                                <img src="/imagens/users/{{ Auth::user()->imagem }}"
-                                    class="user-image rounded-circle shadow" alt="User Image">
-                                <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
+                                <img src="/imagens/users/{{ Auth::user()->imagem }}" class="user-image rounded-circle shadow" alt="{{ Auth::user()->alt }}"> 
+                                <span class="d-none d-md-inline">{{ Auth::user()->name }}</span> 
                             @endif
                         </a>
                         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                             @if(Auth::check())
-                                <li class="user-header text-bg-primary"> <img
+                                <li class="user-header bg-body-secondary"> <img
                                         src="/imagens/users/{{ Auth::user()->imagem }}"
-                                        class="rounded-circle shadow" alt="User Image">
-                                        <p>
-                                        {{ Auth::user()->roles->pluck('name')->implode(', ') }}
-                                        </p>
+                                        class="rounded-circle bg-light shadow" alt="{{Auth::user()->alt}}">
                                     <p>
                                         {{ Auth::user()->name }} - {{ Auth::user()->cargo }} -  
                                         <small>Cadastro desde
@@ -210,12 +206,11 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                                     </p>
                                 </li>
                             @endif
-                            <li class="user-footer">
-                                <a href="{{ route('profile.edit') }}"
-                                    class="btn btn-outline-primary btn-flat">Perfil</a>
-                                <a href="{{ route('logout') }}" class="btn btn-outline-danger btn-flat float-end" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sair</a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            <li class="user-footer"> 
+                                <a href="{{ route('profile.edit') }}" class="btn btn-outline-success btn-flat">Perfil</a> 
+                                <form method="POST" action="{{ route('logout') }}" class="d-inline">
                                     @csrf
+                                    <button type="submit" class="btn btn-outline-danger btn-flat float-end">Sair</button>
                                 </form>
                             </li>
                         </ul>
