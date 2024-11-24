@@ -4,6 +4,8 @@
 /public/storage
 /storage/*.key
 /vendor
+!vendor/setasign/
+!vendor/setasign/**  # Permite rastrear todos os arquivos dentro de vendor/setasign
 /imagens
 /public/imagens/*
 /public/imagem
