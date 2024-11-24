@@ -32,8 +32,8 @@ Certificado - Edição
             @method('PUT')
 
             <div class="mb-3">
-                <label for="users_id" class="form-label"><strong>Membro*</strong></label>
-                <select id="users_id" name="users_id" class="form-select" required>
+                <label for="user_id" class="form-label"><strong>Membro*</strong></label>
+                <select id="user_id" name="user_id" class="form-select" required>
                     <option value="" disabled
                         {{ empty($selectedUserId) ? 'selected' : '' }}
                         class="text-disable">Selecione</option>

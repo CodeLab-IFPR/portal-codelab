@@ -9,17 +9,17 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
-class PermissaoController extends Controller 
+class PermissaoController extends Controller implements HasMiddleware
 {
-    // public static function middleware(): array
-    // {
-    //     return [
-    //         new Middleware('permission:Visualizar Permissão', only: ['index']),
-    //         new Middleware('permission:Criar Permissão', only: ['create', 'store']),
-    //         new Middleware('permission:Editar Permissão', only: ['edit', 'update']),
-    //         new Middleware('permission:Deletar Permissão', only: ['destroy'])
-    //     ];
-    // }
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Visualizar Permissão', only: ['index']),
+            new Middleware('permission:Criar Permissão', only: ['create', 'store']),
+            new Middleware('permission:Editar Permissão', only: ['edit', 'update']),
+            new Middleware('permission:Deletar Permissão', only: ['destroy'])
+        ];
+    }
     public function index()
     {
         $permissoes = Permission::all();

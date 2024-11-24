@@ -6,7 +6,6 @@
 // admin.blade.php
 use App\Models\Contact;
 use App\Models\Submission;
-
 $unreadMessagesCount = Contact::where('read', false)->count();
 $lastMessage = Contact::where('read', false)->orderBy('created_at', 'desc')->first();
 $lastMessageTime = $lastMessage ? $lastMessage->created_at->diffForHumans() : 'Nenhuma mensagem';
@@ -63,9 +62,9 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
-    <script src="https://cdn.tiny.cloud/1/7zo9iyuj1gb1fyw0uccbyarr0akkym7ki4hkoeb6tfq12zg5/tinymce/7/tinymce.min.js"
+    <script src="https://cdn.tiny.cloud/1/i6174a4p21k3bvgofjdjglzvdfxrle8qza1n62srherxw93i/tinymce/7/tinymce.min.js"
         referrerpolicy="origin"></script>
-    @vite('resources/css/adminlte.css"')
+    @vite('resources/css/adminlte.css')
         <script>
             tinymce.init({
                 selector: '#inputConteudo',
@@ -249,7 +248,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                                     @endcan
                                 </li>
                                 <li class="nav-item">
-                                    @can('Ver Função')
+                                    @can('Visualizar Função')
                                     <a href="{{ route('funcoes.index') }}"
                                         class="nav-link {{ request()->routeIs('funcoes.index') ? 'active' : '' }}">
                                         <i
@@ -324,7 +323,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                         </li>
 
                         <li
-                            class="nav-item {{ request()->routeIs('users.index') || request()->routeIs('parceiros.index') ? 'menu-open' : '' }}">
+                            class="nav-item {{ request()->routeIs('noticias.index') || request()->routeIs('users.index') || request()->routeIs('parceiros.index') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-journal-text"></i>
                                 <p>
@@ -338,7 +337,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                                     <a href="{{ route('noticias.index') }}"
                                         class="nav-link {{ request()->routeIs('noticias.index') ? 'active' : '' }}">
                                         <i
-                                            class="nav-icon bi {{ request()->routeIs('users.index') ? 'bi-play-fill' : 'bi-play' }}"></i>
+                                            class="nav-icon bi {{ request()->routeIs('noticias.index') ? 'bi-play-fill' : 'bi-play' }}"></i>
                                         <p>Noticias</p>
                                     </a>
                                     @endcan
@@ -641,7 +640,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
         integrity="sha256-whL0tQWoY1Ku1iskqPFvmZ+CHsvmRWx/PIoEvIeWh4I=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script>
-    @vite('resources/js/adminlte.js')
+        @vite('resources/js/adminlte.js')
         @vite('resources/js/menu.js')
             <script>
                 const SELECTOR_SIDEBAR_WRAPPER = ".sidebar-wrapper";

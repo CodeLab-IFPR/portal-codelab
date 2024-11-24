@@ -19,9 +19,20 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class RegisteredUserController extends Controller
+class RegisteredUserController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Visualizar Membro', only: ['index', 'show']),
+            new Middleware('permission:Criar Membro', only: ['create', 'store']),
+            new Middleware('permission:Editar Membro', only: ['edit', 'update']),
+            new Middleware('permission:Deletar Membro', only: ['destroy']),
+        ];
+    }
     /**
      * Display the registration view.
      */

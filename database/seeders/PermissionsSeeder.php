@@ -77,6 +77,9 @@ class PermissionsSeeder extends Seeder
             'Criar Certificado',
             'Editar Certificado',
             'Deletar Certificado',
+            
+            // Frases
+            'Criar Frase'
         ];
 
         foreach ($permissions as $permission) {

@@ -58,7 +58,7 @@ Serviços
                                                 @csrf
                                                 @method('DELETE')
                                                 @can('Deletar Serviço')
-                                                <button type="submit" class="{{ !$podeDeletarServico ? 'disabled' : '' }} dropdown-item"
+                                                <button type="submit" class="dropdown-item"
                                                     onclick="return confirm('Tem certeza que deseja deletar este serviço?')">
                                                     <i class="fa-solid fa-trash"></i> Deletar
                                                 </button>

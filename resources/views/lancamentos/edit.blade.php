@@ -39,11 +39,11 @@
             </div>
             <div class="form-group">
                 <label for="data_inicio"><strong>Data de Início</strong></label>
-                <input type="text" name="data_inicio" class="form-control" value="{{ \Carbon\Carbon::parse($lancamento->data_inicio)->format('d/m/Y') }}" required>
+                <input type="date" name="data_inicio" class="form-control" value="{{ \Carbon\Carbon::parse($lancamento->data_inicio)->format('Y-m-d') }}" required>
             </div>
             <div class="form-group">
-                <label for="data_fim"><strong>Data de Fim</strong></label>
-                <input type="text" name="data_fim" class="form-control" value="{{ \Carbon\Carbon::parse($lancamento->data_final)->format('d/m/Y') }}" required>
+                <label for="data_final"><strong>Data de Fim</strong></label>
+                <input type="date" name="data_final" class="form-control" value="{{ \Carbon\Carbon::parse($lancamento->data_final)->format('Y-m-d') }}" required>
             </div>
             <div class="form-group">
                 <label for="horas_trabalhadas"><strong>Horas Trabalhadas</strong></label>
@@ -67,15 +67,6 @@
             event.preventDefault();
             alert('Link não permitido!');
         }
-    });
-
-    document.querySelectorAll('input[type="text"][name="data_inicio"], input[type="text"][name="data_fim"]').forEach(function(input) {
-        input.addEventListener('input', function() {
-            var value = input.value.replace(/\D/g, '');
-            if (value.length >= 2) value = value.slice(0, 2) + '/' + value.slice(2);
-            if (value.length >= 5) value = value.slice(0, 5) + '/' + value.slice(5);
-            input.value = value;
-        });
     });
 </script>
 @endsection

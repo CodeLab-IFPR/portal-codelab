@@ -185,12 +185,12 @@ class CertificadoController extends Controller implements HasMiddleware
     public function update(Request $request, Certificado $certificado): RedirectResponse
     {
         $request->validate([
-            'users_id' => 'required',
+            'user_id' => 'required',
             'descricao' => 'required|max:520',
             'horas' => 'required|integer',
             'data' => 'required|date',
         ],[
-            'users_id.required' => 'O campo user é obrigatório',
+            'user_id.required' => 'O campo user é obrigatório',
             'descricao.required' => 'O campo descrição é obrigatório',
             'descricao.max' => 'O campo descrição deve ter no máximo 520 caracteres',
             'horas.required' => 'O campo horas é obrigatório',
@@ -200,7 +200,7 @@ class CertificadoController extends Controller implements HasMiddleware
         ]);
 
         $certificado->update([
-            'users_id' => $request->users_id,
+            'user_id' => $request->users_id,
             'descricao' => $request->descricao,
             'horas' => $request->horas,
             'data' => $request->data,
@@ -298,7 +298,7 @@ class CertificadoController extends Controller implements HasMiddleware
     $pdf->AddPage($size['orientation'], [$size['width'], $size['height']]);
     $pdf->useTemplate($template, 0, 0, $size['width'], $size['height']);
 
-    $pdf->AddFont('DejaVuSerifCondensed', '', 'AMAZI___.ttf', true);
+    $pdf->AddFont('DejaVuSerifCondensed', '', 'AMAZI___.TTF', true);
     $pdf->AddFont('DejaVuSans', '', 'DejaVuSans.ttf', true);
 
     $pdf->SetFont('DejaVuSerifCondensed', '', 12);
