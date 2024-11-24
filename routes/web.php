@@ -27,10 +27,6 @@ Route::get('/about', [RegisteredUserController::class, 'about'])->name('about');
 Route::get('/noticias/cards', [NoticiasController::class, 'cards'])->name('noticias.cards');
 Route::get('/noticias/{noticia}', [NoticiasController::class, 'show'])->name('noticias.show');
 
-// Rotas de Autenticação Google
-Route::get('/google/redirect', [App\Http\Controllers\Auth\GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
-Route::get('/google/callback', [App\Http\Controllers\Auth\GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
-
 // Rotas públicas de certificados
 Route::get('/certificados/emitir', [CertificadoController::class, 'emitir'])->name('certificados.emitir');
 Route::post('/certificados/buscar', [CertificadoController::class, 'buscarCertificados'])->name('certificados.buscar');
@@ -52,6 +48,7 @@ Route::post('/certificados/generate', [CertificadoController::class, 'generateFr
 Route::get('/certificados/create', [CertificadoController::class, 'create'])->name('certificados.create');
 Route::post('/certificados', [CertificadoController::class, 'store'])->name('certificados.store');
 
+// Rotas de Autenticação Google
 Route::get('/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 
