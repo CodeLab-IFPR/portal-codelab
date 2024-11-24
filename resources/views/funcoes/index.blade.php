@@ -78,11 +78,12 @@ Cargos
                         <tr>
                             <td colspan="4" class="text-center">Não há cargos 😢</td>
                         </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                         @endforelse
+            </tbody>
+        </table>
         </div>
-        {!! $roles->withQueryString()->links('pagination::bootstrap-5') !!}
     </div>
+    <div class="d-flex justify-content-center mt-4">
+    {!! $roles->withQueryString()->links('pagination::bootstrap-5') !!}
 </div>
 @endsection

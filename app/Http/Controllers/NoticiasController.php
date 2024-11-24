@@ -17,7 +17,7 @@ class NoticiasController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:Visualizar Notícia', only: ['index', 'show']),
+            new Middleware('permission:Visualizar Notícia', only: ['index']),
             new Middleware('permission:Criar Notícia', only: ['create', 'store']),
             new Middleware('permission:Editar Notícia', only: ['edit', 'update']),
             new Middleware('permission:Deletar Notícia', only: ['destroy'])

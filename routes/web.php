@@ -25,6 +25,7 @@ Route::get('/about', [RegisteredUserController::class, 'about'])->name('about');
 
 // Rota pública de cards de notícias
 Route::get('/noticias/cards', [NoticiasController::class, 'cards'])->name('noticias.cards');
+Route::get('/noticias/{noticia}', [NoticiasController::class, 'show'])->name('noticias.show');
 
 // Rotas de Autenticação Google
 Route::get('/google/redirect', [App\Http\Controllers\Auth\GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
@@ -60,7 +61,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 // Rotas Administrativas
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth', 'verified')->group(function () {
     // Rota principal do admin (dashboard)
     Route::get('/', function () {
         return view('admin.index');
@@ -74,8 +75,15 @@ Route::prefix('admin')->group(function () {
     // Rotas de usuários
     Route::resource('users', RegisteredUserController::class);
 
-    // Rotas de permissões e funções
-    Route::resource('permissoes', PermissaoController::class);
+    // Rotas de permissões
+    Route::group(['prefix' => 'permissoes'], function () {
+        Route::get('/', [PermissaoController::class, 'index'])->name('permissoes.index');
+        Route::get('/create', [PermissaoController::class, 'create'])->name('permissoes.create');
+        Route::post('/', [PermissaoController::class, 'store'])->name('permissoes.store');
+        Route::get('/{permissao}/edit', [PermissaoController::class, 'edit'])->name('permissoes.edit');
+        Route::put('/{permissao}', [PermissaoController::class, 'update'])->name('permissoes.update');
+        Route::delete('/{permissao}', [PermissaoController::class, 'destroy'])->name('permissoes.destroy');
+    });
     
     // Rotas manuais para funções
     Route::group(['prefix' => 'funcoes'], function () {
@@ -90,11 +98,27 @@ Route::prefix('admin')->group(function () {
     // Outras rotas administrativas
     Route::resource('projetos', ProjetoController::class);
     Route::resource('servicos', ServicoController::class);
-    Route::resource('lancamentos', LancamentoServicoController::class);
+    
+    Route::group(['prefix' => 'lancamentos'], function(){
+        Route::get('/', [LancamentoServicoController::class, 'index'])->name('lancamentos.index');
+        Route::get('/create', [LancamentoServicoController::class, 'create'])->name('lancamentos.create');
+        Route::post('/', [LancamentoServicoController::class, 'store'])->name('lancamentos.store');
+        Route::get('/{lancamento}/edit', [LancamentoServicoController::class, 'edit'])->name('lancamentos.edit');
+        Route::put('/{lancamento}', [LancamentoServicoController::class, 'update'])->name('lancamentos.update');
+        Route::delete('/{lancamento}', [LancamentoServicoController::class, 'destroy'])->name('lancamentos.destroy');
+    });
+    
     Route::resource('parceiros', ParceiroController::class);
 
     // Rotas de notícias (admin) - removido 'cards' da resource
-    Route::resource('noticias', NoticiasController::class)->except(['cards']);
+    Route::group(['prefix' => 'noticias'], function(){
+        Route::get('/', [NoticiasController::class, 'index'])->name('noticias.index');
+        Route::get('/create', [NoticiasController::class, 'create'])->name('noticias.create');
+        Route::post('/', [NoticiasController::class, 'store'])->name('noticias.store');
+        Route::get('/{noticia}/edit', [NoticiasController::class, 'edit'])->name('noticias.edit');
+        Route::put('/{noticia}', [NoticiasController::class, 'update'])->name('noticias.update');
+        Route::delete('/{noticia}', [NoticiasController::class, 'destroy'])->name('noticias.destroy');
+    });
 
     // Rotas de submissões
     Route::controller(SubmissionController::class)->group(function () {
@@ -109,19 +133,16 @@ Route::prefix('admin')->group(function () {
         Route::delete('/submissions/{id}', 'destroy')->name('submissions.destroy');
     });
 
-    // Rotas de mensagens
-    Route::controller(ContactController::class)->group(function () {
-        Route::get('/mensagens', 'index')->name('mensagens.index');
-        Route::get('/mensagens/{id}', 'show')->name('mensagens.show');
-        Route::delete('/mensagens/deleteSelected', 'deleteSelected')->name('mensagens.deleteSelected');
-        Route::post('/mensagens/{id}/mark-read', 'markRead')->name('mensagens.markRead');
-        Route::delete('/mensagens/{id}', 'destroy')->name('mensagens.destroy');
-        Route::post('/mensagens/{id}/mark-read', 'markRead')->name('mensagens.markRead');
-        Route::post('/mensagens/{id}/mark-unread', 'markUnread')->name('mensagens.markUnread');
-        Route::post('/mensagens/{id}/toggleRead', 'toggleRead')->name('mensagens.toggleRead');
-        Route::post('/mensagens/markReadSelected', 'markReadSelected')->name('mensagens.markReadSelected');
-        Route::post('/mensagens/markUnreadSelected', 'markUnreadSelected')->name('mensagens.markUnreadSelected');
-    });
+    Route::get('/mensagens', [ContactController::class, 'index'])->name('mensagens.index');
+    Route::get('/mensagens/{id}', [ContactController::class, 'show'])->name('mensagens.show');
+    Route::delete('/mensagens/deleteSelected', [ContactController::class, 'deleteSelected'])->name('mensagens.deleteSelected');
+    Route::post('/mensagens/{id}/mark-read', [ContactController::class, 'markRead'])->name('mensagens.markRead');
+    Route::delete('/mensagens/{id}', [ContactController::class, 'destroy'])->name('mensagens.destroy');
+    Route::post('/mensagens/{id}/mark-unread', [ContactController::class, 'markUnread'])->name('mensagens.markUnread');
+    Route::post('/mensagens/{id}/toggleRead', [ContactController::class, 'toggleRead'])->name('mensagens.toggleRead');
+    Route::post('/mensagens/markReadSelected', [ContactController::class, 'markReadSelected'])->name('mensagens.markReadSelected');
+    Route::post('/mensagens/markUnreadSelected', [ContactController::class, 'markUnreadSelected'])->name('mensagens.markUnreadSelected');
+
 
     // Rotas de perfil
     Route::controller(ProfileController::class)->group(function () {

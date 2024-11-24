@@ -1,6 +1,5 @@
 /.phpunit.cache
 /node_modules
-/public/build
 /public/hot
 /public/storage
 /storage/*.key
@@ -8,6 +7,10 @@
 /imagens
 /public/imagens/*
 /public/imagem
+/public/certicate
+/public/anexos_submissions
+/public/anexos_contacts
+/public/qr
 /storage/logs/*.log
 .env
 .env.backup

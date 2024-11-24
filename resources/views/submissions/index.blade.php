@@ -141,7 +141,7 @@ $(document).ready(function () {
         var id = $(this).data('id');
         var icon = $(this);
         $.ajax({
-            url: '/submissions/' + id + '/toggleRead',
+            url: '/admin/submissions/' + id + '/toggleRead',
             method: 'POST',
             success: function (response) {
                 icon.toggleClass('bi-envelope bi-envelope-open');
@@ -160,7 +160,7 @@ $(document).ready(function () {
         }).get();
         if (ids.length > 0) {
             $.ajax({
-                url: '/submissions/markReadSelected',
+                url: '/admin/submissions/markReadSelected',
                 method: 'POST',
                 data: { ids: ids },
                 success: function (response) {
@@ -180,7 +180,7 @@ $(document).ready(function () {
         }).get();
         if (ids.length > 0) {
             $.ajax({
-                url: '/submissions/markUnreadSelected',
+                url: '/admin/submissions/markUnreadSelected',
                 method: 'POST',
                 data: { ids: ids },
                 success: function (response) {

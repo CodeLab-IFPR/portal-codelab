@@ -42,11 +42,11 @@ Novo Lançamento de Serviço
             </div>
             <div class="form-group">
                 <label for="data_inicio"><strong>Data de Início</strong></label>
-                <input type="text" name="data_inicio" class="form-control" placeholder="dd/mm/yyyy" required>
+                <input type="date" name="data_inicio" class="form-control" placeholder="dd/mm/yyyy" required>
             </div>
             <div class="form-group">
-                <label for="data_fim"><strong>Data de Fim</strong></label>
-                <input type="text" name="data_fim" class="form-control" placeholder="dd/mm/yyyy" required>
+                <label for="data_final"><strong>Data Final</strong></label>
+                <input type="date" name="data_final" class="form-control" placeholder="dd/mm/yyyy" required>
             </div>
             <div class="form-group">
                 <label for="horas_trabalhadas"><strong>Horas Trabalhadas</strong></label>
