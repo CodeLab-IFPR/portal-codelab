@@ -130,6 +130,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('submission') }}">Submissão</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('galeria.indexPublic') }}">Galeria</a>
                 <!--</ul>            <div class="d-none d-lg-flex">-->
                 <!--    <a href="{{ route('login') }}" class="btn btn-link text-muted" role="button">Entrar</a>-->
                 <!--    <a href="{{ route('register') }}" class="btn btn-primary ms-2" role="button">Registre-se</a>-->
