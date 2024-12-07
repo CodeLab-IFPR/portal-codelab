@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Tarefa;
+use App\Models\Servico;
 use setasign\Fpdi\Fpdi;
 use Illuminate\View\View;
 use App\Models\Certificado;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\LancamentoServico;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,54 +30,7 @@ class CertificadoController extends Controller implements HasMiddleware
         ];
         
     }
-    public function generateFromTasks(Request $request): JsonResponse
-    {
-        $tasks = $request->input('tasks', []);
-        $users = [];
-        $projetoNome = '';
-    
-        foreach ($tasks as $taskId) {
-            $tarefa = Tarefa::find($taskId);
-            if ($tarefa && !$tarefa->certificado_gerado) {
-                $userId = $tarefa->user_id;
-                if (!isset($users[$userId])) {
-                    $users[$userId] = 0;
-                }
-                $users[$userId] += $tarefa->atividades->sum('horas_trabalhadas');
-                $projetoNome = $tarefa->projeto->nome;
-            }
-        }
-    
-        $certificadosData = [];
-        foreach ($users as $userId => $horas) {
-            $certificadosData[] = [
-                'user_id' => $userId,
-                'horas' => $horas,
-                'descricao' => $projetoNome
-            ];
-        }
-    
-        $generatedTaskIds = [];
-        foreach ($certificadosData as $data) {
-            $certificado = new Certificado();
-            $certificado->user_id = $data['user_id'];
-            $certificado->horas = $data['horas'];
-            $certificado->descricao = $data['descricao'];
-            $certificado->token = Str::random(10);
-            $certificado->data = now();
-            $certificado->save();
-    
-            $generatedTaskIds[] = $data['user_id'];
-        }
-    
-        Tarefa::whereIn('id', $tasks)->update(['certificado_gerado' => true]);
-    
-        return response()->json([
-            'success' => true,
-            'redirect' => route('certificados.create', ['data' => json_encode($certificadosData)]),
-            'generatedTaskIds' => $generatedTaskIds
-        ]);
-    }
+
     public function emitir()
     {
         return view('certificados.emitir');
@@ -168,7 +123,8 @@ class CertificadoController extends Controller implements HasMiddleware
     {
         $certificadosData = json_decode($request->input('data'), true);
         $users = User::all();
-        return view('certificados.create', compact('users', 'certificadosData'));
+        $servicos = Servico::all(); // Adicione esta linha para obter os serviços
+        return view('certificados.create', compact('users', 'certificadosData', 'servicos'));
     }
 
     public function edit(Certificado $certificado)
@@ -213,43 +169,46 @@ class CertificadoController extends Controller implements HasMiddleware
     public function store(Request $request): RedirectResponse
     {
         $certificados = $request->input('certificados', []);
-        $manualCertificado = $request->input('manual_certificado', []);
         $descricao = $request->input('descricao');
 
         foreach ($certificados as $certificadoData) {
-            $existingCertificado = Certificado::where('user_id', $certificadoData['users_id'])
-                ->where('descricao', $descricao)
+            $existingCertificado = Certificado::where('user_id', $certificadoData['user_id'])
+                ->where('descricao', $certificadoData['descricao'])
                 ->first();
 
             if (!$existingCertificado) {
                 $certificado = new Certificado();
-                $certificado->user_id = $certificadoData['users_id'];
+                $certificado->user_id = $certificadoData['user_id'];
                 $certificado->horas = $certificadoData['horas'];
-                $certificado->descricao = $descricao;
-                $certificado->token = Str::random(10);
-                $certificado->data = now();
+                $certificado->data = $certificadoData['data'];
+                $certificado->descricao = $certificadoData['descricao']; // Usar a descrição correta
+                $certificado->token = Str::random(10); // Gerar um token aleatório
                 $certificado->save();
+
+                // Marcar lançamentos como certificado_gerado
+                if (isset($certificadoData['servico_id'])) {
+                    LancamentoServico::where('user_id', $certificadoData['user_id'])
+                        ->where('servico_id', $certificadoData['servico_id'])
+                        ->update(['certificado_gerado' => true]);
+                }
             }
         }
 
-        if (!empty($manualCertificado)) {
-            $existingCertificado = Certificado::where('user_id', $manualCertificado['users_id'])
-                ->where('descricao', $manualCertificado['descricao'])
-                ->first();
-
-            if (!$existingCertificado) {
-                $certificado = new Certificado();
-                $certificado->user_id = $manualCertificado['users_id'];
-                $certificado->horas = $manualCertificado['horas'];
-                $certificado->descricao = $manualCertificado['descricao'];
-                $certificado->token = Str::random(10);
-                $certificado->data = now();
-                $certificado->save();
-            }
+        // Verificar se há dados para criação manual de certificados
+        if ($request->has('manual_certificado')) {
+            $manualCertificadoData = $request->input('manual_certificado');
+            $manualCertificado = new Certificado();
+            $manualCertificado->user_id = $manualCertificadoData['user_id'];
+            $manualCertificado->horas = $manualCertificadoData['horas'];
+            $manualCertificado->data = $manualCertificadoData['data'];
+            $manualCertificado->descricao = $manualCertificadoData['descricao'];
+            $manualCertificado->token = Str::random(10); // Gerar um token aleatório
+            $manualCertificado->save();
         }
 
-    return redirect()->route('certificados.index')->with('success', 'Certificados criados com sucesso.');
-}
+        return redirect()->route('certificados.index')
+            ->with('success', 'Certificados criados com sucesso.');
+    }
 
     public function show(Certificado $certificado)
     {

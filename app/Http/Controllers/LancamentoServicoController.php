@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\LancamentoServico;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Log;
 
 class LancamentoServicoController extends Controller implements HasMiddleware
 {
@@ -45,7 +46,7 @@ class LancamentoServicoController extends Controller implements HasMiddleware
             'data_inicio' => 'required|date',
             'data_final' => 'required|date|after_or_equal:data_inicio',
             'horas_trabalhadas' => 'required|numeric',
-            'link' => 'required|url|max:255',
+            'link' => 'required|url|regex:/^https?:\/\/(www\.)?github\.com\/.+$/',
         ],[
             'projeto_id.required' => 'O campo projeto é obrigatório.',
             'servico_id.required' => 'O campo serviço é obrigatório.',
@@ -55,10 +56,15 @@ class LancamentoServicoController extends Controller implements HasMiddleware
             'horas_trabalhadas.required' => 'O campo horas trabalhadas é obrigatório.',
             'horas_trabalhadas.numeric' => 'O campo horas trabalhadas deve ser um número.',
             'link.url' => 'O campo link deve ser uma URL válida.',
-            'link.max' => 'O campo link deve ter no máximo 255 caracteres.',
+            'link.regex' => 'O campo link deve ser um link de um commit do GitHub.',
         ]);
 
-        LancamentoServico::create($request->all());
+        $data = $request->all();
+        $data['user_id'] = auth()->id(); // Adiciona o user_id do usuário autenticado
+
+        Log::info('Dados recebidos para criação de lançamento:', $data);
+
+        LancamentoServico::create($data);
 
         return redirect()->route('lancamentos.index')
                          ->with('success', 'Lançamento criado com sucesso.');
@@ -84,7 +90,7 @@ class LancamentoServicoController extends Controller implements HasMiddleware
             'data_inicio' => 'required|date',
             'data_final' => 'required|date|after_or_equal:data_inicio',
             'horas_trabalhadas' => 'required|numeric',
-            'link' => 'required|url|max:255',
+            'link' => 'required|url|regex:/^https?:\/\/(www\.)?github\.com\/.+$/',
         ],[
             'projeto_id.required' => 'O campo projeto é obrigatório.',
             'servico_id.required' => 'O campo serviço é obrigatório.',
@@ -94,7 +100,7 @@ class LancamentoServicoController extends Controller implements HasMiddleware
             'horas_trabalhadas.required' => 'O campo horas trabalhadas é obrigatório.',
             'horas_trabalhadas.numeric' => 'O campo horas trabalhadas deve ser um número.',
             'link.url' => 'O campo link deve ser uma URL válida.',
-            'link.max' => 'O campo link deve ter no máximo 255 caracteres.',
+            'link.regex' => 'O campo link deve ser um link de um commit do GitHub.',
         ]);
 
         $lancamento->update($request->all());
@@ -109,5 +115,39 @@ class LancamentoServicoController extends Controller implements HasMiddleware
 
         return redirect()->route('lancamentos.index')
                          ->with('success', 'Lançamento deletado com sucesso.');
+    }
+    public function generateCertificates(Request $request)
+    {
+        $lancamentoIds = $request->input('lancamentos', []);
+        $certificadosData = [];
+        $lancamentosGroupedByUser = [];
+    
+        // Agrupar lançamentos por user_id
+        foreach ($lancamentoIds as $id) {
+            $lancamento = LancamentoServico::find($id);
+            if ($lancamento) {
+                $userId = $lancamento->user_id;
+                if (!isset($lancamentosGroupedByUser[$userId])) {
+                    $lancamentosGroupedByUser[$userId] = [
+                        'user_id' => $userId,
+                        'horas' => 0,
+                        'descricao' => '',
+                        'data' => now()->format('Y-m-d'),
+                        'servico_id' => $lancamento->servico_id
+                    ];
+                }
+                $lancamentosGroupedByUser[$userId]['horas'] += $lancamento->horas_trabalhadas;
+                $lancamentosGroupedByUser[$userId]['descricao'] .= $lancamento->servico->descricao . ', ';
+            }
+        }
+    
+        // Preparar dados para certificados
+        foreach ($lancamentosGroupedByUser as $data) {
+            // Remover a última vírgula e espaço da descrição
+            $data['descricao'] = rtrim($data['descricao'], ', ');
+            $certificadosData[] = $data;
+        }
+    
+        return redirect()->route('certificados.create', ['data' => json_encode($certificadosData)]);
     }
 }
