@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\GaleriaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjetoController;
 use App\Http\Controllers\ServicoController;
@@ -10,8 +11,8 @@ use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\ParceiroController;
 use App\Http\Controllers\PermissaoController;
 use App\Http\Controllers\SubmissionController;
-use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\CertificadoController;
+use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\Admin\FraseInicioController;
 use App\Http\Controllers\LancamentoServicoController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -52,18 +53,32 @@ Route::post('/certificados', [CertificadoController::class, 'store'])->name('cer
 Route::get('/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 
+// Public gallery routes
+Route::get('/galeria', [GaleriaController::class, 'index'])->name('galeria.public');
+Route::get('/galeria/ano/{ano}', [GaleriaController::class, 'peloAno'])->name('galeria.ano');
+Route::get('/galeria', [GaleriaController::class, 'indexPublic'])->name('galeria.indexPublic');
+
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('frase-inicio/editar', [App\Http\Controllers\Admin\FraseInicioController::class, 'editar'])->name('frase_inicio.editar');
     Route::put('frase-inicio/atualizar', [App\Http\Controllers\Admin\FraseInicioController::class, 'atualizar'])->name('frase_inicio.atualizar');
 });
 
 // Rotas Administrativas
-Route::prefix('admin')->middleware('auth', 'verified')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     // Rota principal do admin (dashboard)
     Route::get('/', function () {
         return view('admin.index');
     })->name('admin');
 
+    // Rotas da galeria (admin)
+    Route::group(['prefix' => 'galeria'], function () {
+        Route::get('/', [GaleriaController::class, 'indexAdmin'])->name('galeria.indexAdmin');
+        Route::get('/create', [GaleriaController::class, 'create'])->name('galeria.create');
+        Route::post('/', [GaleriaController::class, 'store'])->name('galeria.store');
+        Route::get('/{galeria}/edit', [GaleriaController::class, 'edit'])->name('galeria.edit');
+        Route::put('/{galeria}', [GaleriaController::class, 'update'])->name('galeria.update');
+        Route::delete('/{galeria}', [GaleriaController::class, 'destroy'])->name('galeria.destroy');
+    });
 
     // Rotas de certificados (admin)
     Route::resource('certificados', CertificadoController::class)->except(['show']);
@@ -103,6 +118,7 @@ Route::prefix('admin')->middleware('auth', 'verified')->group(function () {
         Route::get('/{lancamento}/edit', [LancamentoServicoController::class, 'edit'])->name('lancamentos.edit');
         Route::put('/{lancamento}', [LancamentoServicoController::class, 'update'])->name('lancamentos.update');
         Route::delete('/{lancamento}', [LancamentoServicoController::class, 'destroy'])->name('lancamentos.destroy');
+        Route::post('/lancamentos/generate-certificates', [LancamentoServicoController::class, 'generateCertificates'])->name('lancamentos.generateCertificates');
     });
     
     Route::resource('parceiros', ParceiroController::class);
@@ -140,6 +156,17 @@ Route::prefix('admin')->middleware('auth', 'verified')->group(function () {
     Route::post('/mensagens/markReadSelected', [ContactController::class, 'markReadSelected'])->name('mensagens.markReadSelected');
     Route::post('/mensagens/markUnreadSelected', [ContactController::class, 'markUnreadSelected'])->name('mensagens.markUnreadSelected');
 
+    // Admin gallery routes (protected)
+    Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
+        Route::resource('galeria', GaleriaController::class)->names([
+            'index' => 'galeria.index',
+            'create' => 'galeria.create',
+            'store' => 'galeria.store',
+            'edit' => 'galeria.edit',
+            'update' => 'galeria.update',
+            'destroy' => 'galeria.destroy'
+        ]);
+    });
 
     // Rotas de perfil
     Route::controller(ProfileController::class)->group(function () {
@@ -151,6 +178,7 @@ Route::prefix('admin')->middleware('auth', 'verified')->group(function () {
     // Frase Início
     Route::get('frase-inicio/editar', [FraseInicioController::class, 'editar'])->name('admin.frase_inicio.editar');
     Route::put('frase-inicio/atualizar', [FraseInicioController::class, 'atualizar'])->name('admin.frase_inicio.atualizar');
+    Route::post('lancamentos/generate-certificates', [LancamentoServicoController::class, 'generateCertificates'])->name('lancamentos.generateCertificates');
 });
 
 require __DIR__.'/auth.php';

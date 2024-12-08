@@ -9,21 +9,11 @@ use App\Providers\ImageUploader;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Routing\Controllers\HasMiddleware;
+
 
 
 class MembroController extends Controller
 {
-    // public static function middleware(): array
-    // {
-    //     return [
-    //         new Middleware('permission:Visualizar Membro', only: ['index', 'show']),
-    //         new Middleware('permission:Criar Membro', only: ['create', 'store']),
-    //         new Middleware('permission:Editar Membro', only: ['edit', 'update']),
-    //         new Middleware('permission:Deletar Membro', only: ['destroy']),
-    //     ];
-    // }
     public function index(Request $request)
     {
         $usersQuery = User::latest();

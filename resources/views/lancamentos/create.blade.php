@@ -10,6 +10,9 @@ Novo Lançamento de Serviço
         <div class="row">
             <div class="col-sm-6">
                 <h3 class="mb-0">Novo Lançamento</h3>
+                @if($errors->has('projeto_id'))
+                    <span class="text-danger">{{ $errors->first('projeto_id') }}</span>
+                @endif
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
@@ -26,35 +29,55 @@ Novo Lançamento de Serviço
             @csrf
             <div class="form-group">
                 <label for="projeto_id"><strong>Projeto</strong></label>
-                <select name="projeto_id" class="form-control" required>
+                <select name="projeto_id" class="form-select" required>
                     @foreach($projetos as $projeto)
                         <option value="{{ $projeto->id }}">{{ $projeto->nome }}</option>
                     @endforeach
                 </select>
+                @error('projeto_id')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="servico_id"><strong>Serviço</strong></label>
-                <select name="servico_id" class="form-control" required>
+                <select name="servico_id" class="form-select" required>
                     @foreach($servicos as $servico)
                         <option value="{{ $servico->id }}">{{ $servico->descricao }}</option>
                     @endforeach
                 </select>
+                @error('servico_id')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="data_inicio"><strong>Data de Início</strong></label>
-                <input type="date" name="data_inicio" class="form-control" placeholder="dd/mm/yyyy" required>
+                <input type="date" name="data_inicio" id="data_inicio" class="form-control" placeholder="dd/mm/yyyy"
+                    required>
+                @error('data_inicio')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="data_final"><strong>Data Final</strong></label>
-                <input type="date" name="data_final" class="form-control" placeholder="dd/mm/yyyy" required>
+                <input type="date" name="data_final" id="data_final" class="form-control" placeholder="dd/mm/yyyy"
+                    required>
+                @error('data_final')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="horas_trabalhadas"><strong>Horas Trabalhadas</strong></label>
                 <input type="number" name="horas_trabalhadas" class="form-control" required>
+                @error('horas_trabalhadas')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="link"><strong>Link</strong></label>
                 <input type="url" name="link" class="form-control" required>
+                @error('link')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             <div class="form-group mt-4 d-flex justify-content-between">
                 <a href="{{ route('lancamentos.index') }}" class="btn btn-outline-danger">Voltar</a>
@@ -64,21 +87,9 @@ Novo Lançamento de Serviço
     </div>
 </div>
 <script>
-    document.querySelector('form').addEventListener('submit', function(event) {
-        var linkInput = document.querySelector('input[name="link"]');
-        if (!linkInput.value.startsWith('https://github.com/')) {
-            event.preventDefault();
-            alert('Link não permitido!');
-        }
-    });
-
-    document.querySelectorAll('input[type="text"][name="data_inicio"], input[type="text"][name="data_fim"]').forEach(function(input) {
-        input.addEventListener('input', function() {
-            var value = input.value.replace(/\D/g, '');
-            if (value.length >= 2) value = value.slice(0, 2) + '/' + value.slice(2);
-            if (value.length >= 5) value = value.slice(0, 5) + '/' + value.slice(5);
-            input.value = value;
-        });
+    document.getElementById('data_inicio').addEventListener('change', function () {
+        var dataInicio = this.value;
+        document.getElementById('data_final').setAttribute('min', dataInicio);
     });
 </script>
 @endsection
