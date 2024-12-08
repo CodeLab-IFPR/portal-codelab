@@ -22,7 +22,7 @@ return new class extends Migration
             $table->boolean('ativo')->default(true)->nullable();
             $table->text('biografia')->nullable();
             $table->string('alt')->nullable();
-            $table->string('imagem')->nullable();
+            $table->string('imagem')->default('default.png')->nullable();
             $table->string('linkedin')->nullable();
             $table->string('github')->nullable();
             $table->string('passwordGoogle')->nullable();

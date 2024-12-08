@@ -23,7 +23,7 @@ class AdminUserSeeder extends Seeder
             'ativo' => true,
             'biografia' => 'CDT user é um usuário administrador do sistema.',
             'alt' => 'CDT user alt text',
-            'imagem' => null,
+            'imagem' => 'default.png',
             'linkedin' => 'https://linkedin.com/in/',
             'github' => 'https://github.com/',
             'passwordGoogle' => null,
