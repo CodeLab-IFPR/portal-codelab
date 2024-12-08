@@ -160,14 +160,32 @@ class GaleriaController extends Controller implements HasMiddleware
 
     public function destroy($id)
     {
-        $galeria = Galeria::findOrFail($id);
-        $path = public_path($galeria->caminho);
-        if (File::exists($path)) {
-            File::delete($path);
-        }
-        $galeria->delete();
+        try {
+            $galeria = Galeria::findOrFail($id);
+            
+            if ($galeria->tipo === 'imagem') {
+                $path = public_path($galeria->caminho);
+                if (File::exists($path)) {
+                    File::delete($path);
+                }
+            }
+            
+            $galeria->delete();
 
-        return redirect()->route('galeria.indexAdmin')->with('success', 'Mídia excluída com sucesso!');
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'id' => $id
+                ]);
+            }
+
+            return redirect()->route('galeria.indexAdmin');
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro ao excluir a mídia: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     private function isVideo($mimeType)
