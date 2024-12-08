@@ -13,7 +13,6 @@ class AdminUserSeeder extends Seeder
 
     public function run(): void
     {
-        // Create the user
         $user = User::create([
             'name' => 'CDT user',
             'email' => 'cdt.projetos@gmail.com',
@@ -33,10 +32,8 @@ class AdminUserSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        // Create the role if it doesn't exist
-        $role = Role::firstOrCreate(['name' => 'admin']);
+        $role = Role::firstOrCreate(['name' => 'Admin']);
 
-        // Assign the role to the user
         $user->assignRole($role);
     }
 }

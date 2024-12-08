@@ -5,9 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Galeria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class GaleriaController extends Controller
+class GaleriaController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Visualizar Galeria', only: ['indexAdmin']),
+            new Middleware('permission:Criar Galeria', only: ['create', 'store']),
+            new Middleware('permission:Editar Galeria', only: ['edit', 'update']),
+            new Middleware('permission:Deletar Galeria', only: ['destroy'])
+        ];
+    }
     public function indexAdmin()
     {
         $anos = Galeria::selectRaw('YEAR(created_at) as ano')

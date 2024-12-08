@@ -22,49 +22,61 @@ Lançamentos
 </div>
 <div class="container d-flex justify-content-center">
     <div class="w-75">
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
+    @if(session('success'))
+        <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="alert-content">
+                <strong>{{ session('success') }}</strong>
             </div>
-        @endif
+            <div class="progress-bar-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+        </div>
+    @endif
 
         <form method="POST" action="{{ route('lancamentos.generateCertificates') }}">
             @csrf
-            <table class="table table-bordered">
+            <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th><input type="checkbox" id="select-all"></th>
-                        <th>Projeto</th>
-                        <th>Serviço</th>
-                        <th>Data Início</th>
-                        <th>Data Final</th>
-                        <th>Horas Trabalhadas</th>
-                        <th>Status_Certificado</th>
-                        <th>Link</th>
-                        <th>Ações</th>
+                        @hasrole('Admin')
+                        <th scope="col"><input type="checkbox" class="form-check-input" id="select-all" aria-label="Selecionar todos"></th>
+                        @endhasrole
+                        <th scope="col">Projeto</th>
+                        <th scope="col">Serviço</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Data Início</th>
+                        <th scope="col">Data Final</th>
+                        <th scope="col">Horas Trabalhadas</th>
+                        @hasrole('Admin')
+                        <th scope="col">Status Certificado</th>
+                        @endhasrole
+                        <th scope="col">Link</th>
+                        <th scope="col">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($lancamentos as $lancamento)
                         <tr>
+                            @can('Criar Certificado')
                             <td>
-                                <input type="checkbox" name="lancamentos[]" value="{{ $lancamento->id }}"
-                                    {{ $lancamento->certificado_gerado ? 'checked disabled' : '' }}>
+                                <input type="checkbox" class="form-check-input" name="lancamentos[]" value="{{ $lancamento->id }}"
+                                    {{ $lancamento->certificado_gerado ? 'checked disabled' : '' }} aria-label="Selecionar lançamento">
                             </td>
+                            @endcan
                             <td>{{ $lancamento->projeto->nome }}</td>
                             <td>{{ $lancamento->servico->descricao }}</td>
-                            <td>{{ \Carbon\Carbon::parse($lancamento->data_inicio)->format('d/m/Y') }}
-                            </td>
-                            <td>{{ \Carbon\Carbon::parse($lancamento->data_final)->format('d/m/Y') }}
-                            </td>
+                            <td>{{ $lancamento->user->name }}</td>
+                            <td>{{ \Carbon\Carbon::parse($lancamento->data_inicio)->format('d/m/Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($lancamento->data_final)->format('d/m/Y') }}</td>
                             <td>{{ $lancamento->horas_trabalhadas }}</td>
+                            @can('Visualizar Certificado')         
                             <td>
-                                <span
-                                    class="badge {{ $lancamento->certificado_gerado ? 'bg-success' : 'bg-warning' }}">
+                                <span class="badge {{ $lancamento->certificado_gerado ? 'bg-success' : 'bg-warning' }}">
                                     {{ $lancamento->certificado_gerado ? 'Gerado' : 'Pendente' }}
                                 </span>
                             </td>
-                            <td><a href="{{ $lancamento->link }}" target="_blank">Commit</a></td>
+                            @endcan
+                            <td><a href="{{ $lancamento->link }}" target="_blank" class="btn btn-link">Commit</a></td>
                             <td>
                                 <div class="dropdown text-center">
                                     <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"
@@ -93,12 +105,14 @@ Lançamentos
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="text-center">Não há lançamentos 😢</td>
+                            <td colspan="10" class="text-center">Nenhum lançamento encontrado</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
+            @hasrole('Admin')
             <button type="submit" class="btn btn-outline-success">Gerar Certificados</button>
+            @endhasrole
         </form>
     </div>
     {!! $lancamentos->withQueryString()->links('pagination::bootstrap-5') !!}

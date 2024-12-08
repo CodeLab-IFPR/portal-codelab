@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('title')
+Editar Lançamento
+@endsection
+
 @section('content')
 <div class="app-content-header">
     <div class="container-fluid">

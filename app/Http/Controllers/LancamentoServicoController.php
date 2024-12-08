@@ -19,6 +19,7 @@ class LancamentoServicoController extends Controller implements HasMiddleware
             new Middleware('permission:Criar Lançamento', only: ['create', 'store']),
             new Middleware('permission:Editar Lançamento', only: ['edit', 'update']),
             new Middleware('permission:Deletar Lançamento', only: ['destroy']),
+            new Middleware('permission:Criar Certificado', only: ['generateCertificates'])
         ];
         
     }
@@ -27,7 +28,14 @@ class LancamentoServicoController extends Controller implements HasMiddleware
         $order = $request->get('order', 'created_at');
         $direction = $request->get('direction', 'desc');
 
-        $lancamentos = LancamentoServico::orderBy($order, $direction)->paginate(10);
+        $filtro = LancamentoServico::query();
+
+        // Se o usuário não for admin, mostrar apenas seus próprios lançamentos
+        if (!auth()->user()->hasRole('Admin')) {
+            $filtro->where('user_id', auth()->id());
+        }
+
+        $lancamentos = $filtro->orderBy($order, $direction)->paginate(10);
         return view('lancamentos.index', compact('lancamentos', 'order', 'direction'));
     }
 
