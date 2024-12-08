@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class LancamentoServico extends Model
 {
-    protected $fillable = ['projeto_id', 'servico_id', 'data_inicio', 'data_final', 'horas_trabalhadas', 'link'];
+    protected $fillable = ['projeto_id', 'servico_id', 'user_id' , 'data_inicio', 'data_final', 'horas_trabalhadas', 'link', 'certificado_gerado'];
 
     public function projeto()
     {
@@ -16,5 +16,9 @@ class LancamentoServico extends Model
     public function servico()
     {
         return $this->belongsTo(Servico::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

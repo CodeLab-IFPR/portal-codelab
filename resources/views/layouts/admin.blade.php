@@ -276,7 +276,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             </ul>
                         </li>
                         <li
-                            class="nav-item {{ request()->routeIs('noticias.create') || request()->routeIs('users.create') || request()->routeIs('parceiros.create') ? 'menu-open' : '' }}">
+                            class="nav-item {{ request()->routeIs('noticias.create') || request()->routeIs('users.create') || request()->routeIs('parceiros.create') || request()->routeIs('galeria.create') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-journal-plus"></i>
                                 <p>
@@ -315,11 +315,21 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                                     </a>
                                     @endcan
                                 </li>
+                                <li class="nav-item">
+                                    @can('Criar Galeria')
+                                    <a href="{{ route('galeria.create') }}"
+                                        class="nav-link  {{ request()->routeIs('galeria.create') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('galeria.create') ? 'bi-play-fill' : 'bi-play' }}"></i>
+                                        <p>Galeria - Nova Mídia</p>
+                                    </a>
+                                    @endcan
+                                </li>
                             </ul>
                         </li>
 
                         <li
-                            class="nav-item {{ request()->routeIs('noticias.index') || request()->routeIs('users.index') || request()->routeIs('parceiros.index') ? 'menu-open' : '' }}">
+                            class="nav-item {{ request()->routeIs('noticias.index') || request()->routeIs('users.index') || request()->routeIs('parceiros.index') || request()->routeIs('galeria.indexAdmin') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon bi bi-journal-text"></i>
                                 <p>
@@ -355,6 +365,16 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                                         <i
                                             class="nav-icon bi {{ request()->routeIs('parceiros.index') ? 'bi-play-fill' : 'bi-play' }} "></i>
                                         <p>Parceiro</p>
+                                    </a>
+                                    @endcan
+                                </li>
+                                <li class="nav-item">
+                                    @can('Visualizar Galeria')
+                                    <a href="{{ route('galeria.indexAdmin') }}"
+                                        class="nav-link {{ request()->routeIs('galeria.indexAdmin') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('galeria.indexAdmin') ? 'bi-play-fill' : 'bi-play' }} "></i>
+                                        <p>Galeria</p>
                                     </a>
                                     @endcan
                                 </li>

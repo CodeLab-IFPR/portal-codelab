@@ -118,6 +118,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
         Route::get('/{lancamento}/edit', [LancamentoServicoController::class, 'edit'])->name('lancamentos.edit');
         Route::put('/{lancamento}', [LancamentoServicoController::class, 'update'])->name('lancamentos.update');
         Route::delete('/{lancamento}', [LancamentoServicoController::class, 'destroy'])->name('lancamentos.destroy');
+        Route::post('/lancamentos/generate-certificates', [LancamentoServicoController::class, 'generateCertificates'])->name('lancamentos.generateCertificates');
     });
     
     Route::resource('parceiros', ParceiroController::class);
@@ -177,6 +178,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     // Frase Início
     Route::get('frase-inicio/editar', [FraseInicioController::class, 'editar'])->name('admin.frase_inicio.editar');
     Route::put('frase-inicio/atualizar', [FraseInicioController::class, 'atualizar'])->name('admin.frase_inicio.atualizar');
+    Route::post('lancamentos/generate-certificates', [LancamentoServicoController::class, 'generateCertificates'])->name('lancamentos.generateCertificates');
 });
 
 require __DIR__.'/auth.php';

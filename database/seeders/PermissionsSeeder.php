@@ -79,7 +79,13 @@ class PermissionsSeeder extends Seeder
             'Deletar Certificado',
             
             // Frases
-            'Criar Frase'
+            'Criar Frase',
+
+            // Galeria
+            'Visualizar Galeria',
+            'Criar Galeria',
+            'Editar Galeria',
+            'Deletar Galeria',
         ];
 
         foreach ($permissions as $permission) {
@@ -95,7 +101,7 @@ class PermissionsSeeder extends Seeder
                 'Visualizar Projeto', 
                 'Visualizar Serviço'
             ],
-            'admin' => $permissions
+            'Admin' => $permissions
         ];
 
         foreach ($roles as $role => $rolePermissions) {

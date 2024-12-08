@@ -5,9 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Galeria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class GaleriaController extends Controller
+class GaleriaController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:Visualizar Galeria', only: ['indexAdmin']),
+            new Middleware('permission:Criar Galeria', only: ['create', 'store']),
+            new Middleware('permission:Editar Galeria', only: ['edit', 'update']),
+            new Middleware('permission:Deletar Galeria', only: ['destroy'])
+        ];
+    }
     public function indexAdmin()
     {
         $anos = Galeria::selectRaw('YEAR(created_at) as ano')
@@ -149,14 +160,32 @@ class GaleriaController extends Controller
 
     public function destroy($id)
     {
-        $galeria = Galeria::findOrFail($id);
-        $path = public_path($galeria->caminho);
-        if (File::exists($path)) {
-            File::delete($path);
-        }
-        $galeria->delete();
+        try {
+            $galeria = Galeria::findOrFail($id);
+            
+            if ($galeria->tipo === 'imagem') {
+                $path = public_path($galeria->caminho);
+                if (File::exists($path)) {
+                    File::delete($path);
+                }
+            }
+            
+            $galeria->delete();
 
-        return redirect()->route('galeria.indexAdmin')->with('success', 'Mídia excluída com sucesso!');
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'id' => $id
+                ]);
+            }
+
+            return redirect()->route('galeria.indexAdmin');
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro ao excluir a mídia: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     private function isVideo($mimeType)
