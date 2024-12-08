@@ -23,6 +23,7 @@ Route::get('/sobre', function () { return view('about'); })->name('about');
 Route::get('/contato', function () { return view('contact'); })->name('contact');
 Route::get('/submission', function () { return view('submission'); })->name('submission');
 Route::get('/about', [RegisteredUserController::class, 'about'])->name('about');
+Route::get('/projetos', [ProjetoController::class, 'indexPublic'])->name('projeto.indexPublic');
 
 // Rota pública de cards de notícias
 Route::get('/noticias/cards', [NoticiasController::class, 'cards'])->name('noticias.cards');
