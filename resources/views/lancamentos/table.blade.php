@@ -50,19 +50,19 @@
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li>
                                 @can('Editar Lançamento')
-                                    <a class="dropdown-item"
+                                    <a class="dropdown-item d-flex align-items-center"
                                         href="{{ route('lancamentos.edit', $lancamento->id) }}"><i
-                                            class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                        class="bi bi-pencil-square text-warning me-2"></i> Editar</a>
                                 @endcan
                             </li>
                             <li>
                                 @can('Deletar Lançamento')
-                                    <button type="button" class="dropdown-item btn-delete"
+                                    <button type="button" class="dropdown-item d-flex align-items-center btn-delete"
                                         data-url="{{ route('lancamentos.destroy', $lancamento->id) }}"
                                         data-projeto="{{ $lancamento->projeto->nome }}"
                                         data-servico="{{ $lancamento->servico->descricao }}"
                                         data-nome="{{ $lancamento->user->name }}">
-                                        <i class="fa-solid fa-trash"></i> Deletar
+                                        <i class="bi bi-trash text-danger me-2"></i> Deletar
                                     </button>
                                 @endcan
                             </li>

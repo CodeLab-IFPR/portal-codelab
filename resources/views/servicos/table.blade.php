@@ -18,17 +18,17 @@
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li>
                                 @can('Editar Serviço')
-                                <a class="dropdown-item" href="{{ route('servicos.edit', $servico->id) }}"><i class="fa-solid fa-pen-to-square"></i> Editar</a></li>
+                                <a class="dropdown-item d-flex align-items-center" href="{{ route('servicos.edit', $servico->id) }}"><i class="bi bi-pencil-square text-warning me-2"></i> Editar</a></li>
                                 @endcan
                             <li>
                                 <form action="{{ route('servicos.destroy', $servico->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     @can('Deletar Serviço')
-                                    <button type="submit" class="dropdown-item btn-delete"
+                                    <button type="submit" class="dropdown-item d-flex align-items-center btn-delete"
                                         data-url="{{ route('servicos.destroy', $servico->id) }}"
                                         data-descricao="{{ $servico->descricao }}">
-                                        <i class="fa-solid fa-trash"></i> Deletar
+                                        <i class="bi bi-trash text-danger me-2"></i> Deletar
                                     </button>
                                     @endcan
                                 </form>
