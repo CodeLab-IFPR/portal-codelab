@@ -257,7 +257,7 @@ Index
 
 
 <!-- Latest news Posts-->
-<div id="projetos" class="bg-secondary py-8" data-aos="fade-in">
+<div id="projetos" class="bg-dark py-8" data-aos="fade-in">
     <div class="container">
         <h4 class="fs-1 fw-bold mb-6 text-white text-center">Últimos Projetos</h4>
 
