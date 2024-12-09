@@ -27,7 +27,11 @@
         </div>
 
         <div class="mt-4 d-flex justify-content-center">
-
+            <nav>
+                <ul class="pagination">
+                    {{ $projetos->links('pagination::bootstrap-4') }}
+                </ul>
+            </nav>
     </div>
 </div>
 @endsection
