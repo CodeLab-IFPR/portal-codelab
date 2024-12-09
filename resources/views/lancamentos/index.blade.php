@@ -35,81 +35,9 @@ Lançamentos
 
         <form method="POST" action="{{ route('lancamentos.generateCertificates') }}">
             @csrf
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        @hasrole('Admin')
-                        <th scope="col"><input type="checkbox" class="form-check-input" id="select-all" aria-label="Selecionar todos"></th>
-                        @endhasrole
-                        <th scope="col">Projeto</th>
-                        <th scope="col">Serviço</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Data Início</th>
-                        <th scope="col">Data Final</th>
-                        <th scope="col">Horas Trabalhadas</th>
-                        @hasrole('Admin')
-                        <th scope="col">Status Certificado</th>
-                        @endhasrole
-                        <th scope="col">Link</th>
-                        <th scope="col">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($lancamentos as $lancamento)
-                        <tr>
-                            @can('Criar Certificado')
-                            <td>
-                                <input type="checkbox" class="form-check-input" name="lancamentos[]" value="{{ $lancamento->id }}"
-                                    {{ $lancamento->certificado_gerado ? 'checked disabled' : '' }} aria-label="Selecionar lançamento">
-                            </td>
-                            @endcan
-                            <td>{{ $lancamento->projeto->nome }}</td>
-                            <td>{{ $lancamento->servico->descricao }}</td>
-                            <td>{{ $lancamento->user->name }}</td>
-                            <td>{{ \Carbon\Carbon::parse($lancamento->data_inicio)->format('d/m/Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($lancamento->data_final)->format('d/m/Y') }}</td>
-                            <td>{{ $lancamento->horas_trabalhadas }}</td>
-                            @can('Visualizar Certificado')         
-                            <td>
-                                <span class="badge {{ $lancamento->certificado_gerado ? 'bg-success' : 'bg-warning' }}">
-                                    {{ $lancamento->certificado_gerado ? 'Gerado' : 'Pendente' }}
-                                </span>
-                            </td>
-                            @endcan
-                            <td><a href="{{ $lancamento->link }}" target="_blank" class="btn btn-link">Commit</a></td>
-                            <td>
-                                <div class="dropdown text-center">
-                                    <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"
-                                        id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-cog"></i>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <li>
-                                            @can('Editar Lançamento')
-                                                <a class="dropdown-item"
-                                                    href="{{ route('lancamentos.edit', $lancamento->id) }}"><i
-                                                        class="fa-solid fa-pen-to-square"></i> Editar</a>
-                                            @endcan
-                                        </li>
-                                        <li>
-                                            @can('Deletar Lançamento')
-                                                <button type="button" class="dropdown-item"
-                                                    onclick="deleteLancamento({{ $lancamento->id }})">
-                                                    <i class="fa-solid fa-trash"></i> Deletar
-                                                </button>
-                                            @endcan
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="10" class="text-center">Nenhum lançamento encontrado</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+            <div id="lancamentos-table-container">
+                @include('lancamentos.table', ['lancamentos' => $lancamentos])
+            </div>
             @hasrole('Admin')
             <button type="submit" class="btn btn-outline-success">Gerar Certificados</button>
             @endhasrole
@@ -117,6 +45,34 @@ Lançamentos
     </div>
     {!! $lancamentos->withQueryString()->links('pagination::bootstrap-5') !!}
 </div>
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza de que deseja excluir este lançamento? Esta ação não pode ser desfeita.</p>
+                <div id="lancamento-info">
+                    <p><strong>Projeto:</strong> <span id="lancamento-projeto"></span></p>
+                    <p><strong>Serviço:</strong> <span id="lancamento-servico"></span></p>
+                    <p><strong>Nome:</strong> <span id="lancamento-nome"></span></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form id="deleteForm" method="POST" style="display: none;">
+                    @csrf
+                    @method('DELETE')
+                </form>
+                <button type="button" id="confirmDeleteButton" class="btn btn-danger">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     document.getElementById('select-all').onclick = function () {
         var checkboxes = document.getElementsByName('lancamentos[]');
@@ -127,26 +83,47 @@ Lançamentos
         }
     }
 
-    function deleteLancamento(id) {
-        if (confirm('Tem certeza que deseja deletar este lançamento?')) {
-            var form = document.createElement('form');
-            form.method = 'POST';
-            form.action = '/admin/lancamentos/' + id;
-            form.style.display = 'none';
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
-            var csrfInput = document.createElement('input');
-            csrfInput.name = '_token';
-            csrfInput.value = '{{ csrf_token() }}';
-            form.appendChild(csrfInput);
+        $('body').on('click', '.btn-delete', function (e) {
+            e.preventDefault();
+            var url = $(this).data('url');
+            var projeto = $(this).data('projeto');
+            var servico = $(this).data('servico');
+            var nome = $(this).data('nome');
 
-            var methodInput = document.createElement('input');
-            methodInput.name = '_method';
-            methodInput.value = 'DELETE';
-            form.appendChild(methodInput);
+            $('#lancamento-projeto').text(projeto);
+            $('#lancamento-servico').text(servico);
+            $('#lancamento-nome').text(nome);
 
-            document.body.appendChild(form);
-            form.submit();
-        }
-    }
+            $('#confirmDeleteButton').data('url', url);
+            $('#confirmDeleteModal').modal('show');
+        });
+
+        $('#confirmDeleteButton').on('click', function () {
+            var url = $(this).data('url');
+            $.ajax({
+                url: url,
+                method: 'DELETE',
+                success: function (response) {
+                    if (response.table) {
+                        $('#lancamentos-table-container').html(response.table);
+                        $('#confirmDeleteModal').modal('hide');
+                    } else {
+                        location.reload();
+                    }
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                    alert('Ocorreu um erro ao tentar excluir o lançamento.');
+                }
+            });
+        });
+    });
 </script>
 @endsection

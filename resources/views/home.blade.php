@@ -25,7 +25,7 @@ Index
                         role="button"><i class="ri-play-circle-line align-bottom me-1"></i> Como funciona</a> -->
 
                     <div class="mt-4 pt-1 d-flex flex-column flex-md-row justify-content-center">
-                        <a class="btn btn-success" role="button">Ver Projetos</a>
+                        <a href= "{{ route('projeto.indexPublic') }}" class="btn btn-success" role="button">Ver Projetos</a>
                         <a href="{{ route('contact') }}" class="btn btn-link text-decoration-none text-muted ms-2 bg-light-hover"
                             role="button">Entre em Contato</a>
                     </div>
@@ -254,6 +254,34 @@ Index
     </div>
 </div>
 <!-- / Latest News Posts-->
+
+
+<!-- Latest news Posts-->
+<div id="projetos" class="bg-dark py-8" data-aos="fade-in">
+    <div class="container">
+        <h4 class="fs-1 fw-bold mb-6 text-white text-center">Últimos Projetos</h4>
+
+        <div class="row g-5">
+            @foreach($projetos as $projeto)
+            <!-- Project Post-->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="d-flex h-100 bg-white rounded-4 card overflow-hidden shadow-lg position-relative hover-lift">
+                    <div class="card-body p-4 p-lg-5">
+                        <p class="card-title fw-medium mb-4">{{ $projeto->nome }}</p>
+                        <p class="fw-medium fs-7 text-decoration-none link-cover text-secondary p-2 rounded {{ $projeto->status == 'concluido' ? 'bg-success' : ($projeto->status == 'em aberto' ? 'bg-warning' : 'bg-light') }}">
+                            {{ $projeto->status }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- / Project Post-->
+            @endforeach
+        </div>
+
+        <a href="{{ route('projeto.indexPublic') }}" class="btn btn-white mx-auto mt-7 d-table fw-medium w-100 w-md-auto">Mais Projetos &rarr;</a>
+    </div>
+</div>
+<!-- / Latest Projects Posts-->
 
         <!-- Ferramentas-->
         <div class="bg-dark py-8" data-aos="fade-in">

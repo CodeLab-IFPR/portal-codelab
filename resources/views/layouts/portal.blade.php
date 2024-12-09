@@ -52,6 +52,16 @@
     });
 </script>
 
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            flex: 1;
+        }
+    </style>
     
     @vite('resources/css/libs.bundle.css')    
     @vite('resources/css/theme.bundle.css')
@@ -83,7 +93,7 @@
                     <li class="nav-item dropdown position-static">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
-                            Novidades
+                            Certificação
                         </a>
                         <div class="dropdown-menu dropdown-megamenu">
                             <div class="container">

@@ -32,61 +32,79 @@
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
             <a class="btn btn-outline-success btn-sm" href="{{ route('projetos.create') }}"> <i class="fa fa-plus"></i> Novo projeto</a>
         </div>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th class="col-3">Nome</th>
-                        <th class="col-4">Descrição</th>
-                        <th class="col-2">Status</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($projetos as $projeto)
-                        <tr>
-                            <td>{{ $projeto->nome }}</td>
-                            <td>{{ $projeto->descricao ?? 'Sem descrição' }}</td>
-                            <td>
-                                <span class="badge {{ $projeto->status == 'concluido' ? 'bg-success' : 'bg-warning' }}">
-                                    {{ ucfirst($projeto->status) }}
-                                </span>
-                            </td>
-                            <td>
-                                <div class="dropdown text-center"></div>
-                                    <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-cog"></i>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <li>
-                                            @can('Editar Projeto')
-                                            <a class="dropdown-item" href="{{ route('projetos.edit', $projeto->id) }}"><i class="fa-solid fa-pen-to-square"></i> Editar</a></li>
-                                            @endcan
-                                        <li>
-                                            <form action="{{ route('projetos.destroy', $projeto->id) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                @can('Deletar Projeto')
-                                                <button type="submit" class="dropdown-item"
-                                                    onclick="return confirm('Tem certeza que deseja deletar esta tarefa?')">
-                                                    <i class="fa-solid fa-trash"></i> Deletar
-                                                </button>
-                                                @endcan
-                                            </form>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="text-center">Não há projetos 😢</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+        
+        <div id="projetos-table-container">
+            @include('projetos.table', ['projetos' => $projetos])
         </div>
-
-        {!! $projetos->withQueryString()->links('pagination::bootstrap-5') !!}
     </div>
 </div>
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza de que deseja excluir este projeto? Esta ação não pode ser desfeita.</p>
+                <div id="projeto-info">
+                    <p><strong>Nome:</strong> <span id="projeto-nome"></span></p>
+                    <p><strong>Descrição:</strong> <span id="projeto-descricao"></span></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form id="deleteForm" method="POST" style="display: none;">
+                    @csrf
+                    @method('DELETE')
+                </form>
+                <button type="button" id="confirmDeleteButton" class="btn btn-danger">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('body').on('click', '.btn-delete', function (e) {
+            e.preventDefault();
+            var url = $(this).data('url');
+            var nome = $(this).data('nome');
+            var descricao = $(this).data('descricao');
+
+            $('#projeto-nome').text(nome);
+            $('#projeto-descricao').text(descricao);
+
+            $('#confirmDeleteButton').data('url', url);
+            $('#confirmDeleteModal').modal('show');
+        });
+
+        $('#confirmDeleteButton').on('click', function () {
+            var url = $(this).data('url');
+            $.ajax({
+                url: url,
+                method: 'DELETE',
+                success: function (response) {
+                    if (response.table) {
+                        $('#projetos-table-container').html(response.table);
+                        $('#confirmDeleteModal').modal('hide');
+                    } else {
+                        location.reload();
+                    }
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                    alert('Ocorreu um erro ao tentar excluir o projeto.');
+                }
+            });
+        });
+    });
+</script>
 @endsection

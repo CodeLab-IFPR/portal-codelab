@@ -18,11 +18,16 @@ use App\Http\Controllers\LancamentoServicoController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
 // Rotas Públicas
-Route::get('/', [NoticiasController::class, 'home'])->name('home');
+Route::get('/', function () {
+    $noticias = (new NoticiasController)->home()->getData()['noticias'];
+    $projetos = (new ProjetoController)->home()->getData()['projetos'];
+    return view('home', compact('noticias', 'projetos'));
+})->name('home');
 Route::get('/sobre', function () { return view('about'); })->name('about');
 Route::get('/contato', function () { return view('contact'); })->name('contact');
 Route::get('/submission', function () { return view('submission'); })->name('submission');
 Route::get('/about', [RegisteredUserController::class, 'about'])->name('about');
+Route::get('/projetos/cards', [ProjetoController::class, 'indexPublic'])->name('projeto.indexPublic');
 
 // Rota pública de cards de notícias
 Route::get('/noticias/cards', [NoticiasController::class, 'cards'])->name('noticias.cards');

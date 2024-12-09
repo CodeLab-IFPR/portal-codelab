@@ -145,7 +145,7 @@ Sobre Nós
 
     <div class="d-flex justify-content-center my-5">
         <div class="rounded-pill border px-5 py-3 text-muted d-flex align-items-center">
-            Quer se juntar ao nosso time? <a href="#" class="fw-bold d-flex align-items-center ms-2">Estamos esperando <i
+            Quer se juntar ao nosso time? <a href="{{ route('submission') }}" class="fw-bold d-flex align-items-center ms-2">Estamos esperando <i
                     class="ri-arrow-right-line ms-1"></i></a>
         </div>
     </div>
