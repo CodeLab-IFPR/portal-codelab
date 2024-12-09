@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Noticias;
+use App\Models\Projeto;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\View\View;
 use Illuminate\Http\Request;

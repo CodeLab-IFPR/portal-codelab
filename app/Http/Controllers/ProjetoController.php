@@ -37,6 +37,12 @@ class ProjetoController extends Controller implements HasMiddleware
         return view('projetos.cards', compact('projetos'));
     }
 
+    public function home(): View
+    {
+        $projetos = Projeto::latest()->take(3)->get();
+        return view('home', compact('projetos'));
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $request->validate([

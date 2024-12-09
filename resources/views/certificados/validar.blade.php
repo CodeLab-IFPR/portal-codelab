@@ -12,10 +12,10 @@ Validar Certificado
             @csrf
             <div class="form-group">
                 <label for="token">Token do Certificado</label>
-                <input type="text" class="form-control" id="token" name="token" required>
+                <input type="text" class="form-control rounded" id="token" name="token" required>
             </div>
             <br>
-            <button type="submit" class="btn btn-outline-primary">Validar</button>
+            <button type="submit" class="btn btn-outline-primary rounded">Validar</button>
         </form>
 
         <div id="certificado-detalhes" class="mt-4" style="display: none;">
@@ -30,7 +30,7 @@ Validar Certificado
             </p>
         </div>
 
-        <div id="error-message" class="mt-4 alert alert-danger" style="display: none;"></div>
+        <div id="error-message" class="mt-4 alert alert-danger rounded" style="display: none;"></div>
     </div>
 </div>
 

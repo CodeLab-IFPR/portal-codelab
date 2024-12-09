@@ -12,9 +12,9 @@ Emitir Certificado
         <form id="cpfForm" class="mb-2">
             <div class="mb-3">
                 <label for="cpf" class="form-label">Digite seu CPF:</label>
-                <input type="text" id="cpf" name="cpf" class="form-control" required>
+                <input type="text" id="cpf" name="cpf" class="form-control rounded" required>
             </div>
-            <button type="submit" class="btn btn-primary">Buscar Certificados</button>
+            <button type="submit" class="btn btn-primary rounded">Buscar Certificados</button>
         </form>
 
         <div id="certificadosList"></div>
