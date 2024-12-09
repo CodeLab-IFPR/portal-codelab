@@ -25,7 +25,7 @@ Index
                         role="button"><i class="ri-play-circle-line align-bottom me-1"></i> Como funciona</a> -->
 
                     <div class="mt-4 pt-1 d-flex flex-column flex-md-row justify-content-center">
-                        <a class="btn btn-success" role="button">Ver Projetos</a>
+                        <a href= "{{ route('projeto.indexPublic') }}" class="btn btn-success" role="button">Ver Projetos</a>
                         <a href="{{ route('contact') }}" class="btn btn-link text-decoration-none text-muted ms-2 bg-light-hover"
                             role="button">Entre em Contato</a>
                     </div>

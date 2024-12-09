@@ -1,4 +1,3 @@
-
 @extends('layouts.portal')
 
 @section('title')
@@ -14,11 +13,13 @@
         <div class="row g-5">
             @foreach($projetos as $projeto)
             <div class="col-12 col-sm-6 col-lg-4">
-                <a href="{{ route('projetos.show', ['projeto' => $projeto->id]) }}" class="text-decoration-none">
-                    <div class="d-flex h-100 bg-white rounded-4 card overflow-hidden shadow-lg position-relative hover-lift">
+                <a class="text-decoration-none">
+                    <div class="d-flex h-100 bg-white rounded-4 card overflow-hidden shadow-lg position-relative hover-lift border border-primary p-3">
                         <div class="card-body p-4 p-lg-5">
-                            <p class="card-title fw-medium mb-4">{{ $projeto->nome }}</p>
-                            <p class="fw-medium fs-7 text-decoration-none link-cover">{{ $projeto->status }}</p>
+                            <p class="card-title fw-medium mb-4 text-primary">{{ $projeto->nome }}</p>
+                            <p class="fw-medium fs-7 text-decoration-none link-cover text-secondary p-2 rounded {{ $projeto->status == 'concluido' ? 'bg-success' : ($projeto->status == 'em aberto' ? 'bg-warning' : 'bg-light') }}">
+                                {{ $projeto->status }}
+                            </p>
                         </div>
                     </div>
                 </a>
