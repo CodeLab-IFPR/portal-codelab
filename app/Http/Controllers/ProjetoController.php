@@ -103,10 +103,22 @@ class ProjetoController extends Controller implements HasMiddleware
             ->with('success', 'Projeto atualizado com sucesso.');
     }
 
-    public function destroy(Projeto $projeto): RedirectResponse
+    public function destroy(Projeto $projeto)
     {
-        $projeto->delete();
-        return redirect()->route('projetos.index')
-            ->with('success', 'Projeto deletado.');
+        try {
+            $projeto->delete();
+
+            $projetos = Projeto::paginate(10);
+
+            if (request()->ajax()) {
+                return response()->json([
+                    'table' => view('projetos.table', compact('projetos'))->render()
+                ]);
+            }
+
+            return redirect()->route('projetos.index')->with('success', 'Projeto deletado.');
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao excluir o projeto.'], 500);
+        }
     }
 }

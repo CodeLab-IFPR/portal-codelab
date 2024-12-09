@@ -119,10 +119,21 @@ class LancamentoServicoController extends Controller implements HasMiddleware
 
     public function destroy(LancamentoServico $lancamento)
     {
-        $lancamento->delete();
+        try {
+            $lancamento->delete();
 
-        return redirect()->route('lancamentos.index')
-                         ->with('success', 'Lançamento deletado com sucesso.');
+            $lancamentos = LancamentoServico::paginate(10);
+
+            if (request()->ajax()) {
+                return response()->json([
+                    'table' => view('lancamentos.table', compact('lancamentos'))->render()
+                ]);
+            }
+
+            return redirect()->route('lancamentos.index')->with('success', 'Lançamento deletado.');
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao excluir o lançamento.'], 500);
+        }
     }
     public function generateCertificates(Request $request)
     {

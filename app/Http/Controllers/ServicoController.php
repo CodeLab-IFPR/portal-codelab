@@ -75,9 +75,20 @@ class ServicoController extends Controller implements HasMiddleware
 
     public function destroy(Servico $servico)
     {
-        $servico->delete();
+        try {
+            $servico->delete();
 
-        return redirect()->route('servicos.index')
-                         ->with('success', 'Serviço deletado com sucesso.');
+            $servicos = Servico::paginate(10);
+
+            if (request()->ajax()) {
+                return response()->json([
+                    'table' => view('servicos.table', compact('servicos'))->render()
+                ]);
+            }
+
+            return redirect()->route('servicos.index')->with('success', 'Serviço deletado.');
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao excluir o serviço.'], 500);
+        }
     }
 }
