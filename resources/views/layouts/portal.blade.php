@@ -179,11 +179,7 @@
                 <h6 class="text-uppercase fs-xs fw-bolder tracking-wider text-white opacity-50">Navegação</h6>
                 <ul class="list-unstyled footer-nav">
                     <li><a href="{{ route('home') }}">Home</a></li>
-                    <li><a href="{{ route('login') }}">Login</a></li>
-                    <li><a href="{{ route('register') }}">Registre-se</a></li>
-                    <li><a href="#">Ajuda & Suporte</a></li>
                     <li><a href="{{ route('contact') }}">Contato</a></li>
-                    <li><a href="#">Esqueceu a senha?</a></li>
                 </ul>
             </div>
             <div class="w-100 w-sm-50 w-lg-auto mb-4 mb-lg-0">
@@ -192,7 +188,7 @@
                     <li><a href="#">Política de Privacidade</a></li>
                     <li><a href="#">Termos & Condições</a></li>
                     <li><a href="#">LGPD</a></li>
-                    <li><a href="#">IFPR</a></li>
+                    <li><a href="https://ifpr.edu.br/paranavai/" target="_blank">IFPR</a></li>
                 </ul>
             </div>    
         </div>

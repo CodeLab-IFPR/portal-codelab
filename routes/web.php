@@ -175,9 +175,9 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
 
     // Rotas de perfil
     Route::controller(ProfileController::class)->group(function () {
-        Route::get('/profile', 'edit')->name('profile.edit');
-        Route::patch('/profile', 'update')->name('profile.update');
-        Route::delete('/profile', 'destroy')->name('profile.destroy');
+        Route::get('/perfil', 'edit')->name('profile.edit');
+        Route::patch('/perfil', 'update')->name('profile.update');
+        Route::delete('/perfil', 'destroy')->name('profile.destroy');
     });
 
     // Frase Início

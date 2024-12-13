@@ -4,13 +4,13 @@ use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Notification;
 
-test('reset password link screen can be rendered', function () {
+test('a tela de link de redefinição de senha pode ser renderizada', function () {
     $response = $this->get('/forgot-password');
 
     $response->assertStatus(200);
 });
 
-test('reset password link can be requested', function () {
+test('o link de redefinição de senha pode ser solicitado', function () {
     Notification::fake();
 
     $user = User::factory()->create();
@@ -20,7 +20,7 @@ test('reset password link can be requested', function () {
     Notification::assertSentTo($user, ResetPassword::class);
 });
 
-test('reset password screen can be rendered', function () {
+test('a tela de redefinição de senha pode ser renderizada', function () {
     Notification::fake();
 
     $user = User::factory()->create();
@@ -36,7 +36,7 @@ test('reset password screen can be rendered', function () {
     });
 });
 
-test('password can be reset with valid token', function () {
+test('a senha pode ser redefinida com um token válido', function () {
     Notification::fake();
 
     $user = User::factory()->create();
@@ -47,8 +47,8 @@ test('password can be reset with valid token', function () {
         $response = $this->post('/reset-password', [
             'token' => $notification->token,
             'email' => $user->email,
-            'password' => 'password',
-            'password_confirmation' => 'password',
+            'password' => 'Password1!',
+            'password_confirmation' => 'Password1!',
         ]);
 
         $response

@@ -1,15 +1,21 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
-test('login screen can be rendered', function () {
+test('a tela de login pode ser renderizada', function () {
     $response = $this->get('/login');
 
     $response->assertStatus(200);
 });
 
-test('users can authenticate using the login screen', function () {
-    $user = User::factory()->create();
+test('usuários podem se autenticar usando a tela de login', function () {
+    $user = User::factory()->create([
+        'name' => 'Usuário Teste',
+        'email' => 'teste@exemplo.com',
+        'cpf' => '12345678901',
+        'password' => Hash::make('password')
+    ]);
 
     $response = $this->post('/login', [
         'email' => $user->email,
@@ -20,19 +26,29 @@ test('users can authenticate using the login screen', function () {
     $response->assertRedirect(route('admin', absolute: false));
 });
 
-test('users can not authenticate with invalid password', function () {
-    $user = User::factory()->create();
+test('usuários não podem se autenticar com senha inválida', function () {
+    $user = User::factory()->create([
+        'name' => 'Usuário Teste',
+        'email' => 'teste@exemplo.com',
+        'cpf' => '12345678901',
+        'password' => Hash::make('password')
+    ]);
 
     $this->post('/login', [
         'email' => $user->email,
-        'password' => 'wrong-password',
+        'password' => 'senha-errada',
     ]);
 
     $this->assertGuest();
 });
 
-test('users can logout', function () {
-    $user = User::factory()->create();
+test('usuários podem fazer logout', function () {
+    $user = User::factory()->create([
+        'name' => 'Usuário Teste',
+        'email' => 'teste@example.com',
+        'cpf' => '12345678901',
+        'password' => Hash::make('password')
+    ]);
 
     $response = $this->actingAs($user)->post('/logout');
 
