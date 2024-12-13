@@ -4,21 +4,21 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h3 class="mb-0">Notícia</h3>
+                <h3 class="mb-0">Notícia - Cadastro</h3>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        Notícia
+                        Notícia - Cadastro
                     </li>
                 </ol>
             </div>
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="card-body">
+<div class="container d-flex justify-content-center">
+    <div class="card-body" style="max-width: 600px;">
         <form action="{{ route('noticias.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
@@ -67,12 +67,12 @@
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-            <input type="submit" class="btn btn-outline-secondary" value="Salvar">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="submit" class="btn btn-outline-success">
+                    <i class="fas fa-plus"></i> Salvar
+                </button>
             </div>
-
         </form>
-
     </div>
 </div>
 @endsection 

@@ -2,6 +2,11 @@
 
 return [
 
+    'aliases' => [
+    'PDF' => Barryvdh\DomPDF\Facade::class,
+    'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -52,7 +57,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://lime-dog-299533.hostingersite.com/'),
 
     /*
     |--------------------------------------------------------------------------
@@ -78,11 +83,13 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'pt_BR'),
+    'locale' => 'pt_BR',
 
-    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'pt_BR'),
+    'APP_LOCALE=pt_BR',
 
-    'faker_locale' => env('APP_FAKER_LOCALE', 'pt_BR'),
+    'fallback_locale' => 'pt_BR',
+
+    'faker_locale' => 'pt_BR',
 
     /*
     |--------------------------------------------------------------------------

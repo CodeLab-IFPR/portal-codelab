@@ -1,10 +1,8 @@
 @extends('layouts.portal')
 
-<!-- Título -->
 @section('title')
 Submissão de Demandas
 @endsection
-<!-- Título -->
 
 @section('content')
 <header class="pt-10">
@@ -18,27 +16,28 @@ Submissão de Demandas
 <div class="container position-relative z-index-20 py-7">
     <div class="row g-5">
         <div class="col-12 col-lg-8">
-            <form>
+            <form id="submissionForm" method="POST" action="{{ route('submission.submit') }}" enctype="multipart/form-data" aria-labelledby="formTitle">
+                @csrf
                 <div class="row g-5">
                     <div class="col-12 col-md-6">
-                        <label class="form-label">Nome</label>
-                        <input type="text" class="form-control" name="name" placeholder="Seu Nome">
+                        <label class="form-label" for="name">Nome</label>
+                        <input type="text" class="form-control rounded" id="name" name="name" placeholder="Seu Nome" required aria-required="true">
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" placeholder="seuemail@dominio.com">
+                        <label class="form-label" for="email">E-mail</label>
+                        <input type="email" class="form-control rounded" id="email" name="email" placeholder="seuemail@dominio.com" required aria-required="true">
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Descrição da Demanda</label>
-                        <textarea name="demand_description" class="form-control" style="resize: none; height: 150px;" placeholder="Detalhe sua demanda aqui..."></textarea>
+                        <label class="form-label" for="demand_description">Descrição da Demanda</label>
+                        <textarea name="demand_description" id="demand_description" class="form-control rounded" style="resize: none; height: 150px;" placeholder="Detalhe sua demanda aqui..." required aria-required="true"></textarea>
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Utilidade Esperada</label>
-                        <textarea name="expected_utility" class="form-control" style="resize: none; height: 100px;" placeholder="Descreva a utilidade esperada..."></textarea>
+                        <label class="form-label" for="expected_utility">Utilidade Esperada</label>
+                        <textarea name="expected_utility" id="expected_utility" class="form-control rounded" style="resize: none; height: 100px;" placeholder="Descreva a utilidade esperada..." required aria-required="true"></textarea>
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Arquivo de Suporte (Anexo)</label>
-                        <input type="file" class="form-control" name="supporting_file">
+                        <label class="form-label" for="supporting_files">Arquivos de Suporte (Anexos)</label>
+                        <input type="file" class="form-control rounded" id="supporting_files" name="supporting_files[]" accept=".pdf,.doc,.docx" multiple required aria-required="true">
                     </div>
                     <div class="col-12 justify-content-end d-flex">
                         <button class="btn btn-primary" type="submit">Enviar Demanda</button>
@@ -51,8 +50,8 @@ Submissão de Demandas
                 <p class="mb-4 small fw-bolder tracking-wider text-uppercase text-primary">FAQs sobre Submissão de Demandas</p>
                 <ul class="list-unstyled">
                     <li class="mb-3"><strong>Qual o tempo de resposta?</strong> Geralmente respondemos em até 48 horas.</li>
-                    <li class="mb-3"><strong>Posso enviar mais de um anexo?</strong> No momento, apenas um arquivo pode ser anexado.</li>
-                    <li class="mb-3"><strong>Quais tipos de arquivos são suportados?</strong> Aceitamos PDFs, DOCs, e imagens (JPG, PNG).</li>
+                    <li class="mb-3"><strong>Posso enviar mais de um anexo?</strong> Sim, você pode enviar múltiplos arquivos.</li>
+                    <li class="mb-3"><strong>Quais tipos de arquivos são suportados?</strong> Aceitamos PDFs e DOCs.</li>
                 </ul>
             </div>
         </div>

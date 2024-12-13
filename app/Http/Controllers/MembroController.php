@@ -2,32 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Membro;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
+use App\Providers\ImageUploader;
 use Illuminate\Support\Facades\File;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Database\Eloquent\Builder;
+
+
 
 class MembroController extends Controller
 {
-    public function index(): View
+    public function index(Request $request)
     {
-        $membros = Membro::latest()->paginate(5);
-        
-        return view('membros.index',compact('membros'));
+        $usersQuery = User::latest();
+    
+        if ($request->search) {
+            $usersQuery->where(function (Builder $builder) use ($request) {
+                $builder->where('nome', 'like', "%{$request->search}%")
+                        ->orWhere('cpf', 'like', "%{$request->search}%")
+                        ->orWhere('cargo', 'like', "%{$request->search}%");
+            });
+        }
+    
+        $users = $usersQuery->paginate(5);
+    
+        if ($request->ajax()) {
+            return response()->json([
+                'table' => view('users.table', compact('users'))->render()
+            ]);
+        }
+    
+        return view('users.index', compact('users'));
     }
 
     public function about(): View
     {
-        $membros = Membro::all();
+        $users = User::where('ativo', true)->get();
         
-        return view('about', compact('membros'));
+        return view('about', compact('users'));
     }
 
     public function create(): View
     {
-        return view('membros.create');
+        return view('users.create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -35,6 +54,7 @@ class MembroController extends Controller
         $request->validate([
             'nome' => 'required|min:3|max:255',
             'cargo' => 'required|min:5|max:100',
+            'cpf' => 'required|unique:users,cpf',
             'biografia' => 'required|min:10',
             'linkedin' => 'nullable|url',
             'github' => 'nullable|url',
@@ -43,79 +63,124 @@ class MembroController extends Controller
         ]);
     
         $entrada = $request->all();
+        $entrada['ativo'] = $request->has('ativo') ? $request->ativo : false;
     
-        if ($imagem = $request->file('imagem')) {
-            $destinationPath = 'imagens/';
-            $profileImage = date('YmdHis') . "." . $imagem->getClientOriginalExtension();
-            $imagem->move($destinationPath, $profileImage);
-            $entrada['imagem'] = $profileImage;
+        if ($request->has('cropped_image') && $request->cropped_image) {
+            $image_parts = explode(";base64,", $request->cropped_image);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $imageName = uniqid() . '.png';
+            $imageFullPath = sys_get_temp_dir() . '/' . $imageName;
+            file_put_contents($imageFullPath, $image_base64);
+    
+            $uploader = new ImageUploader();
+            $uploader->setCompression(30);
+            $uploader->setResolution(160);
+            $uploader->setDestinationPath('users/');
+            $entrada['imagem'] = $uploader->upload(new \Illuminate\Http\File($imageFullPath));
         }
-
-        $membro = Membro::create($entrada);
-
-        return redirect()->route("membros.index")
-            ->with("success", "Membro criado com sucesso.");
+    
+        $user = User::create($entrada);
+    
+        return redirect()->route("users.index")
+            ->with("success", "User criado com sucesso.");
     }
 
-    public function show(Membro $membro): View
+    public function show(User $user): View
     {
-        return view("membros.show", compact("membro"));
+        return view("users.show", compact("user"));
     }
 
-    public function edit(Membro $membro): View
+    public function edit(User $user): View
     {
-        return view("membros.edit", compact("membro"));
+        return view("users.edit", compact("user"));
     }
 
-    public function update(Request $request, Membro $membro): RedirectResponse
+    public function update(Request $request, User $user): RedirectResponse
     {
         $request->validate([
             'nome' => 'required|min:3|max:255',
             'cargo' => 'required|min:5|max:100',
+            'cpf' => 'required|unique:users,cpf,' . $user->id,
             'biografia' => 'required|min:10',
             'linkedin' => 'nullable|url',
             'github' => 'nullable|url',
             'alt' => 'required|min:5|max:255',
             'imagem' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ], [
+            'cpf.unique' => 'CPF já cadastrado.',
+            'cpf.required' => 'O campo CPF é obrigatório.',
+            'nome.required' => 'O campo nome é obrigatório.',
+            'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres.',
+            'nome.max' => 'O campo nome deve ter no máximo 255 caracteres.',
+            'cargo.required' => 'O campo cargo é obrigatório.',
+            'cargo.max' => 'O campo cargo deve ter no máximo 100 caracteres.',
+            'biografia.required' => 'O campo biografia é obrigatório.',
+            'biografia.min' => 'O campo biografia deve ter no mínimo 10 caracteres.',
+            'linkedin.url' => 'O campo linkedin deve ser uma URL válida.',
+            'github.url' => 'O campo github deve ser uma URL válida.',
+            'alt.required' => 'O campo alt é obrigatório.',
+            'alt.min' => 'O campo alt deve ter no mínimo 5 caracteres.',
+            'alt.max' => 'O campo alt deve ter no máximo 255 caracteres.',
+            'imagem.image' => 'O arquivo deve ser uma imagem.',
+            'imagem.mimes' => 'O arquivo deve ser uma imagem do tipo: jpeg, png, jpg, gif, svg.',
+            'imagem.max' => 'O arquivo deve ter no máximo 2048 KB.',
         ]);
-
+    
         $entrada = $request->all();
+        $entrada['ativo'] = $request->has('ativo') ? $request->ativo : false;
+    
+        if ($request->has('cropped_image') && $request->cropped_image) {
+            $image_parts = explode(";base64,", $request->cropped_image);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $imageName = uniqid() . '.png';
+            $imageFullPath = sys_get_temp_dir() . '/' . $imageName;
+            file_put_contents($imageFullPath, $image_base64);
+    
+            $uploader = new ImageUploader();
+            $uploader->setCompression(30);
+            $uploader->setResolution(160);
+            $uploader->setDestinationPath('users/');
+            $entrada['imagem'] = $uploader->upload(new \Illuminate\Http\File($imageFullPath), $user->imagem);
+        } else {
+            unset($entrada['imagem']);
+        }
+    
+        $user->update($entrada);
+    
+        return redirect()->route("users.index")
+            ->with("success", "User atualizado com sucesso.");
+    }
+    
 
-        if ($imagem = $request->file('imagem')) {
-            // Remove a imagem antiga se existir
-            if ($membro->imagem) {
-                $oldImagePath = public_path('imagens/' . $membro->imagem);
-                if (File::exists($oldImagePath)) {
-                    File::delete($oldImagePath);
+    public function destroy($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+
+            if ($user->imagem) {
+                $imagePath = public_path('imagens/users/' . $user->imagem);
+                if (File::exists($imagePath)) {
+                    File::delete($imagePath);
                 }
             }
 
-            // Salva a nova imagem
-            $destinationPath = 'imagens/';
-            $profileImage = date('YmdHis') . "_" . $membro->id . "." . $imagem->getClientOriginalExtension();
-            $imagem->move($destinationPath, $profileImage);
-            $entrada['imagem'] = $profileImage;
-        }
+            $user->delete();
 
-        $membro->update($entrada);
+            $users = User::paginate(5);
 
-        return redirect()->route("membros.index")
-            ->with("success", "Membro atualizado com sucesso.");
-    }
-
-    public function destroy(Membro $membro): RedirectResponse
-    {
-        // Remove a imagem associada ao membro se existir
-        if ($membro->imagem) {
-            $imagePath = public_path('imagens/' . $membro->imagem);
-            if (File::exists($imagePath)) {
-                File::delete($imagePath);
+            if (request()->ajax()) {
+                return response()->json([
+                    'table' => view('users.table', compact('users'))->render()
+                ]);
             }
+
+            return redirect()->route('users.index')->with('success', 'User excluído com sucesso.');
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao excluir o user.'], 500);
         }
-
-        $membro->delete();
-
-        return redirect()->route('membros.index')
-                         ->with('success', 'Membro deletado.');
     }
 }

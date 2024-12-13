@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Providers\ImageUploader;
 
 class ProfileController extends Controller
 {
@@ -26,14 +27,34 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $data = $request->validated();
+        $user = $request->user();
+    
+        if ($request->has('cropped_image') && $request->cropped_image) {
+            $image_parts = explode(";base64,", $request->cropped_image);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $imageName = uniqid() . '.png';
+            $imageFullPath = sys_get_temp_dir() . '/' . $imageName;
+            file_put_contents($imageFullPath, $image_base64);
+    
+            $uploader = new ImageUploader();
+            $uploader->setCompression(30);
+            $uploader->setResolution(160);
+            $uploader->setDestinationPath('users/');
+            $data['imagem'] = $uploader->upload(new \Illuminate\Http\File($imageFullPath), $user->imagem);
+        } else {
+            unset($data['imagem']);
         }
-
-        $request->user()->save();
-
+    
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+    
+        $user->fill($data);
+        $user->save();
+    
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 

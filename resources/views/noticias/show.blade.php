@@ -5,40 +5,31 @@
 {{ $noticia->titulo }}
 @endsection
 <!-- Titulo -->
- 
-@section('content')
-<div class="card mt-5">
-    <h1 class="text-center">{{ $noticia->titulo }}</h1>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <br>
-                    {!! html_entity_decode($noticia->conteudo) !!}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 mt-2">
-                <div class="form-group">
-                    <label for="Categoria"><strong>Tags relacionadas:</strong></label>
-                    <strong class="badge text-bg-primary">{{ $noticia->categoria }}</strong>
-                </div>
-            </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <a class="btn btn-primary btn-sm" href="{{ route('noticias.index') }}"><i
-                        class="fa fa-arrow-left"></i> Voltar</a>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <small><span><strong>Por</strong> {{ $noticia->autor }}</span></small>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <small><strong>Publicado em:
-                            </strong>{{ $noticia->created_at->format('d/m/Y H:i') }}
-                            <strong>. Atualizado</strong> {{ $noticia->updated_at->diffForHumans() }}</small>
-                    </div>
-                </div>
 
+@section('content')
+<div class="container mt-5">
+    <div class="card">
+        <img src="{{ asset('imagens/noticias/' . $noticia->imagem) }}" class="card-img-top img-fluid" alt="Imagem da notícia" style="max-height: 400px; object-fit: cover;">
+        <div class="card-body">
+            <h1 class="card-title text-center">{{ $noticia->titulo }}</h1>
+            <hr>
+            <small><strong>Publicado em:</strong> {{ $noticia->created_at->format('d/m/Y H:i') }}</small>
+            <br>
+            <small><strong>Atualizado:</strong> {{ $noticia->updated_at->diffForHumans() }}</small>
+            <div class="content mt-5" style="margin-left: 10%; margin-right: 10%;">
+                {!! html_entity_decode($noticia->conteudo) !!}
+            </div>
+            <div class="tags mt-4">
+                <h5><strong>Tags relacionadas:</strong></h5>
+                <span class="badge bg-primary">{{ $noticia->categoria }}</span>
+            </div>
+            <div class="author mt-4">
+                <small><strong>Por:</strong> {{ $noticia->autor }}</small>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                <a class="btn btn-primary btn-sm" href="{{ url()->previous() }}"><i class="fa fa-arrow-left"></i> Voltar</a>
             </div>
         </div>
-        @endsection
+    </div>
+</div>
+@endsection

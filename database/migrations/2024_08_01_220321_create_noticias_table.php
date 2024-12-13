@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('noticias', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique();
             $table->string('titulo');
             $table->string('autor');
             $table->text('conteudo');
