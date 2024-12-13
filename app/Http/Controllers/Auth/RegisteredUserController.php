@@ -205,7 +205,7 @@ class RegisteredUserController extends Controller implements HasMiddleware
             $user = User::findOrFail($id);
 
             if ($user->imagem) {
-                $imagePath = public_path('imagens/users/' . $user->imagem);
+                $imagePath = public_path("imagens/users/{$user->imagem}");
                 if (File::exists($imagePath)) {
                     File::delete($imagePath);
                 }

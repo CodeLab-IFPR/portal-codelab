@@ -1,4 +1,7 @@
 @extends('layouts.admin')
+@section('title')
+Notícia - Cadastro
+@endsection
 @section('content')
 <div class="app-content-header">
     <div class="container-fluid">

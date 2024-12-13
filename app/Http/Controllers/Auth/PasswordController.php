@@ -11,29 +11,24 @@ use Illuminate\Validation\Rules\Password;
 class PasswordController extends Controller
 {
     /**
-     * Update the user's password.
+     * Atualizar a senha do usuário.
      */
     public function update(Request $request): RedirectResponse
     {
-        try {
-            $validated = $request->validateWithBag('updatePassword', [
-                'current_password' => ['required', 'current_password'],
-                'password' => ['required', Password::defaults(), 'confirmed'],
-            ]);
+        $validated = $request->validateWithBag('updatePassword', [
+            'current_password' => ['required'],
+            'password' => ['required', Password::defaults(), 'confirmed'],
+        ]);
 
-            // Verifica se a senha atual está correta
-            if (!Hash::check($request->current_password, $request->user()->password)) {
-                return back()->with('status', 'password-error');
-            }
-
-            $request->user()->update([
-                'password' => Hash::make($validated['password']),
-            ]);
-
-            return back()->with('status', 'password-updated');
-
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return back()->with('status', 'password-error');
+        // Verifica se a senha atual está correta
+        if (!Hash::check($request->current_password, $request->user()->password)) {
+            return back()->withErrors(['current_password' => 'A senha atual está incorreta.']);
         }
+
+        $request->user()->update([
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        return back()->with('status', 'password-updated');
     }
 }

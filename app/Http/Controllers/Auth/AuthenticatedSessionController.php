@@ -12,15 +12,18 @@ use Illuminate\View\View;
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view.
+     * Exibir a tela de login.
      */
     public function create(): View
     {
+        if (Auth::check()) {
+            return redirect()->route('admin');
+        }
         return view('auth.login');
     }
 
     /**
-     * Handle an incoming authentication request.
+     * Lidar com uma solicitação de autenticação.
      */
     public function store(LoginRequest $request): RedirectResponse
     {
@@ -32,7 +35,7 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Destroy an authenticated session.
+     * Destruir uma sessão autenticada.
      */
     public function destroy(Request $request): RedirectResponse
     {
