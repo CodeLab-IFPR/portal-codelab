@@ -1,66 +1,124 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Portal Web CDT-IFPR
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este projeto é um portal desenvolvido para o gerenciamento de projetos de extensão do CDT-IFPR, permitindo a automação de processos como a emissão e validação de certificados, além da divulgação de notícias e informações institucionais.
 
-## About Laravel
+## Requisitos
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Antes de começar, certifique-se de que possui os seguintes softwares instalados:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. [Node.js](https://nodejs.org/en/download/package-manager)
+2. [XAMPP](https://sourceforge.net/projects/xampp/files/XAMPP%20Windows/8.2.12/xampp-windows-x64-8.2.12-0-VS16-installer.exe/download)
+3. [ImageMagick](https://www.php.net/manual/en/book.imagick.php)
+4. [Composer](https://getcomposer.org/download/)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Opcional:**
+- [Git](https://git-scm.com/downloads)
 
-## Learning Laravel
+## Instalação
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. **Clone o projeto:**
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+   ```bash
+   git clone <url-do-repositorio>
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. **Acesse a pasta do projeto:**
 
-## Laravel Sponsors
+   ```bash
+   cd <nome-da-pasta>
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3. **Instale as dependências do Node.js:**
 
-### Premium Partners
+   ```bash
+   npm install
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+4. **Configure o PHP:**
+   - Acesse o diretório de instalação do PHP dentro da pasta do XAMPP.
+   - Abra o arquivo `php.ini`.
+   - Localize a extensão `gd` e remova o ponto-e-vírgula (`;`) antes dela:
+     ```ini
+     ;extension=gd
+     ```
+     Altere para:
+     ```ini
+     extension=gd
+     ```
+   - Localize a extensão `zip` e remova o ponto-e-vírgula (`;`) antes dela:
+     ```ini
+     ;extension=zip
+     ```
+     Altere para:
+     ```ini
+     extension=zip
+     ```
 
-## Contributing
+5. **Atualize as dependências do Composer:**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+   ```bash
+   composer update
+   ```
 
-## Code of Conduct
+6. **Substitua a pasta `setasign`:**
+   - Na raiz do projeto, localize a pasta `setasign`.
+   - Copie-a e substitua o conteúdo correspondente na pasta `vendor`.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+7. **Configure o arquivo de ambiente:**
+   - Renomeie o arquivo `.env-example` para `.env`.
+   - Insira as credenciais do e-mail (necessárias para a criação de membros).
 
-## Security Vulnerabilities
+8. **Inicie o servidor XAMPP:**
+   - Abra o XAMPP e inicie os serviços `Apache` e `MySQL`.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+9. **Crie o banco de dados:**
+   - No painel do XAMPP, clique em "Admin" no serviço `MySQL`.
+   - Crie um novo banco de dados com o nome desejado.
 
-## License
+10. **Configure o projeto:**
+    - Gere a chave da aplicação:
+      ```bash
+      php artisan key:generate
+      ```
+    - Realize as migrações do banco de dados:
+      ```bash
+      php artisan migrate
+      ```
+    - Popule o banco de dados com dados iniciais:
+      ```bash
+      php artisan db:seed
+      ```
+    - Execute os seguintes comandos para carregar os assets:
+      ```bash
+      npm run build
+      ```
+      ou
+      
+      ```bash
+      npm run dev
+      ```
+    - Execute o projeto com o comando:
+      ```bash
+      php artisan serve
+      ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+11. **Acesse o sistema:**
+    - No navegador, acesse:
+      `/login`
+      `/admin`
+
+---
+
+### Nota
+
+- Para criar um novo membro, é necessário configurar as credenciais de e-mail no arquivo `.env`.
+
+---
+
+## Contribuições
+
+Contribuições são bem-vindas! Siga o fluxo padrão de *fork*, *branch* e *pull request*.
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT. Consulte o arquivo `LICENSE` para mais informações.
