@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class LancamentoServico extends Model
 {
-    protected $fillable = ['projeto_id', 'servico_id', 'user_id' , 'data_inicio', 'data_final', 'horas_trabalhadas', 'link', 'certificado_gerado'];
+    protected $fillable = ['projeto_id', 'servico_id', 'user_id' , 'data_inicio', 'data_final', 'horas_trabalhadas', 'link', 'certificado_gerado', 'descricao'];
 
     public function projeto()
     {
