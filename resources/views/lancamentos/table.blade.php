@@ -8,9 +8,10 @@
             <th scope="col">Projeto</th>
             <th scope="col">Serviço</th>
             <th scope="col">Nome</th>
-            <th scope="col">Data Início</th>
-            <th scope="col">Data Final</th>
-            <th scope="col">Horas Trabalhadas</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Data</th>
+            <!-- <th scope="col">Data Final</th> -->
+            <th scope="col">Horas</th>
             @hasrole('Admin')
             <th scope="col">Status Certificado</th>
             @endhasrole
@@ -30,8 +31,17 @@
                 <td>{{ $lancamento->projeto->nome }}</td>
                 <td>{{ $lancamento->servico->descricao }}</td>
                 <td>{{ $lancamento->user->name }}</td>
-                <td>{{ \Carbon\Carbon::parse($lancamento->data_inicio)->format('d/m/Y') }}</td>
-                <td>{{ \Carbon\Carbon::parse($lancamento->data_final)->format('d/m/Y') }}</td>
+                <td>
+                    @if($lancamento->descricao)
+                        {{ $lancamento->descricao }}
+                    @else
+                        <em>Sem descrição</em>
+                    @endif
+                </td>
+                <td style="min-width: 110px;">
+                    {{ \Carbon\Carbon::parse($lancamento->data_inicio)->format('d/m/Y') }} à <br>
+                    {{ \Carbon\Carbon::parse($lancamento->data_final)->format('d/m/Y') }}
+                </td>
                 <td>{{ $lancamento->horas_trabalhadas }}</td>
                 @can('Visualizar Certificado')         
                 <td>
@@ -40,7 +50,7 @@
                     </span>
                 </td>
                 @endcan
-                <td><a href="{{ $lancamento->link }}" target="_blank" class="btn btn-link">Commit</a></td>
+                <td><a href="{{ $lancamento->link }}" target="_blank" class="btn btn-link">Link</a></td>
                 <td>
                     <div class="dropdown text-center">
                         <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"

@@ -54,7 +54,8 @@ class LancamentoServicoController extends Controller implements HasMiddleware
             'data_inicio' => 'required|date',
             'data_final' => 'required|date|after_or_equal:data_inicio',
             'horas_trabalhadas' => 'required|numeric',
-            'link' => 'required|url|regex:/^https?:\/\/(www\.)?github\.com\/.+$/',
+            'link' => 'required|url',
+            'descricao' => 'nullable|string|max:300',
         ],[
             'projeto_id.required' => 'O campo projeto é obrigatório.',
             'servico_id.required' => 'O campo serviço é obrigatório.',
@@ -64,7 +65,7 @@ class LancamentoServicoController extends Controller implements HasMiddleware
             'horas_trabalhadas.required' => 'O campo horas trabalhadas é obrigatório.',
             'horas_trabalhadas.numeric' => 'O campo horas trabalhadas deve ser um número.',
             'link.url' => 'O campo link deve ser uma URL válida.',
-            'link.regex' => 'O campo link deve ser um link de um commit do GitHub.',
+            'descricao.max' => 'A descrição deve ter até 300 caracteres.',
         ]);
 
         $data = $request->all();
@@ -98,7 +99,8 @@ class LancamentoServicoController extends Controller implements HasMiddleware
             'data_inicio' => 'required|date',
             'data_final' => 'required|date|after_or_equal:data_inicio',
             'horas_trabalhadas' => 'required|numeric',
-            'link' => 'required|url|regex:/^https?:\/\/(www\.)?github\.com\/.+$/',
+            'link' => 'required|url',
+            'descricao' => 'nullable|string|max:300',
         ],[
             'projeto_id.required' => 'O campo projeto é obrigatório.',
             'servico_id.required' => 'O campo serviço é obrigatório.',
@@ -108,7 +110,7 @@ class LancamentoServicoController extends Controller implements HasMiddleware
             'horas_trabalhadas.required' => 'O campo horas trabalhadas é obrigatório.',
             'horas_trabalhadas.numeric' => 'O campo horas trabalhadas deve ser um número.',
             'link.url' => 'O campo link deve ser uma URL válida.',
-            'link.regex' => 'O campo link deve ser um link de um commit do GitHub.',
+            'descricao.max' => 'A descrição deve ter até 300 caracteres.',
         ]);
 
         $lancamento->update($request->all());
