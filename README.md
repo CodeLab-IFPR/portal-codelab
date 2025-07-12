@@ -91,7 +91,7 @@ Na raíz do projeto, execute o comando:
 8. **Inicie o servidor XAMPP:**
    - Abra o XAMPP e inicie os serviços `Apache` e `MySQL`.
   
-10. **Configure o projeto:**
+9. **Configure o projeto:**
     - Gere a chave da aplicação:
       ```bash
       php artisan key:generate
@@ -118,7 +118,7 @@ Na raíz do projeto, execute o comando:
       php artisan serve
       ```
 
-11. **Acesse o sistema:**
+10. **Acesse o sistema:**
     - No navegador, acesse:
       `/login`
       `/admin`
