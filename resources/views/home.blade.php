@@ -2,7 +2,7 @@
 
 <!-- Titulo -->
 @section('title')
-Index
+CodeLab
 @endsection
 <!-- Titulo -->
 
@@ -14,10 +14,13 @@ Index
 
             <!-- Hero Text-->
             <div class="col-12 col-lg-8 position-relative z-index-20 text-center" data-aos="fade-in">
-                <h1 class="display-3 fw-bold mb-4">Centro de Desenvolvimento Tecnológico do IFPR – Campus Paranavaí</h1>
-                    @php
-                        $fraseInicio = \App\Models\FraseInicio::find(1)->frase ?? 'Frase não encontrada';
-                    @endphp
+                <img class="img-fluid mx-auto d-block" src="{{ asset('img/codelab-logo-ico.png') }}" alt="Logo do Codelab">
+                <h1 class="display-1 fw-bold mb-1">CodeLab</h1>
+                <h2 class="fs-5 fs-md-4 fw-bold mb-1">Laboratório de Desenvolvimento Tecnológico</h2>
+                <p class="fs-6 fs-md-5 fw-medium mb-4">IFPR – Campus Paranavaí</p>
+                @php
+                $fraseInicio = \App\Models\FraseInicio::find(1)->frase ?? 'Frase não encontrada';
+                @endphp
                 <p class="lead text-muted mb-5">{{ $fraseInicio }}</p>
                     <!-- <a href="#" class="text-decoration-none text-primary fw-bolder d-flex fs-7 justify-content-center justify-content-lg-start" data-bs-toggle="modal"
                         data-bs-target="#videoIframeModal"
@@ -422,7 +425,7 @@ Index
                             <p class="mb-0 small fw-bolder tracking-wider text-uppercase text-primary">Trabalhem juntos
                             </p>
                             <h4 class="fs-1 fw-bold mb-4 mt-3">Colaboração é a chave para o sucesso.</h4>
-                            <p class="text-muted">Utilize nosso portal para colaborar com os users do CDT-IFPR em todas as etapas dos projetos de extensão.</p>
+                            <p class="text-muted">Utilize nosso portal para colaborar com os users do CodeLab-IFPR em todas as etapas dos projetos de extensão.</p>
                             <a href="#" class="btn btn-link px-0 me-3 fw-medium text-decoration-none mt-4"
                                 role="button">Comece agora &rarr;</a>
                         </div>
@@ -479,7 +482,7 @@ Index
                         <div class="text-start text-lg-end">
                             <p class="mb-0 small fw-bolder tracking-wider text-uppercase text-orange">Centro de Desenvolvimento Tecnológico</p>
                             <h4 class="fs-1 fw-bold mb-4 mt-3">Portal Web para Projetos de Extensão</h4>
-                            <p class="text-muted">Acesse e participe dos projetos de extensão do CDT-IFPR, contribuindo para o desenvolvimento tecnológico e social da comunidade.</p>
+                            <p class="text-muted">Acesse e participe dos projetos de extensão do CodeLab-IFPR, contribuindo para o desenvolvimento tecnológico e social da comunidade.</p>
                             <a href="#" class="btn btn-link px-0 me-3 fw-medium text-orange text-decoration-none mt-4"
                                 role="button">Saiba mais &rarr;</a>
                         </div>
