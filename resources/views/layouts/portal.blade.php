@@ -9,8 +9,8 @@
     <meta name="keywords" content="">
 
     <link rel="apple-touch-icon" sizes="180x180" src="{{ asset('img/favicon/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" src="{{ asset('img/favicon/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" src="{{ asset('img/favicon/favicon-16x16.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/codelab-logo-ico.png')  }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/codelab-logo-ico.png')  }}">
     <link rel="mask-icon" src="{{ asset('img/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
@@ -78,27 +78,28 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-white ">
     <div class="container">
-        <a class="navbar-brand d-flex align-items-center lh-1 me-10 transition-opacity opacity-75-hover" href="{{ route('home') }}">
-            <span class="f-w-7 d-block text-success me-2">
-                <img class="img-fluid d-table mx-auto" src="{{ asset('img/logo_CDT.png') }}" alt="">
+        <a class="navbar-brand d-flex align-items-center lh-1 me-1 transition-opacity opacity-75-hover" href="{{ route('home') }}">
+            <span class="f-w-8 d-block text-success mb-1 me-1">
+                <img class="img-fluid mx-auto d-block" src="{{ asset('img/codelab-logo-ico.png') }}" alt="">
             </span>
-            <span class="fw-bold text-body">CDT</span>
+            <span class="fw-bold text-body text-center fs-6">CodeLab</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="ri-menu-line"></i>
         </button>    
-        <div class="collapse navbar-collapse justify-content-between align-items-center" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown position-static">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+        <div class="collapse navbar-collapse justify-content-evenly" id="navbarSupportedContent">
+            <ul class="navbar-nav" style="gap: 0.3rem;"> 
+                <li class="nav-item dropdown position-static ">
+                    <a class="nav-link dropdown-toggle me-lg-0 ms-lg-0" href="#" role="button" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false" style="font-size: 1.2rem;">
-                        <i class="ri-award-line"></i> Certificação
+                        <i class="ri-award-line me-2"></i>
+                        <span>Certificação</span>
                     </a>
                     <div class="dropdown-menu dropdown-megamenu">
                         <div class="container">
                             <div class="row py-lg-5 gx-8">
-                                <div class="col-auto me-4 mb-4 me-lg-0 mb-lg-0 col-lg-4 d-flex align-items-start">
+                                <div class="col-auto me-4 mb-4 col-lg-4 d-flex align-items-start">
                                     <span class="f-w-16 d-block text-primary me-4 d-none d-lg-flex">
                                         <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline opacity=".4" points="2 12 12 17 22 12"></polyline></svg>
                                     </span>
@@ -108,7 +109,7 @@
                                         <a href="{{ route('certificados.emitir') }}" class="fw-medium fs-7 text-decoration-none link-cover">Acessar &rarr;</a>
                                     </div>
                                 </div>
-                                <div class="col-auto me-4 mb-4 me-lg-0 mb-lg-0 col-lg-4 d-flex align-items-start">
+                                <div class="col-auto me-4 mb-4 col-lg-4 d-flex align-items-start">
                                     <span class="f-w-16 d-block text-primary me-4 d-none d-lg-flex">
                                         <svg class="w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect opacity=".3" x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
                                     </span>
@@ -123,28 +124,33 @@
                     </div>
                 </li>    
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('noticias.cards')}}" style="font-size: 1.2rem;">
-                        <i class="ri-newspaper-line"></i> Notícias
+                    <a class="nav-link me-lg-0 ms-lg-0" href="{{ route('noticias.cards') }}" style="font-size: 1.2rem;">
+                        <i class="ri-newspaper-line me-2"></i>
+                        <span>Notícias</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('about') }}" style="font-size: 1.2rem;">
-                        <i class="ri-information-line"></i> Sobre Nós
+                    <a class="nav-link me-lg-0 ms-lg-0" href="{{ route('about') }}" style="font-size: 1.2rem;">
+                        <i class="ri-information-line me-2"></i>
+                        <span>Sobre Nós</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('contact') }}" style="font-size: 1.2rem;">
-                        <i class="ri-contacts-line"></i> Contato
+                    <a class="nav-link me-lg-0 ms-lg-0" href="{{ route('contact') }}" style="font-size: 1.2rem;">
+                        <i class="ri-contacts-line me-2"></i>
+                        <span>Contato</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('submission') }}" style="font-size: 1.2rem;">
-                        <i class="ri-upload-line"></i> Submissão
+                    <a class="nav-link me-lg-0 ms-lg-0" href="{{ route('submission') }}" style="font-size: 1.2rem;">
+                        <i class="ri-upload-line me-2"></i>
+                        <span>Submissão</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('galeria.indexPublic') }}" style="font-size: 1.2rem;">
-                        <i class="ri-gallery-line"></i> Galeria
+                    <a class="nav-link me-lg-0 ms-lg-0" href="{{ route('galeria.indexPublic') }}" style="font-size: 1.2rem;">
+                        <i class="ri-gallery-line me-2"></i>
+                        <span>Galeria</span>
                     </a>
                 </li>
             </ul>
@@ -156,13 +162,13 @@
 </main>
 <footer class="bg-dark pt-4 pb-8">
     <div class="container">
-        <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-center">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
             <a class="d-flex align-items-center lh-1 text-white transition-opacity opacity-50-hover text-decoration-none mb-4 mb-md-0"
                 href="#">
                 <span class="f-w-7 d-block text-success me-2">
-                <img class="img-fluid d-table mx-auto" src="{{ asset('img/logo_CDT.png') }}" alt="">
+                <img class="img-fluid d-table mx-auto bg-white rounded-1" src="{{ asset('img/codelab-logo-ico.png') }}" alt="">
                 </span>
-                <span class="fw-bold">CDT</span>
+                <span class="fw-bold">CodeLab</span>
             </a>    
         </div>
         <div class="d-flex flex-wrap justify-content-between mt-5 mt-lg-7">    
