@@ -1,6 +1,6 @@
-# Portal Web CDT-IFPR
+# Portal CodeLab IFPR
 
-Este projeto é um portal desenvolvido para o gerenciamento de projetos de extensão do CDT-IFPR, permitindo a automação de processos como a emissão e validação de certificados, além da divulgação de notícias e informações institucionais.
+Este projeto é um portal desenvolvido para o gerenciamento de projetos de extensão do CodeLab IFPR, permitindo a automação de processos como a emissão e validação de certificados, além da divulgação de notícias e informações institucionais.
 
 ## Requisitos
 
@@ -33,10 +33,18 @@ Antes de começar, certifique-se de que possui os seguintes softwares instalados
    ```bash
    npm install
    ```
+## Configurando o PHP
+O PHP utilizado neste projeto é o do XAMPP, e não o instalado globalmente no sistema operacional. A instalação do PHP separadamente não é necessária, pois o XAMPP já fornece uma versão funcional do PHP.
+
+**Garanta que o PHP do seu XAMPP está na versão 8.2**.
 
 4. **Configure o PHP:**
-   - Acesse o diretório de instalação do PHP dentro da pasta do XAMPP.
+   - Acesse o diretório de instalação do PHP dentro da pasta do XAMPP (xampp/php).
    - Abra o arquivo `php.ini`.
+     - Obs: Ignore os arquivos php.ini-development e php.ini-production, o arquivo php.ini pode estar listado como apenas "php", e este é o único arquivo que deve ser alterado.  
+  <img width="608" height="88" alt="image" src="https://github.com/user-attachments/assets/394ddb3a-636c-4754-9e7c-6a01d5645a66" />
+
+Após abrir o arquivo:
    - Localize a extensão `gd` e remova o ponto-e-vírgula (`;`) antes dela:
      ```ini
      ;extension=gd
@@ -53,9 +61,19 @@ Antes de começar, certifique-se de que possui os seguintes softwares instalados
      ```ini
      extension=zip
      ```
+   - Localize a extensão `openssl` e remova o ponto-e-vírgula (`;`) antes dela:
+     ```ini
+     ;extension=openssl
+     ```
+     Altere para:
+     ```ini
+     extension=openssl
+     ```
+## Preparando o ambiente
 
 5. **Atualize as dependências do Composer:**
 
+Na raíz do projeto, execute o comando:
    ```bash
    composer update
    ```
@@ -68,14 +86,12 @@ Antes de começar, certifique-se de que possui os seguintes softwares instalados
    - Renomeie o arquivo `.env-example` para `.env`.
    - Insira as credenciais do e-mail (necessárias para a criação de membros).
 
+## Executando o projeto
+
 8. **Inicie o servidor XAMPP:**
    - Abra o XAMPP e inicie os serviços `Apache` e `MySQL`.
-
-9. **Crie o banco de dados:**
-   - No painel do XAMPP, clique em "Admin" no serviço `MySQL`.
-   - Crie um novo banco de dados com o nome desejado.
-
-10. **Configure o projeto:**
+  
+9. **Configure o projeto:**
     - Gere a chave da aplicação:
       ```bash
       php artisan key:generate
@@ -102,7 +118,7 @@ Antes de começar, certifique-se de que possui os seguintes softwares instalados
       php artisan serve
       ```
 
-11. **Acesse o sistema:**
+10. **Acesse o sistema:**
     - No navegador, acesse:
       `/login`
       `/admin`
@@ -114,6 +130,13 @@ Antes de começar, certifique-se de que possui os seguintes softwares instalados
 - Para criar um novo membro, é necessário configurar as credenciais de e-mail no arquivo `.env`.
 
 ---
+## Starter pack
+Este projeto segue a arquitetura Model-View-Controller, os arquivos principais estarão nos seguintes diretórios:
+- Model - `app/Models`
+- View - `resources/views`
+- Controller - `app/http/Controllers`
+---
+
 
 ## Contribuições
 
