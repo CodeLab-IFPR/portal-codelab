@@ -6,6 +6,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\GaleriaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjetoController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\ServicoController;
 use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\ParceiroController;
@@ -115,6 +116,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     // Outras rotas administrativas
     Route::resource('projetos', ProjetoController::class);
     Route::resource('servicos', ServicoController::class);
+    Route::resource('tags', TagController::class);
     
     Route::group(['prefix' => 'lancamentos'], function(){
         Route::get('/', [LancamentoServicoController::class, 'index'])->name('lancamentos.index');

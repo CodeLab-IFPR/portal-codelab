@@ -469,6 +469,16 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                                     </a>
                                     @endcan
                                 </li>
+                                <li class="nav-item">
+                                    @can('Visualizar Projeto')
+                                    <a href="{{ route('tags.index') }}"
+                                        class="nav-link {{ request()->routeIs('tags.index') ? 'active' : '' }}">
+                                        <i
+                                            class="nav-icon bi {{ request()->routeIs('tags.index') ? 'bi-circle-fill' : 'bi-circle' }}"></i>
+                                        <p>Tags</p>
+                                    </a>
+                                    @endcan
+                                </li>
                             </ul>
                         </li>
                         <li
