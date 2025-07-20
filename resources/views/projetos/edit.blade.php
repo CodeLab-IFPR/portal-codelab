@@ -22,7 +22,7 @@ Editar - {{ $projeto->nome }}
 </div>
 <div class="container d-flex justify-content-center">
     <div class="card-body" style="max-width: 600px; width: 100%;">
-        <form action="{{ route('projetos.update', $projeto->id) }}" method="POST">
+        <form action="{{ route('projetos.update', $projeto->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -51,6 +51,54 @@ Editar - {{ $projeto->nome }}
                     </label>
                 </div>
             </div>
+
+            <div class="mb-3">
+                <label for="inputTags" class="form-label"><strong>Tags:</strong></label>
+                <select name="tags[]" id="inputTags" class="form-control border-primary @error('tags') inválido @enderror" multiple>
+                    @foreach($tags as $tag)
+                        <option value="{{ $tag->id }}" {{ in_array($tag->id, $projeto->tags->pluck('id')->toArray()) ? 'selected' : '' }}>{{ $tag->name }}</option>
+                    @endforeach
+                </select>
+                @error('tags')
+                    <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    $('#inputTags').select2({
+                        placeholder: "Selecione tags",
+                        allowClear: true,
+                        closeOnSelect: false 
+                    });
+                });
+            </script>
+
+            <div class="mb-3">
+                <label for="inputImagem" class="form-label"><strong>Imagem:</strong></label>
+                <input type="file" name="imagem" class="form-control @error('imagem') inválido @enderror" id="inputImagem" accept="image/*">
+                @error('imagem')
+                    <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
+                <div class="mt-3">
+                    <img id="imagePreview" src="{{ asset('storage/' . $projeto->imagem) }}" style="max-width: 100%; display: block;">
+                </div>
+            </div>
+
+            <script>
+                document.getElementById('inputImagem').addEventListener('change', function (event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            const imagePreview = document.getElementById('imagePreview');
+                            imagePreview.src = e.target.result;
+                            imagePreview.style.display = 'block';
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            </script>
 
             <div class="d-flex justify-content-between">
                 <a href="{{ route('projetos.index') }}"

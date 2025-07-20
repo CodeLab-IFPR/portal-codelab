@@ -22,7 +22,7 @@ Projeto - Criar
 </div>
 <div class="container d-flex justify-content-center">
     <div class="card-body" style="max-width: 600px;">
-        <form action="{{ route('projetos.store') }}" method="POST">
+        <form action="{{ route('projetos.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-3">
@@ -63,7 +63,7 @@ Projeto - Criar
                     $('#inputTags').select2({
                         placeholder: "Selecione tags",
                         allowClear: true,
-                        closeOnSelect: false // Prevent closing the dropdown when selecting an item
+                        closeOnSelect: false 
                     });
                 });
             </script>
@@ -77,6 +77,34 @@ Projeto - Criar
                     </label>
                 </div>
             </div>
+
+            <div class="mb-3">
+                <label for="inputImagem" class="form-label"><strong>Imagem:</strong></label>
+                <input type="file" name="imagem" class="form-control @error('imagem') inválido @enderror" id="inputImagem" accept="image/*">
+                @error('imagem')
+                    <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <img id="imagePreview" style="max-width: 100%; display: none;">
+            </div>
+
+            <script>
+                document.getElementById('inputImagem').addEventListener('change', function (event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            const imagePreview = document.getElementById('imagePreview');
+                            imagePreview.src = e.target.result;
+                            imagePreview.style.display = 'block';
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            </script>
+
             <div class="d-flex justify-content-between">
                 <a href="{{ route('projetos.index') }}"
                     class="btn btn-outline-danger">Voltar</a>

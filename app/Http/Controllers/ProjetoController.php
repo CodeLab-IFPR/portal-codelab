@@ -50,6 +50,7 @@ class ProjetoController extends Controller implements HasMiddleware
         $request->validate([
             'nome' => 'required|min:3|max:255',
             'descricao' => 'required|min:5',
+            'imagem' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
         ],[
             'nome.required' => 'O campo nome é obrigatório.',
             'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres.',
@@ -66,6 +67,14 @@ class ProjetoController extends Controller implements HasMiddleware
             'status' => $status,
         ]);
 
+        if ($request->hasFile('imagem')) {
+            $file = $request->file('imagem');
+            $fileName = date('YmdHis') . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('imagens/projetos'), $fileName);
+            $projeto->imagem = 'imagens/projetos/' . $fileName;
+            $projeto->save();
+        }
+
         $projeto->tags()->sync($request->input('tags', [])); 
         
         return redirect()->route('projetos.index')
@@ -79,7 +88,8 @@ class ProjetoController extends Controller implements HasMiddleware
     
     public function edit(Projeto $projeto): View
     {
-        return view('projetos.edit', compact('projeto'));
+        $tags = Tag::all();
+        return view('projetos.edit', compact('projeto', 'tags'));
     }
 
     public function update(Request $request, Projeto $projeto): RedirectResponse
@@ -87,6 +97,7 @@ class ProjetoController extends Controller implements HasMiddleware
         $request->validate([
             'nome' => 'required|min:3|max:255',
             'descricao' => 'required|min:5',
+            'imagem' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
         ],[
             'nome.required' => 'O campo nome é obrigatório.',
             'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres.',
@@ -102,6 +113,14 @@ class ProjetoController extends Controller implements HasMiddleware
             'descricao' => $request->input('descricao'),
             'status' => $status,
         ]);
+
+        if ($request->hasFile('imagem')) {
+            $file = $request->file('imagem');
+            $fileName = date('YmdHis') . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('imagens/projetos'), $fileName);
+            $projeto->imagem = 'imagens/projetos/' . $fileName;
+            $projeto->save();
+        }
 
         $projeto->tags()->sync($request->input('tags', [])); // Sync tags to the pivot table
 
