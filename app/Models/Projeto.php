@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Projeto extends Model
 {
     use HasFactory;
-    protected $fillable = ['nome', 'descricao', 'status'];
+    protected $fillable = ['nome', 'descricao', 'status', 'imagem'];
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 
 }
 

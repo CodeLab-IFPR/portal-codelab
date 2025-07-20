@@ -2,7 +2,7 @@
 
 <!-- Titulo -->
 @section('title')
-CodeLab
+CodeLab IFPR
 @endsection
 <!-- Titulo -->
 
@@ -480,7 +480,7 @@ CodeLab
                     <!-- Highlight Two Text Section-->
                     <div class="col-12 col-md-6 col-xl-5 offset-xl-1 position-relative" data-aos="fade-in">
                         <div class="text-start text-lg-end">
-                            <p class="mb-0 small fw-bolder tracking-wider text-uppercase text-orange">Centro de Desenvolvimento Tecnológico</p>
+                            <p class="mb-0 small fw-bolder tracking-wider text-uppercase text-orange">Laboratório de Desenvolvimento Tecnológico</p>
                             <h4 class="fs-1 fw-bold mb-4 mt-3">Portal Web para Projetos de Extensão</h4>
                             <p class="text-muted">Acesse e participe dos projetos de extensão do CodeLab-IFPR, contribuindo para o desenvolvimento tecnológico e social da comunidade.</p>
                             <a href="#" class="btn btn-link px-0 me-3 fw-medium text-orange text-decoration-none mt-4"

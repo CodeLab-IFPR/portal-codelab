@@ -1,10 +1,10 @@
-
 <table class="table table-bordered">
     <thead>
         <tr>
             <th class="col-3">Nome</th>
             <th class="col-4">Descrição</th>
             <th class="col-2">Status</th>
+            <th class="col-2">Tags</th>
             <th>Ação</th>
         </tr>
     </thead>
@@ -17,6 +17,13 @@
                     <span class="badge {{ $projeto->status == 'concluido' ? 'bg-success' : 'bg-warning' }}">
                         {{ ucfirst($projeto->status) }}
                     </span>
+                </td>
+                <td>
+                    @if($projeto->tags->isNotEmpty())
+                        {{ $projeto->tags->pluck('name')->join(', ') }}
+                    @else
+                        <span class="text-muted fst-italic">Sem tags</span>
+                    @endif
                 </td>
                 <td>
                     <div class="dropdown text-center"></div>
