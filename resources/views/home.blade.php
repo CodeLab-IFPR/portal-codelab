@@ -2,7 +2,7 @@
 
 <!-- Titulo -->
 @section('title')
-CodeLab
+CodeLab IFPR
 @endsection
 <!-- Titulo -->
 
