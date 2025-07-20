@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Projeto;
+use App\Models\Tag;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -28,7 +29,8 @@ class ProjetoController extends Controller implements HasMiddleware
 
     public function create(): View
     {
-        return view('projetos.create');
+        $tags = Tag::all();
+        return view('projetos.create', compact('tags'));
     }
 
     public function indexPublic(): View
@@ -64,6 +66,8 @@ class ProjetoController extends Controller implements HasMiddleware
             'status' => $status,
         ]);
 
+        $projeto->tags()->sync($request->input('tags', [])); 
+        
         return redirect()->route('projetos.index')
             ->with('success', 'Projeto criado com sucesso.');
     }
@@ -98,6 +102,8 @@ class ProjetoController extends Controller implements HasMiddleware
             'descricao' => $request->input('descricao'),
             'status' => $status,
         ]);
+
+        $projeto->tags()->sync($request->input('tags', [])); // Sync tags to the pivot table
 
         return redirect()->route('projetos.index')
             ->with('success', 'Projeto atualizado com sucesso.');

@@ -10,5 +10,10 @@ class Projeto extends Model
     use HasFactory;
     protected $fillable = ['nome', 'descricao', 'status'];
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
 }
 
