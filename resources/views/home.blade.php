@@ -268,20 +268,20 @@ CodeLab IFPR
        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-5">
     @foreach($projetos as $projeto)
     <style>
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
         .project-card {
         height: auto;
         }
     }
 
-    @media (min-width: 769px) {
+    @media (min-width: 768px) {
         .project-card {
-        height: 550px;
+        height: 580px;
         }
     }
     @media (min-width: 1200px) {
         .project-card {
-        height: 640px;
+        height: 660px;
         }
     }
     </style>
