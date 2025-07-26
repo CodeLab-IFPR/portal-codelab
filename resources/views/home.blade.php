@@ -10,7 +10,7 @@ CodeLab IFPR
 
         <!-- Hero Content-->
         <div class="container pt-4 pt-md-6 pt-lg-8 pb-8 pb-lg-10 position-relative">
-            <div class="row gx-10 align-items-center justify-content-center">
+            <div class="row gx-10 mx-0 align-items-center justify-content-center">
 
             <!-- Hero Text-->
             <div class="col-12 col-lg-8 position-relative z-index-20 text-center" data-aos="fade-in">
@@ -263,7 +263,7 @@ CodeLab IFPR
 <!-- Latest news Posts-->
 <div id="projetos" class="bg-primary py-8" data-aos="fade-in">
     <div class="container">
-        <h4 class="fs-1 fw-bold mb-6 text-white text-center">Últimos Projetos</h4>
+        <h4 class="fs-1 fw-bold mb-6 text-white text-center">Últimos projetos</h4>
 
        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-5">
     @foreach($projetos as $projeto)
@@ -331,72 +331,119 @@ CodeLab IFPR
         <!-- Ferramentas-->
         <div class="bg-dark py-8" data-aos="fade-in">
             <div class="container py-4">
-            <p class="mb-0 text-center small fw-bolder tracking-wider text-uppercase text-white opacity-75">Ferramentas</p>
-            <h3 class="text-white text-center mt-3 fs-1 mb-3 fw-bold">Ferramentas utilizadas no desenvolvimento</h3>
-            <p class="text-white opacity-50 text-center">Abaixo estão listadas as ferramentas que foram utilizadas para o desenvolvimento deste sistema.</p>
+            <!-- <p class="mb-0 text-center small fw-bolder tracking-wider text-uppercase text-white opacity-75">Ferramentas</p> -->
+            <h3 class="text-white text-center mt-3 fs-1 mb-3 fw-bold">Ferramentas</h3>
+            <p class="text-white fs-6 fs-md-5 text-center">Tecnologias que usamos para transformar ideias em soluções digitais eficientes.</p>
 
-            <div class="row gx-10 gy-7 mt-4">
+            <div class="d-flex flex-wrap justify-content-center gap-4 gap-sm-7 gap-md-9 mt-8">
                 <!-- Ferramenta-->
-                <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="100">
+                <div class=" d-flex flex-column align-items-center justify-content-center" style="width: 120px;" data-aos="fade-in" data-aos-duration="500" data-aos-delay="100">
                 <picture class="d-block f-h-10">
                     <img class="h-100 w-auto" src="{{ asset('img/logos/logo-vscode.svg') }}" alt="">
                 </picture>
-                <p class="text-white fs-4 fw-medium mb-2 mt-3">Visual Studio Code</p>
-                <p class="text-white opacity-75 text-center fs-7">IDE leve para diversas linguagens.</p>
+                <p class="text-white fs-7  mb-2 mt-3">VS Code</p>
                 </div>
                 <!-- /Ferramenta-->
                 <!-- Ferramenta-->
-                <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="200">
+                <div class=" d-flex flex-column align-items-center justify-content-center" style="width: 120px;" data-aos="fade-in" data-aos-duration="500" data-aos-delay="200">
                 <picture class="d-block f-h-10">
                     <img class="h-100 w-auto" src="{{ asset('img/logos/logo-phpstorm.svg') }}" alt="">
                 </picture>
-                <p class="text-white fs-4 fw-medium mb-2 mt-3">PHPStorm</p>
-                <p class="text-white opacity-75 text-center fs-7">IDE completa para desenvolvimento em PHP com várias integrações.</p>
+                <p class="text-white fs-7  mb-2 mt-3">PHPStorm</p>
                 </div>
                 <!-- /Ferramenta-->
                 <!-- Ferramenta-->
-                <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="300">
+                <div class=" d-flex flex-column align-items-center justify-content-center" style="width: 120px;" data-aos="fade-in" data-aos-duration="500" data-aos-delay="300">
                 <picture class="d-block f-h-10">
                     <img class="h-100 w-auto" src="{{ asset('img/logos/logo-powerarchitect.png') }}" alt="">
                 </picture>
-                <p class="text-white fs-4 fw-medium mb-2 mt-3">Power Architect</p>
-                <p class="text-white opacity-75 text-center fs-7">Ferramenta de design e modelagem de bancos de dados.</p>
+                <p class="text-white fs-7  mb-2 mt-3">Power Architect</p>
                 </div>
                 <!-- /Ferramenta-->
                 <!-- Ferramenta-->
-                <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="400">
+                <div class=" d-flex flex-column align-items-center justify-content-center" style="width: 120px;" data-aos="fade-in" data-aos-duration="500" data-aos-delay="400">
                 <picture class="d-block f-h-10">
                     <img class="h-100 w-auto" src="{{ asset('img/logos/logo-github.svg') }}" alt="">
                 </picture>
-                <p class="text-white fs-4 fw-medium mb-2 mt-3">GitHub</p>
-                <p class="text-white opacity-75 text-center fs-7">Plataforma de hospedagem de código com controle de versão Git.</p>
+                <p class="text-white fs-7  mb-2 mt-3">GitHub</p>
                 </div>
                 <!-- /Ferramenta-->
                 <!-- Ferramenta-->
-                <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="500">
+                <div class=" d-flex flex-column align-items-center justify-content-center" style="width: 120px;" data-aos="fade-in" data-aos-duration="500" data-aos-delay="500">
                 <picture class="d-block f-h-10">
                     <img class="h-100 w-auto" src="{{ asset('img/logos/logo-php.svg') }}" alt="">
                 </picture>
-                <p class="text-white fs-4 fw-medium mb-2 mt-3">PHP</p>
-                <p class="text-white opacity-75 text-center fs-7">Linguagem de programação para desenvolvimento de aplicações web.</p>
+                <p class="text-white fs-7  mb-2 mt-3">PHP</p>
                 </div>
                 <!-- /Ferramenta-->
                 <!-- Ferramenta-->
-                <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="600">
+                <div class=" d-flex flex-column align-items-center justify-content-center" style="width: 120px;" data-aos="fade-in" data-aos-duration="500" data-aos-delay="600">
                 <picture class="d-block f-h-10">
                     <img class="h-100 w-auto" src="{{ asset('img/logos/logo-laravel.svg') }}" alt="">
                 </picture>
-                <p class="text-white fs-4 fw-medium mb-2 mt-3">Laravel</p>
-                <p class="text-white opacity-75 text-center fs-7">Framework PHP para desenvolvimento de aplicações web.</p>
+                <p class="text-white fs-7  mb-2 mt-3">Laravel</p>
                 </div>
                 <!-- /Ferramenta-->
                 <!-- Ferramenta-->
-                <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center justify-content-center" data-aos="fade-in" data-aos-duration="500" data-aos-delay="700">
+                <div class=" d-flex flex-column align-items-center justify-content-center" style="width: 120px;" data-aos="fade-in" data-aos-duration="500" data-aos-delay="700">
                 <picture class="d-block f-h-10">
-                    <img class="h-100 w-auto" src="{{ asset('img/logos/logo-blade.svg') }}" alt="">
+                    <img class="h-100 w-auto" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="">
                 </picture>
-                <p class="text-white fs-4 fw-medium mb-2 mt-3">Blade</p>
-                <p class="text-white opacity-75 text-center fs-7">Motor de template nativo do Laravel para criar layouts dinâmicos.</p>
+                <p class="text-white fs-7  mb-2 mt-3">Java</p>
+                </div>
+                <div class=" d-flex flex-column align-items-center justify-content-center" style="width: 120px;" data-aos="fade-in" data-aos-duration="500" data-aos-delay="700">
+                <picture class="d-block f-h-10">
+                    <img class="h-100 w-auto" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" alt="">
+                </picture>
+                <p class="text-white fs-7 mb-2 mt-3">SpringBoot</p>
+                </div>
+                <div class=" d-flex flex-column align-items-center justify-content-center" style="width: 120px;" data-aos="fade-in" data-aos-duration="500" data-aos-delay="700">
+                <picture class="d-block f-h-10">
+                    <img class="h-100 w-auto" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="">
+                </picture>
+                <p class="text-white fs-7 mb-2 mt-3">JavaScript</p>
+                </div>
+                <div class=" d-flex flex-column align-items-center justify-content-center" style="width: 120px;" data-aos="fade-in" data-aos-duration="500" data-aos-delay="700">
+                <picture class="d-block f-h-10">
+                    <img class="h-100 w-auto" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="">
+                </picture>
+                <p class="text-white fs-7 mb-2 mt-3">React</p>
+                </div>
+                <div class=" d-flex flex-column align-items-center justify-content-center" style="width: 120px;" data-aos="fade-in" data-aos-duration="500" data-aos-delay="700">
+                <picture class="d-block f-h-10">
+                    <img class="h-100 w-auto" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" alt="">
+                </picture>
+                <p class="text-white fs-7 mb-2 mt-3">TypeScript</p>
+                </div>
+                <div class=" d-flex flex-column align-items-center justify-content-center" style="width: 120px;" data-aos="fade-in" data-aos-duration="500" data-aos-delay="700">
+                <picture class="d-block f-h-10">
+                    <img class="h-100 w-auto" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="">
+                </picture>
+                <p class="text-white fs-7 mb-2 mt-3">Node</p>
+                </div>
+                <div class=" d-flex flex-column align-items-center justify-content-center" style="width: 120px;" data-aos="fade-in" data-aos-duration="500" data-aos-delay="700">
+                <picture class="d-block f-h-10">
+                    <img class="h-100 w-auto" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/canva/canva-original.svg" alt="">
+                </picture>
+                <p class="text-white fs-7 mb-2 mt-3">Canva</p>
+                </div>
+                <div class=" d-flex flex-column align-items-center justify-content-center" style="width: 120px;" data-aos="fade-in" data-aos-duration="500" data-aos-delay="700">
+                <picture class="d-block f-h-10">
+                    <img class="h-100 w-auto" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="">
+                </picture>
+                <p class="text-white fs-7 mb-2 mt-3">Figma</p>
+                </div>
+                <div class=" d-flex flex-column align-items-center justify-content-center" style="width: 120px;" data-aos="fade-in" data-aos-duration="500" data-aos-delay="700">
+                <picture class="d-block f-h-10">
+                    <img class="h-100 w-auto" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="">
+                </picture>
+                <p class="text-white fs-7 mb-2 mt-3">MySql</p>
+                </div>
+                <div class=" d-flex flex-column align-items-center justify-content-center" style="width: 120px;" data-aos="fade-in" data-aos-duration="500" data-aos-delay="700">
+                <picture class="d-block f-h-10">
+                    <img class="h-100 w-auto" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="">
+                </picture>
+                <p class="text-white fs-7 mb-2 mt-3">PostgreSQL</p>
                 </div>
             </div>
 
