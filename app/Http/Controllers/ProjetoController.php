@@ -41,7 +41,7 @@ class ProjetoController extends Controller implements HasMiddleware
 
     public function home(): View
     {
-        $projetos = Projeto::latest()->take(3)->get();
+        $projetos = Projeto::latest()->take(6)->get();
         return view('home', compact('projetos'));
     }
 
