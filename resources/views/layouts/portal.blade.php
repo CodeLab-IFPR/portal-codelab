@@ -175,10 +175,8 @@
             <div class="w-100 w-sm-50 w-lg-auto mb-4 mb-lg-0">
                 <h6 class="text-uppercase fs-xs fw-bolder tracking-wider text-white opacity-50">Portal</h6>
                 <ul class="list-unstyled footer-nav">
-                    <li><a href="{{ route('about') }}">Sobre Nós</a></li>
-                    <li><a href="#">Junte-se</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Últimas Noticias</a></li>
+                    <li><a href="{{ route('about') }}">Sobre Nós</a></li> 
+                    <li><a href="{{route('noticias.cards')}}">Últimas Noticias</a></li>
                 </ul>
             </div>
             <div class="w-100 w-sm-50 w-lg-auto mb-4 mb-lg-0">
@@ -191,9 +189,7 @@
             <div class="w-100 w-sm-50 w-lg-auto mb-4 mb-lg-0">
                 <h6 class="text-uppercase fs-xs fw-bolder tracking-wider text-white opacity-50">Termos Legais</h6>
                 <ul class="list-unstyled footer-nav">
-                    <li><a href="#">Política de Privacidade</a></li>
-                    <li><a href="#">Termos & Condições</a></li>
-                    <li><a href="#">LGPD</a></li>
+                    <!-- <li><a href="#">LGPD</a></li> -->
                     <li><a href="https://ifpr.edu.br/paranavai/" target="_blank">IFPR</a></li>
                 </ul>
             </div>    
@@ -202,7 +198,7 @@
     <div class="container">
         <div class="border-top pt-6 mt-7 border-white-10 d-flex flex-column flex-md-row justify-content-between align-items-center">
             <span class="small text-white opacity-50 mb-2 mb-md-0">Todos os direitos reservados &copy IFPR 2024 e Sigma 2021</span>
-            <span class="small text-white opacity-50">Termos de Serviço  |  Política de Segurança</span>
+            <!-- <span class="small text-white opacity-50">Termos de Serviço  |  Política de Segurança</span> -->
         </div>
     </div>    
 </footer>
