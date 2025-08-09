@@ -89,7 +89,7 @@
             <i class="ri-menu-line"></i>
         </button>    
         <div class="collapse navbar-collapse justify-content-evenly" id="navbarSupportedContent">
-            <ul class="navbar-nav" style="gap: 0.3rem;"> 
+            <ul class="navbar-nav" style="gap: 0.2rem;"> 
                 <li class="nav-item dropdown position-static ">
                     <a class="nav-link dropdown-toggle me-lg-0 ms-lg-0" href="#" role="button" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false" style="font-size: 1.2rem;">
@@ -123,6 +123,7 @@
                         </div>
                     </div>
                 </li>    
+                
                 <li class="nav-item">
                     <a class="nav-link me-lg-0 ms-lg-0" href="{{ route('noticias.cards') }}" style="font-size: 1.2rem;">
                         <i class="ri-newspaper-line me-2"></i>
@@ -152,6 +153,11 @@
                         <i class="ri-gallery-line me-2"></i>
                         <span>Galeria</span>
                     </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link me-lg-0 ms-lg-0" href="{{ route('projeto.indexPublic') }}" style="font-size: 1.2rem;">
+                    <i class="ri-information-line me-2"></i>
+                    <span>Projetos</span>
                 </li>
             </ul>
         </div>
