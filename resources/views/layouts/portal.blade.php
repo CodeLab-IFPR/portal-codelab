@@ -124,6 +124,12 @@
                     </div>
                 </li>    
                 <li class="nav-item">
+                    <a class="nav-link me-lg-0 ms-lg-0" href="{{ route('projeto.indexPublic') }}" style="font-size: 1.2rem;">
+                        <i class="ri-newspaper-line me-2"></i>
+                        <span>Projetos</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link me-lg-0 ms-lg-0" href="{{ route('noticias.cards') }}" style="font-size: 1.2rem;">
                         <i class="ri-newspaper-line me-2"></i>
                         <span>Notícias</span>
