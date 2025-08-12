@@ -39,7 +39,7 @@ Lançamentos
                 <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#filtrosModal">
                     <i class="fas fa-filter me-2"></i>Filtros
                 </button>
-                @endcan('Filtrar lançamento')
+                @endcan
 
                 @if(request()->hasAny(['user_id', 'data_inicio', 'data_fim', 'certificado_status']))
                     <a href="{{ route('lancamentos.index') }}" class="btn btn-outline-secondary ms-2">
