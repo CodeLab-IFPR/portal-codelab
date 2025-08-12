@@ -30,6 +30,7 @@ class PermissionsSeeder extends Seeder
             'Criar Lançamento',
             'Editar Lançamento',
             'Deletar Lançamento',
+            'Filtrar lançamento',
 
             // Membros
             'Visualizar Membro',
@@ -59,6 +60,7 @@ class PermissionsSeeder extends Seeder
             'Criar Projeto',
             'Editar Projeto',
             'Deletar Projeto',
+            'Criar tag',
 
             // Serviços
             'Visualizar Serviço',
