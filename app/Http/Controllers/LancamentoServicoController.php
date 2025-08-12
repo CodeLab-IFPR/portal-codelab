@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Projeto;
 use App\Models\Servico;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\LancamentoServico;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -35,8 +36,32 @@ class LancamentoServicoController extends Controller implements HasMiddleware
             $filtro->where('user_id', auth()->id());
         }
 
+        // Aplicar filtros
+        if ($request->filled('user_id') && auth()->user()->hasRole('Admin')) {
+            $filtro->where('user_id', $request->user_id);
+        }
+
+        if ($request->filled('data_inicio')) {
+            $filtro->where('data_inicio', '>=', $request->data_inicio);
+        }
+
+        if ($request->filled('data_fim')) {
+            $filtro->where('data_final', '<=', $request->data_fim);
+        }
+
+        if ($request->filled('certificado_status')) {
+            $filtro->where('certificado_gerado', $request->certificado_status);
+        }
+
         $lancamentos = $filtro->orderBy($order, $direction)->paginate(10);
-        return view('lancamentos.index', compact('lancamentos', 'order', 'direction'));
+        
+        // Buscar usuários para o filtro (apenas para admins)
+        $users = collect();
+        if (auth()->user()->hasRole('Admin')) {
+            $users = User::select('id', 'name')->orderBy('name')->get();
+        }
+        
+        return view('lancamentos.index', compact('lancamentos', 'order', 'direction', 'users'));
     }
 
     public function create()
@@ -124,7 +149,34 @@ class LancamentoServicoController extends Controller implements HasMiddleware
         try {
             $lancamento->delete();
 
-            $lancamentos = LancamentoServico::paginate(10);
+            // Reconstruir a query com os mesmos filtros da requisição atual
+            $request = request();
+            $order = $request->get('order', 'created_at');
+            $direction = $request->get('direction', 'desc');
+
+            $filtro = LancamentoServico::query();
+
+            if (!auth()->user()->hasRole('Admin')) {
+                $filtro->where('user_id', auth()->id());
+            }
+
+            if ($request->filled('user_id') && auth()->user()->hasRole('Admin')) {
+                $filtro->where('user_id', $request->user_id);
+            }
+
+            if ($request->filled('data_inicio')) {
+                $filtro->where('data_inicio', '>=', $request->data_inicio);
+            }
+
+            if ($request->filled('data_fim')) {
+                $filtro->where('data_final', '<=', $request->data_fim);
+            }
+
+            if ($request->filled('certificado_status')) {
+                $filtro->where('certificado_gerado', $request->certificado_status);
+            }
+
+            $lancamentos = $filtro->orderBy($order, $direction)->paginate(10);
 
             if (request()->ajax()) {
                 return response()->json([

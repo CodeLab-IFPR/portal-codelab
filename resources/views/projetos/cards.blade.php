@@ -5,32 +5,30 @@
 @endsection
 
 @section('content')
-<div id="projetos">
+<div id="projetos" class="pb-8" data-aos="fade-in">
     <div class="container">
         <h4 class="fs-1 fw-bold mb-6 text-black text-center">Projetos</h4>
 
         @if($projetos->isEmpty())
-            <p class="text-center">Não há projetos disponíveis no momento.</p>
+            <p class="text-center text-white">Não há projetos disponíveis no momento.</p>
         @else
-        <div id="projetos" class="" data-aos="fade-in">
-    <div class="container">
-       <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-5 mb-5">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
     @foreach($projetos as $projeto)
     <style>
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
         .project-card {
         height: auto;
         }
     }
 
-    @media (min-width: 769px) {
+    @media (min-width: 768px) {
         .project-card {
-        height: 550px;
+        height: 580px;
         }
     }
     @media (min-width: 1200px) {
         .project-card {
-        height: 640px;
+        height: 660px;
         }
     }
     </style>
@@ -78,17 +76,18 @@
 <div class="modal fade" id="projectModal{{ $projeto->id }}" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content rounded-4">
-            
             <div class="modal-body pt-4 px-4 pt-lg-5 px-lg-5">
                 <div class="row">
-                    <h5 class="modal-title fs-4 fw-bolder mb-4" id="projectModalLabel">{{ $projeto->nome }}</h5>
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <h5 class="modal-title fs-4 fw-bolder mb-0" id="projectModalLabel">{{ $projeto->nome }}</h5>
+                    </div>
                     <div class="col-lg-5 mb-2">
                         @if($projeto->imagem && file_exists(public_path($projeto->imagem)))
                         <div style="aspect-ratio: 16 / 9; width: 100%; overflow: hidden;">
                             <img src="{{ asset($projeto->imagem) }}" alt="{{ $projeto->nome }}" class="img-fluid rounded-4" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
                         @else
-                        <img src="https://avatars.githubusercontent.com/u/217792933?s=200&v=4" alt="Default Image" class="img-fluid rounded-4">
+                        <img src="https://avatars.githubusercontent.com/u/217792933?s=200&v=4" alt="Default Image" class="img-fluid rounded-4 flex-shrink-0" style="height: 220px; object-fit: contain; width: 100%; border: 2px solid #e9ecef;">
                         @endif
                         <div class="mt-4 mb-4">
                             <p class="fw-bold mb-0">Palavras-chave</p>

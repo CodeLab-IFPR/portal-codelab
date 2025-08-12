@@ -49,7 +49,7 @@ Contate Nos
             <div class="mb-5">
                 <p class="mb-4 small fw-bolder tracking-wider text-uppercase text-primary">Nos encontre online</p>
                 <ul class="list-unstyled">
-                    <li class="d-flex align-items-center mb-2"><i class="ri-github-line me-3 ri-lg"></i> <a class="text-muted" href="https://github.com/ifpr-paranavai/portal-cdt" target="_blank">GitHub</a></li>
+                    <li class="d-flex align-items-center mb-2"><i class="ri-github-line me-3 ri-lg"></i> <a class="text-muted" href="https://github.com/CodeLab-IFPR" target="_blank">GitHub</a></li>
                 </ul>
             </div>
             <p class="mb-4 small fw-bolder tracking-wider text-uppercase text-primary">Nosso endereço</p>
