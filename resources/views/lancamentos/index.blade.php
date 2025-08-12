@@ -33,22 +33,21 @@ Lançamentos
         </div>
     @endif
 
-        <!-- Botão para abrir filtros -->
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
+                @can('Filtrar lançamento')
                 <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#filtrosModal">
                     <i class="fas fa-filter me-2"></i>Filtros
                 </button>
-                
+                @endcan('Filtrar lançamento')
+
                 @if(request()->hasAny(['user_id', 'data_inicio', 'data_fim', 'certificado_status']))
                     <a href="{{ route('lancamentos.index') }}" class="btn btn-outline-secondary ms-2">
                         <i class="fas fa-times me-1"></i>Limpar Filtros
                     </a>
                 @endif
             </div>
-            
-            <!-- Indicadores de filtros ativos -->
-            
+                        
         </div>
 
         <form method="POST" action="{{ route('lancamentos.generateCertificates') }}">
@@ -63,6 +62,7 @@ Lançamentos
     </div>
 </div>
 
+@can('Filtrar lançamento')
 <div class="modal fade" id="filtrosModal" tabindex="-1" aria-labelledby="filtrosModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -75,7 +75,6 @@ Lançamentos
             <form method="GET" action="{{ route('lancamentos.index') }}" id="filtros-form">
                 <div class="modal-body">
                     <div class="row g-3">
-                        @hasrole('Admin')
                         <div class="col-md-6">
                             <label for="user_id" class="form-label">
                                 Aluno
@@ -89,7 +88,6 @@ Lançamentos
                                 @endforeach
                             </select>
                         </div>
-                        @endhasrole
 
                         <div class="col-md-6">
                             <label for="certificado_status" class="form-label">
@@ -137,6 +135,7 @@ Lançamentos
         </div>
     </div>
 </div>
+@endcan('Filtrar lançamento')
 
 <!-- Modal de Confirmação de Exclusão -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
