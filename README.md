@@ -135,6 +135,13 @@ Este projeto segue a arquitetura Model-View-Controller, os arquivos principais e
 - Model - `app/Models`
 - View - `resources/views`
 - Controller - `app/http/Controllers`
+
+Para acessar a área autenticada vá para a rota /admin no navegador, e insira as credencais: 
+
+| email | senha |
+|---|---|
+| cdt.projetos@gmail.com | admin123 |
+
 ---
 
 

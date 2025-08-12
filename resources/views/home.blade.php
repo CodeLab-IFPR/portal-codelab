@@ -10,7 +10,7 @@ CodeLab IFPR
 
         <!-- Hero Content-->
         <div class="container pt-4 pt-md-6 pt-lg-8 pb-8 pb-lg-10 position-relative">
-            <div class="row gx-10 mx-0 align-items-center justify-content-center">
+            <div class="row align-items-center justify-content-center">
 
             <!-- Hero Text-->
             <div class="col-12 col-lg-8 position-relative z-index-20 text-center" data-aos="fade-in">
@@ -230,42 +230,13 @@ CodeLab IFPR
         </div> -->
         <!-- Logo Showcase-->
 
-        <!-- Latest news Posts-->
-<div id="noticias" class="bg-primary py-8" data-aos="fade-in">
-    <div class="container">
-        <h4 class="fs-1 fw-bold mb-6 text-white text-center">Últimas noticias</h4>
-
-        <div class="row g-5">
-            @foreach($noticias as $noticia)
-            <!-- News Post-->
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="d-flex h-100 bg-white rounded-4 card overflow-hidden shadow-lg position-relative hover-lift">
-                    <picture>
-                        <img class="img-fluid" src="{{ asset('imagens/noticias/' . $noticia->imagem) }}" alt="{{ $noticia->alt }}">
-                    </picture>
-
-                    <div class="card-body p-4 p-lg-5">
-                        <p class="card-title fw-medium mb-4">{{ $noticia->titulo }}</p>
-                        <a href="{{ route('noticias.show', $noticia->id) }}" class="fw-medium fs-7 text-decoration-none link-cover">Ler mais... &rarr;</a>
-                    </div>
-                </div>
-            </div>
-            <!-- / News Post-->
-            @endforeach
-        </div>
-
-        <a href="{{ route('noticias.cards') }}" class="btn btn-white mx-auto mt-7 d-table fw-medium w-100 w-md-auto">Mais Noticias &rarr;</a>
-    </div>
-</div>
-<!-- / Latest News Posts-->
-
 
 <!-- Latest news Posts-->
 <div id="projetos" class="bg-primary py-8" data-aos="fade-in">
     <div class="container">
         <h4 class="fs-1 fw-bold mb-6 text-white text-center">Últimos projetos</h4>
 
-       <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-5">
+       <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
     @foreach($projetos as $projeto)
     <style>
     @media (max-width: 767px) {
@@ -566,7 +537,7 @@ CodeLab IFPR
                             <img src="{{ asset($projeto->imagem) }}" alt="{{ $projeto->nome }}" class="img-fluid rounded-4" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
                         @else
-                        <img src="https://avatars.githubusercontent.com/u/217792933?s=200&v=4" alt="Default Image" class="img-fluid rounded-4">
+                        <img src="https://avatars.githubusercontent.com/u/217792933?s=200&v=4" alt="Default Image" class="img-fluid rounded-4 flex-shrink-0" style="height: 220px; object-fit: contain; width: 100%; border: 2px solid #e9ecef;">
                         @endif
                         <div class="mt-4 mb-4">
                             <p class="fw-bold mb-0">Palavras-chave</p>
