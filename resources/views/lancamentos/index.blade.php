@@ -102,7 +102,7 @@ Lançamentos
 
                         <div class="col-md-6">
                             <label for="data_inicio" class="form-label">
-                                </i>Data de início
+                                Data de início
                             </label>
                             <input type="date" name="data_inicio" id="data_inicio" class="form-control" 
                                    value="{{ request('data_inicio') }}">
