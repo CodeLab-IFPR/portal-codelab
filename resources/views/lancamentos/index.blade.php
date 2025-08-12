@@ -35,7 +35,7 @@ Lançamentos
 
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
-                @can('Filtrar lançamento')
+                @can('Criar Projeto')
                 <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#filtrosModal">
                     <i class="fas fa-filter me-2"></i>Filtros
                 </button>
@@ -62,7 +62,7 @@ Lançamentos
     </div>
 </div>
 
-@can('Filtrar lançamento')
+@can('Criar Projeto')
 <div class="modal fade" id="filtrosModal" tabindex="-1" aria-labelledby="filtrosModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -135,7 +135,7 @@ Lançamentos
         </div>
     </div>
 </div>
-@endcan('Filtrar lançamento')
+@endcan
 
 <!-- Modal de Confirmação de Exclusão -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
