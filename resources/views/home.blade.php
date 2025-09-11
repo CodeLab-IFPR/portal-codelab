@@ -22,43 +22,15 @@ CodeLab IFPR
                 $fraseInicio = \App\Models\FraseInicio::find(1)->frase ?? 'Frase não encontrada';
                 @endphp
                 <p class="lead text-muted mb-5">{{ $fraseInicio }}</p>
-                    <!-- <a href="#" class="text-decoration-none text-primary fw-bolder d-flex fs-7 justify-content-center justify-content-lg-start" data-bs-toggle="modal"
-                        data-bs-target="#videoIframeModal"
-                        data-pixr-video-iframe="https://player.vimeo.com/video/307721664?autoplay=1&amp;loop=false&amp;byline=false&amp;portrait=false&amp;title=false&amp;speed=true&amp;transparent=0&amp;gesture=media"
-                        role="button"><i class="ri-play-circle-line align-bottom me-1"></i> Como funciona</a> -->
 
                     <div class="mt-4 pt-1 d-flex flex-column flex-md-row justify-content-center">
                         <a href= "{{ route('projeto.indexPublic') }}" class="btn btn-success" role="button">Ver Projetos</a>
                         <a href="{{ route('contact') }}" class="btn btn-link text-decoration-none text-muted ms-2 bg-light-hover"
                             role="button">Entre em Contato</a>
                     </div>
-                    <!-- <ul class="list-unstyled d-none d-md-flex align-items-center small text-muted mt-3 pt-1 fw-medium fs-9 justify-content-center justify-content-lg-start">
-                        <li class="me-4 d-flex align-items-center"><i
-                                class="ri-checkbox-circle-fill text-success ri-lg me-1"></i> Sem necessidade de cartão de crédito
-                        </li>
-                        <li class="me-4 d-flex align-items-center"><i
-                                class="ri-checkbox-circle-fill text-success ri-lg me-1"></i> Cancelamento a qualquer momento</li>
-                        <li class="me-4 d-flex align-items-center"><i
-                                class="ri-checkbox-circle-fill text-success ri-lg me-1"></i> 30 dias de teste gratuito</li>
-                    </ul> -->
+                
                 </div>
                 <!-- / Hero Text-->
-
-                <!-- Hero Graphic-->
-                <!-- <div class="col-12 col-lg-6 mt-5 mt-lg-0 align-self-stretch position-relative z-index-20" data-aos="fade-in">
-                    <div class="d-flex h-100 bg-dark rounded-3 shadow-lg card">
-                        <div class="card-header border-white-10 border-1 py-4 d-flex align-items-center">
-                            <span class="f-w-2 f-h-2 block bg-danger rounded-circle me-2"></span>
-                            <span class="f-w-2 f-h-2 block bg-warning rounded-circle me-2"></span>
-                            <span class="f-w-2 f-h-2 block bg-info rounded-circle"></span>
-                        </div>
-                        <div class="card-body" style="min-height: 300px;">
-                            <code class="highlight fs-8"
-                                data-typed='{"backSpeed":2, "strings": ["$&nbsp;git&nbsp;clone&nbsp;https://github.com/ifpr-paranavai/portal-cdt.git<br/><span class=\"text-success\">Repositório&nbsp;clonado&nbsp;com&nbsp;sucesso 👍</span><br/><br/>$&nbsp;cd&nbsp;portal-cdt<br/><span class=\"text-success\">Diretório&nbsp;alterado&nbsp;para&nbsp;portal-cdt</span><br/><br/>$&nbsp;composer&nbsp;install<br/><span class=\"text-success\">Dependências&nbsp;instaladas&nbsp;com&nbsp;sucesso...</span><br/><br/>$&nbsp;php&nbsp;artisan&nbsp;serve<br/><span class=\"text-success\">Servidor&nbsp;iniciado&nbsp;em&nbsp;http://localhost:8000 🚀</span><br/><br/>$&nbsp;npm&nbsp;install<br/><span class=\"text-success\">Pacotes&nbsp;NPM&nbsp;instalados&nbsp;com&nbsp;sucesso...</span><br/><br/>$&nbsp;npm&nbsp;run&nbsp;dev<br/><span class=\"text-success\">Vite&nbsp;executando&nbsp;em&nbsp;modo&nbsp;de&nbsp;desenvolvimento...</span>"]}'></code>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- / Hero Graphic-->
 
             </div>
           
@@ -84,152 +56,6 @@ CodeLab IFPR
             <!-- / Bottom left shapes-->
         </div>
         <!-- /hero Content-->
-
-        <!-- Logo Showcase-->
-        <!-- <div class="bg-primary py-8" data-aos="fade-in">
-            <p class="mb-0 text-center small fw-bolder tracking-wider text-uppercase text-white opacity-75">Trusted by
-                thousands of companies worldwide</p>
-            <div class="mt-5">
-                <section class="marquee marquee-hover-pause">
-                    <div class="marquee-body">
-                        <div class="marquee-section animation-marquee-90">
-                            <div class="mx-5 f-w-24">
-                                <a class="d-block" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Bosch">
-                                    <picture>
-                                        <img class="img-fluid d-table mx-auto" src="{{ asset('img/logos/logo-1.svg') }}" alt="">
-                                    </picture>
-                                    </picture>
-                                </a>
-                            </div>
-                            <div class="mx-5 f-w-24">
-                                <a class="d-block" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Smeg">
-                                    <picture>
-                                        <img class="img-fluid d-table mx-auto" src="{{ asset('img/logos/logo-2.svg') }}" alt="">
-                                    </picture>
-                                    </picture>
-                                </a>
-                            </div>
-                            <div class="mx-5 f-w-24">
-                                <a class="d-block" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Sony">
-                                    <picture>
-                                        <img class="img-fluid d-table mx-auto" src="{{ asset('img/logos/logo-3.svg') }}" alt="">
-                                    </picture>
-                                    </picture>
-                                </a>
-                            </div>
-                            <div class="mx-5 f-w-24">
-                                <a class="d-block" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Siemens">
-                                    <picture>
-                                        <img class="img-fluid d-table mx-auto" src="{{ asset('img/logos/logo-4.svg') }}" alt="">
-                                    </picture>
-                                    </picture>
-                                </a>
-                            </div>
-                            <div class="mx-5 f-w-24">
-                                <a class="d-block" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Coca Cola">
-                                    <picture>
-                                        <img class="img-fluid d-table mx-auto" src="{{ asset('img/logos/logo-5.svg') }}" alt="">
-                                    </picture>
-                                    </picture>
-                                </a>
-                            </div>
-                            <div class="mx-5 f-w-24">
-                                <a class="d-block" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Philips">
-                                    <picture>
-                                        <img class="img-fluid d-table mx-auto" src="{{ asset('img/logos/logo-6.svg') }}" alt="">
-                                    </picture>
-                                    </picture>
-                                </a>
-                            </div>
-                            <div class="mx-5 f-w-24">
-                                <a class="d-block" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Samsung">
-                                    <picture>
-                                        <img class="img-fluid d-table mx-auto" src="{{ asset('img/logos/logo-7.svg') }}" alt="">
-                                    </picture>
-                                    </picture>
-                                </a>
-                            </div>
-                            <div class="mx-5 f-w-24">
-                                <a class="d-block" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Netflix">
-                                    <picture>
-                                        <img class="img-fluid d-table mx-auto" src="{{ asset('img/logos/logo-8.svg') }}" alt="">
-                                    </picture>
-                                    </picture>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="marquee-section animation-marquee-90">
-                            <div class="mx-5 f-w-24">
-                                <a class="d-block" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Bosch">
-                                    <picture>
-                                        <img class="img-fluid d-table mx-auto" src="{{ asset('img/logos/logo-1.svg') }}" alt="">
-                                    </picture>
-                                    </picture>
-                                </a>
-                            </div>
-                            <div class="mx-5 f-w-24">
-                                <a class="d-block" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Smeg">
-                                    <picture>
-                                        <img class="img-fluid d-table mx-auto" src="{{ asset('img/logos/logo-2.svg') }}" alt="">
-                                    </picture>
-                                    </picture>
-                                </a>
-                            </div>
-                            <div class="mx-5 f-w-24">
-                                <a class="d-block" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Sony">
-                                    <picture>
-                                        <img class="img-fluid d-table mx-auto" src="{{ asset('img/logos/logo-3.svg') }}" alt="">
-                                    </picture>
-                                    </picture>
-                                </a>
-                            </div>
-                            <div class="mx-5 f-w-24">
-                                <a class="d-block" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Siemens">
-                                    <picture>
-                                        <img class="img-fluid d-table mx-auto" src="{{ asset('img/logos/logo-4.svg') }}" alt="">
-                                    </picture>
-                                    </picture>
-                                </a>
-                            </div>
-                            <div class="mx-5 f-w-24">
-                                <a class="d-block" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Coca Cola">
-                                    <picture>
-                                        <img class="img-fluid d-table mx-auto" src="{{ asset('img/logos/logo-5.svg') }}" alt="">
-                                    </picture>
-                                    </picture>
-                                </a>
-                            </div>
-                            <div class="mx-5 f-w-24">
-                                <a class="d-block" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Philips">
-                                    <picture>
-                                        <img class="img-fluid d-table mx-auto" src="{{ asset('img/logos/logo-6.svg') }}" alt="">
-                                    </picture>
-                                    </picture>
-                                </a>
-                            </div>
-                            <div class="mx-5 f-w-24">
-                                <a class="d-block" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Samsung">
-                                    <picture>
-                                        <img class="img-fluid d-table mx-auto" src="{{ asset('img/logos/logo-7.svg') }}" alt="">
-                                    </picture>
-                                    </picture>
-                                </a>
-                            </div>
-                            <div class="mx-5 f-w-24">
-                                <a class="d-block" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Netflix">
-                                    <picture>
-                                        <img class="img-fluid d-table mx-auto" src="{{ asset('img/logos/logo-8.svg') }}" alt="">
-                                    </picture>
-                                    </picture>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div> -->
-        <!-- Logo Showcase-->
-
 
 <!-- Latest news Posts-->
 <div id="projetos" class="bg-primary py-8" data-aos="fade-in">
