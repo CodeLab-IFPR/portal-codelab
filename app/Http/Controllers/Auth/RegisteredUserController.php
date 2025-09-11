@@ -124,7 +124,7 @@ class RegisteredUserController extends Controller implements HasMiddleware
 
     public function about(): View
     {
-        $users = User::where('ativo', true)->get();
+        $users = User::latest()->get();
         
         return view('about', compact('users'));
     }
