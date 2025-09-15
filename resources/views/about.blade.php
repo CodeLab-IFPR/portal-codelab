@@ -34,9 +34,12 @@ Sobre Nós
                             @if($user->imagem)
                                 <img style="width:80px; height:80px; border-radius:50%;" src="{{ asset('imagens/users/' . $user->imagem) }}" alt="{{ $user->alt ?? $user->name }}">
                             @else
-                                <img style="width:80px; height:80px; border-radius:50%;" src="{{ asset('imagens/users/default.png') }}" alt="{{ $user->alt ?? $user->name }}">
-                            @endif
-                        </div>
+                                <div style="width:80px; height:80px; border-radius:50%; background-color:#f8f9fa; display:flex; align-items:center; justify-content:center; margin:0 auto;">
+                                    <i class="ri-user-fill" style="font-size:4rem; color:#6c757d;"></i>
+                                </div>
+                                @endif
+                                
+                            </div>
                         <p style="font-weight:bold; margin-bottom:0.5rem; margin-top:1rem;">{{ $user->name }}</p>
                         <p style="color:#007bff; font-weight:bold; margin-bottom:1rem; font-size:small;">{{ $user->cargo }}</p>
                         <p style="color:#6c757d; margin-bottom:1rem; line-height:1.5; word-wrap:break-word; overflow-wrap:break-word; white-space:normal;">{{ $user->biografia }}</p>
