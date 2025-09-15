@@ -34,7 +34,7 @@ Sobre Nós
                             @if($user->imagem)
                                 <img style="width:80px; height:80px; border-radius:50%;" src="{{ asset('imagens/users/' . $user->imagem) }}" alt="{{ $user->alt ?? $user->name }}">
                             @else
-                                <img style="width:80px; height:80px; border-radius:50%;" src="{{ asset('imagens/users/default') }}" alt="{{ $user->alt ?? $user->name }}">
+                                <img style="width:80px; height:80px; border-radius:50%;" src="{{ asset('imagens/users/default.png') }}" alt="{{ $user->alt ?? $user->name }}">
                             @endif
                         </div>
                         <p style="font-weight:bold; margin-bottom:0.5rem; margin-top:1rem;">{{ $user->name }}</p>
