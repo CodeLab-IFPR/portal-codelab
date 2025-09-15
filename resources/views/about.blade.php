@@ -31,7 +31,11 @@ Sobre Nós
                 <div class="shadow-lg hover-lift" style="position:relative; display:flex; flex-direction:column; min-width:0; word-wrap:break-word; background-color:#fff; background-clip:border-box; border-radius:0.25rem; box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075); height:100%;">
                     <div style="flex:1 1 auto; padding:1rem; text-align:center; display:flex; flex-direction:column;">
                         <div style="margin-bottom:1rem;">
-                            <img style="width:80px; height:80px; border-radius:50%;" src="{{ asset('imagens/users/' . $user->imagem) }}" alt="{{ $user->alt ?? $user->name }}">
+                            @if($user->imagem)
+                                <img style="width:80px; height:80px; border-radius:50%;" src="{{ asset('imagens/users/' . $user->imagem) }}" alt="{{ $user->alt ?? $user->name }}">
+                            @else
+                                <img style="width:80px; height:80px; border-radius:50%;" src="{{ asset('imagens/users/default') }}" alt="{{ $user->alt ?? $user->name }}">
+                            @endif
                         </div>
                         <p style="font-weight:bold; margin-bottom:0.5rem; margin-top:1rem;">{{ $user->name }}</p>
                         <p style="color:#007bff; font-weight:bold; margin-bottom:1rem; font-size:small;">{{ $user->cargo }}</p>
