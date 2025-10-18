@@ -1,25 +1,25 @@
 <?php return array (
   'barryvdh/laravel-dompdf' => 
   array (
-    'aliases' => 
-    array (
-      'PDF' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
-      'Pdf' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
-    ),
     'providers' => 
     array (
       0 => 'Barryvdh\\DomPDF\\ServiceProvider',
     ),
+    'aliases' => 
+    array (
+      'Pdf' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
+      'PDF' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
+    ),
   ),
   'intervention/image' => 
   array (
-    'aliases' => 
-    array (
-      'Image' => 'Intervention\\Image\\Facades\\Image',
-    ),
     'providers' => 
     array (
       0 => 'Intervention\\Image\\ImageServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Image' => 'Intervention\\Image\\Facades\\Image',
     ),
   ),
   'laravel-lang/config' => 
@@ -66,13 +66,13 @@
   ),
   'laravel/socialite' => 
   array (
-    'aliases' => 
-    array (
-      'Socialite' => 'Laravel\\Socialite\\Facades\\Socialite',
-    ),
     'providers' => 
     array (
       0 => 'Laravel\\Socialite\\SocialiteServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Socialite' => 'Laravel\\Socialite\\Facades\\Socialite',
     ),
   ),
   'laravel/tinker' => 
@@ -119,13 +119,13 @@
   ),
   'simplesoftwareio/simple-qrcode' => 
   array (
-    'aliases' => 
-    array (
-      'QrCode' => 'SimpleSoftwareIO\\QrCode\\Facades\\QrCode',
-    ),
     'providers' => 
     array (
       0 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'QrCode' => 'SimpleSoftwareIO\\QrCode\\Facades\\QrCode',
     ),
   ),
   'spatie/laravel-permission' => 
@@ -135,22 +135,15 @@
       0 => 'Spatie\\Permission\\PermissionServiceProvider',
     ),
   ),
-  'spatie/laravel-sitemap' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Spatie\\Sitemap\\SitemapServiceProvider',
-    ),
-  ),
   'webklex/laravel-imap' => 
   array (
-    'aliases' => 
-    array (
-      'Client' => 'Webklex\\IMAP\\Facades\\Client',
-    ),
     'providers' => 
     array (
       0 => 'Webklex\\IMAP\\Providers\\LaravelServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Client' => 'Webklex\\IMAP\\Facades\\Client',
     ),
   ),
 );

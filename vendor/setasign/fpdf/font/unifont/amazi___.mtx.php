@@ -13,7 +13,7 @@ $desc=array (
 );
 $up=-65;
 $ut=10;
-$ttffile='D:\ProjetosGit\portal-cdt\vendor\setasign\fpdf/font/unifont/AMAZI___.ttf';
+$ttffile='/home/u631067364/domains/lime-dog-299533.hostingersite.com/public_html/vendor/setasign/fpdf/font/unifont/AMAZI___.TTF';
 $originalsize=81052;
 $fontkey='dejavuserifcondensed';
 ?>

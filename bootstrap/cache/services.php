@@ -41,10 +41,9 @@
     37 => 'Pest\\Laravel\\PestServiceProvider',
     38 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
     39 => 'Spatie\\Permission\\PermissionServiceProvider',
-    40 => 'Spatie\\Sitemap\\SitemapServiceProvider',
-    41 => 'Webklex\\IMAP\\Providers\\LaravelServiceProvider',
-    42 => 'App\\Providers\\AppServiceProvider',
-    43 => 'Spatie\\Permission\\PermissionServiceProvider',
+    40 => 'Webklex\\IMAP\\Providers\\LaravelServiceProvider',
+    41 => 'App\\Providers\\AppServiceProvider',
+    42 => 'Spatie\\Permission\\PermissionServiceProvider',
   ),
   'eager' => 
   array (
@@ -71,10 +70,9 @@
     20 => 'Pest\\Laravel\\PestServiceProvider',
     21 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
     22 => 'Spatie\\Permission\\PermissionServiceProvider',
-    23 => 'Spatie\\Sitemap\\SitemapServiceProvider',
-    24 => 'Webklex\\IMAP\\Providers\\LaravelServiceProvider',
-    25 => 'App\\Providers\\AppServiceProvider',
-    26 => 'Spatie\\Permission\\PermissionServiceProvider',
+    23 => 'Webklex\\IMAP\\Providers\\LaravelServiceProvider',
+    24 => 'App\\Providers\\AppServiceProvider',
+    25 => 'Spatie\\Permission\\PermissionServiceProvider',
   ),
   'deferred' => 
   array (
