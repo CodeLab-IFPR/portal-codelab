@@ -1,12 +1,21 @@
 <!doctype html>
 <html lang="pt-br">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PJVF5ZBKPL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-PJVF5ZBKPL');
+    </script>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portal CodeLab - Submissão de Demandas, Certificados e mais.">
-    <meta name="author" content="Cadu e João">
-    <meta name="keywords" content="">
+    <meta name="description" content="Portal CodeLab - Espaço de inovação, tecnologia e desenvolvimento de projetos de extensão. Submissão de demandas, emissão de certificados e muito mais">
+    <meta name="author" content="Equipe CodeLab IFPR">
+    <meta name="keywords" content="CodeLab, IFPR, Inovação, Tecnologia, Projetos, Extensão, Desenvolvimento, Comunidade, Educação, Tecnologia Educacional, Certificação, Notícias, Sobre, Contato, Submissão, Galeria">
 
     <link rel="apple-touch-icon" sizes="180x180" src="{{ asset('img/favicon/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/codelab-logo-ico.png')  }}">

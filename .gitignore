@@ -11,6 +11,7 @@
 /public/anexos_submissions
 /public/anexos_contacts
 /public/qr
+/public/sitemap.xml
 /storage/logs/*.log
 .env
 .env.backup
