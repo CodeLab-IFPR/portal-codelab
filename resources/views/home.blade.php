@@ -14,7 +14,7 @@ CodeLab IFPR
 
             <!-- Hero Text-->
             <div class="col-12 col-lg-8 position-relative z-index-20 text-center" data-aos="fade-in">
-                <img class="img-fluid mx-auto d-block" src="{{ asset('img/codelab-logo-ico.png') }}" alt="Logo do Codelab">
+                <img class="img-fluid mx-auto d-block" src="{{ asset('img/codelab-logo-ico.png') }}" alt="Logo do Codelab" style="max-width: 150px; height: auto;">
                 <h1 class="display-1 fw-bold mb-1">CodeLab</h1>
                 <h2 class="fs-5 fs-md-4 fw-bold mb-1">Laboratório de Desenvolvimento Tecnológico</h2>
                 <p class="fs-6 fs-md-5 fw-medium mb-4">IFPR – Campus Paranavaí</p>

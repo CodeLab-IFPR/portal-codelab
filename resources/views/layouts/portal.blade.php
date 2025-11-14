@@ -18,8 +18,8 @@
     <meta name="keywords" content="CodeLab, IFPR, Inovação, Tecnologia, Projetos, Extensão, Desenvolvimento, Comunidade, Educação, Tecnologia Educacional, Certificação, Notícias, Sobre, Contato, Submissão, Galeria">
 
     <link rel="apple-touch-icon" sizes="180x180" src="{{ asset('img/favicon/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/codelab-logo-ico.png')  }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/codelab-logo-ico.png')  }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/codelab-favicon.png')  }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/codelab-favicon.png')  }}">
     <link rel="mask-icon" src="{{ asset('img/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
