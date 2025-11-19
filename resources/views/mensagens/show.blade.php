@@ -36,6 +36,10 @@ Visualizar Mensagem
                 </div>
             @endif
             <div class="form-group">
+                <strong>Enviado em:</strong>
+                <p>{{ $mensagem->created_at->format('d/m/Y \à\s H:i') }}</p>
+            </div>
+            <div class="form-group">
                 <strong>Nome:</strong>
                 <p>{{ $mensagem->name }}</p>
             </div>
