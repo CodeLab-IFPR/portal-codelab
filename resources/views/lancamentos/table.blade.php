@@ -1,4 +1,53 @@
 
+@php
+    $totalHoras = isset($horasTotais) ? $horasTotais['total'] : $lancamentos->sum('horas_trabalhadas');
+    $horasGeradas = isset($horasTotais) ? $horasTotais['geradas'] : $lancamentos->where('certificado_gerado', true)->sum('horas_trabalhadas');
+    $horasPendentes = isset($horasTotais) ? $horasTotais['pendentes'] : $totalHoras - $horasGeradas;
+    $percentualGeradas = isset($horasTotais) ? $horasTotais['percentual'] : ($totalHoras > 0 ? ($horasGeradas / $totalHoras) * 100 : 0);
+@endphp
+
+<div class="border-1 bg-white mb-4 card shadow-sm">
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h6 class="fw-bold mb-2">
+                    Totalizador de horas
+                </h6>
+                <div class="progress mb-2" style="height: 12px;">
+                    <div class="progress-bar bg-success" role="progressbar" 
+                         style="width: {{ $percentualGeradas }}%" 
+                         aria-valuenow="{{ $percentualGeradas }}" 
+                         aria-valuemin="0" 
+                         aria-valuemax="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row text-center">
+                    <div class="col-4">
+                        <div class="d-flex flex-column">
+                            <span class="h5 mb-0 text-primary fw-bold">{{ $totalHoras }}h</span>
+                            <small class="text-muted">Total</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="d-flex flex-column">
+                            <span class="h5 mb-0 text-success fw-bold">{{ $horasGeradas }}h</span>
+                            <small class="text-muted">Certificadas</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="d-flex flex-column">
+                            <span class="h5 mb-0 text-warning fw-bold">{{ $horasPendentes }}h</span>
+                            <small class="text-muted">Pendentes</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
@@ -10,7 +59,6 @@
             <th scope="col">Nome</th>
             <th scope="col">Descrição</th>
             <th scope="col">Data</th>
-            <!-- <th scope="col">Data Final</th> -->
             <th scope="col">Horas</th>
             @hasrole('Admin')
             <th scope="col">Status Certificado</th>

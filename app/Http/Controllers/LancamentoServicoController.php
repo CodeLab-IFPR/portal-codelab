@@ -55,13 +55,15 @@ class LancamentoServicoController extends Controller implements HasMiddleware
 
         $lancamentos = $filtro->orderBy($order, $direction)->paginate(10);
         
+        $horasTotais = $this->calcularTotalHoras($request);
+        
         // Buscar usuários para o filtro (apenas para admins)
         $users = collect();
         if (auth()->user()->hasRole('Admin')) {
             $users = User::select('id', 'name')->orderBy('name')->get();
         }
         
-        return view('lancamentos.index', compact('lancamentos', 'order', 'direction', 'users'));
+        return view('lancamentos.index', compact('lancamentos', 'order', 'direction', 'users', 'horasTotais'));
     }
 
     public function create()
@@ -179,8 +181,10 @@ class LancamentoServicoController extends Controller implements HasMiddleware
             $lancamentos = $filtro->orderBy($order, $direction)->paginate(10);
 
             if (request()->ajax()) {
+                $horasTotais = $this->calcularTotalHoras($request);
+                
                 return response()->json([
-                    'table' => view('lancamentos.table', compact('lancamentos'))->render()
+                    'table' => view('lancamentos.table', compact('lancamentos', 'horasTotais'))->render()
                 ]);
             }
 
@@ -222,5 +226,43 @@ class LancamentoServicoController extends Controller implements HasMiddleware
         }
     
         return redirect()->route('certificados.create', ['data' => json_encode($certificadosData)]);
+    }
+
+
+    private function calcularTotalHoras(Request $request)
+    {
+        $query = LancamentoServico::query();
+
+        if (!auth()->user()->hasRole('Admin')) {
+            $query->where('user_id', auth()->id());
+        }
+
+        if ($request->filled('user_id') && auth()->user()->hasRole('Admin')) {
+            $query->where('user_id', $request->user_id);
+        }
+
+        if ($request->filled('data_inicio')) {
+            $query->where('data_inicio', '>=', $request->data_inicio);
+        }
+
+        if ($request->filled('data_fim')) {
+            $query->where('data_final', '<=', $request->data_fim);
+        }
+
+        if ($request->filled('certificado_status')) {
+            $query->where('certificado_gerado', $request->certificado_status);
+        }
+
+        $totalHoras = $query->sum('horas_trabalhadas');
+        $horasGeradas = $query->where('certificado_gerado', true)->sum('horas_trabalhadas');
+        $horasPendentes = $totalHoras - $horasGeradas;
+        $percentualGeradas = $totalHoras > 0 ? ($horasGeradas / $totalHoras) * 100 : 0;
+
+        return [
+            'total' => $totalHoras,
+            'geradas' => $horasGeradas,
+            'pendentes' => $horasPendentes,
+            'percentual' => $percentualGeradas
+        ];
     }
 }
