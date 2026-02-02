@@ -56,7 +56,19 @@ Lançamentos
                 @include('lancamentos.table', ['lancamentos' => $lancamentos])
             </div>
             @hasrole('Admin')
-            <button type="submit" class="btn btn-outline-success">Gerar Certificados</button>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <div>
+                    <button type="submit" class="btn btn-outline-success">Gerar Certificados</button>
+                </div>
+                <div class="d-flex align-items-center">
+                    <label class="me-2 mb-0">Paginação:</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="paginationSwitch" 
+                        {{ request('page_size') != 10000 ? 'checked' : '' }}
+                        onchange="togglePagination(this)">
+                    </div>
+                </div>
+            </div>
             @endhasrole
         </form>
     </div>
@@ -242,6 +254,22 @@ Lançamentos
             });
         });
     });
+
+    function togglePagination(checkbox) {
+        var currentUrl = new URL(window.location.href);
+        var params = new URLSearchParams(currentUrl.search);
+        
+        if (checkbox.checked) {
+            // Ativar paginação (remover page_size ou definir como 10)
+            params.delete('page_size');
+        } else {
+            // Desativar paginação (definir page_size como 10000)
+            params.set('page_size', '10000');
+        }
+        
+        currentUrl.search = params.toString();
+        window.location.href = currentUrl.toString();
+    }
 </script>
 
 <style>
