@@ -194,7 +194,6 @@ Lançamentos
             }
         });
 
-        // Validação de datas no modal
         $('#data_inicio, #data_fim').on('change', function() {
             var dataInicio = $('#data_inicio').val();
             var dataFim = $('#data_fim').val();
@@ -206,7 +205,6 @@ Lançamentos
             }
         });
 
-        // Fechar modal após submit
         $('#filtros-form').on('submit', function() {
             $('#filtrosModal').modal('hide');
         });
@@ -260,10 +258,8 @@ Lançamentos
         var params = new URLSearchParams(currentUrl.search);
         
         if (checkbox.checked) {
-            // Ativar paginação (remover page_size ou definir como 10)
             params.delete('page_size');
         } else {
-            // Desativar paginação (definir page_size como 10000)
             params.set('page_size', '10000');
         }
         
