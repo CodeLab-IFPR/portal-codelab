@@ -56,7 +56,19 @@ Lançamentos
                 @include('lancamentos.table', ['lancamentos' => $lancamentos])
             </div>
             @hasrole('Admin')
-            <button type="submit" class="btn btn-outline-success">Gerar Certificados</button>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <div>
+                    <button type="submit" class="btn btn-outline-success">Gerar Certificados</button>
+                </div>
+                <div class="d-flex align-items-center">
+                    <label class="me-2 mb-0">Paginação:</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="paginationSwitch" 
+                        {{ request('page_size') != 10000 ? 'checked' : '' }}
+                        onchange="togglePagination(this)">
+                    </div>
+                </div>
+            </div>
             @endhasrole
         </form>
     </div>
@@ -182,7 +194,6 @@ Lançamentos
             }
         });
 
-        // Validação de datas no modal
         $('#data_inicio, #data_fim').on('change', function() {
             var dataInicio = $('#data_inicio').val();
             var dataFim = $('#data_fim').val();
@@ -194,7 +205,6 @@ Lançamentos
             }
         });
 
-        // Fechar modal após submit
         $('#filtros-form').on('submit', function() {
             $('#filtrosModal').modal('hide');
         });
@@ -242,6 +252,20 @@ Lançamentos
             });
         });
     });
+
+    function togglePagination(checkbox) {
+        var currentUrl = new URL(window.location.href);
+        var params = new URLSearchParams(currentUrl.search);
+        
+        if (checkbox.checked) {
+            params.delete('page_size');
+        } else {
+            params.set('page_size', '10000');
+        }
+        
+        currentUrl.search = params.toString();
+        window.location.href = currentUrl.toString();
+    }
 </script>
 
 <style>

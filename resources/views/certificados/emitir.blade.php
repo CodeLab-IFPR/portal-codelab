@@ -9,12 +9,12 @@ Emitir Certificado
     <div class="text-center">
         <h1>Emitir Certificados</h1>
 
-        <form id="cpfForm" class="mb-2">
-            <div class="mb-3">
+        <form id="cpfForm">
+            <div>
                 <label for="cpf" class="form-label">Digite seu CPF:</label>
                 <input type="text" id="cpf" name="cpf" class="form-control rounded" required>
             </div>
-            <button type="submit" class="btn btn-primary rounded">Buscar Certificados</button>
+            <button type="submit" class="btn btn-primary rounded my-3">Buscar Certificados</button>
         </form>
 
         <div id="certificadosList"></div>
@@ -66,14 +66,29 @@ Emitir Certificado
                     certificadosList.innerHTML = '';
 
                     if (data.certificados && data.certificados.length > 0) {
-                        let table = '<table class="table"><thead><tr><th>Descrição</th><th>Horas</th><th>Ações</th></tr></thead><tbody>';
+                        let table = '<table class="table table-bordered table-striped"><thead><tr><th>Descrição</th><th>Horas</th><th>Ações</th></tr></thead><tbody>';
                         data.certificados.forEach(certificado => {
                             table += `<tr>
                                 <td>${certificado.descricao}</td>
                                 <td>${certificado.horas}</td>
                                 <td>
-                                    <a href="/certificados/${certificado.id}/view" target="_blank">Visualizar</a> |
-                                    <a href="/certificados/${certificado.id}/download">Baixar</a>
+                                    <div class="dropdown text-center">
+                                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Ação
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a class="dropdown-item d-flex align-items-center" href="/certificados/${certificado.id}/view" target="_blank">
+                                                    <i class="bi bi-eye text-secondary me-2"></i> Visualizar
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item d-flex align-items-center" href="/certificados/${certificado.id}/download">
+                                                    <i class="bi bi-download text-success me-2"></i> Baixar
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </td>
                             </tr>`;
                         });
