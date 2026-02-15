@@ -96,7 +96,7 @@
                 @if($projeto->imagem && file_exists(public_path($projeto->imagem)))
                 <img src="{{ asset($projeto->imagem) }}" alt="{{ $projeto->nome }}" class="img-fluid flex-shrink-0" style="height: 220px; object-fit: cover; width: 100%;">
                 @else
-                <img src="https://raw.githubusercontent.com/CodeLab-IFPR/.github/main/profile/banner.png" alt="Default Image" class="img-fluid flex-shrink-0" style="height: 220px; object-fit: fit; width: 100%;">
+                <img src="{{ asset($iconLogoPath) }}" alt="Default Image" class="img-fluid flex-shrink-0 p-2" style="height: 220px; object-fit: contain; width: 100%;">
                 @endif
                      
             <div class="card-body p-4 p-lg-5 d-flex flex-column">
@@ -370,7 +370,7 @@
                             <img src="{{ asset($projeto->imagem) }}" alt="{{ $projeto->nome }}" class="img-fluid rounded-4" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
                         @else
-                        <img src="https://avatars.githubusercontent.com/u/217792933?s=200&v=4" alt="Default Image" class="img-fluid rounded-4 flex-shrink-0" style="height: 220px; object-fit: contain; width: 100%; border: 2px solid #e9ecef;">
+                        <img src="{{ asset(\App\Models\FraseInicio::getParametro(PARAM_ICON_LOGO)) }}" alt="Default Image" class="img-fluid rounded-4 flex-shrink-0 p-2" style="height: 220px; object-fit: contain; width: 100%; border: 2px solid #e9ecef;">
                         @endif
                         <div class="mt-4 mb-4">
                             <p class="fw-bold mb-0">Palavras-chave</p>
