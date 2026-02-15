@@ -24,7 +24,8 @@ class FraseInicioController extends Controller
         $nosEncontreOnline = FraseInicio::find(PARAM_NOS_ENCONTRE_ONLINE);
         $iconLogo = FraseInicio::find(PARAM_ICON_LOGO);
         $fullLogo = FraseInicio::find(PARAM_FULL_LOGO);
-        return view('admin.frase_inicio.editar', compact('fraseInicio', 'fraseSobre', 'titulo_1', 'titulo_2', 'titulo_3', 'nomeOrganizacao', 'endereco', 'seoTitle', 'seoDescricao', 'seoAuthor', 'seoKeywords', 'nosEncontreOnline', 'iconLogo', 'fullLogo'));
+        $favIcon = FraseInicio::find(PARAM_FAV_ICON);
+        return view('admin.frase_inicio.editar', compact('fraseInicio', 'fraseSobre', 'titulo_1', 'titulo_2', 'titulo_3', 'nomeOrganizacao', 'endereco', 'seoTitle', 'seoDescricao', 'seoAuthor', 'seoKeywords', 'nosEncontreOnline', 'iconLogo', 'fullLogo', 'favIcon'));
     }
 
     public function atualizar(Request $request)
@@ -42,7 +43,8 @@ class FraseInicioController extends Controller
             'seo_author' => 'nullable|string',
             'seo_keywords' => 'nullable|string',
             'nos_encontre_online' => 'nullable|string',
-            'icon_logo' => 'required|image|mimes:jpeg,png,jpg',
+            'icon_logo' => 'nullable|image|mimes:jpeg,png,jpg',
+            'fav_icon' => 'nullable|image|mimes:jpeg,png,jpg',
         ]);
 
         if ($request->hasFile('icon_logo')) {
@@ -66,6 +68,31 @@ class FraseInicioController extends Controller
                 FraseInicio::create([
                     'id' => PARAM_ICON_LOGO,
                     'frase' => $iconPath
+                ]);
+            }
+        }
+
+        if ($request->hasFile('fav_icon')) {
+            $favIconRecord = FraseInicio::find(PARAM_FAV_ICON);
+            
+            if ($favIconRecord && $favIconRecord->frase) {
+                $oldPath = public_path($favIconRecord->frase);
+                if (File::exists($oldPath)) {
+                    File::delete($oldPath);
+                }
+            }
+            
+            $favFile = $request->file('fav_icon');
+            $favFileName = 'favicon.' . $favFile->getClientOriginalExtension();
+            $favFile->move(public_path('imagens/logos'), $favFileName);
+            $favPath = 'imagens/logos/' . $favFileName;
+            
+            if ($favIconRecord) {
+                $favIconRecord->update(['frase' => $favPath]);
+            } else {
+                FraseInicio::create([
+                    'id' => PARAM_FAV_ICON,
+                    'frase' => $favPath
                 ]);
             }
         }
