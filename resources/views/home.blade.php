@@ -2,7 +2,10 @@
 
 <!-- Titulo -->
 @section('title')
-CodeLab IFPR
+@php
+    $seoTitle = \App\Models\FraseInicio::getParametro(PARAM_SEO_TITLE);
+@endphp
+{{ ($seoTitle && $seoTitle !== '') ? $seoTitle : \App\Models\FraseInicio::getParametro(PARAM_TITULO_1) }}
 @endsection
 <!-- Titulo -->
 
@@ -14,13 +17,17 @@ CodeLab IFPR
 
             <!-- Hero Text-->
             <div class="col-12 col-lg-8 position-relative z-index-20 text-center" data-aos="fade-in">
-                <img class="img-fluid mx-auto d-block" src="{{ asset('img/codelab-logo-ico.png') }}" alt="Logo do Codelab" style="max-width: 150px; height: auto;">
-                <h1 class="display-1 fw-bold mb-1">CodeLab</h1>
-                <h2 class="fs-5 fs-md-4 fw-bold mb-1">Laboratório de Desenvolvimento Tecnológico</h2>
-                <p class="fs-6 fs-md-5 fw-medium mb-4">IFPR – Campus Paranavaí</p>
                 @php
-                $fraseInicio = \App\Models\FraseInicio::find(1)->frase ?? 'Frase não encontrada';
+                $fraseInicio = \App\Models\FraseInicio::getParametro(PARAM_FRASE_TELA_INICIAL) ?? 'Frase não encontrada';
+                $titulo_1 = \App\Models\FraseInicio::getParametro(parametro: PARAM_TITULO_1) ?? '';
+                $titulo_2 = \App\Models\FraseInicio::getParametro(PARAM_TITULO_2) ?? '';
+                $titulo_3 = \App\Models\FraseInicio::getParametro(PARAM_TITULO_3) ?? '';
+                $iconLogoPath = \App\Models\FraseInicio::getParametro(PARAM_ICON_LOGO);
                 @endphp
+                <img class="img-fluid mx-auto d-block" src="{{ asset($iconLogoPath ) }}" alt="Logo do Codelab" style="max-width: 150px; height: auto;">
+                <h1 class="display-1 fw-bold mb-1">{{ $titulo_1 }}</h1>
+                <h2 class="fs-5 fs-md-4 fw-bold mb-1">{{ $titulo_2 }}</h2>
+                <p class="fs-6 fs-md-5 fw-medium mb-4">{{ $titulo_3 }}</p>
                 <p class="lead text-muted mb-5">{{ $fraseInicio }}</p>
 
                     <div class="mt-4 pt-1 d-flex flex-column flex-md-row justify-content-center">
@@ -89,7 +96,7 @@ CodeLab IFPR
                 @if($projeto->imagem && file_exists(public_path($projeto->imagem)))
                 <img src="{{ asset($projeto->imagem) }}" alt="{{ $projeto->nome }}" class="img-fluid flex-shrink-0" style="height: 220px; object-fit: cover; width: 100%;">
                 @else
-                <img src="https://avatars.githubusercontent.com/u/217792933?s=200&v=4" alt="Default Image" class="img-fluid flex-shrink-0" style="height: 220px; object-fit: contain; width: 100%;">
+                <img src="https://raw.githubusercontent.com/CodeLab-IFPR/.github/main/profile/banner.png" alt="Default Image" class="img-fluid flex-shrink-0" style="height: 220px; object-fit: fit; width: 100%;">
                 @endif
                      
             <div class="card-body p-4 p-lg-5 d-flex flex-column">
