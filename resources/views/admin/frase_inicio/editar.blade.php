@@ -91,12 +91,26 @@ Editar Frases
             </div>
 
             <div class="mb-3">
-                <label for="icon_logo" class="form-label"><strong>Logo*</strong></label>
-                <input type="file" name="icon_logo" id="icon_logo" class="form-control @error('icon_logo') is-invalid @enderror" accept="image/*" required>
+                <label for="icon_logo" class="form-label"><strong>Logo</strong></label>
+                <input type="file" name="icon_logo" id="icon_logo" class="form-control @error('icon_logo') is-invalid @enderror" accept="image/*">
                 <div class="form-text">jpeg, png ou jpg</div>
                 @error('icon_logo')
                     <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
+            </div>
+
+            <div class="mb-3">
+                <label for="fav_icon" class="form-label"><strong>Favicon</strong></label>
+                <input type="file" name="fav_icon" id="fav_icon" class="form-control @error('fav_icon') is-invalid @enderror" accept="image/*">
+                <div class="form-text">png, jpeg ou jpg</div>
+                @error('fav_icon')
+                    <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
+                @if($favIcon && $favIcon->frase)
+                    <div class="mt-2">
+                        <small>Favicon atual: {{ basename($favIcon->frase) }}</small>
+                    </div>
+                @endif
             </div>
             
             <div class="mb-3">

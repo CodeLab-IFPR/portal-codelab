@@ -18,7 +18,7 @@
     <meta name="keywords" content={{ \App\Models\FraseInicio::getParametro(PARAM_SEO_KEYWORDS) }}>
 
     @php
-        $faviconPath = \App\Models\FraseInicio::getParametro(PARAM_ICON_LOGO);
+        $faviconPath = \App\Models\FraseInicio::getParametro(PARAM_FAV_ICON);
     @endphp
     <link rel="apple-touch-icon" sizes="180x180" src="{{ asset('img/favicon/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset($faviconPath) }}">
