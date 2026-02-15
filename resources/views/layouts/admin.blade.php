@@ -30,7 +30,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
     <meta name="keywords"
         content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard">
     @php
-        $faviconPath = \App\Models\FraseInicio::getParametro(PARAM_ICON_LOGO);
+        $faviconPath = \App\Models\FraseInicio::getParametro(PARAM_FAV_ICON);
     @endphp
         <link rel="icon" type="image/png" sizes="32x32" href="{{ asset($faviconPath) }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset($faviconPath) }}">
