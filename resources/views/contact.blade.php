@@ -25,23 +25,32 @@ Contate Nos
                 <div class="row g-5">
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="name">Nome</label>
-                        <input type="text" class="form-control rounded" id="name" name="name" placeholder="Seu nome" required aria-required="true">
+                        <input type="text" class="form-control rounded" id="name" name="name" placeholder="Seu nome" value="{{ old('name') }}" required aria-required="true">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="email">E-mail</label>
-                        <input type="email" class="form-control rounded" id="email" name="email" placeholder="email@email.com.br" required aria-required="true">
+                        <input type="email" class="form-control rounded" id="email" name="email" placeholder="email@email.com.br" value="{{ old('email') }}" required aria-required="true">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="telephone">Celular</label>
-                        <input type="text" class="form-control rounded" id="telephone" name="telephone" placeholder="(99) 9-9999-9999" required aria-required="true">
+                        <input type="text" class="form-control rounded" id="telephone" name="telephone" placeholder="(99) 9-9999-9999" value="{{ old('telephone') }}" required aria-required="true">
                     </div>
                     <div class="col-12">
                         <label class="form-label" for="message">Mensagem</label>
-                        <textarea name="message" id="message" class="form-control rounded" style="resize: none; height: 150px;" placeholder="Sua mensagem..." required aria-required="true"></textarea>
+                        <textarea name="message" id="message" class="form-control rounded" style="resize: none; height: 150px;" placeholder="Sua mensagem..." required aria-required="true">{{ old('message') }}</textarea>
                     </div>
+                    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                    
+                    <div class="g-recaptcha" data-sitekey="{{ env('NOCAPTCHA_SITEKEY') }}"></div>
+                    <div id="captchaClientError" class="text-danger small mt-2" style="display: none;">Por favor, confirme o captcha.</div>
+                    @error('g-recaptcha-response')
+                        <div class="text-danger small mt-2">{{ $message }}</div>
+                    @enderror
+
                     <div class="col-12 justify-content-end d-flex">
                         <button class="btn btn-primary rounded" type="submit">Enviar mensagem</button>
                     </div>
+
                 </div>
             </form>
         </div>
@@ -60,10 +69,26 @@ Contate Nos
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        var contactForm = document.getElementById('contactForm');
+        var captchaClientError = document.getElementById('captchaClientError');
         var telephoneInput = document.getElementById('telephone');
         telephoneInput.addEventListener('input', function (e) {
             var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,1})(\d{0,4})(\d{0,4})/);
             e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '') + (x[4] ? '-' + x[4] : '');
+        });
+
+        contactForm.addEventListener('submit', function (event) {
+            if (typeof grecaptcha === 'undefined') {
+                return;
+            }
+
+            var response = grecaptcha.getResponse();
+            if (!response) {
+                event.preventDefault();
+                captchaClientError.style.display = 'block';
+            } else {
+                captchaClientError.style.display = 'none';
+            }
         });
     });
 </script>

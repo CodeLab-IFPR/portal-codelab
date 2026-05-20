@@ -21,24 +21,34 @@ Submissão de Demandas
                 <div class="row g-5">
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="name">Nome</label>
-                        <input type="text" class="form-control rounded" id="name" name="name" placeholder="Seu Nome" required aria-required="true">
+                        <input type="text" class="form-control rounded" id="name" name="name" value="{{ old('name') }}" placeholder="Seu Nome" required aria-required="true">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="email">E-mail</label>
-                        <input type="email" class="form-control rounded" id="email" name="email" placeholder="seuemail@dominio.com" required aria-required="true">
+                        <input type="email" class="form-control rounded" id="email" name="email" value="{{ old('email') }}" placeholder="seuemail@dominio.com" required aria-required="true">
                     </div>
                     <div class="col-12">
                         <label class="form-label" for="demand_description">Descrição da Demanda</label>
-                        <textarea name="demand_description" id="demand_description" class="form-control rounded" style="resize: none; height: 150px;" placeholder="Detalhe sua demanda aqui..." required aria-required="true"></textarea>
+                        <textarea name="demand_description" id="demand_description" class="form-control rounded" style="resize: none; height: 150px;" placeholder="Detalhe sua demanda aqui..." required aria-required="true">{{ old('demand_description') }}</textarea>
                     </div>
                     <div class="col-12">
                         <label class="form-label" for="expected_utility">Utilidade Esperada</label>
-                        <textarea name="expected_utility" id="expected_utility" class="form-control rounded" style="resize: none; height: 100px;" placeholder="Descreva a utilidade esperada..." required aria-required="true"></textarea>
+                        <textarea name="expected_utility" id="expected_utility" class="form-control rounded" style="resize: none; height: 100px;" placeholder="Descreva a utilidade esperada..." required aria-required="true">{{ old('expected_utility') }}</textarea>
                     </div>
                     <div class="col-12">
                         <label class="form-label" for="supporting_files">Arquivos de Suporte (Anexos)</label>
                         <input type="file" class="form-control rounded" id="supporting_files" name="supporting_files[]" accept=".pdf,.doc,.docx" multiple required aria-required="true">
+                        @if ($errors->any())
+                            <div class="text-danger small mt-1">Por favor, selecione os arquivos novamente.</div>
+                        @endif
                     </div>
+                    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+                    <div class="g-recaptcha" data-sitekey="{{ env('NOCAPTCHA_SITEKEY') }}"></div>
+                    <div id="captchaClientError" class="text-danger small mt-2" style="display: none;">Por favor, confirme o captcha.</div>
+                    @error('g-recaptcha-response')
+                        <div class="text-danger small mt-2">{{ $message }}</div>
+                    @enderror
                     <div class="col-12 justify-content-end d-flex">
                         <button class="btn btn-primary" type="submit">Enviar Demanda</button>
                     </div>
@@ -57,4 +67,25 @@ Submissão de Demandas
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var submissionForm = document.getElementById('submissionForm');
+        var captchaClientError = document.getElementById('captchaClientError');
+
+        submissionForm.addEventListener('submit', function (event) {
+            if (typeof grecaptcha === 'undefined') {
+                return;
+            }
+
+            var response = grecaptcha.getResponse();
+            if (!response) {
+                event.preventDefault();
+                captchaClientError.style.display = 'block';
+            } else {
+                captchaClientError.style.display = 'none';
+            }
+        });
+    });
+</script>
 @endsection
