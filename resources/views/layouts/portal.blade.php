@@ -175,6 +175,7 @@
                     </a>
                 </li>
             </ul>
+            <a href="{{ route('admin') }}" class="btn btn-primary mt-3 mt-lg-0" role="button">Login</a>
         </div>
     </div>
 </nav>
