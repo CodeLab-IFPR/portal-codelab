@@ -6,6 +6,7 @@ use App\Mail\ContactMessage;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Contact;
 use Illuminate\Support\Facades\File;
+use ReCaptcha\ReCaptcha;
 
 class ContactController extends Controller
 {
@@ -67,6 +68,22 @@ class ContactController extends Controller
 
     public function sendMessage(Request $request)
     {
+        $request->validate([
+            'g-recaptcha-response' => ['required'],
+        ]);
+
+        $recaptcha = new ReCaptcha(env('NOCAPTCHA_SECRET'));
+        $resp = $recaptcha->verify(
+            $request->input('g-recaptcha-response'),
+            $request->ip()
+        );
+
+        if (!$resp->isSuccess()) {
+            return back()->withErrors([
+                'g-recaptcha-response' => 'Captcha invalido, tente novamente.',
+            ])->withInput();
+        }
+
         $data = $request->all();
 
         // Salvar a mensagem de contato no banco de dados

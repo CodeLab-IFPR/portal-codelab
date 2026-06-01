@@ -1,16 +1,28 @@
 <!doctype html>
 <html lang="pt-br">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PJVF5ZBKPL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-PJVF5ZBKPL');
+    </script>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portal CodeLab - Submissão de Demandas, Certificados e mais.">
-    <meta name="author" content="Cadu e João">
-    <meta name="keywords" content="">
+    <meta name="description" content={{ \App\Models\FraseInicio::getParametro(PARAM_SEO_DESCRICAO) }}>
+    <meta name="author" content={{ \App\Models\FraseInicio::getParametro(PARAM_SEO_AUTHOR) }}>
+    <meta name="keywords" content={{ \App\Models\FraseInicio::getParametro(PARAM_SEO_KEYWORDS) }}>
 
+    @php
+        $faviconPath = \App\Models\FraseInicio::getParametro(PARAM_FAV_ICON);
+    @endphp
     <link rel="apple-touch-icon" sizes="180x180" src="{{ asset('img/favicon/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/codelab-logo-ico.png')  }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/codelab-logo-ico.png')  }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset($faviconPath) }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset($faviconPath) }}">
     <link rel="mask-icon" src="{{ asset('img/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
@@ -80,9 +92,12 @@
     <div class="container">
         <a class="navbar-brand d-flex align-items-center lh-1 me-1 transition-opacity opacity-75-hover" href="{{ route('home') }}">
             <span class="f-w-8 d-block text-success mb-1 me-1">
-                <img class="img-fluid mx-auto d-block" src="{{ asset('img/codelab-logo-ico.png') }}" alt="">
+                @php
+                    $iconLogoPath = \App\Models\FraseInicio::getParametro(PARAM_ICON_LOGO);
+                @endphp
+                <img class="img-fluid mx-auto d-block" src="{{ asset($iconLogoPath ?? 'img/codelab-logo-ico.png') }}" alt="">
             </span>
-            <span class="fw-bold text-body text-center fs-6">CodeLab</span>
+            <span class="fw-bold text-body text-center fs-6">{{ \App\Models\FraseInicio::getParametro(PARAM_NOME_ORGANIZACAO) ?? '' }}</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -160,6 +175,7 @@
                     </a>
                 </li>
             </ul>
+            <a href="{{ route('admin') }}" class="btn btn-primary mt-3 mt-lg-0" role="button">Login</a>
         </div>
     </div>
 </nav>
@@ -172,19 +188,20 @@
             <a class="d-flex align-items-center lh-1 text-white transition-opacity opacity-50-hover text-decoration-none mb-4 mb-md-0"
                 href="#">
                 <span class="f-w-7 d-block text-success me-2">
-                <img class="img-fluid d-table mx-auto bg-white rounded-1" src="{{ asset('img/codelab-logo-ico.png') }}" alt="">
+                @php
+                    $iconLogoPath = \App\Models\FraseInicio::getParametro(PARAM_ICON_LOGO);
+                @endphp
+                <img class="img-fluid d-table mx-auto bg-white rounded-1" src="{{ asset($iconLogoPath) }}" alt="">
                 </span>
-                <span class="fw-bold">CodeLab</span>
+                <span class="fw-bold">{{ \App\Models\FraseInicio::getParametro(PARAM_NOME_ORGANIZACAO) }}</span>
             </a>    
         </div>
         <div class="d-flex flex-wrap justify-content-between mt-5 mt-lg-7">    
             <div class="w-100 w-sm-50 w-lg-auto mb-4 mb-lg-0">
                 <h6 class="text-uppercase fs-xs fw-bolder tracking-wider text-white opacity-50">Portal</h6>
                 <ul class="list-unstyled footer-nav">
-                    <li><a href="{{ route('about') }}">Sobre Nós</a></li>
-                    <li><a href="#">Junte-se</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Últimas Noticias</a></li>
+                    <li><a href="{{ route('about') }}">Sobre Nós</a></li> 
+                    <li><a href="{{route('noticias.cards')}}">Últimas Noticias</a></li>
                 </ul>
             </div>
             <div class="w-100 w-sm-50 w-lg-auto mb-4 mb-lg-0">
@@ -197,9 +214,7 @@
             <div class="w-100 w-sm-50 w-lg-auto mb-4 mb-lg-0">
                 <h6 class="text-uppercase fs-xs fw-bolder tracking-wider text-white opacity-50">Termos Legais</h6>
                 <ul class="list-unstyled footer-nav">
-                    <li><a href="#">Política de Privacidade</a></li>
-                    <li><a href="#">Termos & Condições</a></li>
-                    <li><a href="#">LGPD</a></li>
+                    <!-- <li><a href="#">LGPD</a></li> -->
                     <li><a href="https://ifpr.edu.br/paranavai/" target="_blank">IFPR</a></li>
                 </ul>
             </div>    
@@ -207,8 +222,8 @@
     </div>
     <div class="container">
         <div class="border-top pt-6 mt-7 border-white-10 d-flex flex-column flex-md-row justify-content-between align-items-center">
-            <span class="small text-white opacity-50 mb-2 mb-md-0">Todos os direitos reservados &copy IFPR 2024 e Sigma 2021</span>
-            <span class="small text-white opacity-50">Termos de Serviço  |  Política de Segurança</span>
+            <span class="small text-white opacity-50 mb-2 mb-md-0">Todos os direitos reservados {{ \App\Models\FraseInicio::getParametro(parametro: PARAM_NOME_ORGANIZACAO) ?? '' }}</span>
+            <!-- <span class="small text-white opacity-50">Termos de Serviço  |  Política de Segurança</span> -->
         </div>
     </div>    
 </footer>

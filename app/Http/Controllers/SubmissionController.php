@@ -8,6 +8,7 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Submission;
 use Illuminate\Support\Facades\File;
+use ReCaptcha\ReCaptcha;
 
 class SubmissionController extends Controller implements HasMiddleware
 {
@@ -21,6 +22,22 @@ class SubmissionController extends Controller implements HasMiddleware
     }
     public function submit(Request $request)
     {
+        $request->validate([
+            'g-recaptcha-response' => ['required'],
+        ]);
+
+        $recaptcha = new ReCaptcha(env('NOCAPTCHA_SECRET'));
+        $resp = $recaptcha->verify(
+            $request->input('g-recaptcha-response'),
+            $request->ip()
+        );
+
+        if (!$resp->isSuccess()) {
+            return back()->withErrors([
+                'g-recaptcha-response' => 'Captcha invalido, tente novamente.',
+            ])->withInput();
+        }
+
         $data = $request->all();
 
         // Verificar e processar arquivos anexados

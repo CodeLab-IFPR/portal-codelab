@@ -35,7 +35,7 @@ class ProjetoController extends Controller implements HasMiddleware
 
     public function indexPublic(): View
     {
-        $projetos = Projeto::latest()->paginate(6);
+        $projetos = Projeto::latest()->get();
         return view('projetos.cards', compact('projetos'));
     }
 
