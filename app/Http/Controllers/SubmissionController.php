@@ -34,7 +34,7 @@ class SubmissionController extends Controller implements HasMiddleware
 
         if ($request->filled('website')) {
             return back()->withErrors([
-                'form' => 'Falha na validacao. Tente novamente.',
+                'form' => 'Falha na validação. Tente novamente.',
             ])->withInput();
         }
 

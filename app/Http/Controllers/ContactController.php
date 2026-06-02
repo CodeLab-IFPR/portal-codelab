@@ -80,7 +80,7 @@ class ContactController extends Controller
 
         if ($request->filled('website')) {
             return back()->withErrors([
-                'form' => 'Falha na validacao. Tente novamente.',
+                'form' => 'Falha na validação. Tente novamente.',
             ])->withInput();
         }
 
@@ -96,7 +96,7 @@ class ContactController extends Controller
 
         if (!$resp->isSuccess()) {
             return back()->withErrors([
-                'g-recaptcha-response' => 'Falha na validacao. Tente novamente.',
+                'g-recaptcha-response' => 'Falha na validação. Tente novamente.',
             ])->withInput();
         }
 
