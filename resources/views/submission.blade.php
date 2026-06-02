@@ -42,14 +42,18 @@ Submissão de Demandas
                             <div class="text-danger small mt-1">Por favor, selecione os arquivos novamente.</div>
                         @endif
                     </div>
-                    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-                    <div class="g-recaptcha" data-sitekey="{{ env('NOCAPTCHA_SITEKEY') }}"></div>
-                    <div id="captchaClientError" class="text-danger small mt-2" style="display: none;">Por favor, confirme o captcha.</div>
-                    @error('g-recaptcha-response')
-                        <div class="text-danger small mt-2">{{ $message }}</div>
-                    @enderror
+                    <div class="col-12" style="position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden;" aria-hidden="true">
+                        <label class="form-label" for="website">Website</label>
+                        <input type="text" class="form-control rounded" id="website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
+                    <input type="hidden" id="submissionRecaptchaToken" name="g-recaptcha-response">
                     <div class="col-12 justify-content-end d-flex">
+                        @error('form')
+                            <div class="text-danger small mt-2">{{ $message }}</div>
+                        @enderror
+                        @error('g-recaptcha-response')
+                            <div class="text-danger small mt-2">{{ $message }}</div>
+                        @enderror
                         <button class="btn btn-primary" type="submit">Enviar Demanda</button>
                     </div>
                 </div>
@@ -68,23 +72,27 @@ Submissão de Demandas
     </div>
 </div>
 
+<script src="https://www.google.com/recaptcha/api.js?render={{ env('NOCAPTCHA_SITEKEY') }}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var submissionForm = document.getElementById('submissionForm');
-        var captchaClientError = document.getElementById('captchaClientError');
+        var submissionRecaptchaToken = document.getElementById('submissionRecaptchaToken');
+        var recaptchaSiteKey = "{{ env('NOCAPTCHA_SITEKEY') }}";
+        var submitting = false;
 
         submissionForm.addEventListener('submit', function (event) {
-            if (typeof grecaptcha === 'undefined') {
+            if (submitting || typeof grecaptcha === 'undefined' || !recaptchaSiteKey) {
                 return;
             }
 
-            var response = grecaptcha.getResponse();
-            if (!response) {
-                event.preventDefault();
-                captchaClientError.style.display = 'block';
-            } else {
-                captchaClientError.style.display = 'none';
-            }
+            event.preventDefault();
+            grecaptcha.ready(function () {
+                grecaptcha.execute(recaptchaSiteKey, { action: 'submission' }).then(function (token) {
+                    submissionRecaptchaToken.value = token;
+                    submitting = true;
+                    submissionForm.submit();
+                });
+            });
         });
     });
 </script>
