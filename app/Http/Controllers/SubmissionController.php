@@ -8,6 +8,7 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Submission;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\RateLimiter;
 use ReCaptcha\ReCaptcha;
 
 class SubmissionController extends Controller implements HasMiddleware
@@ -22,19 +23,34 @@ class SubmissionController extends Controller implements HasMiddleware
     }
     public function submit(Request $request)
     {
+        $rateKey = 'submission:' . $request->ip();
+        if (RateLimiter::tooManyAttempts($rateKey, 5)) {
+            return back()->withErrors([
+                'form' => 'Muitas tentativas. Tente novamente em alguns minutos.',
+            ])->withInput();
+        }
+
+        RateLimiter::hit($rateKey, 60);
+
+        if ($request->filled('website')) {
+            return back()->withErrors([
+                'form' => 'Falha na validação. Tente novamente.',
+            ])->withInput();
+        }
+
         $request->validate([
             'g-recaptcha-response' => ['required'],
         ]);
 
         $recaptcha = new ReCaptcha(env('NOCAPTCHA_SECRET'));
-        $resp = $recaptcha->verify(
-            $request->input('g-recaptcha-response'),
-            $request->ip()
-        );
+        $resp = $recaptcha
+            ->setExpectedAction('submission')
+            ->setScoreThreshold(0.5)
+            ->verify($request->input('g-recaptcha-response'), $request->ip());
 
         if (!$resp->isSuccess()) {
             return back()->withErrors([
-                'g-recaptcha-response' => 'Captcha invalido, tente novamente.',
+                'g-recaptcha-response' => 'Falha na validação. Tente novamente.',
             ])->withInput();
         }
 
