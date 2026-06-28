@@ -101,6 +101,21 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="inputWhatsapp" class="form-label"><strong>WhatsApp (com DDD):</strong></label>
+                    <input type="text"
+                        name="whatsapp"
+                        class="form-control form-control @error('whatsapp') is-invalid @enderror"
+                        id="inputWhatsapp"
+                        value="{{ old('whatsapp', $user->whatsapp) }}"
+                        placeholder="WhatsApp..."
+                        inputmode="numeric"
+                        oninput="this.value = formatWhatsapp(this.value)">
+                    @error('whatsapp')
+                        <div class="form-text text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
                     <label for="biografia" class="form-label"><strong>{{ __('Biografia') }}:</strong></label>
                     <textarea class="form-control form-control @error('biografia') is-invalid @enderror" style="height:150px"
                         name="biografia" id="biografia" placeholder="Biografia...">{{ old('biografia', $user->biografia) }}</textarea>
@@ -262,6 +277,20 @@
 
 <script>
 // Manter o modal e a lógica de exibição da imagem ao recortar
+function formatWhatsapp(value) {
+    var digits = value.replace(/\D/g, '').slice(0, 11);
+
+    if (digits.length <= 2) {
+        return digits;
+    }
+
+    if (digits.length <= 7) {
+        return '(' + digits.slice(0, 2) + ') ' + digits.slice(2);
+    }
+
+    return '(' + digits.slice(0, 2) + ') ' + digits.slice(2, 7) + '-' + digits.slice(7);
+}
+
 var $modal = $('#modal');
 var image = document.getElementById('image');
 var cropper;
@@ -340,4 +369,11 @@ $("#crop").click(function(){
         $('#croppedImageContainer').show();
     });
 @endif
+
+document.addEventListener('DOMContentLoaded', function() {
+    var whatsappInput = document.getElementById('inputWhatsapp');
+    if (whatsappInput) {
+        whatsappInput.value = formatWhatsapp(whatsappInput.value);
+    }
+});
 </script>

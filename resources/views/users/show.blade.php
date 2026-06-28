@@ -40,6 +40,18 @@
                         <p>{{ $user->email }}</p>
                     </div>
                     <div class="form-group">
+                        <strong>WhatsApp:</strong>
+                        @if ($user->whatsapp)
+                            <p>
+                                <a href="https://wa.me/55{{ $user->whatsapp }}" target="_blank" class="text-decoration-none">
+                                    <i class="bi bi-whatsapp text-success me-1"></i>{{ preg_replace('/^(\d{2})(\d{5})(\d{4})$/', '($1) $2-$3', $user->whatsapp) }}
+                                </a>
+                            </p>
+                        @else
+                            <p class="text-muted">Não informado</p>
+                        @endif
+                    </div>
+                    <div class="form-group">
                         <strong>Nome:</strong>
                         <p>{{ $user->name }}</p>
                     </div>
