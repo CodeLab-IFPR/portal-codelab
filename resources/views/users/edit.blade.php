@@ -63,6 +63,16 @@ Membros - Edição
             </div>
 
             <div class="mb-3">
+                <label for="inputWhatsapp" class="form-label"><strong>WhatsApp (com DDD):</strong></label>
+                <input type="text" name="whatsapp" value="{{ old('whatsapp', $user->whatsapp) }}"
+                    class="form-control @error('whatsapp') is-invalid @enderror" id="inputWhatsapp" placeholder="WhatsApp..."
+                    inputmode="numeric" oninput="this.value = formatWhatsapp(this.value)">
+                @error('whatsapp')
+                    <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
                 <label for="inputAtivo" class="form-label"><strong>Ativo:</strong></label>
                 <input type="checkbox" name="ativo" class="form-check-input @error('ativo') is-invalid @enderror" id="inputAtivo" value="1" {{ old('ativo', $user->ativo ?? 1) ? 'checked' : '' }}>
                 @error('ativo')
@@ -182,6 +192,20 @@ Membros - Edição
 
 <script>
 // Manter o modal e a lógica de exibição da imagem ao recortar
+function formatWhatsapp(value) {
+    var digits = value.replace(/\D/g, '').slice(0, 11);
+
+    if (digits.length <= 2) {
+        return digits;
+    }
+
+    if (digits.length <= 7) {
+        return '(' + digits.slice(0, 2) + ') ' + digits.slice(2);
+    }
+
+    return '(' + digits.slice(0, 2) + ') ' + digits.slice(2, 7) + '-' + digits.slice(7);
+}
+
 var $modal = $('#modal');
 var image = document.getElementById('image');
 var cropper;
@@ -260,5 +284,12 @@ $("#crop").click(function(){
         $('#croppedImageContainer').show();
     });
 @endif
+
+document.addEventListener('DOMContentLoaded', function() {
+    var whatsappInput = document.getElementById('inputWhatsapp');
+    if (whatsappInput) {
+        whatsappInput.value = formatWhatsapp(whatsappInput.value);
+    }
+});
 </script>
 @endsection

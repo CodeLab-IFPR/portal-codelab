@@ -49,6 +49,10 @@ class RegisteredUserController extends Controller implements HasMiddleware
      */
     public function store(Request $request): RedirectResponse
     {
+        $request->merge([
+            'whatsapp' => $this->normalizeWhatsapp($request->input('whatsapp')),
+        ]);
+
         $request->validate([
             'name' => 'required|min:3|max:255',
             'cargo' => 'nullable|min:5|max:100',
@@ -56,9 +60,12 @@ class RegisteredUserController extends Controller implements HasMiddleware
             'biografia' => 'nullable|min:10',
             'linkedin' => 'nullable|url',
             'github' => 'nullable|url',
+            'whatsapp' => 'nullable|digits:11',
             'alt' => 'nullable|min:5|max:255',
             'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+        ], [
+            'whatsapp.digits' => 'O campo WhatsApp deve conter exatamente 11 dígitos.',
         ]);
     
         $entrada = $request->all();
@@ -144,6 +151,10 @@ class RegisteredUserController extends Controller implements HasMiddleware
 
     public function update(Request $request, User $user): RedirectResponse
     {
+        $request->merge([
+            'whatsapp' => $this->normalizeWhatsapp($request->input('whatsapp')),
+        ]);
+
         $request->validate([
             'name' => 'required|min:3|max:255',
             'cargo' => 'nullable|min:5|max:100',
@@ -151,6 +162,7 @@ class RegisteredUserController extends Controller implements HasMiddleware
             'biografia' => 'nullable|min:10',
             'linkedin' => 'nullable|url',
             'github' => 'nullable|url',
+            'whatsapp' => 'nullable|digits:11',
             'alt' => 'nullable|min:5|max:255',
             'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email,' . $user->id],
@@ -164,6 +176,7 @@ class RegisteredUserController extends Controller implements HasMiddleware
             'biografia.min' => 'O campo biografia deve ter no mínimo 10 caracteres.',
             'linkedin.url' => 'O campo linkedin deve ser uma URL válida.',
             'github.url' => 'O campo github deve ser uma URL válida.',
+            'whatsapp.digits' => 'O campo WhatsApp deve conter exatamente 11 dígitos.',
             'alt.min' => 'O campo alt deve ter no mínimo 5 caracteres.',
             'alt.max' => 'O campo alt deve ter no máximo 255 caracteres.',
             'imagem.image' => 'O arquivo deve ser uma imagem.',
@@ -225,5 +238,14 @@ class RegisteredUserController extends Controller implements HasMiddleware
         } catch (\Exception $e) {
             return response()->json(['error' => 'Erro ao excluir o usuário.'], 500);
         }
+    }
+
+    private function normalizeWhatsapp(?string $whatsapp): ?string
+    {
+        if (blank($whatsapp)) {
+            return null;
+        }
+
+        return preg_replace('/\D/', '', $whatsapp);
     }
 }
