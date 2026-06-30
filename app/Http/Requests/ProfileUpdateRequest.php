@@ -8,6 +8,15 @@ use Illuminate\Validation\Rule;
 
 class ProfileUpdateRequest extends FormRequest
 {
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'whatsapp' => blank($this->input('whatsapp'))
+                ? null
+                : preg_replace('/\D/', '', $this->input('whatsapp')),
+        ]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -18,6 +27,7 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
+            'whatsapp' => ['nullable', 'digits:11'],
             'cargo' => ['nullable', 'string', 'max:255'],
             'cpf' => ['nullable', 'string', 'max:14'],
             'biografia' => ['nullable', 'string'],
@@ -26,6 +36,13 @@ class ProfileUpdateRequest extends FormRequest
             'alt' => ['nullable', 'string', 'max:255'],
             'cropped_image' => ['nullable', 'string'],
             'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'whatsapp.digits' => 'O campo WhatsApp deve conter exatamente 11 dígitos.',
         ];
     }
 }

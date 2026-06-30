@@ -4,7 +4,7 @@
             <th>Imagem</th>
             <th>Nome</th>
             <th>Cpf</th>
-            <th>Email</th>
+            <th>Contato</th>
             <th>Ativo</th>
             <th>Cargo</th>
             <th>Função</th>
@@ -18,7 +18,16 @@
                 <td><img src="/imagens/users/{{ $user->imagem }}" alt="{{ $user->alt }}" width="80px"></td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->cpf }}</td>
-                <td>{{ $user->email }}</td>
+                <td>
+                    <div>{{ $user->email }}</div>
+                    @if ($user->whatsapp)
+                        <div>
+                            <a href="https://wa.me/55{{ $user->whatsapp }}" target="_blank" class="text-decoration-none">
+                                <i class="bi bi-whatsapp text-success me-1"></i>{{ preg_replace('/^(\d{2})(\d{5})(\d{4})$/', '($1) $2-$3', $user->whatsapp) }}
+                            </a>
+                        </div>
+                    @endif
+                </td>
                 <td>{{ $user->ativo ? 'Sim' : 'Não' }}</td>
                 <td>{{ $user->cargo }}</td>
                 <td>
