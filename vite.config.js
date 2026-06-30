@@ -11,6 +11,7 @@ export default defineConfig({
                 // 'resources/css/libs.bundle.css.map',
                 'resources/css/theme.bundle.css',
                 'resources/css/adminlte.css',
+                'resources/css/admin-system.css',
                 // 'resources/css/theme.bundle.css.map',
                 'resources/css/datatables.min.css',
                 'resources/js/app.js',
