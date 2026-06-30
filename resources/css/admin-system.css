@@ -1,0 +1,429 @@
+:root {
+    --admin-bg: #eef4fb;
+    --admin-surface: #ffffff;
+    --admin-surface-soft: rgba(255, 255, 255, 0.06);
+    --admin-sidebar: #0f274d;
+    --admin-sidebar-2: #12315f;
+    --admin-sidebar-border: rgba(255, 255, 255, 0.08);
+    --admin-primary: #21457b;
+    --admin-primary-strong: #183761;
+    --admin-text: #082247;
+    --admin-text-soft: #5f7494;
+    --admin-text-inverse: #f5f9ff;
+    --admin-text-muted: #93add1;
+    --admin-border: #cad8ea;
+    --admin-radius-sm: 12px;
+    --admin-radius-md: 16px;
+    --admin-radius-lg: 22px;
+    --admin-shadow-sm: 0 8px 18px rgba(8, 34, 71, 0.08);
+    --admin-shadow-md: 0 18px 40px rgba(6, 28, 60, 0.16);
+    --admin-sidebar-width: 264px;
+    --admin-sidebar-collapsed-width: 88px;
+}
+
+body.admin-shell {
+    background: var(--admin-bg);
+    color: var(--admin-text);
+    font-family: "Open Sans", "Source Sans 3", sans-serif;
+}
+
+body.admin-shell .app-wrapper {
+    min-height: 100vh;
+}
+
+body.admin-shell .admin-sidebar {
+    display: flex;
+    flex-direction: column;
+    width: var(--admin-sidebar-width);
+    height: 100dvh;
+    background: var(--admin-sidebar);
+    border-right: 1px solid var(--admin-sidebar-border);
+    box-shadow: none;
+}
+
+body.admin-shell .admin-sidebar .sidebar-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 10px 2px 0 12px;
+}
+
+body.admin-shell .admin-sidebar .sidebar-brand {
+    display: flex;
+    justify-content: flex-start;
+    padding: 12px 16px 12px;
+    border-bottom: 1px solid var(--admin-sidebar-border);
+}
+
+body.admin-shell .admin-sidebar .brand-link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+body.admin-shell .admin-brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: #ffffff;
+    color: var(--admin-text-inverse);
+    font-size: 0.95rem;
+    flex: 0 0 auto;
+    overflow: hidden;
+    border: 0;
+    box-shadow: none;
+}
+
+body.admin-shell .admin-brand-mark img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 3px;
+}
+
+body.admin-shell .admin-brand-copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+body.admin-shell .admin-brand-title {
+    color: var(--admin-text-inverse);
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+body.admin-shell .admin-brand-subtitle {
+    color: var(--admin-text-muted);
+    font-size: 0.82rem;
+    line-height: 1.1;
+}
+
+body.admin-shell .admin-sidebar-nav {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+    scrollbar-color: transparent transparent;
+    scrollbar-width: thin;
+    padding: 10px 10px 10px 0;
+}
+
+body.admin-shell .admin-sidebar-nav:hover,
+body.admin-shell .admin-sidebar-nav:focus-within {
+    scrollbar-color: rgba(147, 173, 209, 0.55) transparent;
+}
+
+body.admin-shell .admin-sidebar-nav::-webkit-scrollbar {
+    width: 8px;
+}
+
+body.admin-shell .admin-sidebar-nav::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+body.admin-shell .admin-sidebar-nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+body.admin-shell .admin-sidebar-nav::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 999px;
+}
+
+body.admin-shell .admin-sidebar-nav:hover::-webkit-scrollbar-thumb,
+body.admin-shell .admin-sidebar-nav:focus-within::-webkit-scrollbar-thumb {
+    background: rgba(147, 173, 209, 0.55);
+}
+
+body.admin-shell .admin-sidebar-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+body.admin-shell .admin-sidebar-group {
+    display: block;
+}
+
+body.admin-shell .admin-sidebar-group-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 4px;
+    border: 0;
+    background: transparent;
+    color: var(--admin-text-muted);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.2;
+    text-align: left;
+    text-transform: none;
+    cursor: pointer;
+}
+
+body.admin-shell .admin-sidebar-group-header > *,
+body.admin-shell .admin-sidebar-item > *,
+body.admin-shell .admin-profile-link > *,
+body.admin-shell .admin-profile-popover-item > *,
+body.admin-shell [data-lte-toggle="sidebar"] > * {
+    pointer-events: none;
+}
+
+body.admin-shell .admin-sidebar-group-header:hover,
+body.admin-shell .admin-sidebar-group.is-open .admin-sidebar-group-header {
+    color: var(--admin-text-inverse);
+}
+
+body.admin-shell .admin-sidebar-group-header .bi {
+    width: 14px;
+    font-size: 14px;
+    text-align: center;
+    color: var(--admin-text-muted);
+}
+
+body.admin-shell .admin-sidebar-group-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    padding: 0 0 0;
+    pointer-events: none;
+    transform: translateY(-4px);
+    transition: max-height 260ms ease, opacity 180ms ease, padding 220ms ease, transform 220ms ease;
+}
+
+body.admin-shell .admin-sidebar-group.is-open .admin-sidebar-group-panel {
+    max-height: 420px;
+    opacity: 1;
+    padding: 0 0 6px;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+body.admin-shell .admin-sidebar-group-panel .admin-sidebar-item {
+    opacity: 0;
+    transform: translateY(-3px);
+    transition: background-color 160ms ease, color 160ms ease, opacity 180ms ease, transform 220ms ease;
+}
+
+body.admin-shell .admin-sidebar-group.is-open .admin-sidebar-group-panel .admin-sidebar-item {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+body.admin-shell .admin-sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 38px;
+    padding: 10px 10px;
+    border-radius: 10px;
+    color: var(--admin-text-muted);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.15;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 160ms ease, color 160ms ease, opacity 180ms ease, transform 220ms ease;
+}
+
+body.admin-shell .admin-sidebar-item:hover {
+    color: var(--admin-text-inverse);
+    background: rgba(255, 255, 255, 0.055);
+}
+
+body.admin-shell .admin-sidebar-item.active {
+    color: var(--admin-text-inverse);
+    background: #1e3a5f;
+    box-shadow: none;
+}
+
+body.admin-shell .admin-sidebar-item-icon {
+    width: 18px;
+    flex: 0 0 18px;
+    color: #7eb8ff;
+    font-size: 16px;
+    text-align: center;
+}
+
+body.admin-shell .admin-sidebar-item span {
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+body.admin-shell .admin-sidebar-footer {
+    position: relative;
+    margin-top: auto;
+    margin-right: -2px;
+    margin-left: -12px;
+    padding: 12px 16px 10px 16px;
+    border-top: 1px solid var(--admin-sidebar-border);
+}
+
+body.admin-shell .admin-profile-link {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--admin-text-inverse);
+    text-decoration: none;
+    border-radius: 12px;
+    padding: 9px 8px;
+    text-align: left;
+    cursor: pointer;
+}
+
+body.admin-shell .admin-profile-link:hover,
+body.admin-shell .admin-sidebar-footer.is-profile-open .admin-profile-link {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+body.admin-shell .admin-profile-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: 0 0 auto;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+body.admin-shell .admin-profile-copy {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+body.admin-shell .admin-profile-name {
+    display: block;
+    color: var(--admin-text-inverse);
+    font-weight: 700;
+    font-size: 0.875rem;
+    line-height: 1.15;
+}
+
+body.admin-shell .admin-profile-email {
+    display: block;
+    color: var(--admin-text-muted);
+    font-size: 0.78rem;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+body.admin-shell .admin-profile-chevron {
+    color: var(--admin-text-muted);
+    font-size: 0.9rem;
+}
+
+body.admin-shell .admin-profile-popover {
+    position: absolute;
+    right: 16px;
+    bottom: calc(100% + 10px);
+    left: 16px;
+    z-index: 20;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    background: #102f5e;
+    box-shadow: 0 18px 32px rgba(4, 17, 38, 0.26);
+}
+
+body.admin-shell .admin-profile-popover[hidden] {
+    display: none;
+}
+
+body.admin-shell .admin-profile-popover form {
+    margin: 0;
+}
+
+body.admin-shell .admin-profile-popover-item {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 12px;
+    color: var(--admin-text-inverse);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+body.admin-shell [data-lte-toggle="sidebar"] {
+    cursor: pointer;
+}
+
+body.admin-shell .admin-profile-popover-item:hover {
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--admin-text-inverse);
+}
+
+body.admin-shell .admin-profile-popover-item i {
+    width: 18px;
+    color: #7eb8ff;
+    font-size: 16px;
+    text-align: center;
+}
+
+body.admin-shell.sidebar-collapse .admin-sidebar {
+    width: var(--admin-sidebar-collapsed-width);
+}
+
+body.admin-shell.sidebar-collapse .admin-brand-copy,
+body.admin-shell.sidebar-collapse .admin-sidebar-group-header span,
+body.admin-shell.sidebar-collapse .admin-sidebar-group-header .bi,
+body.admin-shell.sidebar-collapse .admin-sidebar-group-panel,
+body.admin-shell.sidebar-collapse .admin-profile-copy,
+body.admin-shell.sidebar-collapse .admin-profile-chevron,
+body.admin-shell.sidebar-collapse .admin-profile-popover {
+    display: none;
+}
+
+body.admin-shell.sidebar-collapse .admin-sidebar .sidebar-brand {
+    padding-inline: 12px;
+}
+
+body.admin-shell.sidebar-collapse .admin-sidebar-group-header,
+body.admin-shell.sidebar-collapse .admin-profile-link {
+    justify-content: center;
+    padding-inline: 0;
+}
+
+body.admin-shell.sidebar-collapse .admin-sidebar-footer {
+    padding-inline: 0;
+}
+
+@media (max-width: 991.98px) {
+    body.admin-shell .admin-sidebar {
+        width: var(--admin-sidebar-width);
+    }
+}
