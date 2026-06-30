@@ -66,6 +66,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
         referrerpolicy="origin"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
     @vite('resources/css/adminlte.css')
+    @vite('resources/css/admin-system.css')
         <script>
             tinymce.init({
                 selector: '#inputConteudo',
@@ -142,7 +143,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
     </style>
 </head>
 
-<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+<body class="admin-shell layout-fixed sidebar-expand-lg bg-body-tertiary">
     <div id="loading-screen">
         <div class="spinner"></div>
     </div>
@@ -152,7 +153,7 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
             <div class="container-fluid">
                 <ul class="navbar-nav">
                     <li class="nav-item"> <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"> <i
-                                class="bi bi-list"></i> </a> </li>
+                                class="bi bi-layout-sidebar"></i> </a> </li>
                     <li class="nav-item d-none d-md-block"> <a href="{{ route('home') }}"
                             class="nav-link">Home</a> </li>
                     <li class="nav-item d-none d-md-block"> <a href="{{ route('contact') }}"
@@ -218,6 +219,8 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                 </ul>
             </div>
         </nav>
+        @include('layouts.partials.admin-sidebar')
+        {{--
         <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
             <div class="sidebar-brand"><a href="{{ route('admin') }}" class="brand-link"> <img
                         src="{{ asset('/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
@@ -556,16 +559,10 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
             </div>
 
         </aside>
+        --}}
         <main class="app-main">
             @yield('content')
         </main>
-        <footer class="app-footer">
-            <div class="float-end d-none d-sm-inline">Anything you want</div><strong>
-                Copyright &copy; 2014-2024&nbsp;
-                <a href="https://adminlte.io" class="text-decoration-none">AdminLTE.io</a>.
-            </strong>
-            All rights reserved.
-        </footer>
     </div>
     <style>
         .focus-ring-green:focus {
@@ -792,6 +789,44 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                     ],
                 });
             </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const breadcrumbTarget = document.querySelector('[data-admin-header-breadcrumb]');
+            const contentHeader = document.querySelector('.app-main .app-content-header');
+            const sourceBreadcrumb = contentHeader ? contentHeader.querySelector('.breadcrumb') : null;
+
+            if (!breadcrumbTarget || !sourceBreadcrumb) {
+                return;
+            }
+
+            const clonedBreadcrumb = sourceBreadcrumb.cloneNode(true);
+            clonedBreadcrumb.classList.remove('float-sm-end');
+            clonedBreadcrumb.classList.add('admin-header-breadcrumb');
+
+            const firstItem = clonedBreadcrumb.querySelector('.breadcrumb-item');
+            if (firstItem) {
+                const homeLink = firstItem.querySelector('a');
+                const homeText = homeLink ? homeLink.textContent.trim() : firstItem.textContent.trim();
+
+                if (homeText.toLowerCase() === 'home') {
+                    if (homeLink) {
+                        homeLink.textContent = 'Início';
+                    } else {
+                        firstItem.textContent = 'Início';
+                    }
+                }
+
+                if (!firstItem.querySelector('.bi-house-door')) {
+                    const homeIcon = document.createElement('i');
+                    homeIcon.className = 'bi bi-house-door';
+                    homeIcon.setAttribute('aria-hidden', 'true');
+                    firstItem.prepend(homeIcon);
+                }
+            }
+
+            breadcrumbTarget.replaceChildren(clonedBreadcrumb);
+        });
+    </script>
     <script>
         window.addEventListener('load', function() {
             // Aguarda um pequeno delay para garantir que todos os recursos estejam carregados
