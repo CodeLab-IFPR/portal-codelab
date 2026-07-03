@@ -1,38 +1,48 @@
-<table class="table table-bordered table-striped mt-4" id="parceiros-table">
+<table class="table admin-ui-table" id="parceiros-table">
     <thead>
         <tr>
             <th>Imagem</th>
             <th>Nome</th>
             <th>Email</th>
-            <th>Ação</th>
+            <th class="admin-ui-actions-cell">Ações</th>
         </tr>
     </thead>
 
     <tbody>
         @forelse($parceiros as $parceiro)
             <tr>
-                <td><a href="{{$parceiro->link}}"><img src="/imagens/parceiros/{{ $parceiro->imagem }}" alt="{{ $parceiro->alt }}" width="100px"></a></td>
-                <td>{{ $parceiro->nome }}</td>
-                <td>{{ $parceiro->email }}</td>
                 <td>
+                    <div class="admin-ui-media">
+                        <a href="{{ $parceiro->link }}" class="admin-ui-avatar" target="_blank">
+                            <img src="/imagens/parceiros/{{ $parceiro->imagem }}" alt="{{ $parceiro->alt }}">
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <div class="admin-ui-media-copy">
+                        <p class="admin-ui-media-title">{{ $parceiro->nome }}</p>
+                    </div>
+                </td>
+                <td><a href="mailto:{{ $parceiro->email }}" class="admin-ui-link">{{ $parceiro->email }}</a></td>
+                <td class="admin-ui-actions-cell">
                     <div class="dropdown">
-                        <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"
+                        <button class="admin-ui-dropdown-toggle" type="button"
                             id="dropdownMenuButton{{ $parceiro->id }}" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            <i class="bi bi-gear"></i>
+                            <i class="bi bi-sliders2"></i>
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $parceiro->id }}">
+                        <ul class="dropdown-menu dropdown-menu-end admin-ui-actions-menu" aria-labelledby="dropdownMenuButton{{ $parceiro->id }}">
                             <li>
                                 <a class="dropdown-item d-flex align-items-center"
                                     href="{{ route('parceiros.show', $parceiro->id) }}">
-                                    <i class="bi bi-eye text-secondary me-2"></i> Visualizar
+                                    <i class="bi bi-eye admin-ui-action-icon-primary me-2"></i> Visualizar
                                 </a>
                             </li>
                             <li>
                                 @can('Editar Parceiro')
-                                <a class=" dropdown-item d-flex align-items-center"
+                                <a class="dropdown-item d-flex align-items-center"
                                     href="{{ route('parceiros.edit', $parceiro->id) }}">
-                                    <i class="bi bi-pencil-square text-warning me-2"></i> Editar
+                                    <i class="bi bi-pencil-square admin-ui-action-icon-primary me-2"></i> Editar
                                 </a>
                                 @endcan
                             </li>
@@ -42,7 +52,7 @@
                                     data-url="{{ route('parceiros.destroy', $parceiro->id) }}"
                                     data-nome="{{ $parceiro->nome }}"
                                     data-email="{{ $parceiro->email }}">
-                                    <i class="bi bi-trash text-danger me-2"></i> Deletar
+                                    <i class="bi bi-trash admin-ui-action-icon-danger me-2"></i> Deletar
                                 </a>
                                 @endcan
                             </li>
@@ -52,7 +62,7 @@
             </tr>
         @empty
             <tr>
-                <td colspan="4" class="text-center">Não há parceiros 😢</td>
+                <td colspan="4" class="admin-ui-table-empty">Não há parceiros cadastrados.</td>
             </tr>
         @endforelse
     </tbody>

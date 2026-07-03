@@ -2,7 +2,7 @@
 
 <!-- Título -->
 @section('title')
-Parceiros - Lista
+Parceiros
 @endsection
 <!-- Título -->
 
@@ -10,26 +10,29 @@ Parceiros - Lista
 <div class="app-content-header">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-6">
-                <h3 class="mb-0">Parceiros - Lista</h3>
-            </div>
-            <div class="col-sm-6">
+            <div class="col-12">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        Parceiros - Lista
+                        Parceiros
                     </li>
                 </ol>
             </div>
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right: 10px;">
-        <a class="btn btn-outline-success btn-sm" href="{{ route('parceiros.create') }}">
-            <i class="fa fa-plus"></i> Adicionar Parceiro
+<div class="admin-ui-page admin-ui-page-fluid">
+    <div class="admin-ui-intro">
+        <div class="admin-ui-intro-copy">
+            <h1 class="admin-ui-title">Parceiros</h1>
+        </div>
+        <a class="admin-ui-btn admin-ui-btn-primary" href="{{ route('parceiros.create') }}">
+            <i class="fa fa-plus"></i>
+            <span class="admin-ui-mobile-hide">Novo parceiro</span>
         </a>
     </div>
+
+    <hr class="admin-ui-divider">
 
     @if(session('success'))
         <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">
@@ -42,16 +45,16 @@ Parceiros - Lista
         </div>
     @endif
 
-    <div class="d-flex justify-content-center mb-4">
-        <form id="search-form" class="d-flex" method="GET" action="{{ route('parceiros.index') }}">
-            <input id="search-input" class="form-control me-2" type="search" name="search" placeholder="Buscar Parceiros" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">
+    <div class="admin-ui-searchbar">
+        <form id="search-form" class="admin-ui-search-form" method="GET" action="{{ route('parceiros.index') }}">
+            <input id="search-input" class="admin-ui-search-input" type="search" name="search" placeholder="Buscar parceiros" aria-label="Buscar parceiros">
+            <button class="admin-ui-btn admin-ui-btn-secondary" type="submit">
                 <i class="bi bi-search"></i>
             </button>
         </form>
     </div>
 
-    <div class="card-body">
+    <div class="admin-ui-table-card admin-ui-card">
         <div id="parceiros-table-container">
             @include('parceiros.table', ['parceiros' => $parceiros])
         </div>
