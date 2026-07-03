@@ -1,18 +1,11 @@
-@php
-    use Illuminate\Support\Facades\Auth;
-@endphp
-
 <?php
-// admin.blade.php
-use App\Models\Contact;
-use App\Models\Submission;
-$unreadMessagesCount = Contact::where('read', false)->count();
-$lastMessage = Contact::where('read', false)->orderBy('created_at', 'desc')->first();
-$lastMessageTime = $lastMessage ? $lastMessage->created_at->diffForHumans() : 'Nenhuma mensagem';
-
-$unreadSubmissionsCount = Submission::where('read', false)->count();
-$lastSubmission = Submission::where('read', false)->orderBy('created_at', 'desc')->first();
-$lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHumans() : 'Nenhuma submissão';
+$unreadMessagesCount = $unreadMessagesCount ?? 0;
+$unreadSubmissionsCount = $unreadSubmissionsCount ?? 0;
+$lastMessageTime = $lastMessageTime ?? 'Nenhuma mensagem';
+$adminBrandName = $adminBrandName ?? (config('app.name', 'CodeLab'));
+if (!isset($lastSubmissionTime)) {
+    $lastSubmissionTime = 'Nenhuma submissão';
+}
 ?>
 
 <!DOCTYPE html>
@@ -38,23 +31,12 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
         integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/styles/overlayscrollbars.min.css"
         integrity="sha256-dSokZseQNT08wYEWiz5iLI8QPlKxG+TswNRD8k35cpg=" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css"
-        integrity="sha256-Qsx5lrStHZyR9REqhUF8iQt73X06c8LGIUPzpOhwRrI=" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
-        integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
-        integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
-        integrity="sha384-Qsx5lrStHZyR9REqhUF8iQt73X06c8LGIUPzpOhwRrI=" crossorigin="anonymous">
-    <script src="https://cdn.tiny.cloud/1/i6174a4p21k3bvgofjdjglzvdfxrle8qza1n62srherxw93i/tinymce/7/tinymce.min.js">
-    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <script src="https://cdn.tiny.cloud/1/i6174a4p21k3bvgofjdjglzvdfxrle8qza1n62srherxw93i/tinymce/7/tinymce.min.js"
+        referrerpolicy="origin"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
@@ -62,26 +44,9 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
-    <script src="https://cdn.tiny.cloud/1/i6174a4p21k3bvgofjdjglzvdfxrle8qza1n62srherxw93i/tinymce/7/tinymce.min.js"
-        referrerpolicy="origin"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
     @vite('resources/css/adminlte.css')
     @vite('resources/css/admin-system.css')
-        <script>
-            tinymce.init({
-                selector: '#inputConteudo',
-                language: 'pt_BR',
-                directionality: 'ltr',
-                toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons',
-                plugins: [
-                    'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor',
-                    'pagebreak',
-                    'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen',
-                    'insertdatetime',
-                    'media', 'table', 'emoticons', 'help'
-                ],
-            });
-        </script>
     <style>
         #loading-screen {
             position: fixed;
@@ -134,11 +99,12 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
         }
 
         body {
-            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.15s ease;
         }
 
         body.loaded {
-            visibility: visible;
+            opacity: 1;
         }
     </style>
 </head>
@@ -149,25 +115,23 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
     </div>
 
     <div class="app-wrapper">
-        <nav class="app-header navbar navbar-expand bg-body">
-            <div class="container-fluid">
-                <ul class="navbar-nav">
-                    <li class="nav-item"> <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"> <i
-                                class="bi bi-layout-sidebar"></i> </a> </li>
-                    <li class="nav-item d-none d-md-block"> <a href="{{ route('home') }}"
-                            class="nav-link">Home</a> </li>
-                    <li class="nav-item d-none d-md-block"> <a href="{{ route('contact') }}"
-                            class="nav-link">Contato</a> </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
+        <nav class="app-header navbar admin-topbar">
+            <div class="container-fluid admin-topbar-main">
+                <div class="admin-topbar-brand">
+                    <a class="nav-link admin-topbar-toggle" data-lte-toggle="sidebar" href="#" role="button" aria-label="Alternar sidebar">
+                        <i class="bi bi-layout-sidebar"></i>
+                    </a>
+                    <span class="admin-topbar-divider" aria-hidden="true"></span>
+                    <span class="admin-topbar-title">{{ $adminBrandName }} Admin</span>
+                </div>
+                <ul class="navbar-nav admin-topbar-actions">
                     <li class="nav-item dropdown">
-                        <a class="nav-link" data-bs-toggle="dropdown" href="#">
+                        <a class="nav-link admin-topbar-notification" data-bs-toggle="dropdown" href="#" aria-label="Notificações">
                             <i class="bi bi-bell-fill"></i>
                             <span
                                 class="navbar-badge badge text-bg-warning">{{ $unreadMessagesCount + $unreadSubmissionsCount }}</span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end"
-                            style="max-height: 400px; overflow-y: auto;">
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end admin-topbar-notification-menu">
                             <span
                                 class="dropdown-item dropdown-header">{{ $unreadMessagesCount + $unreadSubmissionsCount }}
                                 Notificações</span>
@@ -184,39 +148,10 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                             </a>
                         </div>
                     </li>
-                    <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i
-                                data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i
-                                data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a>
-                    </li>
-                    <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle"
-                            data-bs-toggle="dropdown">
-                            @if(Auth::check())
-                                <img src="/imagens/users/{{ Auth::user()->imagem }}" class="user-image rounded-circle shadow" alt="{{ Auth::user()->alt }}"> 
-                                <span class="d-none d-md-inline">{{ Auth::user()->name }}</span> 
-                            @endif
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                            @if(Auth::check())
-                                <li class="user-header bg-body-secondary"> <img
-                                        src="/imagens/users/{{ Auth::user()->imagem }}"
-                                        class="rounded-circle bg-light shadow" alt="{{Auth::user()->alt}}">
-                                    <p>
-                                        {{ Auth::user()->name }} - {{ Auth::user()->cargo }} -  
-                                        <small>Cadastro desde
-                                            {{ Auth::user()->created_at->format('M, Y.') }}</small>
-                                    </p>
-                                </li>
-                            @endif
-                            <li class="user-footer"> 
-                                <a href="{{ route('profile.edit') }}" class="btn btn-outline-success btn-flat">Perfil</a> 
-                                <form method="POST" action="{{ route('logout') }}" class="d-inline">
-                                    @csrf
-                                    <button type="submit" class="btn btn-outline-danger btn-flat float-end">Sair</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
+            </div>
+            <div class="container-fluid admin-topbar-breadcrumb-row">
+                <div class="admin-topbar-breadcrumb" data-admin-header-breadcrumb></div>
             </div>
         </nav>
         @include('layouts.partials.admin-sidebar')
@@ -658,6 +593,10 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
 
         document.addEventListener('DOMContentLoaded', function () {
             const textarea = document.getElementById('descricao');
+            if (!textarea) {
+                return;
+            }
+
             textarea.addEventListener('input', updateCharacterCount);
             updateCharacterCount();
         });
@@ -679,7 +618,11 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                 };
                 document.addEventListener("DOMContentLoaded", function () {
                     const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
-                    if (sidebarWrapper && typeof OverlayScrollbarsGlobal ? .OverlayScrollbars !== "undefined") {
+                    if (
+                        sidebarWrapper &&
+                        !sidebarWrapper.closest('.admin-sidebar') &&
+                        typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== "undefined"
+                    ) {
                         OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
                             scrollbars: {
                                 theme: Default.scrollbarTheme,
@@ -690,36 +633,105 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                     }
                 });
             </script>
-            <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"
-                integrity="sha256-ipiJrswvAR4VAx/th+6zWsdeYmVae0iJuiR+6OqHJHQ=" crossorigin="anonymous"></script>
-            <!-- sortablejs -->
             <script>
-                const connectedSortables =
-                    document.querySelectorAll(".connectedSortable");
-                connectedSortables.forEach((connectedSortable) => {
-                    let sortable = new Sortable(connectedSortable, {
-                        group: "shared",
-                        handle: ".card-header",
+                document.addEventListener('DOMContentLoaded', function () {
+                    document.querySelectorAll('.admin-ui-file-native').forEach((input) => {
+                        const fileName = input.closest('.admin-ui-file-control')?.querySelector('[data-admin-file-name]');
+
+                        if (!fileName) {
+                            return;
+                        }
+
+                        input.addEventListener('change', function () {
+                            fileName.textContent = this.files?.[0]?.name || 'Nenhum arquivo selecionado';
+                        });
                     });
                 });
+            </script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const portaledMenus = new WeakMap();
+                    const portalMenuSelector = '.admin-ui-actions-menu, .admin-topbar-notification-menu';
 
-                <
-                script >
-                    const cardHeaders = document.querySelectorAll(
-                        ".connectedSortable .card-header",
-                    );
-                cardHeaders.forEach((cardHeader) => {
-                    cardHeader.style.cursor = "move";
+                    const positionMenu = (toggle, menu) => {
+                        const toggleRect = toggle.getBoundingClientRect();
+                        const menuRect = menu.getBoundingClientRect();
+                        const spacing = 4;
+                        const viewportPadding = 16;
+
+                        let left = toggleRect.right - menuRect.width;
+                        left = Math.max(viewportPadding, Math.min(left, window.innerWidth - menuRect.width - viewportPadding));
+
+                        let top = toggleRect.bottom + spacing;
+                        if (top + menuRect.height > window.innerHeight - viewportPadding) {
+                            top = Math.max(viewportPadding, toggleRect.top - menuRect.height - spacing);
+                        }
+
+                        menu.style.position = 'fixed';
+                        menu.style.left = `${left}px`;
+                        menu.style.top = `${top}px`;
+                        menu.style.right = 'auto';
+                        menu.style.bottom = 'auto';
+                        menu.style.transform = 'none';
+                    };
+
+                    document.addEventListener('show.bs.dropdown', function (event) {
+                        const toggle = event.target;
+                        const menu = toggle.parentElement?.querySelector(portalMenuSelector);
+
+                        if (!menu) {
+                            return;
+                        }
+
+                        const placeholder = document.createComment('admin dropdown menu placeholder');
+                        menu.before(placeholder);
+                        portaledMenus.set(menu, { placeholder, toggle });
+
+                        document.body.appendChild(menu);
+                        menu.classList.add('is-portaled');
+
+                        requestAnimationFrame(() => positionMenu(toggle, menu));
+                    });
+
+                    document.addEventListener('shown.bs.dropdown', function (event) {
+                        const toggle = event.target;
+                        const menu = document.body.querySelector(`${portalMenuSelector}.is-portaled.show`);
+
+                        if (menu) {
+                            positionMenu(toggle, menu);
+                        }
+                    });
+
+                    document.addEventListener('hidden.bs.dropdown', function () {
+                        document.querySelectorAll(`${portalMenuSelector}.is-portaled`).forEach((menu) => {
+                            const state = portaledMenus.get(menu);
+
+                            menu.classList.remove('is-portaled');
+                            menu.removeAttribute('style');
+
+                            if (state?.placeholder?.parentNode) {
+                                state.placeholder.replaceWith(menu);
+                            }
+
+                            portaledMenus.delete(menu);
+                        });
+                    });
+
+                    const repositionOpenMenu = () => {
+                        document.querySelectorAll(`${portalMenuSelector}.is-portaled.show`).forEach((menu) => {
+                            const state = portaledMenus.get(menu);
+
+                            if (state?.toggle) {
+                                positionMenu(state.toggle, menu);
+                            }
+                        });
+                    };
+
+                    window.addEventListener('resize', repositionOpenMenu);
+                    window.addEventListener('scroll', repositionOpenMenu, true);
                 });
             </script>
             <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
-                integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"
-                integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y=" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
-                integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY=" crossorigin="anonymous"></script>
-
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
             <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
             <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
@@ -731,62 +743,72 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                 });
             </script>
             <script>
-                document.querySelector('#cancel-button').addEventListener('click', function () {
-                    $('#modal').modal('hide');
-                    document.querySelector('#inputImagem').value = '';
-                });
-            </script>
-            <script>
-                document.getElementById('crop').addEventListener('click', function () {
-                    document.getElementById('croppedImageContainer').style.display = 'block';
-                });
-            </script>
-            <script>
-                document.getElementById('inputImagem').addEventListener('change', function () {
-                    if (this.files.length > 0) {
-                        var file = this.files[0];
-                        var done = function (url) {
-                            document.getElementById('image').src = url;
-                            $('#modal').modal('show');
-                        };
+                document.addEventListener('DOMContentLoaded', function () {
+                    const cancelButton = document.querySelector('#cancel-button');
+                    const cropButton = document.getElementById('crop');
+                    const imageInput = document.getElementById('inputImagem');
+                    const imageTarget = document.getElementById('image');
+                    const croppedImageContainer = document.getElementById('croppedImageContainer');
+                    const preview = document.getElementById('newImagePreview');
 
-                        if (URL) {
-                            done(URL.createObjectURL(file));
-                        } else if (FileReader) {
-                            var reader = new FileReader();
-                            reader.onload = function (e) {
-                                done(reader.result);
-                            };
-                            reader.readAsDataURL(file);
-                        }
+                    if (cancelButton && imageInput) {
+                        cancelButton.addEventListener('click', function () {
+                            $('#modal').modal('hide');
+                            imageInput.value = '';
+                        });
                     }
-                });
-            </script>
 
-            <script>
-                document.getElementById('inputImagem').addEventListener('change', function (event) {
-                    const [file] = event.target.files;
-                    if (file) {
-                        const preview = document.getElementById('newImagePreview');
-                        preview.innerHTML =
-                            `<p class="mt-2"><strong>Nova imagem:</strong></p><img src="${URL.createObjectURL(file)}" width="160px" class="mt-2">`;
+                    if (cropButton && croppedImageContainer) {
+                        cropButton.addEventListener('click', function () {
+                            croppedImageContainer.style.display = 'block';
+                        });
                     }
-                });
-            </script>
 
-            <script>
-                tinymce.init({
-                    selector: '#inputConteudo',
-                    language: 'pt_BR',
-                    directionality: 'ltr',
-                    toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons',
-                    plugins: [
-                        'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor',
-                        'pagebreak',
-                        'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen',
-                        'insertdatetime',
-                        'media', 'table', 'emoticons', 'help'
-                    ],
+                    if (imageInput) {
+                        imageInput.addEventListener('change', function () {
+                            if (this.files.length > 0 && imageTarget) {
+                                var file = this.files[0];
+                                var done = function (url) {
+                                    imageTarget.src = url;
+                                    $('#modal').modal('show');
+                                };
+
+                                if (URL) {
+                                    done(URL.createObjectURL(file));
+                                } else if (FileReader) {
+                                    var reader = new FileReader();
+                                    reader.onload = function (e) {
+                                        done(reader.result);
+                                    };
+                                    reader.readAsDataURL(file);
+                                }
+                            }
+                        });
+
+                        imageInput.addEventListener('change', function (event) {
+                            const [file] = event.target.files;
+                            if (file && preview) {
+                                preview.innerHTML =
+                                    `<p class="mt-2"><strong>Nova imagem:</strong></p><img src="${URL.createObjectURL(file)}" width="160px" class="mt-2">`;
+                            }
+                        });
+                    }
+
+                    if (document.querySelector('#inputConteudo') && typeof tinymce !== 'undefined') {
+                        tinymce.init({
+                            selector: '#inputConteudo',
+                            language: 'pt_BR',
+                            directionality: 'ltr',
+                            toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons',
+                            plugins: [
+                                'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor',
+                                'pagebreak',
+                                'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen',
+                                'insertdatetime',
+                                'media', 'table', 'emoticons', 'help'
+                            ],
+                        });
+                    }
                 });
             </script>
     <script>
@@ -794,6 +816,52 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
             const breadcrumbTarget = document.querySelector('[data-admin-header-breadcrumb]');
             const contentHeader = document.querySelector('.app-main .app-content-header');
             const sourceBreadcrumb = contentHeader ? contentHeader.querySelector('.breadcrumb') : null;
+            const listBreadcrumbMap = {
+                funcoes: {
+                    label: 'Cargos',
+                    href: "{{ route('funcoes.index') }}",
+                },
+                permissoes: {
+                    label: 'Permissões',
+                    href: "{{ route('permissoes.index') }}",
+                },
+                noticias: {
+                    label: 'Notícias',
+                    href: "{{ route('noticias.index') }}",
+                },
+                users: {
+                    label: 'Membros',
+                    href: "{{ route('users.index') }}",
+                },
+                parceiros: {
+                    label: 'Parceiros',
+                    href: "{{ route('parceiros.index') }}",
+                },
+                galeria: {
+                    label: 'Galeria',
+                    href: "{{ route('galeria.indexAdmin') }}",
+                },
+                certificados: {
+                    label: 'Certificados',
+                    href: "{{ route('certificados.index') }}",
+                },
+                projetos: {
+                    label: 'Projetos',
+                    href: "{{ route('projetos.index') }}",
+                },
+                servicos: {
+                    label: 'Serviços',
+                    href: "{{ route('servicos.index') }}",
+                },
+                lancamentos: {
+                    label: 'Lançamentos',
+                    href: "{{ route('lancamentos.index') }}",
+                },
+                tags: {
+                    label: 'Tags',
+                    href: "{{ route('tags.index') }}",
+                },
+            };
 
             if (!breadcrumbTarget || !sourceBreadcrumb) {
                 return;
@@ -824,16 +892,238 @@ $lastSubmissionTime = $lastSubmission ? $lastSubmission->created_at->diffForHuma
                 }
             }
 
+            const breadcrumbItems = Array.from(clonedBreadcrumb.querySelectorAll('.breadcrumb-item'));
+            const activeItem = breadcrumbItems.at(-1);
+            const activeLabel = activeItem ? activeItem.textContent.trim().toLowerCase() : '';
+            const pathSegments = window.location.pathname.split('/').filter(Boolean);
+            const resourceKey = pathSegments[1];
+            const shouldInjectListItem = breadcrumbItems.length === 2
+                && activeItem
+                && resourceKey
+                && listBreadcrumbMap[resourceKey]
+                && /^(novo|nova|criar|editar)\b/.test(activeLabel);
+
+            if (shouldInjectListItem) {
+                const listItem = document.createElement('li');
+                listItem.className = 'breadcrumb-item';
+
+                const listLink = document.createElement('a');
+                listLink.href = listBreadcrumbMap[resourceKey].href;
+                listLink.textContent = listBreadcrumbMap[resourceKey].label;
+
+                listItem.appendChild(listLink);
+                activeItem.before(listItem);
+            }
+
             breadcrumbTarget.replaceChildren(clonedBreadcrumb);
         });
     </script>
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const breadcrumbTarget = document.querySelector('[data-admin-header-breadcrumb]');
+            const pathSegments = window.location.pathname.split('/').filter(Boolean);
+            const actionSegment = pathSegments.at(-1);
+            const isCreatePage = actionSegment === 'create';
+            const isEditPage = actionSegment === 'edit' || actionSegment === 'editar';
+            const adminHomePath = "{{ route('admin', [], false) }}";
+            const pageHeading = document.querySelector('.app-content-header h1, .app-content-header h2, .app-content-header h3, .app-main h1, .app-main h2, .app-main h3');
+            const fallbackLabel = pageHeading ? pageHeading.textContent.trim() : '';
+            const breadcrumbMap = {
+                funcoes: {
+                    listLabel: 'Cargos',
+                    href: "{{ route('funcoes.index') }}",
+                    createLabel: 'Novo Cargo',
+                    editLabel: 'Editar Função',
+                },
+                permissoes: {
+                    listLabel: 'Permissões',
+                    href: "{{ route('permissoes.index') }}",
+                    createLabel: 'Nova permissão',
+                    editLabel: 'Editar permissão',
+                },
+                noticias: {
+                    listLabel: 'Notícias',
+                    href: "{{ route('noticias.index') }}",
+                    createLabel: 'Nova notícia',
+                    editLabel: 'Editar notícia',
+                },
+                users: {
+                    listLabel: 'Membros',
+                    href: "{{ route('users.index') }}",
+                    createLabel: 'Novo Membro',
+                    editLabel: 'Editar Membro',
+                },
+                parceiros: {
+                    listLabel: 'Parceiros',
+                    href: "{{ route('parceiros.index') }}",
+                    createLabel: 'Novo Parceiro',
+                    editLabel: 'Editar Parceiro',
+                },
+                galeria: {
+                    listLabel: 'Galeria',
+                    href: "{{ route('galeria.indexAdmin') }}",
+                    createLabel: 'Nova Mídia',
+                    editLabel: 'Editar Galeria',
+                },
+                certificados: {
+                    listLabel: 'Certificados',
+                    href: "{{ route('certificados.index') }}",
+                    createLabel: 'Novo certificado',
+                    editLabel: 'Editar certificado',
+                },
+                projetos: {
+                    listLabel: 'Projetos',
+                    href: "{{ route('projetos.index') }}",
+                    createLabel: 'Novo Projeto',
+                    editLabel: 'Editar Projeto',
+                },
+                servicos: {
+                    listLabel: 'Serviços',
+                    href: "{{ route('servicos.index') }}",
+                    createLabel: 'Novo Serviço',
+                    editLabel: 'Editar Serviço',
+                },
+                lancamentos: {
+                    listLabel: 'Lançamentos',
+                    href: "{{ route('lancamentos.index') }}",
+                    createLabel: 'Novo Lançamento',
+                    editLabel: 'Editar Lançamento',
+                },
+                tags: {
+                    listLabel: 'Tags',
+                    href: "{{ route('tags.index') }}",
+                    createLabel: 'Nova tag',
+                    editLabel: 'Editar tag',
+                },
+            };
+            const resourceKey = [...pathSegments].reverse().find((segment) => Object.prototype.hasOwnProperty.call(breadcrumbMap, segment));
+            const resourceConfig = resourceKey ? breadcrumbMap[resourceKey] : null;
+
+            if (!breadcrumbTarget) {
+                return;
+            }
+
+            const ensureHomeItem = (item) => {
+                if (!item) {
+                    return;
+                }
+
+                const homeLink = item.querySelector('a');
+                if (homeLink) {
+                    homeLink.textContent = 'Início';
+                } else {
+                    item.textContent = 'Início';
+                }
+
+                if (!item.querySelector('.bi-house-door')) {
+                    const homeIcon = document.createElement('i');
+                    homeIcon.className = 'bi bi-house-door';
+                    homeIcon.setAttribute('aria-hidden', 'true');
+                    item.prepend(homeIcon);
+                }
+            };
+
+            let breadcrumb = breadcrumbTarget.querySelector('.breadcrumb');
+
+            if (!breadcrumb && window.location.pathname === adminHomePath) {
+                breadcrumb = document.createElement('ol');
+                breadcrumb.className = 'breadcrumb admin-header-breadcrumb';
+
+                const homeItem = document.createElement('li');
+                homeItem.className = 'breadcrumb-item active';
+                homeItem.setAttribute('aria-current', 'page');
+                breadcrumb.appendChild(homeItem);
+
+                ensureHomeItem(homeItem);
+                breadcrumbTarget.replaceChildren(breadcrumb);
+                return;
+            }
+
+            if (!breadcrumb) {
+                breadcrumb = document.createElement('ol');
+                breadcrumb.className = 'breadcrumb admin-header-breadcrumb';
+                breadcrumbTarget.replaceChildren(breadcrumb);
+            }
+
+            let breadcrumbItems = Array.from(breadcrumb.querySelectorAll('.breadcrumb-item'));
+
+            if (breadcrumbItems.length === 0) {
+                const homeItem = document.createElement('li');
+                homeItem.className = 'breadcrumb-item';
+
+                const homeLink = document.createElement('a');
+                homeLink.href = adminHomePath;
+                homeItem.appendChild(homeLink);
+
+                const activeItem = document.createElement('li');
+                activeItem.className = 'breadcrumb-item active';
+                activeItem.setAttribute('aria-current', 'page');
+
+                breadcrumb.append(homeItem, activeItem);
+                breadcrumbItems = [homeItem, activeItem];
+            }
+
+            const firstItem = breadcrumbItems[0];
+            const activeItem = breadcrumbItems.at(-1);
+
+            ensureHomeItem(firstItem);
+
+            if (resourceConfig && activeItem) {
+                const isListPage = breadcrumbItems.length === 2 && !isCreatePage && !isEditPage;
+
+                if ((isCreatePage || isEditPage) && breadcrumbItems.length === 2) {
+                    const existingListItem = breadcrumbItems.find((item, index) => index > 0 && item !== activeItem);
+
+                    if (!existingListItem) {
+                        const listItem = document.createElement('li');
+                        listItem.className = 'breadcrumb-item';
+
+                        const listLink = document.createElement('a');
+                        listLink.href = resourceConfig.href;
+                        listLink.textContent = resourceConfig.listLabel;
+
+                        listItem.appendChild(listLink);
+                        activeItem.before(listItem);
+                    }
+                }
+
+                if (isCreatePage && resourceConfig.createLabel) {
+                    activeItem.textContent = resourceConfig.createLabel;
+                } else if (isEditPage && resourceConfig.editLabel) {
+                    activeItem.textContent = resourceConfig.editLabel;
+                } else if (isListPage && resourceConfig.listLabel) {
+                    activeItem.textContent = resourceConfig.listLabel;
+                }
+            }
+
+            if (activeItem && !activeItem.textContent.trim()) {
+                activeItem.textContent = fallbackLabel || 'Início';
+            }
+
+            const normalizedItems = Array.from(breadcrumb.querySelectorAll('.breadcrumb-item'));
+            if (normalizedItems.length >= 3) {
+                const secondItem = normalizedItems[1];
+                const secondLabel = secondItem ? secondItem.textContent.trim() : '';
+
+                if (resourceKey === 'galeria' && secondLabel === 'Galeria - Lista') {
+                    const secondLink = secondItem.querySelector('a');
+                    if (secondLink) {
+                        secondLink.textContent = 'Galeria';
+                    } else {
+                        secondItem.textContent = 'Galeria';
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
         window.addEventListener('load', function() {
-            // Aguarda um pequeno delay para garantir que todos os recursos estejam carregados
-            setTimeout(function() {
-                document.body.classList.add('loaded');
-                document.getElementById('loading-screen').style.display = 'none';
-            }, 500);
+            document.body.classList.add('loaded', 'app-loaded');
+
+            const loadingScreen = document.getElementById('loading-screen');
+            if (loadingScreen) {
+                loadingScreen.style.display = 'none';
+            }
         });
     </script>
 </body>
