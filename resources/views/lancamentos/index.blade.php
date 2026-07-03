@@ -47,7 +47,10 @@ Lançamentos
                     </a>
                 @endif
             </div>
-                        
+
+            <a href="{{ route('lancamentos.create') }}" class="btn btn-outline-success">
+                <i class="fas fa-plus me-2"></i>Novo lançamento
+            </a>
         </div>
 
         <form method="POST" action="{{ route('lancamentos.generateCertificates') }}">
