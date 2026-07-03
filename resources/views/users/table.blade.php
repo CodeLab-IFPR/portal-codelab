@@ -1,62 +1,75 @@
-<table class="table table-bordered table-striped mt-4" id="users-table">
+<table class="table admin-ui-table" id="users-table">
     <thead>
         <tr>
-            <th>Imagem</th>
+            <th>Foto</th>
             <th>Nome</th>
-            <th>Cpf</th>
+            <th>CPF</th>
             <th>Contato</th>
-            <th>Ativo</th>
+            <th>Status</th>
             <th>Cargo</th>
             <th>Função</th>
-            <th>Ação</th>
+            <th class="admin-ui-actions-cell">Ações</th>
         </tr>
     </thead>
 
     <tbody>
         @forelse($users as $user)
             <tr>
-                <td><img src="/imagens/users/{{ $user->imagem }}" alt="{{ $user->alt }}" width="80px"></td>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->cpf }}</td>
                 <td>
-                    <div>{{ $user->email }}</div>
-                    @if ($user->whatsapp)
-                        <div>
-                            <a href="https://wa.me/55{{ $user->whatsapp }}" target="_blank" class="text-decoration-none">
-                                <i class="bi bi-whatsapp text-success me-1"></i>{{ preg_replace('/^(\d{2})(\d{5})(\d{4})$/', '($1) $2-$3', $user->whatsapp) }}
-                            </a>
-                        </div>
+                    <div class="admin-ui-avatar">
+                        <img src="/imagens/users/{{ $user->imagem }}" alt="{{ $user->alt }}">
+                    </div>
+                </td>
+                <td><p class="admin-ui-media-title mb-0">{{ $user->name }}</p></td>
+                <td><span class="admin-ui-meta">{{ $user->cpf }}</span></td>
+                <td>
+                    <div class="admin-ui-media-copy">
+                        <div>{{ $user->email }}</div>
+                        @if ($user->whatsapp)
+                            <div class="mt-1">
+                                <a href="https://wa.me/55{{ $user->whatsapp }}" target="_blank" class="admin-ui-link">
+                                    <i class="bi bi-whatsapp text-success me-1"></i>{{ preg_replace('/^(\d{2})(\d{5})(\d{4})$/', '($1) $2-$3', $user->whatsapp) }}
+                                </a>
+                            </div>
+                        @endif
+                    </div>
+                </td>
+                <td>
+                    @if ($user->ativo)
+                        <span class="admin-ui-badge admin-ui-badge-success">Ativo</span>
+                    @else
+                        <span class="admin-ui-badge admin-ui-badge-danger">Inativo</span>
                     @endif
                 </td>
-                <td>{{ $user->ativo ? 'Sim' : 'Não' }}</td>
                 <td>{{ $user->cargo }}</td>
                 <td>
-                    @if (!empty($user->getRoleNames()))
-                        @foreach ($user->getRoleNames() as $role)
-                            <span class="badge bg-primary mx-1">{{ $role }}</span>
-                        @endforeach
-                        
-                    @endif
+                    <div class="admin-ui-role-list">
+                        @if (!empty($user->getRoleNames()))
+                            @foreach ($user->getRoleNames() as $role)
+                                <span class="admin-ui-badge {{ $role === 'Admin' ? 'admin-ui-badge-primary' : 'admin-ui-badge-neutral' }}">{{ $role }}</span>
+                            @endforeach
+                        @endif
+                    </div>
                 </td>
-                <td>
+                <td class="admin-ui-actions-cell">
                     <div class="dropdown">
-                        <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"
+                        <button class="admin-ui-dropdown-toggle" type="button"
                             id="dropdownMenuButton{{ $user->id }}" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            <i class="bi bi-gear"></i>
+                            <i class="bi bi-sliders2"></i>
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $user->id }}">
+                        <ul class="dropdown-menu dropdown-menu-end admin-ui-actions-menu" aria-labelledby="dropdownMenuButton{{ $user->id }}">
                             <li>
                                 <a class="dropdown-item d-flex align-items-center"
                                     href="{{ route('users.show', $user->id) }}">
-                                    <i class="bi bi-eye text-secondary me-2"></i> Visualizar
+                                    <i class="bi bi-eye admin-ui-action-icon-primary me-2"></i> Visualizar
                                 </a>
                             </li>
                             <li>
                                 @can('Editar Membro')
                                 <a class="dropdown-item d-flex align-items-center"
                                     href="{{ route('users.edit', $user->id) }}">
-                                    <i class="bi bi-pencil-square text-warning me-2"></i> Editar
+                                    <i class="bi bi-pencil-square admin-ui-action-icon-primary me-2"></i> Editar
                                 </a>
                                 @endcan
                             </li>
@@ -69,7 +82,7 @@
                                     data-cargo="{{ $user->cargo }}"
                                     data-imagem="/imagens/users/{{ $user->imagem }}"
                                     data-alt="{{ $user->alt }}">
-                                    <i class="bi bi-trash text-danger me-2"></i> Deletar
+                                    <i class="bi bi-trash admin-ui-action-icon-danger me-2"></i> Deletar
                                 </a>
                                 @endcan
                             </li>
@@ -79,14 +92,7 @@
             </tr>
         @empty
             <tr>
-                <td colspan="7">
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                        <a class="btn btn-outline-success btn-sm"
-                            href="{{ route('users.create') }}">
-                            <i class="fa fa-plus"></i> Adicionar Membro
-                        </a>
-                    </div>
-                </td>
+                <td colspan="8" class="admin-ui-table-empty">Não há membros cadastrados.</td>
             </tr>
         @endforelse
     </tbody>

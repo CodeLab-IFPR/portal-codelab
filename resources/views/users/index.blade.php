@@ -1,65 +1,64 @@
 @extends('layouts.admin')
 
-<!-- Título -->
 @section('title')
-Membro - Lista
+Membros
 @endsection
-<!-- Título -->
 
 @section('content')
 <div class="app-content-header">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-6">
-                <h3 class="mb-0">Membro - Lista</h3>
-            </div>
-            <div class="col-sm-6">
+            <div class="col-12">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        Membro - Lista
-                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Membros</li>
                 </ol>
             </div>
         </div>
     </div>
 </div>
-<div class="container">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right: 10px;">
-            <a class="btn btn-outline-success btn-sm" href="{{ route('users.create') }}">
-                <i class="fa fa-plus"></i> Adicionar Membro
-            </a>
-        </div>
 
-        @if(session('success'))
-            <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">
-                <div class="alert-content">
-                    <strong>{{ session('success') }}</strong>
-                </div>
-                <div class="progress-bar-container">
-                    <div id="progress-bar" class="progress-bar"></div>
-                </div>
+<div class="admin-ui-page admin-ui-page-fluid">
+    <div class="admin-ui-intro">
+        <div class="admin-ui-intro-copy">
+            <h1 class="admin-ui-title">Membros</h1>
+        </div>
+        <a class="admin-ui-btn admin-ui-btn-primary" href="{{ route('users.create') }}">
+            <i class="fa fa-plus"></i>
+            <span class="admin-ui-mobile-hide">Novo membro</span>
+        </a>
+    </div>
+
+    <hr class="admin-ui-divider">
+
+    @if(session('success'))
+        <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="alert-content">
+                <strong>{{ session('success') }}</strong>
             </div>
-        @endif
-        <div class="d-flex justify-content-center mb-4">
-            <form id="search-form" class="d-flex" method="GET" action="{{ route('users.index') }}">
-            <input id="search-input" class="form-control me-2" type="search" name="search" placeholder="Buscar Membros"
-                aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">
+            <div class="progress-bar-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+        </div>
+    @endif
+
+    <div class="admin-ui-searchbar">
+        <form id="search-form" class="admin-ui-search-form" method="GET" action="{{ route('users.index') }}">
+            <input id="search-input" class="admin-ui-search-input" type="search" name="search" placeholder="Buscar membros" aria-label="Buscar membros">
+            <button class="admin-ui-btn admin-ui-btn-secondary" type="submit">
                 <i class="bi bi-search"></i>
             </button>
-            </form>
-        </div>
+        </form>
+    </div>
 
-        <div class="card-body">
-            <div id="users-table-container">
-                @include('users.table', ['users' => $users])
-            </div>
+    <div class="admin-ui-table-card admin-ui-card">
+        <div id="users-table-container">
+            @include('users.table', ['users' => $users])
         </div>
+    </div>
 </div>
 
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
