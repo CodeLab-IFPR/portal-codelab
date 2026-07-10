@@ -39,7 +39,8 @@ class ParceiroController extends Controller implements HasMiddleware
     
         if (request()->ajax()) {
             return response()->json([
-                'table' => view('parceiros.table', compact('parceiros'))->render()
+                'table' => view('parceiros.table', compact('parceiros'))->render(),
+                'pagination' => view('components.admin.paginator', ['paginator' => $parceiros])->render(),
             ]);
         }
     
@@ -179,7 +180,8 @@ class ParceiroController extends Controller implements HasMiddleware
     
             if (request()->ajax()) {
                 return response()->json([
-                    'table' => view('parceiros.table', compact('parceiros'))->render()
+                    'table' => view('parceiros.table', compact('parceiros'))->render(),
+                    'pagination' => view('components.admin.paginator', ['paginator' => $parceiros])->render(),
                 ]);
             }
     
