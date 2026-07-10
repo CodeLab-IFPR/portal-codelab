@@ -59,6 +59,10 @@ Parceiros
             @include('parceiros.table', ['parceiros' => $parceiros])
         </div>
     </div>
+
+    <div id="parceiros-pagination-container">
+        <x-admin.paginator :paginator="$parceiros" />
+    </div>
 </div>
 
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
@@ -89,6 +93,22 @@ Parceiros
 
 <script>
     $(document).ready(function () {
+        const updateParceirosList = function (url, query) {
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: query,
+                success: function (response) {
+                    $('#parceiros-table-container').html(response.table);
+                    $('#parceiros-pagination-container').html(response.pagination);
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                    alert('Ocorreu um erro ao atualizar os parceiros.');
+                }
+            });
+        };
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -98,18 +118,20 @@ Parceiros
         $('#search-form').on('submit', function (e) {
             e.preventDefault();
             var query = $('#search-input').val();
-            $.ajax({
-                url: "{{ route('parceiros.index') }}",
-                type: 'GET',
-                data: { search: query },
-                success: function (response) {
-                    $('#parceiros-table-container').html(response.table);
-                },
-                error: function (xhr) {
-                    console.log(xhr.responseText);
-                    alert('Ocorreu um erro ao tentar buscar os parceiros.');
-                }
-            });
+            updateParceirosList("{{ route('parceiros.index') }}", { search: query });
+        });
+
+        $('body').on('click', '.admin-ui-pagination a', function (e) {
+            e.preventDefault();
+
+            if ($(this).attr('aria-disabled') === 'true') {
+                return;
+            }
+
+            var url = $(this).attr('href');
+            var query = { search: $('#search-input').val() };
+
+            updateParceirosList(url, query);
         });
 
         $('body').on('click', '.btn-delete', function (e) {
@@ -133,6 +155,7 @@ Parceiros
                 success: function (response) {
                     if (response.table) {
                         $('#parceiros-table-container').html(response.table);
+                        $('#parceiros-pagination-container').html(response.pagination);
                         $('#confirmDeleteModal').modal('hide');
                     } else {
                         location.reload();
