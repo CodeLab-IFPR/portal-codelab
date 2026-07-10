@@ -1,35 +1,44 @@
-<table class="table table-bordered table-striped mt-4" id="noticias-table">
+<table class="table admin-ui-table" id="noticias-table">
     <thead>
         <tr>
             <th>Imagem</th>
             <th>Título</th>
             <th>Autor</th>
             <th>Categoria</th>
-            <th>Ação</th>
+            <th class="admin-ui-actions-cell">Ações</th>
         </tr>
     </thead>
 
     <tbody>
         @forelse($noticias as $noticia)
             <tr>
-                <td><img src="/imagens/noticias/{{ $noticia->imagem }}" alt="{{ $noticia->titulo }}" width="100px"></td>
-                <td>{{ $noticia->titulo }}</td>
-                <td>{{ $noticia->autor }}</td>
-                <td>{{ $noticia->categoria }}</td>
                 <td>
+                    <div class="admin-ui-media">
+                        <div class="admin-ui-thumbnail admin-ui-thumbnail-4x3">
+                            <img src="/imagens/noticias/{{ $noticia->imagem }}" alt="{{ $noticia->alt ?? $noticia->titulo }}">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="admin-ui-media-copy">
+                        <p class="admin-ui-media-title">{{ $noticia->titulo }}</p>
+                    </div>
+                </td>
+                <td><span class="admin-ui-meta">{{ $noticia->autor }}</span></td>
+                <td><span class="admin-ui-meta">{{ $noticia->categoria }}</span></td>
+                <td class="admin-ui-actions-cell">
                     <div class="dropdown">
-                        <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"
+                        <button class="admin-ui-dropdown-toggle" type="button"
                             id="dropdownMenuButton{{ $noticia->id }}" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            <i class="bi bi-gear"></i>
+                            <i class="bi bi-sliders2"></i>
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $noticia->id }}">
-                            
+                        <ul class="dropdown-menu dropdown-menu-end admin-ui-actions-menu" aria-labelledby="dropdownMenuButton{{ $noticia->id }}">
                             <li>
                                 @can('Editar Notícia')
                                 <a class="dropdown-item d-flex align-items-center"
                                     href="{{ route('noticias.edit', $noticia->id) }}">
-                                    <i class="bi bi-pencil-square text-warning me-2"></i> Editar
+                                    <i class="bi bi-pencil-square admin-ui-action-icon-primary me-2"></i> Editar
                                 </a>
                                 @endcan
                             </li>
@@ -40,9 +49,9 @@
                                     data-titulo="{{ $noticia->titulo }}"
                                     data-autor="{{ $noticia->autor }}"
                                     data-categoria="{{ $noticia->categoria }}">
-                                    <i class="bi bi-trash text-danger me-2"></i> Deletar
-                                @endcan
+                                    <i class="bi bi-trash admin-ui-action-icon-danger me-2"></i> Deletar
                                 </a>
+                                @endcan
                             </li>
                         </ul>
                     </div>
@@ -50,10 +59,8 @@
             </tr>
         @empty
             <tr>
-                <td colspan="5" class="text-center">Não há notícias 😢</td>
+                <td colspan="5" class="admin-ui-table-empty">Não há notícias cadastradas.</td>
             </tr>
         @endforelse
     </tbody>
 </table>
-
-{!! $noticias->withQueryString()->links('pagination::bootstrap-5') !!}

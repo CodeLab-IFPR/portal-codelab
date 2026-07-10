@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('title')
+Editar Notícia
+@endsection
+
 @section('content')
 <div class="app-content-header">
     <div class="container-fluid">
@@ -10,69 +14,108 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('noticias.index') }}">Notícia</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('noticias.index') }}">Notícias</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Editar</li>
                 </ol>
             </div>
         </div>
     </div>
 </div>
-<div class="container d-flex justify-content-center">
-    <div class="card-body" style="max-width: 600px;">
-        <form action="{{ route('noticias.update', $noticia->id) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-            <div class="mb-3">
-                <label for="inputTitulo" class="form-label"><strong>Titulo:</strong></label>
-                <input type="text" class="form-control" name="titulo" id="inputTitulo" placeholder="Titulo..." value="{{ $noticia->titulo }}">
-                @error('titulo')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label for="inputConteudo" class="form-label"><strong>Conteudo:</strong></label>
-                <textarea class="form-control @error('conteudo') inválida @enderror" style="height: 600px" name="conteudo" id="inputConteudo" placeholder="Conteudo...">{{ $noticia->conteudo }}</textarea>
-                @error('conteudo')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label for="inputAutor" class="form-label"><strong>Autor:</strong></label>
-                <input type="text" class="form-control" name="autor" id="inputAutor" placeholder="Autor..." value="{{ $noticia->autor }}">
-                @error('autor')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label for="inputImagem" class="form-label"><strong>Imagem:</strong></label>
-                <input type="file" name="imagem" class="form-control @error('imagem') is-invalid @enderror image" id="inputImagem">
-                @if($noticia->imagem)
-                    <p class="mt-2"><strong>Imagem atual:</strong></p>
-                    <img src="/imagens/noticias/{{ $noticia->imagem }}" width="160px" class="mt-2">
-                @endif
-                @error('imagem')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
-                <div id="newImagePreview" class="mt-2"></div>
-            </div>
-            <div class="mb-3">
-                <label for="inputAlt" class="form-label"><strong>Alt:</strong></label>
-                <input type="text" class="form-control @error('alt') inválido @enderror" name="alt" value="{{ $noticia->alt }}" id="inputAlt" placeholder="Descreva a capa...">
-                @error('alt')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label for="inputCategoria" class="form-label"><strong>Categoria:</strong></label>
-                <input type="text" class="form-control @error('categoria') inválida @enderror" name="categoria" value="{{ $noticia->categoria }}" id="inputCategoria" placeholder="Categoria...">
-                @error('categoria')
-                    <div class="form-text text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button type="submit" class="btn btn-outline-primary"><i class="fa-solid fa-floppy-disk"></i> Atualizar</button>
-            </div>
-        </form>
+
+<div class="admin-ui-page admin-ui-page-narrow">
+    <div class="admin-ui-intro">
+        <div class="admin-ui-intro-copy">
+            <h1 class="admin-ui-title">Editar Notícia</h1>
+        </div>
+        <a href="{{ route('noticias.index') }}" class="admin-ui-btn admin-ui-btn-secondary">
+            <i class="bi bi-arrow-left"></i>
+            <span class="admin-ui-mobile-hide">Voltar</span>
+        </a>
     </div>
+
+    <form action="{{ route('noticias.update', $noticia->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+
+        <div class="admin-ui-card admin-ui-card-form">
+            <h2 class="admin-ui-card-title">Dados da notícia</h2>
+
+            <div class="admin-ui-grid admin-ui-grid-2">
+                <div class="admin-ui-field" style="grid-column: 1 / -1;">
+                    <label for="inputTitulo" class="admin-ui-label">Título</label>
+                    <input type="text" class="admin-ui-input @error('titulo') is-invalid @enderror" name="titulo"
+                        id="inputTitulo" placeholder="Título..." value="{{ old('titulo', $noticia->titulo) }}">
+                    @error('titulo')
+                        <div class="admin-ui-error">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="admin-ui-field" style="grid-column: 1 / -1;">
+                    <label for="inputConteudo" class="admin-ui-label">Conteúdo</label>
+                    <textarea class="admin-ui-textarea @error('conteudo') is-invalid @enderror"
+                        style="min-height: 600px;" name="conteudo" id="inputConteudo"
+                        placeholder="Conteúdo...">{{ old('conteudo', $noticia->conteudo) }}</textarea>
+                    @error('conteudo')
+                        <div class="admin-ui-error">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="admin-ui-field">
+                    <label for="inputAutor" class="admin-ui-label">Autor</label>
+                    <input type="text" class="admin-ui-input @error('autor') is-invalid @enderror" name="autor"
+                        id="inputAutor" placeholder="Autor..." value="{{ old('autor', $noticia->autor) }}">
+                    @error('autor')
+                        <div class="admin-ui-error">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="admin-ui-field">
+                    <label for="inputCategoria" class="admin-ui-label">Categoria</label>
+                    <input type="text" class="admin-ui-input @error('categoria') is-invalid @enderror" name="categoria"
+                        id="inputCategoria" placeholder="Categoria..." value="{{ old('categoria', $noticia->categoria) }}">
+                    @error('categoria')
+                        <div class="admin-ui-error">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="admin-ui-field">
+                    <label for="inputAlt" class="admin-ui-label">Alt</label>
+                    <input type="text" class="admin-ui-input @error('alt') is-invalid @enderror" name="alt"
+                        id="inputAlt" placeholder="Descreva a capa..." value="{{ old('alt', $noticia->alt) }}">
+                    @error('alt')
+                        <div class="admin-ui-error">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="admin-ui-field">
+                    <label for="inputImagem" class="admin-ui-label">Capa</label>
+                    <div class="admin-ui-file-control">
+                        <label class="admin-ui-file-button" for="inputImagem" aria-label="Selecionar imagem">
+                            <i class="bi bi-cloud-arrow-up"></i>
+                            <span class="admin-ui-file-name" data-admin-file-name>Nenhum arquivo selecionado</span>
+                        </label>
+                        <input type="file" name="imagem" class="admin-ui-file-native @error('imagem') is-invalid @enderror"
+                            id="inputImagem">
+                    </div>
+                    @if($noticia->imagem)
+                        <p class="admin-ui-file-current">Imagem atual</p>
+                        <div class="admin-ui-avatar-lg">
+                            <img src="/imagens/noticias/{{ $noticia->imagem }}" alt="{{ $noticia->alt ?? $noticia->titulo }}">
+                        </div>
+                    @endif
+                    @error('imagem')
+                        <div class="admin-ui-error">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-ui-actions">
+            <a href="{{ route('noticias.index') }}" class="admin-ui-btn admin-ui-btn-secondary">Cancelar</a>
+            <button type="submit" class="admin-ui-btn admin-ui-btn-primary">
+                <i class="fa-regular fa-floppy-disk"></i> Atualizar
+            </button>
+        </div>
+    </form>
 </div>
 @endsection
