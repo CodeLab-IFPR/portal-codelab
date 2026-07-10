@@ -655,6 +655,52 @@ body.admin-shell {
         width: 100%;
     }
 
+    .admin-home-launchpad {
+        display: grid;
+        place-items: center;
+        min-height: calc(100vh - 190px);
+        padding: 24px 16px 48px;
+    }
+
+    .admin-home-launch-button {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        width: min(260px, 72vw);
+        aspect-ratio: 1;
+        color: var(--admin-surface);
+        text-decoration: none;
+        background: linear-gradient(145deg, color-mix(in srgb, var(--admin-primary) 92%, black), var(--admin-primary));
+        border: 1px solid color-mix(in srgb, var(--admin-primary) 80%, white);
+        border-radius: var(--admin-radius-xl);
+        box-shadow: 0 24px 48px rgba(var(--admin-shadow-rgb), 0.18);
+        transition: transform var(--admin-transition-fast), box-shadow var(--admin-transition-fast),
+            border-color var(--admin-transition-fast);
+    }
+
+    .admin-home-launch-button:hover,
+    .admin-home-launch-button:focus-visible {
+        color: var(--admin-surface);
+        text-decoration: none;
+        border-color: color-mix(in srgb, var(--admin-primary) 55%, white);
+        box-shadow: 0 30px 54px rgba(var(--admin-shadow-rgb), 0.22);
+        transform: translateY(-2px);
+        outline: 0;
+    }
+
+    .admin-home-launch-button i {
+        font-size: clamp(3rem, 9vw, 4.5rem);
+        line-height: 1;
+    }
+
+    .admin-home-launch-button span {
+        font-size: clamp(1.35rem, 3.8vw, 1.75rem);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+    }
+
     .admin-ui-page form {
         min-width: 0;
     }

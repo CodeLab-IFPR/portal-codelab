@@ -196,7 +196,7 @@
                         @endcan
                         @can('Visualizar Lançamento')
                         <a href="{{ route('lancamentos.index') }}" class="admin-sidebar-item {{ request()->routeIs('lancamentos.index') ? 'active' : '' }}">
-                            <i class="admin-sidebar-item-icon bi bi-calendar-event" aria-hidden="true"></i>
+                            <i class="admin-sidebar-item-icon bi bi-rocket-takeoff" aria-hidden="true"></i>
                             <span>Lançamentos</span>
                         </a>
                         @endcan
