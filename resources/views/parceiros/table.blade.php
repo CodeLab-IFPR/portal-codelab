@@ -67,5 +67,3 @@
         @endforelse
     </tbody>
 </table>
-
-{!! $parceiros->withQueryString()->links('pagination::bootstrap-5') !!}

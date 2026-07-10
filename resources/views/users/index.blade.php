@@ -56,6 +56,10 @@ Membros
             @include('users.table', ['users' => $users])
         </div>
     </div>
+
+    <div id="users-pagination-container">
+        <x-admin.paginator :paginator="$users" />
+    </div>
 </div>
 
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
@@ -88,6 +92,22 @@ Membros
 
 <script>
     $(document).ready(function () {
+        const updateUsersList = function (url, query) {
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: query,
+                success: function (response) {
+                    $('#users-table-container').html(response.table);
+                    $('#users-pagination-container').html(response.pagination);
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                    alert('Ocorreu um erro ao atualizar os membros.');
+                }
+            });
+        };
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -97,18 +117,20 @@ Membros
         $('#search-form').on('submit', function (e) {
             e.preventDefault();
             var query = $('#search-input').val();
-            $.ajax({
-                url: "{{ route('users.index') }}",
-                type: 'GET',
-                data: { search: query },
-                success: function (response) {
-                    $('#users-table-container').html(response.table);
-                },
-                error: function (xhr) {
-                    console.log(xhr.responseText);
-                    alert('Ocorreu um erro ao tentar buscar os membros.');
-                }
-            });
+            updateUsersList("{{ route('users.index') }}", { search: query });
+        });
+
+        $('body').on('click', '.admin-ui-pagination a', function (e) {
+            e.preventDefault();
+
+            if ($(this).attr('aria-disabled') === 'true') {
+                return;
+            }
+
+            var url = $(this).attr('href');
+            var query = { search: $('#search-input').val() };
+
+            updateUsersList(url, query);
         });
 
         $('body').on('click', '.btn-delete', function (e) {
@@ -138,6 +160,7 @@ Membros
                 success: function (response) {
                     if (response.table) {
                         $('#users-table-container').html(response.table);
+                        $('#users-pagination-container').html(response.pagination);
                         $('#confirmDeleteModal').modal('hide');
                     } else {
                         location.reload();

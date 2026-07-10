@@ -20,8 +20,7 @@ Lançamentos
         </div>
     </div>
 </div>
-<div class="container d-flex justify-content-center">
-    <div class="w-75">
+<div class="admin-ui-page admin-ui-page-fluid">
     @if(session('success'))
         <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">
             <div class="alert-content">
@@ -58,6 +57,9 @@ Lançamentos
             <div id="lancamentos-table-container">
                 @include('lancamentos.table', ['lancamentos' => $lancamentos])
             </div>
+            <div id="lancamentos-pagination-container">
+                <x-admin.paginator :paginator="$lancamentos" />
+            </div>
             @hasrole('Admin')
             <div class="d-flex justify-content-between align-items-center mt-3">
                 <div>
@@ -74,7 +76,6 @@ Lançamentos
             </div>
             @endhasrole
         </form>
-    </div>
 </div>
 
 @can('Criar Projeto')
@@ -243,6 +244,7 @@ Lançamentos
                 success: function (response) {
                     if (response.table) {
                         $('#lancamentos-table-container').html(response.table);
+                        $('#lancamentos-pagination-container').html(response.pagination);
                         $('#confirmDeleteModal').modal('hide');
                     } else {
                         location.reload();

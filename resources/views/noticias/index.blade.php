@@ -1,20 +1,14 @@
 @extends('layouts.admin')
 
-<!-- Título -->
 @section('title')
-Notícias - Lista
+Notícias
 @endsection
-<!-- Título -->
-
 
 @section('content')
 <div class="app-content-header">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-6">
-                <h3 class="mb-0">Notícias - Lista</h3>
-            </div>
-            <div class="col-sm-6">
+            <div class="col-12">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Notícias</li>
@@ -23,12 +17,19 @@ Notícias - Lista
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right: 10px;">
-        <a class="btn btn-outline-success btn-sm" href="{{ route('noticias.create') }}">
-            <i class="fa fa-plus"></i> Adicionar Notícia
+
+<div class="admin-ui-page admin-ui-page-fluid">
+    <div class="admin-ui-intro">
+        <div class="admin-ui-intro-copy">
+            <h1 class="admin-ui-title">Notícias</h1>
+        </div>
+        <a class="admin-ui-btn admin-ui-btn-primary" href="{{ route('noticias.create') }}">
+            <i class="fa fa-plus"></i>
+            <span class="admin-ui-mobile-hide">Nova notícia</span>
         </a>
     </div>
+
+    <hr class="admin-ui-divider">
 
     @if(session('success'))
         <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">
@@ -40,19 +41,25 @@ Notícias - Lista
             </div>
         </div>
     @endif
-    <div class="d-flex justify-content-center mb-4">
-        <form id="search-form" class="d-flex" method="GET" action="{{ route('noticias.index') }}">
-            <input id="search-input" class="form-control me-2" type="search" name="search" placeholder="Buscar noticias" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">
+
+    <div class="admin-ui-searchbar">
+        <form id="search-form" class="admin-ui-search-form" method="GET" action="{{ route('noticias.index') }}">
+            <input id="search-input" class="admin-ui-search-input" type="search" name="search"
+                placeholder="Buscar notícias" aria-label="Buscar notícias" value="{{ request('search') }}">
+            <button class="admin-ui-btn admin-ui-btn-secondary" type="submit">
                 <i class="bi bi-search"></i>
             </button>
         </form>
     </div>
 
-    <div class="card-body">
+    <div class="admin-ui-table-card admin-ui-card">
         <div id="noticias-table-container">
             @include('noticias.table', ['noticias' => $noticias])
         </div>
+    </div>
+
+    <div id="noticias-pagination-container">
+        <x-admin.paginator :paginator="$noticias" />
     </div>
 </div>
 
@@ -60,7 +67,7 @@ Notícias - Lista
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar exclusão</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -85,6 +92,22 @@ Notícias - Lista
 
 <script>
     $(document).ready(function () {
+        const updateNoticiasList = function (url, query) {
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: query,
+                success: function (response) {
+                    $('#noticias-table-container').html(response.table);
+                    $('#noticias-pagination-container').html(response.pagination);
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                    alert('Ocorreu um erro ao atualizar as notícias.');
+                }
+            });
+        };
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -94,18 +117,20 @@ Notícias - Lista
         $('#search-form').on('submit', function (e) {
             e.preventDefault();
             var query = $('#search-input').val();
-            $.ajax({
-                url: "{{ route('noticias.index') }}",
-                type: 'GET',
-                data: { search: query },
-                success: function (response) {
-                    $('#noticias-table-container').html(response.table);
-                },
-                error: function (xhr) {
-                    console.log(xhr.responseText);
-                    alert('Ocorreu um erro ao tentar buscar os noticias.');
-                }
-            });
+            updateNoticiasList("{{ route('noticias.index') }}", { search: query });
+        });
+
+        $('body').on('click', '.admin-ui-pagination a', function (e) {
+            e.preventDefault();
+
+            if ($(this).attr('aria-disabled') === 'true') {
+                return;
+            }
+
+            var url = $(this).attr('href');
+            var query = { search: $('#search-input').val() };
+
+            updateNoticiasList(url, query);
         });
 
         $('body').on('click', '.btn-delete', function (e) {
@@ -114,13 +139,10 @@ Notícias - Lista
             var titulo = $(this).data('titulo');
             var autor = $(this).data('autor');
             var categoria = $(this).data('categoria');
-            
-
 
             $('#noticia-titulo').text(titulo);
             $('#noticia-autor').text(autor);
             $('#noticia-categoria').text(categoria);
-
 
             $('#confirmDeleteButton').data('url', url);
             $('#confirmDeleteModal').modal('show');
@@ -134,6 +156,7 @@ Notícias - Lista
                 success: function (response) {
                     if (response.table) {
                         $('#noticias-table-container').html(response.table);
+                        $('#noticias-pagination-container').html(response.pagination);
                         $('#confirmDeleteModal').modal('hide');
                     } else {
                         location.reload();
@@ -141,7 +164,7 @@ Notícias - Lista
                 },
                 error: function (xhr) {
                     console.log(xhr.responseText);
-                    alert('Ocorreu um erro ao tentar excluir o noticia.');
+                    alert('Ocorreu um erro ao tentar excluir a notícia.');
                 }
             });
         });

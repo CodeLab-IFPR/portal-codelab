@@ -122,7 +122,8 @@ class RegisteredUserController extends Controller implements HasMiddleware
     
         if ($request->ajax()) {
             return response()->json([
-                'table' => view('users.table', compact('users'))->render()
+                'table' => view('users.table', compact('users'))->render(),
+                'pagination' => view('components.admin.paginator', ['paginator' => $users])->render(),
             ]);
         }
     
@@ -230,7 +231,8 @@ class RegisteredUserController extends Controller implements HasMiddleware
 
             if (request()->ajax()) {
                 return response()->json([
-                    'table' => view('users.table', compact('users'))->render()
+                    'table' => view('users.table', compact('users'))->render(),
+                    'pagination' => view('components.admin.paginator', ['paginator' => $users])->render(),
                 ]);
             }
           
