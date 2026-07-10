@@ -53,7 +53,7 @@ class LancamentoServicoController extends Controller implements HasMiddleware
             $filtro->where('certificado_gerado', $request->certificado_status);
         }
 
-        $pageSize = $request->get('page_size', 1);
+        $pageSize = $request->get('page_size', 10);
         $lancamentos = $filtro->orderBy($order, $direction)->paginate($pageSize);
         
         $horasTotais = $this->calcularTotalHoras($request);
