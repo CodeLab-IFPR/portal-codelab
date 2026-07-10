@@ -135,5 +135,3 @@
         @endforelse
     </tbody>
 </table>
-
-{!! $lancamentos->withQueryString()->links('pagination::bootstrap-5') !!}
