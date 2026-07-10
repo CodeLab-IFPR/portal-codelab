@@ -181,7 +181,7 @@ body.admin-shell {
 
             .bi-house-door {
                 margin-right: 5px;
-                font-size: 11px;
+                font-size: 14px;
                 color: var(--admin-text-soft);
             }
         }
@@ -944,6 +944,81 @@ body.admin-shell {
         overflow-y: hidden;
     }
 
+    .admin-ui-pagination-shell {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        margin-top: 16px;
+        padding: 0 2px;
+        flex-wrap: wrap;
+    }
+
+    .admin-ui-pagination-summary {
+        color: var(--admin-text-soft);
+        font-size: 0.95rem;
+        line-height: 1.35;
+    }
+
+    .admin-ui-pagination {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: auto;
+    }
+
+    .admin-ui-pagination-btn,
+    .admin-ui-pagination-ellipsis {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 40px;
+        border-radius: var(--admin-radius-md);
+        font-size: 0.94rem;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .admin-ui-pagination-btn {
+        color: var(--admin-primary);
+        text-decoration: none;
+        background: color-mix(in srgb, var(--admin-bg) 72%, white);
+        border: 1px solid color-mix(in srgb, var(--admin-border) 84%, white);
+        box-shadow: 0 10px 24px rgba(var(--admin-shadow-rgb), 0.08);
+        transition: var(--admin-transition-item);
+    }
+
+    .admin-ui-pagination-btn:hover,
+    .admin-ui-pagination-btn:focus-visible {
+        color: var(--admin-surface);
+        background: var(--admin-primary);
+        border-color: var(--admin-primary);
+    }
+
+    .admin-ui-pagination-btn.is-active {
+        color: var(--admin-surface);
+        background: linear-gradient(135deg, var(--admin-primary), color-mix(in srgb, var(--admin-primary) 68%, #4f8fe0));
+        border-color: transparent;
+        box-shadow: 0 14px 28px rgba(var(--admin-shadow-rgb), 0.18);
+    }
+
+    .admin-ui-pagination-btn.is-disabled {
+        color: var(--admin-text-muted);
+        background: color-mix(in srgb, var(--admin-border) 70%, white);
+        border-color: color-mix(in srgb, var(--admin-border) 92%, white);
+        pointer-events: none;
+        box-shadow: none;
+    }
+
+    .admin-ui-pagination-btn-nav {
+        min-width: 40px;
+    }
+
+    .admin-ui-pagination-ellipsis {
+        color: var(--admin-text-muted);
+    }
+
     .admin-ui-table {
         width: 100%;
         min-width: max-content;
@@ -1021,6 +1096,39 @@ body.admin-shell {
 
     .admin-ui-avatar img,
     .admin-ui-avatar-lg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .admin-ui-thumbnail {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: color-mix(in srgb, var(--admin-bg) 45%, white);
+        border: 1px solid var(--admin-border);
+        border-radius: var(--admin-radius-md);
+        flex: 0 0 auto;
+    }
+
+    .admin-ui-thumbnail-4x3 {
+        width: 72px;
+        aspect-ratio: 4 / 3;
+    }
+
+    .admin-ui-thumbnail-preview {
+        width: 180px;
+        aspect-ratio: 4 / 3;
+    }
+
+    .admin-ui-thumbnail-modal {
+        width: 100%;
+        max-width: 320px;
+        aspect-ratio: 4 / 3;
+    }
+
+    .admin-ui-thumbnail img {
         width: 100%;
         height: 100%;
         object-fit: cover;

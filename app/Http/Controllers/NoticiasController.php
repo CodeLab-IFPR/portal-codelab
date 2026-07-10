@@ -41,7 +41,8 @@ class NoticiasController extends Controller implements HasMiddleware
     
         if ($request->ajax()) {
             return response()->json([
-                'table' => view('noticias.table', compact('noticias'))->render()
+                'table' => view('noticias.table', compact('noticias'))->render(),
+                'pagination' => view('components.admin.paginator', ['paginator' => $noticias])->render(),
             ]);
         }
     
@@ -177,11 +178,12 @@ class NoticiasController extends Controller implements HasMiddleware
     
             $noticia->delete();
     
-            $noticias = Noticias::paginate(5);
+            $noticias = Noticias::latest()->paginate(5);
     
             if (request()->ajax()) {
                 return response()->json([
-                    'table' => view('noticias.table', compact('noticias'))->render()
+                    'table' => view('noticias.table', compact('noticias'))->render(),
+                    'pagination' => view('components.admin.paginator', ['paginator' => $noticias])->render(),
                 ]);
             }
     
