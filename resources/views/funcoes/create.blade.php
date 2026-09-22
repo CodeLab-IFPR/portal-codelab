@@ -25,7 +25,6 @@
     <form action="{{ route('funcoes.store') }}" method="POST" id="role-form">
         @csrf
         <div class="admin-ui-card admin-ui-card-form mb-4">
-            <h2 class="admin-ui-card-title">Identificação</h2>
             <div class="admin-ui-field">
                 <label for="inputNomeCargo" class="admin-ui-label">Nome da função *</label>
                 <input type="text" name="name" class="admin-ui-input @error('name') is-invalid @enderror"
@@ -41,7 +40,6 @@
             <div class="admin-ui-permission-heading">
                 <div>
                     <h2 class="admin-ui-card-title mb-2" id="permissions-title">Permissões</h2>
-                    <p class="admin-ui-helper">Selecione as permissões individualmente ou por recurso.</p>
                 </div>
                 <span class="admin-ui-badge admin-ui-badge-neutral" id="permission-count" role="status" aria-live="polite"></span>
             </div>
