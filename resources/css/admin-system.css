@@ -1366,7 +1366,6 @@ body.admin-shell {
 
     .admin-ui-permission-option:has(:checked) {
         color: var(--admin-primary);
-        background: color-mix(in srgb, var(--admin-primary) 10%, var(--admin-surface));
     }
 
     .admin-ui-permission-option .admin-ui-check,
