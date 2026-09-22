@@ -30,7 +30,17 @@ class RoleController extends Controller implements HasMiddleware
     public function create()
     {
         $permissoes = Permission::orderBy('name', 'ASC')->get();
-        return view('funcoes.create', compact('permissoes'));
+        $gruposPermissoes = $permissoes->groupBy(function ($permissao) {
+            if (in_array($permissao->name, ['Marcar como Lida', 'Marcar como Não Lida', 'Alterar Status da Mensagem'])) {
+                return 'Mensagem';
+            }
+
+            $recurso = preg_replace('/^(Criar|Editar|Visualizar|Deletar|Filtrar)\s+/iu', '', $permissao->name);
+
+            return mb_convert_case($recurso, MB_CASE_TITLE, 'UTF-8');
+        })->sortKeys();
+
+        return view('funcoes.create', compact('permissoes', 'gruposPermissoes'));
     }
 
     public function store(Request $request)

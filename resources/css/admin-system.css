@@ -1315,6 +1315,105 @@ body.admin-shell {
         font-weight: 600;
     }
 
+    .admin-ui-permission-heading,
+    .admin-ui-permission-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .admin-ui-permission-toolbar {
+        margin-top: 22px;
+    }
+
+    .admin-ui-permission-toolbar .admin-ui-search-input {
+        flex-basis: 220px;
+    }
+
+    .admin-ui-permission-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+        gap: 16px;
+    }
+
+    .admin-ui-permission-group {
+        min-width: 0;
+        padding: 16px;
+        border: 1px solid var(--admin-border);
+        border-radius: var(--admin-radius-md);
+    }
+
+    .admin-ui-permission-group .admin-ui-inline-option {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .admin-ui-permission-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 44px;
+        padding: 8px;
+        border-radius: var(--admin-radius-sm);
+        color: var(--admin-text-soft);
+        font-size: 0.9rem;
+        overflow-wrap: anywhere;
+        cursor: pointer;
+    }
+
+    .admin-ui-permission-option:has(:checked) {
+        color: var(--admin-primary);
+        background: color-mix(in srgb, var(--admin-primary) 10%, var(--admin-surface));
+    }
+
+    .admin-ui-permission-option .admin-ui-check,
+    .admin-ui-permission-group .admin-ui-check {
+        flex: 0 0 18px;
+    }
+
+    .admin-ui-permission-option[hidden],
+    .admin-ui-permission-group[hidden] {
+        display: none;
+    }
+
+    .admin-ui-permission-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        width: 340px;
+        max-width: 100%;
+    }
+
+    .admin-ui-permission-chip {
+        display: inline-block;
+        max-width: 100%;
+        padding: 5px 9px;
+        border-radius: 6px;
+        background: color-mix(in srgb, var(--admin-primary) 9%, var(--admin-surface));
+        color: var(--admin-primary);
+        font-size: 0.8rem;
+        line-height: 1.4;
+        overflow-wrap: anywhere;
+    }
+
+    .admin-ui-permission-more {
+        padding: 5px;
+        border: 0;
+        background: transparent;
+        color: var(--admin-primary);
+        font-size: 0.85rem;
+        text-decoration: underline;
+    }
+
+    #certificados-table .admin-ui-certificate-description {
+        min-width: 180px;
+        max-width: 300px;
+        overflow-wrap: anywhere;
+    }
+
     @media (max-width: 575.98px) {
         .admin-ui-page {
             padding-inline: 12px;

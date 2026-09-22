@@ -1,67 +1,59 @@
-<table class="table table-bordered table-striped mt-4" id="certificados-table">
-            <thead>
+<div class="admin-ui-table-card admin-ui-card">
+    <table class="table admin-ui-table" id="certificados-table">
+        <thead>
+            <tr>
+                <th>Membro - Nome</th>
+                <th>Descrição</th>
+                <th>Horas</th>
+                <th>Data do certificado</th>
+                <th>Token</th>
+                <th class="admin-ui-actions-cell">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($certificados as $certificado)
                 <tr>
-                    <th>Membro - Nome</th>
-                    <th>Descrição</th>
-                    <th>Horas</th>
-                    <th>Data Certificado</th>
-                    <th>Token</th>
-                    <th>Ação</th>
+                    <td><p class="admin-ui-media-title">{{ $certificado->user->name }}</p></td>
+                    <td class="admin-ui-certificate-description">
+                        <span class="admin-ui-meta" title="{{ $certificado->descricao }}">{{ \Illuminate\Support\Str::limit($certificado->descricao, 60, '...') }}</span>
+                    </td>
+                    <td><span class="admin-ui-meta">{{ $certificado->horas }}</span></td>
+                    <td><span class="admin-ui-meta">{{ \Carbon\Carbon::parse($certificado->data)->format('d/m/Y') }}</span></td>
+                    <td><span class="admin-ui-meta">{{ $certificado->token }}</span></td>
+                    <td class="admin-ui-actions-cell">
+                        <div class="dropdown">
+                            <button class="admin-ui-dropdown-toggle" type="button" id="dropdownMenuButton{{ $certificado->id }}"
+                                data-bs-toggle="dropdown" aria-expanded="false" aria-label="Ações do certificado de {{ $certificado->user->name }}">
+                                <i class="bi bi-sliders2" aria-hidden="true"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end admin-ui-actions-menu" aria-labelledby="dropdownMenuButton{{ $certificado->id }}">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center external-link" href="{{ route('certificados.view', $certificado->id) }}">
+                                        <i class="bi bi-eye admin-ui-action-icon-primary me-2"></i> Visualizar
+                                    </a>
+                                </li>
+                                @can('Editar Certificado')
+                                    <li><a class="dropdown-item d-flex align-items-center" href="{{ route('certificados.edit', $certificado->id) }}">
+                                        <i class="bi bi-pencil-square admin-ui-action-icon-primary me-2"></i> Editar
+                                    </a></li>
+                                @endcan
+                                @can('Deletar Certificado')
+                                    <li><a href="#" class="dropdown-item d-flex align-items-center btn-delete"
+                                        data-url="{{ route('certificados.destroy', $certificado->id) }}"
+                                        data-nome="{{ $certificado->user->name }}" data-descricao="{{ $certificado->descricao }}"
+                                        data-horas="{{ $certificado->horas }}" data-data="{{ \Carbon\Carbon::parse($certificado->data)->format('d/m/Y') }}"
+                                        data-token="{{ $certificado->token }}">
+                                        <i class="bi bi-trash admin-ui-action-icon-danger me-2"></i> Deletar
+                                    </a></li>
+                                @endcan
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
-            </thead>
-
-            <tbody>
-                @forelse($certificados as $certificado)
-                    <tr>
-                        <td>{{ $certificado->user->name }}</td>
-                        <td>{{ mb_strimwidth("$certificado->descricao", 0, 250, "...") }}
-                        </td>
-                        <td>{{ $certificado->horas }} </td>
-                        <td>{{ \Carbon\Carbon::parse($certificado->data)->format('d/m/Y') }}
-                        </td>
-                        <td>{{ $certificado->token }}</td>
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"
-                                    id="dropdownMenuButton{{ $certificado->id }}" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <i class="bi bi-gear"></i>
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $certificado->id }}">
-                                <a class="dropdown-item d-flex align-items-center external-link" href="{{ route('certificados.view', $certificado->id) }}">
-                                    <i class="bi bi-eye text-secondary me-2"></i> Visualizar
-                                </a>
-                                    <li>
-                                        @can('Editar Certificado')
-                                        <a class="dropdown-item d-flex align-items-center"
-                                            href="{{ route('certificados.edit', $certificado->id) }}">
-                                            <i class="bi bi-pencil-square text-warning me-2"></i> Editar
-                                        </a>
-                                        @endcan
-                                    </li>
-                                    <li>
-                                        @can('Deletar Certificado')
-                                        <a href="#" class="dropdown-item d-flex align-items-center btn-delete"
-                                            data-url="{{ route('certificados.destroy', $certificado->id) }}"
-                                            data-nome="{{ $certificado->user->name }}"
-                                            data-descricao="{{ $certificado->descricao }}"
-                                            data-horas="{{ $certificado->horas }}"
-                                            data-data="{{ \Carbon\Carbon::parse($certificado->data)->format('d/m/Y') }}"
-                                            data-token="{{ $certificado->token }}">
-                                            <i class="bi bi-trash text-danger me-2"></i> Deletar
-                                        </a>
-                                        @endcan
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="5" class="text-center">Não há certificados 😢</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-
-{!! $certificados->withQueryString()->links('pagination::bootstrap-5') !!}
+            @empty
+                <tr><td colspan="6" class="admin-ui-table-empty">Não há certificados cadastrados.</td></tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
+<x-admin.paginator :paginator="$certificados->withQueryString()" />

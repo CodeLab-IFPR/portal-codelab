@@ -102,7 +102,7 @@ class CertificadoController extends Controller implements HasMiddleware
                     ->orWhere('horas', 'like', "%{$request->search}%")
                     ->orWhere('data', 'like', "%{$request->search}%")
                     ->orWhereHas('user', function (Builder $query) use ($request) {
-                        $query->where('nome', 'like', "%{$request->search}%");
+                        $query->where('name', 'like', "%{$request->search}%");
                     })
                     ->orWhere('token', 'like', "%{$request->search}%");
             });
@@ -168,6 +168,44 @@ class CertificadoController extends Controller implements HasMiddleware
 
     public function store(Request $request): RedirectResponse
     {
+        $request->validate([
+            'manual_certificado' => 'required_without:certificados|array',
+            'manual_certificado.user_id' => 'required_with:manual_certificado|integer|exists:users,id',
+            'manual_certificado.horas' => 'required_with:manual_certificado|integer',
+            'manual_certificado.data' => 'required_with:manual_certificado|date',
+            'manual_certificado.descricao' => 'required_with:manual_certificado|string|max:520',
+            'certificados' => 'required_without:manual_certificado|array|min:1',
+            'certificados.*.user_id' => 'required|integer|exists:users,id',
+            'certificados.*.horas' => 'required|integer',
+            'certificados.*.data' => 'required|date',
+            'certificados.*.descricao' => 'required|string|max:520',
+        ], [
+            '*.user_id.required' => 'Selecione um membro.',
+            '*.user_id.required_with' => 'Selecione um membro.',
+            '*.user_id.integer' => 'Selecione um membro válido.',
+            '*.user_id.exists' => 'Selecione um membro cadastrado.',
+            '*.horas.required' => 'O campo horas é obrigatório.',
+            '*.horas.required_with' => 'O campo horas é obrigatório.',
+            '*.horas.integer' => 'O campo horas deve ser um número inteiro.',
+            '*.data.required' => 'O campo data é obrigatório.',
+            '*.data.required_with' => 'O campo data é obrigatório.',
+            '*.data.date' => 'O campo data deve ser uma data válida.',
+            '*.descricao.required' => 'O campo descrição é obrigatório.',
+            '*.descricao.required_with' => 'O campo descrição é obrigatório.',
+            '*.descricao.string' => 'O campo descrição deve ser um texto.',
+            '*.descricao.max' => 'O campo descrição deve ter no máximo 520 caracteres.',
+            'certificados.*.user_id.required' => 'Selecione um membro.',
+            'certificados.*.user_id.integer' => 'Selecione um membro válido.',
+            'certificados.*.user_id.exists' => 'Selecione um membro cadastrado.',
+            'certificados.*.horas.required' => 'O campo horas é obrigatório.',
+            'certificados.*.horas.integer' => 'O campo horas deve ser um número inteiro.',
+            'certificados.*.data.required' => 'O campo data é obrigatório.',
+            'certificados.*.data.date' => 'O campo data deve ser uma data válida.',
+            'certificados.*.descricao.required' => 'O campo descrição é obrigatório.',
+            'certificados.*.descricao.string' => 'O campo descrição deve ser um texto.',
+            'certificados.*.descricao.max' => 'O campo descrição deve ter no máximo 520 caracteres.',
+        ]);
+
         $certificados = $request->input('certificados', []);
         $descricao = $request->input('descricao');
 
