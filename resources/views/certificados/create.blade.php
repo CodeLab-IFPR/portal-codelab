@@ -30,8 +30,8 @@
             @endphp
             <section class="admin-ui-card admin-ui-card-form mb-4" aria-label="Certificado {{ $loop->iteration }}">
                 <div class="admin-ui-grid">
-                    <div class="admin-ui-field">
-                        <label for="{{ $inputId }}-user" class="admin-ui-label">Membro *</label>
+                    <div class="admin-ui-field admin-ui-member-field">
+                        <label for="{{ $inputId }}-user" id="{{ $inputId }}-user-label" class="admin-ui-label">Membro *</label>
                         <select id="{{ $inputId }}-user" name="{{ $inputName }}[user_id]"
                             class="admin-ui-input @error($prefix.'.user_id') is-invalid @enderror" required
                             @error($prefix.'.user_id') aria-invalid="true" aria-describedby="{{ $inputId }}-user-error" @enderror>
@@ -85,4 +85,27 @@
         </div>
     </form>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (!$.fn.select2) return;
+
+        $('.admin-ui-member-field select').each(function () {
+            const field = $(this);
+            field.select2({
+                width: '100%',
+                placeholder: 'Selecione um membro',
+                minimumResultsForSearch: Infinity,
+                dropdownParent: field.closest('.admin-ui-member-field'),
+            });
+
+            const selection = field.next('.select2-container').find('.select2-selection');
+            selection.attr('aria-labelledby', field.attr('id') + '-label ' + selection.attr('aria-labelledby'));
+            selection.attr('aria-required', 'true');
+            if (field.attr('aria-invalid')) {
+                selection.attr('aria-invalid', field.attr('aria-invalid'));
+                selection.attr('aria-describedby', field.attr('aria-describedby'));
+            }
+        });
+    });
+</script>
 @endsection
