@@ -14,7 +14,6 @@
     <div class="admin-ui-intro">
         <div class="admin-ui-intro-copy">
             <h1 class="admin-ui-title">Funções</h1>
-            <p class="admin-ui-subtitle">Gerencie funções de acesso.</p>
         </div>
         @can('Criar Função')
             <a class="admin-ui-btn admin-ui-btn-primary" href="{{ route('funcoes.create') }}" aria-label="Nova função">

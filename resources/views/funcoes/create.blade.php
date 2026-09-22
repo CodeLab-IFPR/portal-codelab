@@ -15,7 +15,6 @@
     <div class="admin-ui-intro">
         <div class="admin-ui-intro-copy">
             <h1 class="admin-ui-title">Nova função</h1>
-            <p class="admin-ui-subtitle">Defina um nome e selecione as permissões desta função.</p>
         </div>
         <a href="{{ route('funcoes.index') }}" class="admin-ui-btn admin-ui-btn-secondary" aria-label="Voltar para funções">
             <i class="bi bi-arrow-left" aria-hidden="true"></i>

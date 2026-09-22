@@ -7,7 +7,6 @@
     <div class="admin-ui-intro">
         <div class="admin-ui-intro-copy">
             <h1 class="admin-ui-title">Certificados</h1>
-            <p class="admin-ui-subtitle">Todos os certificados emitidos.</p>
         </div>
         @can('Criar Certificado')
             <a class="admin-ui-btn admin-ui-btn-primary" href="{{ route('certificados.create') }}" aria-label="Novo certificado">

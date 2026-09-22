@@ -7,7 +7,6 @@
     <div class="admin-ui-intro">
         <div class="admin-ui-intro-copy">
             <h1 class="admin-ui-title">Novo Certificado</h1>
-            <p class="admin-ui-subtitle">Emitir um novo certificado.</p>
         </div>
         <a href="{{ route('certificados.index') }}" class="admin-ui-btn admin-ui-btn-secondary" aria-label="Voltar para certificados">
             <i class="bi bi-arrow-left" aria-hidden="true"></i>
