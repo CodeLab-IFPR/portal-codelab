@@ -28,8 +28,7 @@
                 $inputName = $emLote ? "certificados[$index]" : 'manual_certificado';
                 $inputId = $emLote ? "certificado-$index" : 'manual-certificado';
             @endphp
-            <section class="admin-ui-card admin-ui-card-form mb-4" aria-labelledby="{{ $inputId }}-title">
-                <h2 class="admin-ui-card-title" id="{{ $inputId }}-title">Dados do certificado @if($emLote) — {{ $loop->iteration }} @endif</h2>
+            <section class="admin-ui-card admin-ui-card-form mb-4" aria-label="Certificado {{ $loop->iteration }}">
                 <div class="admin-ui-grid">
                     <div class="admin-ui-field">
                         <label for="{{ $inputId }}-user" class="admin-ui-label">Membro *</label>
