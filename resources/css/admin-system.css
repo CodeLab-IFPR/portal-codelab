@@ -1333,6 +1333,10 @@ body.admin-shell {
         flex-basis: 220px;
     }
 
+    .admin-ui-permission-toolbar .admin-ui-btn {
+        flex: 1 0 auto;
+    }
+
     .admin-ui-permission-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
