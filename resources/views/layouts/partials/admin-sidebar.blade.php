@@ -122,7 +122,7 @@
                         @can('Visualizar Certificado')
                         <a href="{{ route('certificados.index') }}" class="admin-sidebar-item {{ request()->routeIs('certificados.index') ? 'active' : '' }}">
                             <i class="admin-sidebar-item-icon bi bi-patch-check" aria-hidden="true"></i>
-                            <span>Todos os certificados</span>
+                            <span>Certificados</span>
                         </a>
                         @endcan
                     </div>
