@@ -129,6 +129,51 @@ class AdminLayoutTasksTest extends TestCase
             ->assertOk()->assertSee('Não há certificados cadastrados.');
     }
 
+    public function test_role_edit_preserves_permissions_and_can_clear_them(): void
+    {
+        $role = Role::create(['name' => 'Editor de teste']);
+        $role->givePermissionTo('Visualizar Certificado');
+        $response = $this->get(route('funcoes.edit', $role))->assertOk();
+        $this->assertCount(Permission::count(), $response->viewData('gruposPermissoes')->flatten());
+        $response->assertSee('value="Editor de teste"', false);
+        $this->assertMatchesRegularExpression('/value="Visualizar Certificado"\s+checked/', $response->getContent());
+
+        $this->from(route('funcoes.edit', $role))->put(route('funcoes.update', $role), ['name' => ''])
+            ->assertSessionHasErrors('name');
+        $response = $this->get(route('funcoes.edit', $role))->assertOk();
+        $this->assertDoesNotMatchRegularExpression('/value="Visualizar Certificado"\s+checked/', $response->getContent());
+
+        $this->put(route('funcoes.update', $role), ['name' => 'Editor atualizado'])
+            ->assertSessionHasNoErrors()->assertRedirect(route('funcoes.index'));
+        $this->assertSame('Editor atualizado', $role->fresh()->name);
+        $this->assertCount(0, $role->fresh()->permissions);
+    }
+
+    public function test_certificate_edit_loads_and_saves_the_selected_member(): void
+    {
+        $certificate = Certificado::forceCreate($this->certificateData() + ['token' => 'edit-test']);
+        $member = User::create([
+            'name' => 'Outro membro', 'email' => 'other@example.test',
+            'cpf' => '11111111111', 'password' => 'test-password',
+        ]);
+        $response = $this->get(route('certificados.edit', $certificate))->assertOk();
+        $response->assertSee('value="'.$this->admin->id.'" selected', false)
+            ->assertSee('Atividade de extensão')->assertSee('value="2026-09-22"', false);
+
+        $data = array_replace($this->certificateData(), ['user_id' => $member->id, 'horas' => 24]);
+        $this->put(route('certificados.update', $certificate), $data)
+            ->assertSessionHasNoErrors()->assertRedirect(route('certificados.index'));
+        $this->assertDatabaseHas('certificados', ['id' => $certificate->id] + $data);
+
+        $this->from(route('certificados.edit', $certificate))->put(route('certificados.update', $certificate),
+            array_replace($data, ['user_id' => $this->admin->id, 'horas' => '']))
+            ->assertSessionHasErrors('horas');
+        $this->get(route('certificados.edit', $certificate))->assertOk()
+            ->assertSee('value="'.$this->admin->id.'" selected', false)
+            ->assertSee('O campo horas é obrigatório');
+        $this->assertSame($member->id, $certificate->fresh()->user_id);
+    }
+
     private function certificateData(): array
     {
         return ['user_id' => $this->admin->id, 'horas' => 12, 'data' => '2026-09-22', 'descricao' => 'Atividade de extensão'];

@@ -130,23 +130,23 @@ class CertificadoController extends Controller implements HasMiddleware
     public function edit(Certificado $certificado)
     {
         $users = User::all();
-        $selectedUser = $certificado->users_id;
         return view('certificados.edit', [
             'certificado' => $certificado,
             'users' => $users,
-            'selectedUserId' => $selectedUser
         ]);
     }
 
     public function update(Request $request, Certificado $certificado): RedirectResponse
     {
         $request->validate([
-            'user_id' => 'required',
+            'user_id' => 'required|integer|exists:users,id',
             'descricao' => 'required|max:520',
             'horas' => 'required|integer',
             'data' => 'required|date',
         ],[
-            'user_id.required' => 'O campo user é obrigatório',
+            'user_id.required' => 'Selecione um membro.',
+            'user_id.integer' => 'Selecione um membro válido.',
+            'user_id.exists' => 'Selecione um membro cadastrado.',
             'descricao.required' => 'O campo descrição é obrigatório',
             'descricao.max' => 'O campo descrição deve ter no máximo 520 caracteres',
             'horas.required' => 'O campo horas é obrigatório',
@@ -156,7 +156,7 @@ class CertificadoController extends Controller implements HasMiddleware
         ]);
 
         $certificado->update([
-            'user_id' => $request->users_id,
+            'user_id' => $request->user_id,
             'descricao' => $request->descricao,
             'horas' => $request->horas,
             'data' => $request->data,

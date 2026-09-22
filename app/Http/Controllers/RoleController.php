@@ -30,7 +30,14 @@ class RoleController extends Controller implements HasMiddleware
     public function create()
     {
         $permissoes = Permission::orderBy('name', 'ASC')->get();
-        $gruposPermissoes = $permissoes->groupBy(function ($permissao) {
+        $gruposPermissoes = $this->agruparPermissoes($permissoes);
+
+        return view('funcoes.create', compact('permissoes', 'gruposPermissoes'));
+    }
+
+    private function agruparPermissoes($permissoes)
+    {
+        return $permissoes->groupBy(function ($permissao) {
             if (in_array($permissao->name, ['Marcar como Lida', 'Marcar como Não Lida', 'Alterar Status da Mensagem'])) {
                 return 'Mensagem';
             }
@@ -39,8 +46,6 @@ class RoleController extends Controller implements HasMiddleware
 
             return mb_convert_case($recurso, MB_CASE_TITLE, 'UTF-8');
         })->sortKeys();
-
-        return view('funcoes.create', compact('permissoes', 'gruposPermissoes'));
     }
 
     public function store(Request $request)
@@ -71,7 +76,8 @@ class RoleController extends Controller implements HasMiddleware
     {   
         $tem_permissoes = $role->permissions->pluck('name');
         $permissoes = Permission::orderBy('name', 'ASC')->get();
-        return view("funcoes.edit", compact("role", "permissoes", "tem_permissoes"));
+        $gruposPermissoes = $this->agruparPermissoes($permissoes);
+        return view("funcoes.edit", compact("role", "permissoes", "tem_permissoes", "gruposPermissoes"));
     }
     
     public function update(Request $request, Role $role)
