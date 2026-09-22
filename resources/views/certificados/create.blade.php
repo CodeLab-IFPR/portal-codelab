@@ -1,103 +1,111 @@
 @extends('layouts.admin')
 
-@section('title')
-Certificados
-@endsection
+@section('title', 'Novo Certificado')
 
 @section('content')
-<div class="app-content-header">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-6">
-                <h3 class="mb-0">Certificado - Cadastro</h3>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-end">
-                    <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        Certificado - Cadastro
-                    </li>
-                </ol>
-            </div>
+<div class="admin-ui-page admin-ui-page-narrow">
+    <div class="admin-ui-intro">
+        <div class="admin-ui-intro-copy">
+            <h1 class="admin-ui-title">Novo Certificado</h1>
         </div>
+        <a href="{{ route('certificados.index') }}" class="admin-ui-btn admin-ui-btn-secondary" aria-label="Voltar para certificados">
+            <i class="bi bi-arrow-left" aria-hidden="true"></i>
+            <span class="admin-ui-mobile-hide">Voltar</span>
+        </a>
     </div>
-</div>
-<div class="container d-flex justify-content-center">
-    <div class="card-body" style="max-width: 600px;">
-        @if(!empty($certificadosData))
-            <form method="POST" action="{{ route('certificados.store') }}">
-                @csrf
-                @foreach($certificadosData as $index => $data)
-                    <div class="mb-3">
-                        <label for="users_id_{{ $index }}" class="form-label"><strong>Membro*</strong></label>
-                        <select id="users_id_{{ $index }}" name="certificados[{{ $index }}][user_id]" class="form-select" required>
+    <hr class="admin-ui-divider">
+
+    @php
+        $certificadosLote = old('certificados', $certificadosData ?? []);
+        $emLote = !empty($certificadosLote);
+        $formularios = $emLote ? $certificadosLote : [old('manual_certificado', [])];
+    @endphp
+    <form method="POST" action="{{ route('certificados.store') }}" novalidate>
+        @csrf
+        @foreach ($formularios as $index => $data)
+            @php
+                $prefix = $emLote ? "certificados.$index" : 'manual_certificado';
+                $inputName = $emLote ? "certificados[$index]" : 'manual_certificado';
+                $inputId = $emLote ? "certificado-$index" : 'manual-certificado';
+            @endphp
+            <section class="admin-ui-card admin-ui-card-form mb-4" aria-label="Certificado {{ $loop->iteration }}">
+                <div class="admin-ui-grid">
+                    <div class="admin-ui-field admin-ui-member-field">
+                        <label for="{{ $inputId }}-user" id="{{ $inputId }}-user-label" class="admin-ui-label">Membro *</label>
+                        <select id="{{ $inputId }}-user" name="{{ $inputName }}[user_id]"
+                            class="admin-ui-input @error($prefix.'.user_id') is-invalid @enderror" required
+                            @error($prefix.'.user_id') aria-invalid="true" aria-describedby="{{ $inputId }}-user-error" @enderror>
+                            <option value="">Selecione um membro</option>
                             @foreach($users as $user)
-                                <option value="{{ $user->id }}" {{ $user->id == $data['user_id'] ? 'selected' : '' }}>
-                                    {{ $user->name }}
-                                </option>
+                                <option value="{{ $user->id }}" @selected((string) $user->id === (string) ($data['user_id'] ?? ''))>{{ $user->name }}</option>
                             @endforeach
                         </select>
+                        @error($prefix.'.user_id')
+                            <p class="admin-ui-error" id="{{ $inputId }}-user-error">{{ $message }}</p>
+                        @enderror
                     </div>
-
-                    <div class="mb-3">
-                        <label for="horas_{{ $index }}" class="form-label"><strong>Horas:*</strong></label>
-                        <input type="text" class="form-control" id="horas_{{ $index }}" name="certificados[{{ $index }}][horas]" value="{{ $data['horas'] }}" required>
+                    <div class="admin-ui-field">
+                        <label for="{{ $inputId }}-horas" class="admin-ui-label">Horas *</label>
+                        <input type="number" step="1" class="admin-ui-input @error($prefix.'.horas') is-invalid @enderror"
+                            id="{{ $inputId }}-horas" name="{{ $inputName }}[horas]" value="{{ $data['horas'] ?? '' }}" required
+                            @error($prefix.'.horas') aria-invalid="true" aria-describedby="{{ $inputId }}-horas-error" @enderror>
+                        @error($prefix.'.horas')
+                            <p class="admin-ui-error" id="{{ $inputId }}-horas-error">{{ $message }}</p>
+                        @enderror
                     </div>
-
-                    <div class="mb-3">
-                        <label for="data_{{ $index }}" class="form-label"><strong>Data:*</strong></label>
-                        <input type="date" class="form-control" id="data_{{ $index }}" name="certificados[{{ $index }}][data]" value="{{ $data['data'] }}" required>
+                    <div class="admin-ui-field">
+                        <label for="{{ $inputId }}-data" class="admin-ui-label">Data *</label>
+                        <input type="date" class="admin-ui-input @error($prefix.'.data') is-invalid @enderror"
+                            id="{{ $inputId }}-data" name="{{ $inputName }}[data]" value="{{ $data['data'] ?? '' }}" required
+                            @error($prefix.'.data') aria-invalid="true" aria-describedby="{{ $inputId }}-data-error" @enderror>
+                        @error($prefix.'.data')
+                            <p class="admin-ui-error" id="{{ $inputId }}-data-error">{{ $message }}</p>
+                        @enderror
                     </div>
-
-                    <div class="mb-3">
-                        <label for="descricao_{{ $index }}" class="form-label"><strong>Descrição</strong></label>
-                        <textarea class="form-control" id="descricao_{{ $index }}" name="certificados[{{ $index }}][descricao]" required>{{ $data['descricao'] }}</textarea>
+                    <div class="admin-ui-field">
+                        <label for="{{ $inputId }}-descricao" class="admin-ui-label">Descrição *</label>
+                        <textarea class="admin-ui-textarea @error($prefix.'.descricao') is-invalid @enderror"
+                            id="{{ $inputId }}-descricao" name="{{ $inputName }}[descricao]" maxlength="520" required
+                            @error($prefix.'.descricao') aria-invalid="true" aria-describedby="{{ $inputId }}-descricao-error" @enderror>{{ $data['descricao'] ?? '' }}</textarea>
+                        @error($prefix.'.descricao')
+                            <p class="admin-ui-error" id="{{ $inputId }}-descricao-error">{{ $message }}</p>
+                        @enderror
                     </div>
-
-                    <input type="hidden" name="certificados[{{ $index }}][servico_id]" value="{{ $data['servico_id'] }}">
-                @endforeach
-
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button type="submit" class="btn btn-outline-success">
-                        <i class="fas fa-plus"></i> Criar Certificado
-                    </button>
                 </div>
-            </form>
-        @else
-            <!-- Formulário para criação manual de certificados -->
-            <form method="POST" action="{{ route('certificados.store') }}">
-                @csrf
-                <div class="mb-3">
-                    <label for="manual_user_id" class="form-label"><strong>Membro*</strong></label>
-                    <select id="manual_user_id" name="manual_certificado[user_id]" class="form-select" required>
-                        @foreach($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label for="manual_horas" class="form-label"><strong>Horas:*</strong></label>
-                    <input type="text" class="form-control" id="manual_horas" name="manual_certificado[horas]" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="manual_data" class="form-label"><strong>Data:*</strong></label>
-                    <input type="date" class="form-control" id="manual_data" name="manual_certificado[data]" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="manual_descricao" class="form-label"><strong>Descrição</strong></label>
-                    <textarea class="form-control" id="manual_descricao" name="manual_certificado[descricao]" required></textarea>
-                </div>
-
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button type="submit" class="btn btn-outline-success">
-                        <i class="fas fa-plus"></i> Criar Certificado
-                    </button>
-                </div>
-            </form>
-        @endif
-    </div>
+                @if ($emLote && isset($data['servico_id']))
+                    <input type="hidden" name="{{ $inputName }}[servico_id]" value="{{ $data['servico_id'] }}">
+                @endif
+            </section>
+        @endforeach
+        <div class="admin-ui-actions">
+            <a href="{{ route('certificados.index') }}" class="admin-ui-btn admin-ui-btn-secondary">Cancelar</a>
+            <button type="submit" class="admin-ui-btn admin-ui-btn-primary">
+                <i class="fa fa-plus" aria-hidden="true"></i> {{ $emLote ? 'Criar certificados' : 'Criar certificado' }}
+            </button>
+        </div>
+    </form>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (!$.fn.select2) return;
+
+        $('.admin-ui-member-field select').each(function () {
+            const field = $(this);
+            field.select2({
+                width: '100%',
+                placeholder: 'Selecione um membro',
+                minimumResultsForSearch: Infinity,
+                dropdownParent: field.closest('.admin-ui-member-field'),
+            });
+
+            const selection = field.next('.select2-container').find('.select2-selection');
+            selection.attr('aria-labelledby', field.attr('id') + '-label ' + selection.attr('aria-labelledby'));
+            selection.attr('aria-required', 'true');
+            if (field.attr('aria-invalid')) {
+                selection.attr('aria-invalid', field.attr('aria-invalid'));
+                selection.attr('aria-describedby', field.attr('aria-describedby'));
+            }
+        });
+    });
+</script>
 @endsection

@@ -1,64 +1,43 @@
 @extends('layouts.admin')
 
-<!-- Título -->
-@section('title')
-Certificados - Lista
-@endsection
-<!-- Título -->
+@section('title', 'Certificados')
 
 @section('content')
-<div class="app-content-header">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-6">
-                <h3 class="mb-0">Certificados - Lista</h3>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-end">
-                    <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        Certificados - Lista
-                    </li>
-                </ol>
-            </div>
+<div class="admin-ui-page admin-ui-page-fluid">
+    <div class="admin-ui-intro">
+        <div class="admin-ui-intro-copy">
+            <h1 class="admin-ui-title">Certificados</h1>
         </div>
+        @can('Criar Certificado')
+            <a class="admin-ui-btn admin-ui-btn-primary" href="{{ route('certificados.create') }}" aria-label="Novo certificado">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                <span class="admin-ui-mobile-hide">Novo certificado</span>
+            </a>
+        @endcan
     </div>
-</div>
-<div class="container">
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-right: 10px;">
-        <a class="btn btn-outline-success btn-sm" href="{{ route('certificados.create') }}">
-            <i class="fa fa-plus"></i> Criar Certificado
-        </a>
-    </div>
-    <div class="card-body">
+    <hr class="admin-ui-divider">
 
-        @if(session('success'))
-            <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">
-                <div class="alert-content">
-                    <strong>{{ session('success') }}</strong>
-                </div>
-                <div class="progress-bar-container">
-                    <div id="progress-bar" class="progress-bar"></div>
-                </div>
-            </div>
-        @endif
-        <div class="d-flex justify-content-center mb-4">
-            <form id="search-form" class="d-flex" method="GET" action="{{ route('certificados.index') }}">
-            <input id="search-input" class="form-control me-2" type="search" name="search" placeholder="Buscar Certificados"
-                aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">
-                <i class="bi bi-search"></i>
+    @if(session('success'))
+        <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="alert-content"><strong>{{ session('success') }}</strong></div>
+            <div class="progress-bar-container"><div id="progress-bar" class="progress-bar"></div></div>
+        </div>
+    @endif
+
+    <div class="admin-ui-searchbar">
+        <form id="search-form" class="admin-ui-search-form" method="GET" action="{{ route('certificados.index') }}">
+            <input id="search-input" class="admin-ui-search-input" type="search" name="search"
+                placeholder="Buscar certificados" aria-label="Buscar certificados" value="{{ request('search') }}">
+            <button class="admin-ui-btn admin-ui-btn-secondary" type="submit" aria-label="Buscar">
+                <i class="bi bi-search" aria-hidden="true"></i>
             </button>
-            </form>
-        </div>
-        <div class="card-body">
-            <div id="certificados-table-container">
-                @include('certificados.table', ['certificados' => $certificados])
-            </div>
+        </form>
     </div>
-
+    <div id="certificados-table-container">
+        @include('certificados.table', ['certificados' => $certificados])
     </div>
 </div>
+
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
