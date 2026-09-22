@@ -854,6 +854,66 @@ body.admin-shell {
         outline: 0;
     }
 
+    .admin-ui-member-field {
+        position: relative;
+    }
+
+    .admin-ui-member-field .select2-container .select2-selection--single {
+        display: flex;
+        align-items: center;
+        min-height: 48px;
+        border: 1px solid var(--admin-border);
+        border-radius: var(--admin-radius-md);
+        background: var(--admin-surface);
+        box-shadow: 0 2px 6px rgba(var(--admin-shadow-rgb), 0.04);
+    }
+
+    .admin-ui-member-field .select2-selection--single .select2-selection__rendered {
+        padding: 12px 40px 12px 14px;
+        color: var(--admin-text);
+        font-size: 0.98rem;
+        line-height: 1.35;
+    }
+
+    .admin-ui-member-field .select2-selection__placeholder {
+        color: var(--admin-text-soft);
+    }
+
+    .admin-ui-member-field .select2-selection--single .select2-selection__arrow {
+        height: 100%;
+        right: 12px;
+    }
+
+    .admin-ui-member-field .select2-selection--single:focus,
+    .admin-ui-member-field .select2-container--open .select2-selection--single {
+        border-color: var(--admin-primary);
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--admin-primary) 10%, transparent);
+        outline: 0;
+    }
+
+    .admin-ui-member-field .select2-dropdown {
+        overflow: hidden;
+        border: 1px solid var(--admin-border);
+        border-radius: var(--admin-radius-md);
+        background: var(--admin-surface);
+        box-shadow: 0 18px 32px rgba(var(--admin-shadow-rgb), 0.14);
+    }
+
+    .admin-ui-member-field .select2-results__option {
+        padding: 12px 14px;
+        color: var(--admin-text);
+        overflow-wrap: anywhere;
+    }
+
+    .admin-ui-member-field .select2-results__option[aria-selected="true"] {
+        background: var(--admin-bg);
+    }
+
+    .admin-ui-member-field .select2-results__option--highlighted[aria-selected] {
+        color: var(--admin-surface);
+        background: var(--admin-primary);
+    }
+
     .admin-ui-textarea {
         min-height: 150px;
         resize: vertical;
@@ -1359,6 +1419,108 @@ body.admin-shell {
         color: var(--admin-text);
         font-size: 0.95rem;
         font-weight: 600;
+    }
+
+    .admin-ui-permission-heading,
+    .admin-ui-permission-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .admin-ui-permission-toolbar {
+        margin-top: 22px;
+    }
+
+    .admin-ui-permission-toolbar .admin-ui-search-input {
+        flex-basis: 220px;
+    }
+
+    .admin-ui-permission-toolbar .admin-ui-btn {
+        flex: 1 0 auto;
+    }
+
+    .admin-ui-permission-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+        gap: 16px;
+    }
+
+    .admin-ui-permission-group {
+        min-width: 0;
+        padding: 16px;
+        border: 1px solid var(--admin-border);
+        border-radius: var(--admin-radius-md);
+    }
+
+    .admin-ui-permission-group .admin-ui-inline-option {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .admin-ui-permission-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 44px;
+        padding: 8px;
+        border-radius: var(--admin-radius-sm);
+        color: var(--admin-text-soft);
+        font-size: 0.9rem;
+        overflow-wrap: anywhere;
+        cursor: pointer;
+    }
+
+    .admin-ui-permission-option:has(:checked) {
+        color: var(--admin-primary);
+    }
+
+    .admin-ui-permission-option .admin-ui-check,
+    .admin-ui-permission-group .admin-ui-check {
+        flex: 0 0 18px;
+    }
+
+    .admin-ui-permission-option[hidden],
+    .admin-ui-permission-group[hidden] {
+        display: none;
+    }
+
+    .admin-ui-permission-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        width: 340px;
+        max-width: 100%;
+    }
+
+    .admin-ui-permission-chip {
+        display: inline-block;
+        max-width: 100%;
+        padding: 5px 9px;
+        border-radius: 6px;
+        background: color-mix(in srgb, var(--admin-primary) 9%, var(--admin-surface));
+        color: var(--admin-primary);
+        font-size: 0.8rem;
+        line-height: 1.4;
+        overflow-wrap: anywhere;
+    }
+
+    .admin-ui-permission-more {
+        padding: 5px;
+        border: 0;
+        background: transparent;
+        color: var(--admin-primary);
+        font-size: 0.85rem;
+        text-decoration: underline;
+    }
+
+    #certificados-table .admin-ui-certificate-description {
+        min-width: 180px;
+        max-width: 300px;
+        overflow-wrap: anywhere;
     }
 
     @media (max-width: 575.98px) {
